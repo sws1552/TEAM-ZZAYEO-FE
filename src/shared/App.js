@@ -22,7 +22,7 @@ function App() {
   );
 }
 
-const Fullscreen = styled.div`
+const Fullscreen = styled.div`  
 background-color:#e6f4fa;
 height: 100vh;
 padding-top: 100px;
