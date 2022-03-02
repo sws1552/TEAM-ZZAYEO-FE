@@ -4,7 +4,8 @@ import GoogleMapReact from 'google-map-react';
 import Maker from "./Maker"
 import SearchBar from './SearchBar';
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as mapActions } from "../../../redux/modules/map";
+// import { actionCreators as mapActions } from "../../../redux/modules/map";
+
 
 const WritePlanMap = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const WritePlanMap = () => {
   const [places, setPlaces] = useState([]);
   const [target, setTarget] = useState(null);
   
+  const location = useSelector((state) => state.map.list);
   // React.useEffect(() => {
   //   dispatch(mapActions.searchLocation(places))
   //   dispatch(mapActions.loadLocation(places))
@@ -49,7 +51,7 @@ const WritePlanMap = () => {
   const markerClicked = (key) => {
     setTarget(key);
   }
-
+ 
   return (
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
@@ -60,11 +62,11 @@ const WritePlanMap = () => {
           addPlace={addPlace}
         />)}
 
-      <div style={{ height: '345px', width: '100%', margin: "auto" }}>
+      <div style={{ height: '325px', width: '100%', margin: "auto" }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: 'AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA',
-            libraries: "places"
+            libraries: "places",
             //GoogleMap로드시 라이브러리로 places를 추가
           }}
 
@@ -78,12 +80,12 @@ const WritePlanMap = () => {
           onGoogleApiLoaded={({ map, maps }) => handleApiloaded(map, maps)}
         // 위치를 렌더해주는 함수
         >
-          {places.length !== 0 && places.map((place) => (
+          {location.length !== 0 && location.map((place, index) => (
             <Maker
-              key={place.id}
+              key={index}
               text={place.name}
-              lat={place.geometry.location.lat()}
-              lng={place.geometry.location.lng()}
+              lat={place.lat}
+              lng={place.lng}
               target={place.place_id === target}
               place={place}
             />
@@ -94,6 +96,8 @@ const WritePlanMap = () => {
     </Container>
   );
 };
+
+
 
 export default WritePlanMap;
 
