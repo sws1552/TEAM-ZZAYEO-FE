@@ -1,10 +1,12 @@
 import React from "react";
-import Main from "../pages/Main";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/ConfigureStore";
 import styled from "styled-components";
-import Navigation from "../components/Navigation"
+import Navigation from "../components/Navigation/Navigation"
+
+import Main from "../pages/Main";
+import WritePlan from "../pages/WritePlan";
 
 function App() {
 
@@ -14,6 +16,7 @@ function App() {
       <ConnectedRouter history={history}>
         <Container>
         <Route path="/" exact component={Main} />
+        <Route path="/writeplan" exact component={WritePlan} />
         <Navigation/>
         </Container>
       </ConnectedRouter>
@@ -34,6 +37,7 @@ border-radius: 10px;
 height: 900px;
 width: 420px;
 margin: auto;
+box-sizing: border-box;
 position: relative;
 `
 
