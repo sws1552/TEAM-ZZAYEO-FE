@@ -22,10 +22,11 @@ const BtnBox = styled.div`
 
 const KaKaoBtn = styled.a`
   background-image: url("/img/kakao_login.png");
-  background-size: 100%;
+  background-size: 90%;
   background-position: center;
-  width: 250px;
-  height: 50px;
+  width: 312px;
+  height: 48px;
+  margin-top: 100%;
   margin-bottom: 10px;
   border: 1px solid transparent;
   border-radius: 12px;
@@ -34,10 +35,10 @@ const KaKaoBtn = styled.a`
 
 const NaverBtn = styled.a`
   background-image: url("/img/naver_login.png");
-  background-size: 90%;
+  background-size: 80%;
   background-position: center;
-  width: 250px;
-  height: 50px;
+  width: 312px;
+  height: 48px;
   border: 1px solid transparent;
   border-radius: 12px;
   cursor: pointer;
