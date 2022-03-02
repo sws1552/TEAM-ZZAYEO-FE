@@ -9,7 +9,7 @@ import { history } from "../redux/ConfigureStore";
 import Auth2RedirectHandler from "./Auth2RedirectHandler";
 import Main from "../pages/Main";
 import Login from "../pages/Login";
-
+import WritePlan from "../pages/WritePlan";
 import Navigation from "../components/Navigation";
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
           <Container>
             <Route path="/" exact component={Main} />
             <Route path="/login" exact component={Login} />
+            <Route path="/writeplan" exact component={WritePlan} />
 
             <Route
               path="/oauth/callback/kakao"
@@ -45,6 +46,7 @@ const Container = styled.div`
   height: 900px;
   width: 420px;
   margin: auto;
+  box-sizing: border-box;
   position: relative;
 `;
 
