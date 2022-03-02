@@ -83,6 +83,7 @@ const WritePlanMap = () => {
           {location.length !== 0 && location.map((place, index) => (
             <Maker
               key={index}
+              N={index}
               text={place.name}
               lat={place.lat}
               lng={place.lng}
