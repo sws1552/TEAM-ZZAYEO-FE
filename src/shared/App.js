@@ -10,7 +10,7 @@ import Auth2RedirectHandler from "./Auth2RedirectHandler";
 import Main from "../pages/Main";
 import Login from "../pages/Login";
 import WritePlan from "../pages/WritePlan";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/Navigation/Navigation";
 
 function App() {
   return (
@@ -24,8 +24,10 @@ function App() {
 
             <Route
               path="/oauth/callback/kakao"
+              exact
               component={Auth2RedirectHandler}
             ></Route>
+            <Route path="/naver" component={Auth2RedirectHandler} />
             <Navigation />
           </Container>
         </ConnectedRouter>
@@ -36,8 +38,6 @@ function App() {
 
 const Fullscreen = styled.div`
   background-color: #e6f4fa;
-  height: 100vh;
-  padding-top: 100px;
 `;
 
 const Container = styled.div`

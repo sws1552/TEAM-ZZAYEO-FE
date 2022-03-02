@@ -8,10 +8,12 @@ const OAuth2RedirectHandler = (props) => {
 
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code");
-  //console.log(code);
+  let state = new URL(window.location.href).searchParams.get("state");
+  console.log(code, state);
 
   React.useEffect(() => {
     dispatch(userActions.kakaoLogin(code));
+    dispatch(userActions.naverLogin(code, state));
   }, []);
 };
 
