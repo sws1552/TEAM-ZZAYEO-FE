@@ -12,6 +12,7 @@ import Login from "../pages/Login";
 import WritePlan from "../pages/WritePlan";
 import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
+import AddPlan from "../pages/AddPlan";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Container>
             <Route path="/" exact component={Main} />
             <Route path="/login" exact component={Login} />
+            <Route path="/addplan" exact component={AddPlan} />
             <Route path="/writeplan" exact component={WritePlan} />
 
             <Route
@@ -28,7 +30,7 @@ function App() {
               exact
               component={Auth2RedirectHandler}
             ></Route>
-            <Route path="/naver" component={Auth2RedirectHandler} />
+            <Route path="/naver" exact component={Auth2RedirectHandler} />
 
             <Route path="/chatlist" exact component={ChatList} />
 
@@ -42,8 +44,7 @@ function App() {
 
 const Fullscreen = styled.div`
   background-color: #e6f4fa;
-  height: 100vh;
-  
+  /* height: 100vh; */
 `;
 
 const Container = styled.div`
