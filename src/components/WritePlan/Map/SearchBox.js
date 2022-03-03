@@ -17,6 +17,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
      
         addPlace(selected)
         setAddmap(selected)
+        
         if (!place.geometry) return;
         if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport)
@@ -50,6 +51,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
         <>
         <ElInput ref={input} placeholder="장소찾기" type="text" />
         <button onClick={()=>{
+            addPlace([])
             dispatch(mapActions.searchLocation(Addmap))
         }}>장소추가</button>
         </>
