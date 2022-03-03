@@ -60,7 +60,6 @@ export default handleActions(
       }),
     [SEARCHLOATION]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload)
         // const place = action.payload.places
         const placeName =action.payload.placeName
         const lat = action.payload.lat
@@ -69,11 +68,6 @@ export default handleActions(
         draft.list.push({placeName, lat, lng, address})
         // draft.list.push({places: [{placeName, lat, lng, address}] })
         // draft.list.push({placeName,lat,lng,address})
-        // dayId.map((v, idx)=>{
-        //   return(
-        //     draft.list[v].push({name,lat,lng,address})
-        //   )
-        // })
       }),
   },
   initialState

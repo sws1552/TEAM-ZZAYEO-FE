@@ -7,7 +7,7 @@ import { actionCreators as mapActions } from "../redux/modules/map";
 const WritePlan = () => {
     const dispatch = useDispatch();
     const location = useSelector((state) => state.map.list);
-    console.log(location)
+
    
     React.useEffect(() => {
         dispatch(mapActions.loadLocationDB(location))
