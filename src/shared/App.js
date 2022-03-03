@@ -11,6 +11,7 @@ import Main from "../pages/Main";
 import Login from "../pages/Login";
 import WritePlan from "../pages/WritePlan";
 import Navigation from "../components/Navigation/Navigation";
+import ChatList from "../pages/ChatList";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
               component={Auth2RedirectHandler}
             ></Route>
             <Route path="/naver" component={Auth2RedirectHandler} />
+
+            <Route path="/chatlist" exact component={ChatList} />
+
             <Navigation />
           </Container>
         </ConnectedRouter>
