@@ -38,6 +38,7 @@ export default function LabelBottomNavigation() {
         icon={<FavoriteIcon />}
       />
       <BottomNavigationAction
+        onClick={() => history.push("/chatlist")}
         label="Chat"
         value="nearby"
         icon={<LocationOnIcon />}
