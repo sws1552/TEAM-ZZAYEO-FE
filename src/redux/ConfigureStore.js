@@ -4,13 +4,15 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import User from "./modules/user";
-import Map from "./modules/map";
+import map from "./modules/map";
+import polyline from "./modules/polyline";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: User,
-  map: Map,
+  map: map,
+  polyline: polyline,
   router: connectRouter(history),
 });
 
