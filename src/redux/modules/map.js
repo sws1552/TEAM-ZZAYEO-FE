@@ -19,12 +19,21 @@ export default handleActions(
   {
     [LOADLOATION]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list = action.payload.places
+        // const place = action.payload.places
+        // const name = place[0].name
+        // const lat = place[0].geometry.location.lat()
+        // const lng = place[0].geometry.location.lng()
+        // const address = place[0].formatted_address
+        // draft.list = {name, lat, lng, address}
       }),
     [SEARCHLOATION]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.places)
-        // draft.list.push(action.payload.places);
+        const place = action.payload.places
+        const name = place[0].name
+        const lat = place[0].geometry.location.lat()
+        const lng = place[0].geometry.location.lng()
+        const address = place[0].formatted_address
+        draft.list.push({name,lat,lng,address});
       }),
   },
   initialState

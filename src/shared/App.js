@@ -38,6 +38,8 @@ function App() {
 
 const Fullscreen = styled.div`
   background-color: #e6f4fa;
+  height: 100vh;
+  
 `;
 
 const Container = styled.div`
