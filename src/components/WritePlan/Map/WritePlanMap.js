@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import GoogleMapReact from 'google-map-react';
 import Maker from "./Maker"
+import MakerDirect from "./MakerDirect"
 import SearchBar from './SearchBar';
 import { useDispatch, useSelector } from "react-redux";
 // import { actionCreators as mapActions } from "../../../redux/modules/map";
@@ -16,9 +17,8 @@ const WritePlanMap = () => {
   let zoom = 10;
 
   const [places, setPlaces] = useState([]);
-  const [target, setTarget] = useState(null);
-  
   const location = useSelector((state) => state.map.list);
+
   // React.useEffect(() => {
   //   dispatch(mapActions.searchLocation(places))
   //   dispatch(mapActions.loadLocation(places))
@@ -47,11 +47,7 @@ const WritePlanMap = () => {
     }
   }
 
-  //마커찍기
-  const markerClicked = (key) => {
-    setTarget(key);
-  }
- 
+
   return (
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
@@ -76,19 +72,26 @@ const WritePlanMap = () => {
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
 
-          onChildClick={markerClicked}
+
           onGoogleApiLoaded={({ map, maps }) => handleApiloaded(map, maps)}
         // 위치를 렌더해주는 함수
         >
-          {location.length !== 0 && location.map((place, index) => (
-            <Maker
+          {places.length !== 0 && places.map((place, index) => (
+            <MakerDirect
               key={index}
-              N={index}
               text={place.name}
               lat={place.lat}
               lng={place.lng}
-              target={place.place_id === target}
-              place={place}
+            />
+          ))}
+          
+          {location.length !== 0 && location.map((place, index) => (
+            <Maker
+              key={index}
+              Num={index}
+              text={place.name}
+              lat={place.lat}
+              lng={place.lng}
             />
           ))}
 
