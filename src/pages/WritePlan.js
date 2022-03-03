@@ -10,18 +10,19 @@ const WritePlan = () => {
     console.log(location)
    
     React.useEffect(() => {
-        dispatch(mapActions.loadLocation(location))
-    }, [location]);
+        dispatch(mapActions.loadLocationDB(location))
+    }, []);
 
-
+    
     return (
         <>
             <Container>
+            
                 <WritePlanMap />
                 <Location>
-                {location.map((v, i)=>{
+                {location.map((v, idx)=>{
                     return(
-                        <div key={i}>
+                        <div key={idx}>
                         <div>이름:{v.name}</div>
                         <div>경도:{v.lng}</div>
                         <div>위도:{v.lat}</div>
