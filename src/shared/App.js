@@ -33,9 +33,8 @@ function App() {
             <Route path="/naver" exact component={Auth2RedirectHandler} />
 
             <Route path="/chatlist" exact component={ChatList} />
-
-            <Navigation />
           </Container>
+          <Navigation />
         </ConnectedRouter>
       </Fullscreen>
     </React.Fragment>
@@ -50,7 +49,7 @@ const Fullscreen = styled.div`
 const Container = styled.div`
   background-color: white;
   border-radius: 10px;
-  height: 900px;
+  height: 100vh;
   width: 420px;
   margin: auto;
   box-sizing: border-box;

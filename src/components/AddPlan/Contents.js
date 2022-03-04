@@ -1,0 +1,207 @@
+import React, { useState } from "react";
+import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const Contents = (props) => {
+  //여행제목 값 가져오기
+  const [titleInput, setTitleInput] = useState("");
+  //console.log(titleInput);
+
+  //여행 선택일자 가져오기
+  const [dateRange, setDateRange] = React.useState([null, null]);
+  const [startDate, endDate] = dateRange;
+  //console.log(dateRange, startDate, endDate);
+
+  const destList = ["국내", "해외"];
+  const [clickedTripDest, changeTripDest] = React.useState(0);
+  //console.log(tripDest[clickedTripDest]);
+
+  const withList = [
+    "혼자",
+    "연인과",
+    "친구와",
+    "배우자와",
+    "부모님과",
+    "아이와",
+    "가족과",
+    "자매와",
+    "형제와",
+    "동행과",
+    "기타",
+  ];
+  const [clickedWithList, changeWithList] = React.useState(0);
+
+  const Tripstyle = [
+    "액티비티 체험",
+    "문화 예술 역사 체험",
+    "명소 관광지 방문필수",
+    "페스티벌 참여",
+    "먹방투어",
+    "쇼핑 좋아",
+    "편하게 쉬는 휴양",
+    "SNS 핫플 투어",
+    "호캉스",
+    "자연친화",
+  ];
+  const [clickedTripstyle, changeTripstyle] = React.useState(0);
+
+  return (
+    <React.Fragment>
+      <TitleBox>
+        <Text>여행제목</Text>
+        <Input
+          type="text"
+          placeholder="제목을 입력해주세요"
+          onChange={(e) => {
+            setTitleInput(e.target.value);
+          }}
+        ></Input>
+        {/* 글자수 설정시 사용 minlength="4" maxlength="8" */}
+      </TitleBox>
+      <DateBox>
+        <Text>언제</Text>
+        <MyDatePicker
+          selectsRange={true}
+          startDate={startDate}
+          endDate={endDate}
+          onChange={(update) => {
+            setDateRange(update);
+          }}
+          dateFormat="yyyy-MM-dd"
+          withPortal
+          //isClearable={true} 취소버튼 보이게하기
+        />
+      </DateBox>
+      <TripDestBox>
+        <Text>어디로</Text>
+        <div>
+          {destList.map((l, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => {
+                  changeTripDest(i);
+                }}
+                style={{
+                  backgroundColor:
+                    i === clickedTripDest ? "#12C5ED" : "#EDEDED",
+                  color: i === clickedTripDest ? "#FFFFFF" : "#979797",
+                }}
+              >
+                {l}
+              </li>
+            );
+          })}
+        </div>
+      </TripDestBox>
+      <WithListBox>
+        <Text>누구랑</Text>
+        <div>
+          {withList.map((l, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => {
+                  changeWithList(i);
+                }}
+                style={{
+                  backgroundColor:
+                    i === clickedWithList ? "#12C5ED" : "#EDEDED",
+                  color: i === clickedWithList ? "#FFFFFF" : "#979797",
+                }}
+              >
+                {l}
+              </li>
+            );
+          })}
+        </div>
+      </WithListBox>
+      <TripstyleBox>
+        <Text>여행스타일</Text>
+        <div>
+          {Tripstyle.map((l, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => {
+                  changeTripstyle(i);
+                }}
+                style={{
+                  backgroundColor:
+                    i === clickedTripstyle ? "#12C5ED" : "#EDEDED",
+                  color: i === clickedTripstyle ? "#FFFFFF" : "#979797",
+                }}
+              >
+                {l}
+              </li>
+            );
+          })}
+        </div>
+      </TripstyleBox>
+      <Button>세부일정 작성하기</Button>
+    </React.Fragment>
+  );
+};
+
+const TitleBox = styled.div`
+  display: block;
+  width: 321px;
+  height: 100%;
+  margin: 10px auto;
+`;
+
+const Text = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  margin: 13px 0px;
+`;
+
+const Input = styled.input`
+  width: 312px;
+  height: 41px;
+`;
+
+const DateBox = styled(TitleBox)``;
+
+const MyDatePicker = styled(DatePicker)`
+  display: block;
+  width: 312px;
+  height: 41px;
+`;
+
+const TripDestBox = styled(TitleBox)`
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 32px;
+    margin: 0px 10px 5px 0px;
+    padding: 15px 12px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+`;
+
+const WithListBox = styled(TripDestBox)``;
+
+const TripstyleBox = styled(WithListBox)``;
+
+const Button = styled.div`
+  margin: 10px 0px;
+  width: 312px;
+  height: 54px;
+  background-color: #12c5ed;
+`;
+
+export default Contents;
