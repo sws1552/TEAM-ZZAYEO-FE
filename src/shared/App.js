@@ -14,6 +14,7 @@ import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
+import Myplan from "../pages/Myplan";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Container>
             <Route path="/" exact component={Main} />
             <Route path="/login" exact component={Login} />
+            <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />
             <Route path="/writeplan" exact component={WritePlan} />
 
@@ -35,10 +37,8 @@ function App() {
 
             <Route path="/chatlist" exact component={ChatList} />
             <Route path="/chatroom" exact component={ChatRoom} />
-
             <Navigation />
           </Container>
-          <Navigation />
         </ConnectedRouter>
       </Fullscreen>
     </React.Fragment>

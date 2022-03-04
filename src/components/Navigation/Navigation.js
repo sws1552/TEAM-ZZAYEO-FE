@@ -16,7 +16,7 @@ export default function LabelBottomNavigation() {
 
   return (
     <BottomNavigation
-      sx={{ width: 420 }}
+      sx={{ width: 420, height: 60 }}
       value={value}
       onChange={handleChange}
       style={{ position: "absolute", bottom: 0, borderRadius: "10px" }}

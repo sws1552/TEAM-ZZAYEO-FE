@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Contents from "../components/AddPlan/Contents";
 
-const AddPlan = (props) => {
+const Myplan = (props) => {
   const { history } = props;
 
   return (
@@ -14,13 +12,14 @@ const AddPlan = (props) => {
             onClick={() => {
               history.replace("/");
             }}
-          >
-            <ArrowBackIcon />
-          </CancleBtn>
-          <TText>새로운 여행 작성</TText>
+          ></CancleBtn>
+          <TText>나의 여행</TText>
         </Top>
         <Bottom>
-          <Contents />
+          <AddPlanBtn>
+            <P>+</P>
+            <P>새로운 여행을 작성해주세요</P>
+          </AddPlanBtn>
         </Bottom>
       </Container>
     </React.Fragment>
@@ -66,4 +65,24 @@ const Bottom = styled.div`
   flex-direction: column;
 `;
 
-export default AddPlan;
+const AddPlanBtn = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 312px;
+  height: 81px;
+  margin-top: 20px;
+  background: #ffffff;
+  border: 1px solid #666666;
+  box-sizing: border-box;
+`;
+const P = styled.p`
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20.27px;
+  margin: 0;
+`;
+
+export default Myplan;

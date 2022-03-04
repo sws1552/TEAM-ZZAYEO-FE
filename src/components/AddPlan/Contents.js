@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+
+import { useDispatch } from "react-redux";
+import { actionCreators as planActions } from "../../redux/modules/paln";
+import { history } from "../../redux/ConfigureStore";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 const Contents = (props) => {
+  const dispatch = useDispatch();
+
   //여행제목 값 가져오기
   const [titleInput, setTitleInput] = useState("");
   //console.log(titleInput);
@@ -15,7 +23,7 @@ const Contents = (props) => {
 
   const destList = ["국내", "해외"];
   const [clickedTripDest, changeTripDest] = React.useState(0);
-  //console.log(tripDest[clickedTripDest]);
+  //console.log(destList[clickedTripDest]);
 
   const withList = [
     "혼자",
@@ -32,7 +40,7 @@ const Contents = (props) => {
   ];
   const [clickedWithList, changeWithList] = React.useState(0);
 
-  const Tripstyle = [
+  const tripStyle = [
     "액티비티 체험",
     "문화 예술 역사 체험",
     "명소 관광지 방문필수",
@@ -45,6 +53,22 @@ const Contents = (props) => {
     "자연친화",
   ];
   const [clickedTripstyle, changeTripstyle] = React.useState(0);
+
+  console.log();
+
+  const createPlan = () => {
+    let plan = {
+      title: titleInput,
+      location: destList[clickedTripDest],
+      withlist: withList[clickedWithList],
+      startdate: moment(startDate).format("YYYY-MM-DD"),
+      enddate: moment(endDate).format("YYYY-MM-DD"),
+      category: tripStyle[clickedTripstyle],
+    };
+    dispatch(planActions.createPlanDB(plan));
+    console.log(plan);
+    history.push("/writeplan");
+  };
 
   return (
     <React.Fragment>
@@ -62,6 +86,7 @@ const Contents = (props) => {
       <DateBox>
         <Text>언제</Text>
         <MyDatePicker
+          placeholderText="날짜를 선택해주세요."
           selectsRange={true}
           startDate={startDate}
           endDate={endDate}
@@ -120,7 +145,7 @@ const Contents = (props) => {
       <TripstyleBox>
         <Text>여행스타일</Text>
         <div>
-          {Tripstyle.map((l, i) => {
+          {tripStyle.map((l, i) => {
             return (
               <li
                 key={i}
@@ -139,7 +164,9 @@ const Contents = (props) => {
           })}
         </div>
       </TripstyleBox>
-      <Button>세부일정 작성하기</Button>
+      <Button onClick={createPlan}>
+        <p>세부일정 작성하기</p>
+      </Button>
     </React.Fragment>
   );
 };
@@ -169,6 +196,7 @@ const MyDatePicker = styled(DatePicker)`
   display: block;
   width: 312px;
   height: 41px;
+  text-align: center;
 `;
 
 const TripDestBox = styled(TitleBox)`
@@ -198,10 +226,16 @@ const WithListBox = styled(TripDestBox)``;
 const TripstyleBox = styled(WithListBox)``;
 
 const Button = styled.div`
-  margin: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 34px 0px 70px;
   width: 312px;
   height: 54px;
   background-color: #12c5ed;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
 `;
 
 export default Contents;
