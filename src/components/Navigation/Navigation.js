@@ -25,7 +25,7 @@ export default function LabelBottomNavigation() {
         onClick={() => {
           history.push("/");
         }}
-        label="Main"
+        label="홈"
         value="recents"
         icon={<RestoreIcon />}
       />
@@ -33,13 +33,13 @@ export default function LabelBottomNavigation() {
         onClick={() => {
           history.push("/writeplan");
         }}
-        label="Plan"
+        label="나의여행"
         value="favorites"
         icon={<FavoriteIcon />}
       />
       <BottomNavigationAction
         onClick={() => history.push("/chatlist")}
-        label="Chat"
+        label="메세지"
         value="nearby"
         icon={<LocationOnIcon />}
       />
@@ -47,7 +47,7 @@ export default function LabelBottomNavigation() {
         onClick={() => {
           history.push("/login");
         }}
-        label="Mypage"
+        label="마이피드"
         value="folder"
         icon={<FolderIcon />}
       />

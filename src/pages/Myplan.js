@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import BeforeRegister from "../components/Mypaln/BeforeRegister";
 
 const Myplan = (props) => {
   const { history } = props;
@@ -20,6 +21,7 @@ const Myplan = (props) => {
             <P>+</P>
             <P>새로운 여행을 작성해주세요</P>
           </AddPlanBtn>
+          <BeforeRegister />
         </Bottom>
       </Container>
     </React.Fragment>
@@ -66,7 +68,7 @@ const Bottom = styled.div`
 `;
 
 const AddPlanBtn = styled.div`
-  position: absolute;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
