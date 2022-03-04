@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Onechat = (props) => {
     return (
-        <Container>
+        <Container onClick={props._onClick}>
             <UserImg profileImg={props.profileImg}/>
             <NickCon>
                 <Text>{props.userNick}</Text>
@@ -17,6 +17,7 @@ Onechat.defaultProps = {
     profileImg : "https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg",
     userNick: "wonseok",
     pretime: "2022-03-03",
+    _onClick: () => {},
 }
 
 const Container = styled.div`
