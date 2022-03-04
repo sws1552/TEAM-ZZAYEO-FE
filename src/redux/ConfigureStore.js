@@ -3,17 +3,20 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
+import User from "./modules/user";
+import Plan from "./modules/paln";
 import map from "./modules/map";
 import polyline from "./modules/polyline";
-
 
 import chat from "./modules/chat";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  polyline: polyline,
+  user: User,
+  plan: Plan,
   map: map,
+  polyline: polyline,
   chat: chat,
   router: connectRouter(history),
 });

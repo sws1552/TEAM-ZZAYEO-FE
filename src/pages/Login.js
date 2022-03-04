@@ -14,7 +14,6 @@ const Login = (props) => {
 };
 
 const BtnBox = styled.div`
-  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
