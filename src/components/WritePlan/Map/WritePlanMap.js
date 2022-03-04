@@ -75,7 +75,6 @@ const WritePlanMap = (props) => {
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
 
-
           onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
 
         // 위치를 렌더해주는 함수
