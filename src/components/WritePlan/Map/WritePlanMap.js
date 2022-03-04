@@ -40,10 +40,8 @@ const WritePlanMap = (props) => {
       setGooglemaps(maps)
 
     }
-  //polyline
-   
+  //polyline 
   }
-
 
   //장소찾기
   const addPlace = (places) => {
@@ -64,7 +62,7 @@ const WritePlanMap = (props) => {
         />)}
      
 
-      <div style={{ height: '325px', width: '100%', margin: "auto" }}>
+      <div style={{ height: '220px', width: '100%', margin: "auto" }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: 'AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA',
@@ -103,34 +101,23 @@ const WritePlanMap = (props) => {
             />
           ))}
 
-          <Polyline
+          {/* <Polyline
           markers={markers}
           map={map}
           maps={googlemaps}
-          />
+          /> */}
         </GoogleMapReact>
       </div>
     </Container>
   );
 };
 
-WritePlanMap.defaultProps = {
-  markers: [
-    { lat: 37.5509786, lng: 126.8495382 },
-    { lat: 37.65835990000001, lng: 126.8320201 },
-    { lat: 37.5975649, lng: 126.8810359}
-
-  ],
-  center: [47.367347, 8.5500025],
-  zoom: 4
-}
-
 export default WritePlanMap;
 
 const Container = styled.div`
 width: 100%;
-height: 400px;
+height: 300px;
 box-sizing: border-box;
-border: 5px solid green;
+border: 3px solid gray;
 margin: auto;
 `
