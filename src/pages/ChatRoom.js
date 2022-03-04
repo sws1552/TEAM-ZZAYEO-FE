@@ -60,6 +60,11 @@ const ChatRoom = (props) => {
 
         });
 
+        return () => {
+            setMessageList([]);
+        }
+
+
     }, [roomData.socket]);
 
 
@@ -78,8 +83,9 @@ const ChatRoom = (props) => {
                                 <UserCon className={roomData.userId === item.author ? "me" : "other"}>{item.author}</UserCon>
                                 <MsgCon className={roomData.userId === item.author ? "me" : "other"}>
                                     <p>{item.time}</p>
+                                    {/* <UserImg /> */}
                                     <MessageContent className={roomData.userId === item.author ? "me" : "other"}>
-                                            <p>{item.message}</p>
+                                        <p>{item.message}</p>
                                     </MessageContent>
                                 </MsgCon>
                             </div>
@@ -134,6 +140,16 @@ const Message = styled.div`
     padding: 10px;
     display: flex;
     justify-content: ${(props) => (props.className === 'me' ? "flex-end" : "flex-start")};
+`;
+
+const UserImg = styled.div`
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    background-image: url("https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg");
+    background-position: center;
+    background-size: cover;
+    object-fit: contain;
 `;
 
 const UserCon = styled.div`

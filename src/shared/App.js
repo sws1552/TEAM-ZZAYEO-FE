@@ -13,6 +13,7 @@ import WritePlan from "../pages/WritePlan";
 import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import ChatRoom from "../pages/ChatRoom";
+import MyPage from "../pages/MyPage";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
 
             <Route path="/chatlist" exact component={ChatList} />
             <Route path="/chatroom" exact component={ChatRoom} />
+
+            <Route path="/mypage" exact component={MyPage} />
 
             <Navigation />
           </Container>

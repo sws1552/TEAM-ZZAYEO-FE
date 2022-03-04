@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import io from "socket.io-client";
 
 // 서버와 클라이언트 연결
-const socket = io.connect("http://localhost:5000");
+// const socket = io.connect("http://localhost:5000");
 
 const ChatList = (props) => {
 
@@ -24,13 +24,13 @@ const ChatList = (props) => {
         const data = {
             userId: userId,
             roomId: roomId,
-            socket: socket,
+            // socket: socket,
         };
 
         dispatch(chatActions.getRoom(data));
 
         // 서버에 방id 전송 같은 방일경우에 서로의 채팅이 보인다.
-        socket.emit("join_room", roomId);
+        // socket.emit("join_room", roomId);
         
         
         history.push('/chatroom');
