@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
-import { actionCreators as planActions } from "../../redux/modules/paln";
+import { actionCreators as planActions } from "../../redux/modules/plan";
 import { history } from "../../redux/ConfigureStore";
 
 import DatePicker from "react-datepicker";
@@ -21,6 +21,7 @@ const Contents = (props) => {
   const [startDate, endDate] = dateRange;
   //console.log(dateRange, startDate, endDate);
 
+  //어디로
   const destList = ["국내", "해외"];
   const [clickedTripDest, changeTripDest] = React.useState(0);
   //console.log(destList[clickedTripDest]);
