@@ -14,7 +14,6 @@ export default MainCategory;
 const Container = styled.div`
 width: 100%;
 height: 200px;
-margin: auto;
 box-sizing: border-box;
-border: 5px solid blue;
+border: 4px solid gray;
 `

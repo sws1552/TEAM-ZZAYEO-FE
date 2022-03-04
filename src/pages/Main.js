@@ -19,5 +19,5 @@ const Main = () => {
 export default Main;
 
 const Container = styled.div`
-padding: 24px 24px;
+
 `

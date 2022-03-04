@@ -15,11 +15,9 @@ const MainTravelList = () => {
 
 const Container = styled.div`
 width: 100%;
-height: 300px;
+height: 200px;
 box-sizing: border-box;
-border: 5px solid orange;
-margin: 24px auto 0px auto;
-overflow-y: auto;
+border: 4px solid gray;
 `
 export default MainTravelList;
 
