@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import moment from "moment";
 import axios from "axios";
 
 // 액션타입

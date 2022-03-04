@@ -9,15 +9,14 @@ const Myplan = (props) => {
     <React.Fragment>
       <Container>
         <Top>
-          <CancleBtn
-            onClick={() => {
-              history.replace("/");
-            }}
-          ></CancleBtn>
           <TText>나의 여행</TText>
         </Top>
         <Bottom>
-          <AddPlanBtn>
+          <AddPlanBtn
+            onClick={() => {
+              history.push("/addplan");
+            }}
+          >
             <P>+</P>
             <P>새로운 여행을 작성해주세요</P>
           </AddPlanBtn>
@@ -45,12 +44,6 @@ const Top = styled.div`
   justify-content: center;
   align-items: center;
   border: 2px solid #fbeaff;
-`;
-
-const CancleBtn = styled.div`
-  position: absolute;
-  left: 5%;
-  cursor: pointer;
 `;
 
 const TText = styled.div`

@@ -31,7 +31,7 @@ export default function LabelBottomNavigation() {
       />
       <BottomNavigationAction
         onClick={() => {
-          history.push("/writeplan");
+          history.push("/myplan");
         }}
         label="나의여행"
         value="favorites"
