@@ -52,7 +52,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
         <ElInput ref={input} placeholder="장소찾기" type="text" />
         <button onClick={()=>{
             addPlace([])
-            dispatch(mapActions.searchLocation(Addmap))
+            dispatch(mapActions.searchLocationDB(Addmap))
         }}>장소추가</button>
         </>
     )

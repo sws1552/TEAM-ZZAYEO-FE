@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import map from "./modules/map";
-
+import polyline from "./modules/polyline";
 
 
 import chat from "./modules/chat";
@@ -12,6 +12,7 @@ import chat from "./modules/chat";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
+  polyline: polyline,
   map: map,
   chat: chat,
   router: connectRouter(history),
