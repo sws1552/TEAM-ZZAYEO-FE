@@ -21,8 +21,7 @@ const WritePlanMap = (props) => {
   const [places, setPlaces] = useState([]);
   const location = useSelector((state) => state.map.list);
   const markers = useSelector((state) => state.polyline.list);
-  console.log(markers)
-  console.log(props.markers)
+
 
   React.useEffect(() => {
     dispatch(lineActions.addlocation(location))
@@ -40,7 +39,7 @@ const WritePlanMap = (props) => {
       setGooglemaps(maps)
 
     }
-  //polyline 
+    //polyline 
   }
 
   //장소찾기
@@ -60,7 +59,7 @@ const WritePlanMap = (props) => {
           mapApi={googlemaps}
           addPlace={addPlace}
         />)}
-     
+
 
       <div style={{ height: '220px', width: '100%', margin: "auto" }}>
         <GoogleMapReact
@@ -101,11 +100,13 @@ const WritePlanMap = (props) => {
             />
           ))}
 
-          {/* <Polyline
-          markers={markers}
-          map={map}
-          maps={googlemaps}
-          /> */}
+          {apiReady && googlemaps && (
+            <Polyline
+              markers={markers}
+              map={map}
+              maps={googlemaps}
+            />)}
+
         </GoogleMapReact>
       </div>
     </Container>

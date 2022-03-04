@@ -5,13 +5,14 @@ import { connectRouter } from "connected-react-router";
 
 import map from "./modules/map";
 import polyline from "./modules/polyline";
-
+import image from "./modules/image";
 
 import chat from "./modules/chat";
 
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
+  image:image,
   polyline: polyline,
   map: map,
   chat: chat,
