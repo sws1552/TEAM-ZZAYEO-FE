@@ -13,6 +13,7 @@ import WritePlan from "../pages/WritePlan";
 import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
+import ChatRoom from "../pages/ChatRoom";
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
             <Route path="/naver" exact component={Auth2RedirectHandler} />
 
             <Route path="/chatlist" exact component={ChatList} />
+            <Route path="/chatroom" exact component={ChatRoom} />
+
+            <Navigation />
           </Container>
           <Navigation />
         </ConnectedRouter>

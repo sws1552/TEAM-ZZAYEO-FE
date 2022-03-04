@@ -7,12 +7,15 @@ import User from "./modules/user";
 import map from "./modules/map";
 import polyline from "./modules/polyline";
 
+import chat from "./modules/chat";
+
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: User,
   map: map,
   polyline: polyline,
+  chat: chat,
   router: connectRouter(history),
 });
 

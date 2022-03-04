@@ -13,10 +13,11 @@ const Searchbar = (props) => {
 };
 
 const SearchCon = styled.div`
-    /* background-color: red; */
+    background-color: #F5F5F5;
     display: flex;
     position: relative;
     align-items: center;
+    border-radius: 20px;
 
     & .searchIcon {
         position: absolute;
@@ -27,6 +28,7 @@ const SearchCon = styled.div`
 `;
 
 const Sbar = styled.input`
+    margin-left: 50px;
     width: 100%;
     height: 4vh;
     border-radius: 20px;
