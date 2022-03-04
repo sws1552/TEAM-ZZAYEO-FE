@@ -20,8 +20,6 @@ const WritePlanMap = (props) => {
   const [places, setPlaces] = useState([]);
   const location = useSelector((state) => state.map.list);
   const markers = useSelector((state) => state.polyline.list);
-  console.log(markers);
-  console.log(props.markers);
 
   React.useEffect(() => {
     dispatch(lineActions.addlocation(location));
@@ -38,8 +36,8 @@ const WritePlanMap = (props) => {
       setMap(map);
       setGooglemaps(maps);
     }
-    //polyline
-  };
+  }
+
 
   //장소찾기
   const addPlace = (places) => {
@@ -52,8 +50,11 @@ const WritePlanMap = (props) => {
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
       {apiReady && googlemaps && (
-        <SearchBar map={map} mapApi={googlemaps} addPlace={addPlace} />
-      )}
+        <SearchBar
+          map={map}
+          mapApi={googlemaps}
+          addPlace={addPlace}
+        />)}
 
       <div style={{ height: "220px", width: "100%", margin: "auto" }}>
         <GoogleMapReact
@@ -68,11 +69,12 @@ const WritePlanMap = (props) => {
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
 
-          onGoogleApiLoaded={({ map, maps }) => {
-            handleApiloaded(map, maps);
-          }}
 
-          // 위치를 렌더해주는 함수
+          onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
+
+        // 위치를 렌더해주는 함수
+
+
         >
           {places.length !== 0 &&
             places.map((place, index) => (
@@ -95,11 +97,13 @@ const WritePlanMap = (props) => {
               />
             ))}
 
-          {/* <Polyline
-          markers={markers}
-          map={map}
-          maps={googlemaps}
-          /> */}
+          {apiReady && googlemaps && (
+            <Polyline
+              markers={markers}
+              map={map}
+              maps={googlemaps}
+            />)}
+
         </GoogleMapReact>
       </div>
     </Container>
