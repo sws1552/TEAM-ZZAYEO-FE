@@ -12,6 +12,7 @@ import Login from "../pages/Login";
 import WritePlan from "../pages/WritePlan";
 import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
+import ChatRoom from "../pages/ChatRoom";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/naver" component={Auth2RedirectHandler} />
 
             <Route path="/chatlist" exact component={ChatList} />
+            <Route path="/chatroom" exact component={ChatRoom} />
 
             <Navigation />
           </Container>

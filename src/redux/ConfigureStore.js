@@ -6,10 +6,14 @@ import { connectRouter } from "connected-react-router";
 import map from "./modules/map";
 
 
+
+import chat from "./modules/chat";
+
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   map: map,
+  chat: chat,
   router: connectRouter(history),
 });
 
