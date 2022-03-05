@@ -3,7 +3,6 @@ import React from 'react';
 
 const Polyline = ({ maps, map, markers }) => {
 
-
   const geodesicPolyline = new maps.Polyline({
     path: markers,
     geodesic: true,
