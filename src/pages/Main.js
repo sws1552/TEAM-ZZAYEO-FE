@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MainCategory from "../components/Main/MainCategory";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
-import Searchbar from "../components/Main/Searchbar";
+import Searchbar from "../components/Search/Searchbar";
 
 const Main = () => {
   return (

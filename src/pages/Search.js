@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import Searchbar from "../components/Main/Searchbar";
-import SearchList from "../components/Main/SearchList";
+import Searchbar from "../components/Search/Searchbar";
+import SearchList from "../components/Search/SearchList";
 import queryString from "query-string";
+import { RESP } from "../shared/Response";
 
 const Search = (props) => {
+  const plans = RESP.PLANS.plan;
   //const search = decodeURI(props.location.search).split("=")[1];
   const query = queryString.parse(window.location.search);
   const search = query.query;
@@ -18,7 +20,9 @@ const Search = (props) => {
             <span>"{search}"</span>에 대한 검색 결과입니다.
           </p>
         </SearchKeword>
-        <SearchList />
+        {plans.map((p, i) => {
+          return <SearchList key={i} {...p} />;
+        })}
       </Container>
     </React.Fragment>
   );
@@ -36,7 +40,13 @@ const Container = styled.div`
 
 const SearchKeword = styled.div`
   font-family: "Roboto", sans-serif;
-  position: absolute;
+  margin: 0px 24px;
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25px;
+  }
 `;
 
 export default Search;

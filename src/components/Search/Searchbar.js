@@ -3,13 +3,12 @@ import styled from "styled-components";
 
 const Searchbar = (props) => {
   const [search, setSearch] = React.useState(null);
-  console.log(search);
 
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log(search);
       window.location.replace(`search?query=${search}`);
-      //검색시 api 백엔드랑 협의
+      //주소 임의 설정
     }
   };
   return (

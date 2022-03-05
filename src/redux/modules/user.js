@@ -1,6 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { apis } from "../../shared/Api";
+import { apis } from "../../shared/api";
 import axios from "axios";
 
 //actions
@@ -24,6 +24,7 @@ const initialState = {
 //middleware
 //카카오로그인
 const kakaoLogin = (code) => {
+  console.log(code);
   return function (dispatch, getState, { history }) {
     axios
       .get(`http://3.34.131.246:3000/api/auth/kakao/callback?code=${code}`)

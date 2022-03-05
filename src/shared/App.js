@@ -19,7 +19,6 @@ import MyPage from "../pages/MyPage";
 import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
 
-
 function App() {
   return (
     <React.Fragment>
@@ -33,7 +32,7 @@ function App() {
             <Route path="/writeplan" exact component={WritePlan} />
             <Route path="/search" exact component={Search}></Route>
             <Route
-              path="/oauth/callback/kakao"
+              path="/api/auth/kakao/callback"
               exact
               component={Auth2RedirectHandler}
             ></Route>
