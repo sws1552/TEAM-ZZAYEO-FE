@@ -7,6 +7,9 @@ import { history } from '../redux/ConfigureStore';
 import {actionCreators as chatActions} from '../redux/modules/chat';
 import {useDispatch, useSelector} from 'react-redux';
 
+// 테스트용 댓글보기용
+import CommentList from '../components/Comment/CommentList';
+
 import io from "socket.io-client";
 
 // 서버와 클라이언트 연결
@@ -47,8 +50,11 @@ const ChatList = (props) => {
                     <Onechat _onClick={joinRoom}/>
                     <Onechat _onClick={() => console.log('test')}/>
                     <Onechat _onClick={() => console.log('test')}/>
-                    <Onechat _onClick={() => console.log('test')}/>
                 </OneChatWrap>
+
+                {/* 테스트용 댓글작업하려고 */}
+                <CommentList />
+
             </ListWrap>
         </ListContainer>
         
