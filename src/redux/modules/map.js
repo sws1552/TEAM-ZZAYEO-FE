@@ -74,7 +74,7 @@ export default handleActions(
         const dayId = action.payload.dayId
         // const day = action.payload.day
         const day = state.dayList.find(e => e.dayId === dayId)
-        console.log(day.place.push({ placeName, lat, lng, address }))
+        // console.log(day.place.push({ placeName, lat, lng, address }))
         //
         // e.places.push({placeName, lat, lng, address})
         draft.list.push({ placeName, lat, lng, address })

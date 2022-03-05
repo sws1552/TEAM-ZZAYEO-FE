@@ -17,7 +17,7 @@ import ChatRoom from "../pages/ChatRoom";
 
 import MyPage from "../pages/MyPage";
 import Myplan from "../pages/Myplan";
-
+import Search from "../pages/Search";
 
 function App() {
   return (
@@ -30,9 +30,9 @@ function App() {
             <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />
             <Route path="/writeplan" exact component={WritePlan} />
-
+            <Route path="/search" exact component={Search}></Route>
             <Route
-              path="/oauth/callback/kakao"
+              path="/api/auth/kakao/callback"
               exact
               component={Auth2RedirectHandler}
             ></Route>

@@ -21,6 +21,7 @@ const Contents = (props) => {
   const [startDate, endDate] = dateRange;
   //console.log(dateRange, startDate, endDate);
 
+  //어디로
   const destList = ["국내", "해외"];
   const [clickedTripDest, changeTripDest] = React.useState(0);
   //console.log(destList[clickedTripDest]);

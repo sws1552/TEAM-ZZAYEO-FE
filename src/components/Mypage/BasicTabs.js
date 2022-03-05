@@ -52,34 +52,30 @@ export default function BasicTabs() {
   };
 
   return (
-    <TabContainer>
         <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="일정" {...a11yProps(0)} style={{fontWeight: "bold"}}/>
-                <Tab label="후기" {...a11yProps(1)} style={{fontWeight: "bold"}}/>
-                {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
-            </Tabs>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabsRe value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab label="일정" {...a11yProps(0)} style={{fontWeight: "bold"}}/>
+                    <Tab label="후기" {...a11yProps(1)} style={{fontWeight: "bold"}}/>
+                    {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+                </TabsRe>
+            </Box>
+            <TabPanel value={value} index={0}>
+                {/* <CalendarList /> */}
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                후기
+            </TabPanel>
+            {/* <TabPanel value={value} index={2}>
+                Item Three
+            </TabPanel> */}
         </Box>
-        <TabPanel value={value} index={0}>
-            {/* <CalendarList /> */}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-            후기
-        </TabPanel>
-        {/* <TabPanel value={value} index={2}>
-            Item Three
-        </TabPanel> */}
-        </Box>
-    </TabContainer>
   );
 }
 
 
-const TabContainer = styled.div`
-    
-    & .css-heg063-MuiTabs-flexContainer {
+const TabsRe = styled(Tabs)`
+   & .css-heg063-MuiTabs-flexContainer {
         justify-content: space-around;
     }
-
 `;
