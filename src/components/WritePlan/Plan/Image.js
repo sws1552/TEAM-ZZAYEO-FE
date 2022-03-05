@@ -28,6 +28,7 @@ const Image = () => {
 
 
     let profile_preview = null;
+    
     if (postfiles.file !== null) {
         profile_preview = postfiles.file[0]?.type.includes("image/") ? (
             <img src={postfiles.previewURL} />

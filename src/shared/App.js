@@ -14,8 +14,11 @@ import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
+
+import MyPage from "../pages/MyPage";
 import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
+
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
 
             <Route path="/chatlist" exact component={ChatList} />
             <Route path="/chatroom" exact component={ChatRoom} />
+
+            <Route path="/mypage" exact component={MyPage} />
+
             <Navigation />
           </Container>
         </ConnectedRouter>
@@ -48,7 +54,7 @@ function App() {
 
 const Fullscreen = styled.div`
   background-color: #e6f4fa;
-  /* height: 100vh; */
+  height: 100vh;
 `;
 
 const Container = styled.div`

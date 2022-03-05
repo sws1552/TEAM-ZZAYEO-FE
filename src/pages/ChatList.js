@@ -7,6 +7,9 @@ import { history } from "../redux/ConfigureStore";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 
+// 테스트용 댓글보기용
+import CommentList from "../components/Comment/CommentList";
+
 import io from "socket.io-client";
 
 // 서버와 클라이언트 연결
@@ -25,8 +28,6 @@ const ChatList = (props) => {
       // socket: socket,
     };
 
-    dispatch(chatActions.getRoom(data));
-
     // 서버에 방id 전송 같은 방일경우에 서로의 채팅이 보인다.
     // socket.emit("join_room", roomId);
 
@@ -43,8 +44,10 @@ const ChatList = (props) => {
           <Onechat _onClick={joinRoom} />
           <Onechat _onClick={() => console.log("test")} />
           <Onechat _onClick={() => console.log("test")} />
-          <Onechat _onClick={() => console.log("test")} />
         </OneChatWrap>
+
+        {/* 테스트용 댓글작업하려고 */}
+        <CommentList />
       </ListWrap>
     </ListContainer>
   );
@@ -70,6 +73,9 @@ const ListWrap = styled.div`
     display: none;
   }
 `;
+
+// 컴포넌트에 스타일을 바꾸는방법 괄호안에 컴포넌트를 넣으면된당
+// const TripDestBox = styled(TitleBox)``;
 
 const OneChatWrap = styled.div``;
 

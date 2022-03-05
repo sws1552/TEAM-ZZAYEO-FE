@@ -7,6 +7,8 @@ import User from "./modules/user";
 import Plan from "./modules/plan";
 import map from "./modules/map";
 import polyline from "./modules/polyline";
+import image from "./modules/image";
+
 
 import chat from "./modules/chat";
 
@@ -15,6 +17,7 @@ export const history = createBrowserHistory();
 const rootReducer = combineReducers({
   user: User,
   plan: Plan,
+  image:image,
   map: map,
   polyline: polyline,
   chat: chat,

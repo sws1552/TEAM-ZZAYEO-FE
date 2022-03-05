@@ -60,6 +60,11 @@ const ChatRoom = (props) => {
 
         });
 
+        return () => {
+            setMessageList([]);
+        }
+
+
     }, [roomData.socket]);
 
 
@@ -70,7 +75,7 @@ const ChatRoom = (props) => {
             showBack={true}
             _onClick={() => history.goBack()}/>
             <ChatBody>
-                <ScrollToBottom className="msg-container">
+                <ScrollToBottomNew className="msg-container">
                 {msgList.map((item, i) => {
                     return (
                         <Message key={`msgKey${i}`} className={roomData.userId === item.author ? "me" : "other"} >
@@ -78,15 +83,16 @@ const ChatRoom = (props) => {
                                 <UserCon className={roomData.userId === item.author ? "me" : "other"}>{item.author}</UserCon>
                                 <MsgCon className={roomData.userId === item.author ? "me" : "other"}>
                                     <p>{item.time}</p>
+                                    {/* <UserImg /> */}
                                     <MessageContent className={roomData.userId === item.author ? "me" : "other"}>
-                                            <p>{item.message}</p>
+                                        <p>{item.message}</p>
                                     </MessageContent>
                                 </MsgCon>
                             </div>
                         </Message>
                     )
                 })}
-                </ScrollToBottom>
+                </ScrollToBottomNew>
 
                 <InputBar>
                     <ChatInput value={curMsg} placeholder='메세지를 입력하세요.' onChange={(e) => setCurMsg(e.target.value)} 
@@ -129,11 +135,29 @@ const ChatBody = styled.div`
     position: relative;
 `;
 
+const ScrollToBottomNew = styled(ScrollToBottom)`
+    
+    /* & .react-scroll-to-bottom--css-cqiwg-79elbk::-webkit-scrollbar {
+        display: none;
+    } */
+
+`;
+
 const Message = styled.div`
     height: auto;
     padding: 10px;
     display: flex;
     justify-content: ${(props) => (props.className === 'me' ? "flex-end" : "flex-start")};
+`;
+
+const UserImg = styled.div`
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    background-image: url("https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg");
+    background-position: center;
+    background-size: cover;
+    object-fit: contain;
 `;
 
 const UserCon = styled.div`
