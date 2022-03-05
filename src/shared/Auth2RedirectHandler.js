@@ -2,19 +2,23 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+// import { history } from "../redux/ConfigureStore";
 
-const OAuth2RedirectHandler = (props) => {
+const Auth2RedirectHandler = (props) => {
   const dispatch = useDispatch();
 
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code");
-  let state = new URL(window.location.href).searchParams.get("state");
-  console.log(code, state);
+  // let state = new URL(window.location.href).searchParams.get("state");
+  console.log(code);
 
   React.useEffect(() => {
     dispatch(userActions.kakaoLogin(code));
-    dispatch(userActions.naverLogin(code, state));
+    console.log("111");
+    // dispatch(userActions.naverLogin(code, state));
   }, []);
+
+  return null;
 };
 
-export default OAuth2RedirectHandler;
+export default Auth2RedirectHandler;
