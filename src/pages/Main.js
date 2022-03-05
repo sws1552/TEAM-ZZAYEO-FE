@@ -1,3 +1,4 @@
+
 import React from "react";
 import styled from "styled-components";
 import MainCategory from "../components/Main/MainCategory";
@@ -14,6 +15,7 @@ const Main = () => {
       <MainTravelList />
     </Container>
   );
+
 };
 
 export default Main;

@@ -24,6 +24,7 @@ const initialState = {
 // 미들웨어
 
 //전체포스트 내용 받아오기
+
 const getPlanDB = () => {
   return function (dispatch, getState, {history}) {
     // instance.get('/api/plans', {})
@@ -72,6 +73,15 @@ const getdayPlanDB = (planId) => {
   }
 }
 
+
+// const createPlanDB = (plan) => {
+//   //console.log(plan);
+//   return function (dispatch, getState, { history }) {
+//     dispatch(createPlan(plan));
+//   };
+// };
+
+
 //리덕스
 export default handleActions(
   {
@@ -82,12 +92,12 @@ export default handleActions(
 
     [CREATE_PLAN]: (state, action) =>
       produce(state, (draft) => {
+
       }),
     [GET_DAYPLAN]: (state, action) =>
     produce(state, (draft) => {
       draft.dayList = action.payload.dayList;
     }),  
-    
   },
   initialState
 );

@@ -36,7 +36,7 @@ function App() {
               exact
               component={Auth2RedirectHandler}
             ></Route>
-            <Route path="/naver" exact component={Auth2RedirectHandler} />
+            {/* <Route path="/naver" exact component={Auth2RedirectHandler} /> */}
 
             <Route path="/chatlist" exact component={ChatList} />
             <Route path="/chatroom" exact component={ChatRoom} />
