@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import styled from 'styled-components';
 
 const options = [
   'None',
@@ -58,6 +59,10 @@ export default function LongMenu() {
             maxHeight: ITEM_HEIGHT * 4.5,
             width: '20ch',
           },
+        }}
+
+        style={{
+            left: '-150px',
         }}
       >
         {options.map((option) => (
