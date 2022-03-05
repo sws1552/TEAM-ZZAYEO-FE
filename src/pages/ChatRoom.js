@@ -75,7 +75,7 @@ const ChatRoom = (props) => {
             showBack={true}
             _onClick={() => history.goBack()}/>
             <ChatBody>
-                <ScrollToBottom className="msg-container">
+                <ScrollToBottomNew className="msg-container">
                 {msgList.map((item, i) => {
                     return (
                         <Message key={`msgKey${i}`} className={roomData.userId === item.author ? "me" : "other"} >
@@ -92,7 +92,7 @@ const ChatRoom = (props) => {
                         </Message>
                     )
                 })}
-                </ScrollToBottom>
+                </ScrollToBottomNew>
 
                 <InputBar>
                     <ChatInput value={curMsg} placeholder='메세지를 입력하세요.' onChange={(e) => setCurMsg(e.target.value)} 
@@ -133,6 +133,14 @@ const ChatBody = styled.div`
     height:100%;
     flex-direction: column;
     position: relative;
+`;
+
+const ScrollToBottomNew = styled(ScrollToBottom)`
+    
+    /* & .react-scroll-to-bottom--css-cqiwg-79elbk::-webkit-scrollbar {
+        display: none;
+    } */
+
 `;
 
 const Message = styled.div`

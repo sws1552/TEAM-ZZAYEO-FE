@@ -79,6 +79,9 @@ const ListWrap = styled.div`
 
 `;
 
+// 컴포넌트에 스타일을 바꾸는방법 괄호안에 컴포넌트를 넣으면된당
+// const TripDestBox = styled(TitleBox)``;
+
 const OneChatWrap = styled.div`
     
 `;
