@@ -1,5 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import { apis } from "../../shared/api";
 import axios from "axios";
 
 //actions
@@ -21,14 +22,11 @@ const initialState = {
 };
 
 //middleware
-
 //카카오로그인
 const kakaoLogin = (code) => {
   return function (dispatch, getState, { history }) {
-    axios({
-      method: "GET",
-      url: `http://주소넣기/oauth/callback/kakao?code=${code}`,
-    })
+    axios
+      .get(`http://3.34.131.246:3000/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const ACCESS_TOKEN = res.data.accessToken;
