@@ -8,33 +8,27 @@ import Title from "../components/WritePlan/Title/Title";
 
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
+import { actionCreators as planActions } from "../redux/modules/plan";
 
 const WritePlan = () => {
   const dispatch = useDispatch();
   const location = useSelector((state) => state.map.list);
+  const dayId = useSelector((state) => state.map.dayId);
   const [show, setShow] = React.useState(true);
+  
 
   React.useEffect(() => {
-    dispatch(mapActions.loadLocationDB(location));
-  }, []);
+    dispatch(mapActions.loadLocationDB(dayId,location));
+    dispatch(planActions.getdayPlanDB());
+  }, [location, dayId]);
 
-  // <Location>
-  // {location.map((v, idx)=>{
-  //     return(
-  //         <div key={idx}>
-  //         <div>이름:{v.name}</div>
-  //         <div>경도:{v.lng}</div>
-  //         <div>위도:{v.lat}</div>
-  //         <div>주소:{v.address}</div>
-  //         </div>
-  //     )
-  // })}
-  // </Location>
+ 
   return (
     <>
       <Container>
         <Header />
         <Title />
+        
         {show ? <WritePlanMap /> : null}
         <div style={{ textAlign: "center" }}>
           {show ? (
@@ -49,6 +43,18 @@ const WritePlan = () => {
   );
 };
 
+  // <Location>
+  // {location.map((v, idx)=>{
+  //     return(
+  //         <div key={idx}>
+  //         <div>이름:{v.name}</div>
+  //         <div>경도:{v.lng}</div>
+  //         <div>위도:{v.lat}</div>
+  //         <div>주소:{v.address}</div>
+  //         </div>
+  //     )
+  // })}
+  // </Location>
 export default WritePlan;
 
 const Container = styled.div`

@@ -7,7 +7,8 @@ import Box from '@mui/material/Box';
 import { boxSizing, height } from '@mui/system';
 import styled from 'styled-components';
 import Detailplan from './Detailplan';
-
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as mapActions } from "../../../redux/modules/map"
 const TabPanel = (props) => {
 
   const { children, value, index, ...other } = props;
@@ -42,42 +43,68 @@ const a11yProps = (index) => {
   };
 }
 
-const BasicTabs = () => {
+const BasicTabs = (props) => {
+  const dayList = props.days
+  const dispatch = useDispatch()
+  // const dayList = useSelector((state) => state.plan.dayList)
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // React.useEffect(() => {
+
+  // }, [dayList]);
+
+
+
   return (
     <Container>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Day value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Day 1" {...a11yProps(0)} />
-          <Tab label="Day 2" {...a11yProps(1)} />
-          <Tab label="Day 3" {...a11yProps(2)} />
-          <Tab label="Day 4" {...a11yProps(3)} />
-          <Tab label="Day 5" {...a11yProps(4)} />
+        <Day value={value} onChange={handleChange} aria-label="basic tabs example" >
+          {dayList.map((d, i) => {
+            return (
+              <Tab onClick={() => {
+                // dispatch(mapActions.sendDayId(d.dayId))
+              }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
+            )
+          })}
+
         </Day>
       </Box>
-      <TabPanel style={{height:"100%"}} value={value} index={0}>
-        <Detailplan/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item four
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item five
-      </TabPanel>
+      {dayList.map((d, i) => {
+        return (
+          <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
+            {/* <Detailplan /> */}
+            <button onClick={() => {
+              dispatch(mapActions.sendDayId(d.dayId, dayList))
+            }}>장소추가하기</button>
+          </TabPanel>
+        )
+      })}
     </Container>
   );
 }
 
+BasicTabs.defaultProps = {
+  "days": [{"dayId":"dayId1",
+  "dayNumber": 1,
+    "places":[{"placeName":"장소1", "lat":456,"lng":456,"address":"주소1"},
+              {"placeName":"장소2", "lat":456,"lng":456,"address":"주소2"},
+              {"placeName":"장소3", "lat":456,"lng":456,"address":"주소3"}]},
+ {"dayId":"dayId2",
+  "dayNumber": 2,
+    "places":[{"placeName":"장소1", "lat":456,"lng":456,"address":"주소1"},
+              {"placeName":"장소2", "lat":456,"lng":456,"address":"주소2"},
+              {"placeName":"장소3", "lat":456,"lng":456,"address":"주소3"}]},
+ {"dayId":"dayId3",
+  "dayNumber": 3,
+    "places":[{"placeName":"장소1", "lat":456,"lng":456,"address":"주소1"},
+              {"placeName":"장소2", "lat":456,"lng":456,"address":"주소2"},
+              {"placeName":"장소3", "lat":456,"lng":456,"address":"주소3"}]}
+ 
+ ]
+};
 const Container = styled(Box)`
   width: 100%;
   height: 300px;

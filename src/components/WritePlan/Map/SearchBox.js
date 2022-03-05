@@ -1,14 +1,17 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { actionCreators as mapActions } from "../../../redux/modules/map";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const SearchBox = ({ mapApi, map, addPlace }) => {
+   
+    const dayId = useSelector((state) => state.map.dayId);
+  
     const dispatch = useDispatch();
     const input = useRef(null);
     const searchBox = useRef(null);
     const [Addmap, setAddmap] = useState(null)
-  
+
     //useCallback 계산된 값을 자료구조에 저장하고 이후 같은 계산을 반복하지 않고 자료구조에서 꺼내 재사용하는 것, 상태값이 변경된 경우에만 다시 생성된다.
     const handleOnPlacesChanged = useCallback(() => {
         const selected = searchBox.current.getPlaces();
@@ -52,7 +55,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
         <ElInput ref={input} placeholder="장소찾기" type="text" />
         <button onClick={()=>{
             addPlace([])
-            dispatch(mapActions.searchLocationDB(Addmap))
+            dispatch(mapActions.searchLocationDB(dayId,Addmap))
         }}>장소추가</button>
         </>
     )

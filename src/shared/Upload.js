@@ -10,7 +10,6 @@ const Upload = (props) => {
     const dispatch = useDispatch();
     const uploading = useSelector((state) => state.image.uploading);
     const preview = useSelector((state) => state.image.preview);
-    console.log(preview)
     const fileInput = React.useRef();
 
     // const selectFile = (e) => {

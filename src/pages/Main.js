@@ -3,10 +3,17 @@ import styled from 'styled-components';
 import MainCategory from '../components/Main/MainCategory';
 import MainBookMarkList from '../components/Main/MainBookMarkList';
 import MainTravelList from '../components/Main/MainTravelList';
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as planActions } from "../redux/modules/plan";
 
 
 const Main = () => {
-    return (
+    const dispatch = useDispatch()
+    React.useEffect(() => {
+        dispatch(planActions.getPlanDB());
+      }, []);
+   
+      return (
         <Container>
            <MainCategory/>
            <MainBookMarkList/>

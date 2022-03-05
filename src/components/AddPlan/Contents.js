@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
-import { actionCreators as planActions } from "../../redux/modules/paln";
+import { actionCreators as planActions } from "../../redux/modules/plan";
 import { history } from "../../redux/ConfigureStore";
 
 import DatePicker from "react-datepicker";

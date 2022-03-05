@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { actionCreators as mapActions } from "../../../redux/modules/map";
 import { actionCreators as lineActions } from "../../../redux/modules/polyline";
 
-const WritePlanMap = (props) => {
+const WritePlanMap = () => {
   const dispatch = useDispatch();
   const [apiReady, setApiReady] = useState(false);
   const [map, setMap] = useState(null);
@@ -19,8 +19,10 @@ const WritePlanMap = (props) => {
 
   const [places, setPlaces] = useState([]);
   const location = useSelector((state) => state.map.list);
+  console.log(location)
   const markers = useSelector((state) => state.polyline.list);
-
+  
+ 
   React.useEffect(() => {
     dispatch(lineActions.addlocation(location));
   }, [location]);
@@ -28,7 +30,6 @@ const WritePlanMap = (props) => {
   if (window.screen.width >= 768) {
     zoom = 15;
   }
-
   //serchBar
   const handleApiloaded = (map, maps) => {
     if (map && maps) {
@@ -37,14 +38,13 @@ const WritePlanMap = (props) => {
       setGooglemaps(maps);
     }
   }
-
-
   //장소찾기
   const addPlace = (places) => {
     if (places) {
       setPlaces(places);
     }
   };
+  
 
   return (
     <Container>

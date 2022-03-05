@@ -69,7 +69,7 @@
 // const ListWrap = styled.div`
 //     width: 100%;
 //     height: 100%;
-//     /* background-color: white; */
+//     background-color: white;
 //     overflow-y: scroll;
 //     overflow-x: hidden;
 

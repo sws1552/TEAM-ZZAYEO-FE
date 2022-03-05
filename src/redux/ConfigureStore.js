@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import User from "./modules/user";
-import Plan from "./modules/paln";
+import Plan from "./modules/plan";
 import map from "./modules/map";
 import polyline from "./modules/polyline";
 import image from "./modules/image";

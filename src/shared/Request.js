@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-	baseURL: "https://2a3fd3af-9615-47e1-be4a-4e899ee6da64.mock.pstmn.io"
+
+	// baseURL: "http://3.34.131.246"
+	// baseURL: "https://77b56b3c-3120-4f89-9c26-a691e127a7c7.mock.pstmn.io"
 });
 
 // 가지고 있는 토큰 넣어주기!
