@@ -15,6 +15,7 @@ import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
 import Myplan from "../pages/Myplan";
+import Search from "../pages/Search";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
             <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />
             <Route path="/writeplan" exact component={WritePlan} />
-
+            <Route path="/search" exact component={Search}></Route>
             <Route
               path="/oauth/callback/kakao"
               exact
