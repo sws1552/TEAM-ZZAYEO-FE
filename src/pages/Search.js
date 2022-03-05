@@ -20,9 +20,17 @@ const Search = (props) => {
             <span>"{search}"</span>에 대한 검색 결과입니다.
           </p>
         </SearchKeword>
-        {plans.map((p, i) => {
-          return <SearchList key={i} {...p} />;
-        })}
+        {plans
+          .filter((p) => {
+            if (search === "") {
+              return p;
+            } else if (p.title.includes(search)) {
+              return p;
+            }
+          })
+          .map((p, i) => {
+            return <SearchList key={i} {...p} />;
+          })}
       </Container>
     </React.Fragment>
   );
