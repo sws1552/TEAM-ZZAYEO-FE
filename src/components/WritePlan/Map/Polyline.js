@@ -1,7 +1,8 @@
 import React from 'react';
 
 
-const Polyline = ({ maps, map, markers }) => {
+const Polyline = ({ maps, map, markers, dayId}) => {
+  
 
   const geodesicPolyline = new maps.Polyline({
     path: markers,
@@ -10,7 +11,7 @@ const Polyline = ({ maps, map, markers }) => {
     strokeOpacity: 1.0,
     strokeWeight: 4
   })
-  geodesicPolyline.setMap(map)
+   geodesicPolyline.setMap(map)
 
   const nonGeodesicPolyline = new maps.Polyline({
     path: markers,
@@ -19,6 +20,7 @@ const Polyline = ({ maps, map, markers }) => {
     strokeOpacity: 0.8,
     strokeWeight: 2
   })
+
   nonGeodesicPolyline.setMap(map)
   return (
     null

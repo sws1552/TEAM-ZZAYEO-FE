@@ -19,8 +19,8 @@ const WritePlanMap = () => {
 
   const [places, setPlaces] = useState([]);
   const location = useSelector((state) => state.map.list);
-  const markers = useSelector((state) => state.polyline.list);
 
+  
   const myPlan = useSelector((state) => state.plan.myPlan);
   const dayId = useSelector((state) => state.map.dayId);
 
@@ -29,10 +29,15 @@ const WritePlanMap = () => {
     dayPlace_list.push(doc);
   });
   const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
- 
-  React.useEffect(() => {
-    dispatch(lineActions.addlocation(location));
-  }, [location]);
+  const Markers = []
+  EachDayPlaces[0]?.places?.filter((v,i)=>{
+  return(
+     Markers.push({lat:v.lat, lng:v.lng})
+   )
+ })
+
+
+ console.log(Markers, EachDayPlaces[0].dayId)
 
   if (window.screen.width >= 768) {
     zoom = 15;
@@ -75,8 +80,6 @@ const WritePlanMap = () => {
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
-
-
           onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
 
         // 위치를 렌더해주는 함수
@@ -96,7 +99,6 @@ const WritePlanMap = () => {
 
           {EachDayPlaces && EachDayPlaces[0]?.places?.length !== 0 &&
             EachDayPlaces[0]?.places?.map((place, index) => {
-              console.log(place)
               return (
                 <Maker
                   key={index}
@@ -108,12 +110,13 @@ const WritePlanMap = () => {
               )
             })} 
 
-          {apiReady && googlemaps && (
+          {apiReady && googlemaps && EachDayPlaces && EachDayPlaces[0].dayId ? (
             <Polyline
-              markers={markers}
+              dayId = {EachDayPlaces[0].dayId}
+              markers={Markers}
               map={map}
               maps={googlemaps}
-            />)}
+            />) : null}
 
         </GoogleMapReact>
       </div>
