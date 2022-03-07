@@ -22,11 +22,12 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://3.34.131.246:3000/api/auth/kakao/callback?code=${code}`)
+      .get(`http://3.36.50.53:3000/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
         localStorage.setItem("token", token); //예시로 로컬에 저장
+        dispatch(checkUserDB());
         history.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
       })
       .catch((err) => {
@@ -64,7 +65,12 @@ const checkUserDB = () => {
     instance
       .get(`/api/users/auth/me`)
       .then((res) => {
-        console.log(res);
+        let userId = res.data.userId;
+        let nickname = res.data.nickname;
+        let userImg = res.data.userImg;
+        dispatch(
+          setUser({ userId: userId, nickname: nickname, userImg: userImg })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -77,7 +83,9 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user;
+        draft.user.userId = action.payload.user.userId;
+        draft.user.nickname = action.payload.user.nickname;
+        draft.user.userImg = action.payload.user.userImg;
         draft.is_login = true;
       }),
   },
