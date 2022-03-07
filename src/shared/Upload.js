@@ -12,18 +12,22 @@ const Upload = (props) => {
     const preview = useSelector((state) => state.image.preview);
     const fileInput = React.useRef();
 
-    // const selectFile = (e) => {
+    // const addImage = e => {
+    //     const nowSelectImageList = e.target.files;
+    //     console.log(nowSelectImageList)
+    //     const nowImageURLList = [...myImage];
 
-    //     const reader = new FileReader();
-    //     const file = e.target.files[0];
+    //     for (let i = 0; i < nowSelectImageList.length; i += 1) {
+    //         test.append('image', nowSelectImageList[i])
+    //         const nowImageUrl = URL.createObjectURL(nowSelectImageList[i]) //미리보기
+    //         nowImageURLList.push(nowImageUrl)
+    //     }
+    //     setMyImage(nowImageURLList)
+    //     console.log(test)
+    //     console.log(nowSelectImageList)
+    //     dispatch(imageActions.setPreview(nowSelectImageList));
+    // }
 
-    //     reader.readAsDataURL(file)
-
-    //     reader.onloadend = () => {
-    //         // reader.result는 파일의 컨텐츠(내용물)입니다!s
-    //      dispatch(imageActions.setPreview(reader.result));
-    //     };
-    // };
 
     // 여러개 업로드
     const handleImageUpload = (e) => {
@@ -64,7 +68,7 @@ const Upload = (props) => {
                     accept="image/jpg,image/png,image/jpeg,image/gif"
                     disabled={uploading}
                     ref={fileInput}
-                    onChange={handleImageUpload}
+                    onChange={handleImageUpload }
                 />
             </div>
         </React.Fragment>

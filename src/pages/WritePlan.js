@@ -14,21 +14,22 @@ const WritePlan = () => {
   const dispatch = useDispatch();
   const location = useSelector((state) => state.map.list);
   const dayId = useSelector((state) => state.map.dayId);
+  const planId = useSelector((state) => state.plan.planId);
+  const myPlan = useSelector((state) => state.plan.myPlan)
   const [show, setShow] = React.useState(true);
-  
 
   React.useEffect(() => {
     dispatch(mapActions.loadLocationDB(dayId,location));
-    dispatch(planActions.getdayPlanDB());
-  }, [location, dayId]);
+    dispatch(planActions.getdayPlanDB(planId));
+  }, [location, dayId, planId]);
 
- 
+   console.log(myPlan)
   return (
     <>
       <Container>
-        <Header />
-        <Title />
-        
+        <Header/>
+        <Title {...myPlan}/>
+       
         {show ? <WritePlanMap /> : null}
         <div style={{ textAlign: "center" }}>
           {show ? (
@@ -37,7 +38,7 @@ const WritePlan = () => {
             <button onClick={() => setShow(true)}>MapShow</button>
           )}
         </div>
-        {show ? <BasicTabs /> : <BasicTabsHide />}
+        {show ? <BasicTabs {...myPlan}/> : <BasicTabsHide />}
       </Container>
     </>
   );

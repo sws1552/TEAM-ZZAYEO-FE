@@ -1,12 +1,18 @@
-
 import React from "react";
 import styled from "styled-components";
 import MainCategory from "../components/Main/MainCategory";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Searchbar from "../components/Search/Searchbar";
-
+import { actionCreators as planActions } from "../redux/modules/plan";
+import { useDispatch, useSelector } from "react-redux";
 const Main = () => {
+  const dispatch = useDispatch();
+  
+  React.useEffect(() => {
+    dispatch(planActions.getPlanDB());
+  }, []);
+  
   return (
     <Container>
       <Searchbar />

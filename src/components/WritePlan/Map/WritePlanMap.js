@@ -19,9 +19,16 @@ const WritePlanMap = () => {
 
   const [places, setPlaces] = useState([]);
   const location = useSelector((state) => state.map.list);
-  console.log(location)
   const markers = useSelector((state) => state.polyline.list);
-  
+
+  const myPlan = useSelector((state) => state.plan.myPlan);
+  const dayId = useSelector((state) => state.map.dayId);
+
+  const dayPlace_list = [] //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
+  // myPlan.days.forEach((doc) => {
+  //   dayPlace_list.push(doc);
+  // });
+  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
  
   React.useEffect(() => {
     dispatch(lineActions.addlocation(location));
@@ -44,7 +51,7 @@ const WritePlanMap = () => {
       setPlaces(places);
     }
   };
-  
+
 
   return (
     <Container>
@@ -76,8 +83,8 @@ const WritePlanMap = () => {
 
 
         >
-          {places.length !== 0 &&
-            places.map((place, index) => (
+          {places?.length !== 0 &&
+            places?.map((place, index) => (
               <MakerDirect
                 key={index}
                 text={place.name}
@@ -86,16 +93,20 @@ const WritePlanMap = () => {
               />
             ))}
 
-          {location.length !== 0 &&
-            location.map((place, index) => (
-              <Maker
-                key={index}
-                Num={index}
-                text={place.name}
-                lat={place.lat}
-                lng={place.lng}
-              />
-            ))}
+
+          {/* {EachDayPlaces && EachDayPlaces[0].places.length !== 0 &&
+            EachDayPlaces[0].places.map((place, index) => {
+              console.log(place)
+              return (
+                <Maker
+                  key={index}
+                  Num={index}
+                  text={place.placeName}
+                  lat={place.lat}
+                  lng={place.lng}
+                />
+              )
+            })} */}
 
           {apiReady && googlemaps && (
             <Polyline
