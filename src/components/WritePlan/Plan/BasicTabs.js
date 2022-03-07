@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { boxSizing, height } from '@mui/system';
 import styled from 'styled-components';
-import Detailplan from './Detailplan';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map"
 import { history } from "../../../redux/ConfigureStore";
@@ -78,7 +77,6 @@ const BasicTabs = (props) => {
       {dayList && dayList.map((d, i) => {
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
-            {/* <Detailplan/> */}
             <button onClick={() => {
               dispatch(mapActions.sendDayId(d.dayId))
               history.push("/addplace")

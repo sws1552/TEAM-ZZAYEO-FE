@@ -19,8 +19,8 @@ const WritePlan = () => {
   const [show, setShow] = React.useState(true);
 
   React.useEffect(() => {
-    dispatch(mapActions.loadLocationDB(dayId,location));
-    dispatch(planActions.getdayPlanDB(planId));
+    // dispatch(mapActions.loadLocationDB(dayId,location));
+    // dispatch(planActions.getdayPlanDB(planId));
   }, [location, dayId, planId]);
 
    console.log(myPlan)

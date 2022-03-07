@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { boxSizing, height } from '@mui/system';
 import styled from 'styled-components';
-import Detailplan from './Detailplan';
 
 const TabPanel = (props) => {
 
@@ -60,7 +59,7 @@ const BasicTabsHide = () => {
         </Day>
       </Box>
       <TabPanel style={{height:"100%"}} value={value} index={0}>
-        <Detailplan/>
+    
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

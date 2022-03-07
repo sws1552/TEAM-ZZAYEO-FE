@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import styled from "styled-components";
 import { actionCreators as imageActions } from "../redux/modules/image";
-
+import Image from '../elements/Images';
 
 const Upload = (props) => {
 
@@ -54,13 +54,39 @@ const Upload = (props) => {
 
     return (
         <React.Fragment>
-            <div padding="10px">
-                <AddPhotoAlternateOutlinedIcon
-                    style={{ color: "#f68843", fontSize: "30px", cursor: "pointer" }}
-                    onClick={() => {
-                        fileInput.current.click()
+            <div>
+                <Container onClick={() => {
+                    fileInput.current.click()
+                }}>
+                    <AddPhotoAlternateOutlinedIcon
+                        style={{
+                            color: "gray",
+                            fontSize: "30px",
+                            textAlign: "center",
+                            marginRight: "auto",
+                            marginLeft: "auto",
+                            marginTop: "33px",
+                            display: "block"
+                        }}
+                    />
+                </Container>
 
-                    }} />
+                {preview.map((v, idx) => {
+                    return (
+                        <>
+                            <Container>
+                                <Image
+                                    key={idx}
+                                    width="100%"
+                                    src={preview[idx] ? preview[idx] : "http://via.placeholder.com/400x300"} />
+                                <button onClick={() => {
+                                    dispatch(imageActions.deletePreview(idx))
+                                }}>삭제</button>
+                            </Container>
+
+                        </>
+                    )
+                })}
                 <Input
                     id="file"
                     type="file"
@@ -68,7 +94,7 @@ const Upload = (props) => {
                     accept="image/jpg,image/png,image/jpeg,image/gif"
                     disabled={uploading}
                     ref={fileInput}
-                    onChange={handleImageUpload }
+                    onChange={handleImageUpload}
                 />
             </div>
         </React.Fragment>
@@ -83,5 +109,15 @@ padding: 0;
 overflow: hidden;
 border: 0;
 `
+
+const Container = styled.div`
+width: 100px;
+height: 100px;
+border: 1px solid gray;
+border-radius: 8px ;
+cursor: pointer;
+margin-right: "15px";
+`
+
 
 export default Upload;
