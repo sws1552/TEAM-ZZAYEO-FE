@@ -67,8 +67,6 @@ const Contents = (props) => {
       style: tripStyle[clickedTripstyle],
     };
     dispatch(planActions.createPlanDB(plan));
-    console.log(plan);
-    history.push("/writeplan");
   };
 
   return (

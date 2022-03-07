@@ -1,15 +1,23 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as planActions } from "../redux/modules/plan";
 import styled from "styled-components";
 import Searchbar from "../components/Search/Searchbar";
 import SearchList from "../components/Search/SearchList";
 import queryString from "query-string";
-import { RESP } from "../shared/Response";
 
 const Search = (props) => {
-  const plans = RESP.PLANS.plan;
+  const dispatch = useDispatch();
+
+  const plans = useSelector((store) => store.plan.list);
+
   //const search = decodeURI(props.location.search).split("=")[1];
   const query = queryString.parse(window.location.search);
   const search = query.query;
+
+  React.useEffect(() => {
+    dispatch(planActions.getPlanDB());
+  }, []);
 
   return (
     <React.Fragment>

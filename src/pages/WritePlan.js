@@ -10,23 +10,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as planActions } from "../redux/modules/plan";
 
-const WritePlan = () => {
+const WritePlan = (props) => {
   const dispatch = useDispatch();
-  const myPlan = useSelector((state) => state.plan.myPlan)
-  const dayId = useSelector((state)=> state.map.dayId)
+
+  const planId = props.match.params.planId;
+
+  const myPlan = useSelector((state) => state.plan.myPlan);
+  const dayId = useSelector((state) => state.map.dayId);
   const [show, setShow] = React.useState(true);
 
   React.useEffect(() => {
-    // dispatch(planActions.getdayPlanDB(planId));
+    dispatch(planActions.getdayPlanDB(planId));
   }, []);
-   console.log(myPlan)
-   console.log(dayId)
+  console.log(myPlan);
+  console.log(dayId);
   return (
     <>
       <Container>
-        <Header/>
-        <Title {...myPlan}/>
-       
+        <Header />
+        <Title {...myPlan} />
+
         {show ? <WritePlanMap /> : null}
         <div style={{ textAlign: "center" }}>
           {show ? (
@@ -35,24 +38,24 @@ const WritePlan = () => {
             <button onClick={() => setShow(true)}>MapShow</button>
           )}
         </div>
-        {show ? <BasicTabs {...myPlan}/> : <BasicTabsHide />}
+        {show ? <BasicTabs {...myPlan} /> : <BasicTabsHide />}
       </Container>
     </>
   );
 };
 
-  // <Location>
-  // {location.map((v, idx)=>{
-  //     return(
-  //         <div key={idx}>
-  //         <div>이름:{v.name}</div>
-  //         <div>경도:{v.lng}</div>
-  //         <div>위도:{v.lat}</div>
-  //         <div>주소:{v.address}</div>
-  //         </div>
-  //     )
-  // })}
-  // </Location>
+// <Location>
+// {location.map((v, idx)=>{
+//     return(
+//         <div key={idx}>
+//         <div>이름:{v.name}</div>
+//         <div>경도:{v.lng}</div>
+//         <div>위도:{v.lat}</div>
+//         <div>주소:{v.address}</div>
+//         </div>
+//     )
+// })}
+// </Location>
 export default WritePlan;
 
 const Container = styled.div`
