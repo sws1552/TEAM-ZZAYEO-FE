@@ -1,10 +1,10 @@
-import * as React from "react";
+import React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import FolderIcon from "@mui/icons-material/Folder";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import HomeIcon from "@mui/icons-material/Home";
+import CropSquareIcon from "@mui/icons-material/CropSquare";
+import ChatIcon from "@mui/icons-material/Chat";
+import PersonIcon from "@mui/icons-material/Person";
 import { history } from "../../redux/ConfigureStore";
 
 export default function LabelBottomNavigation() {
@@ -27,7 +27,7 @@ export default function LabelBottomNavigation() {
         }}
         label="홈"
         value="recents"
-        icon={<RestoreIcon />}
+        icon={<HomeIcon />}
       />
       <BottomNavigationAction
         onClick={() => {
@@ -35,13 +35,13 @@ export default function LabelBottomNavigation() {
         }}
         label="나의여행"
         value="favorites"
-        icon={<FavoriteIcon />}
+        icon={<CropSquareIcon />}
       />
       <BottomNavigationAction
         onClick={() => history.push("/chatlist")}
         label="메세지"
         value="nearby"
-        icon={<LocationOnIcon />}
+        icon={<ChatIcon />}
       />
       <BottomNavigationAction
         onClick={() => {
@@ -49,7 +49,7 @@ export default function LabelBottomNavigation() {
         }}
         label="마이피드"
         value="folder"
-        icon={<FolderIcon />}
+        icon={<PersonIcon />}
       />
     </BottomNavigation>
   );

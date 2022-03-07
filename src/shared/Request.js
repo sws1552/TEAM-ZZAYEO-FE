@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = localStorage.getItem("login-token");
+const token = localStorage.getItem("token");
 
 const instance = axios.create({
   baseURL: "http://3.36.50.53:3000",

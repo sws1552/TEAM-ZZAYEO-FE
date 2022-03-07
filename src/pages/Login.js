@@ -1,15 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../shared/Auth";
-import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = (props) => {
-  const dispatch = useDispatch();
   return (
     <React.Fragment>
       <BtnBox>
-        {/* <KaKaoBtn href="http://3.34.131.246:3000/api/auth/kakao/callback"></KaKaoBtn> */}
         <KaKaoBtn href={KAKAO_AUTH_URL}></KaKaoBtn>
         <NaverBtn href={NAVER_AUTH_URL}></NaverBtn>
       </BtnBox>
