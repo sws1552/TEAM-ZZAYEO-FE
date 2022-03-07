@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import MainLike from "./MainLike";
 
 const MainTravelList = (props) => {
   const { title, destination, style, withlist } = props;
@@ -12,6 +13,7 @@ const MainTravelList = (props) => {
           <CardInfo>
             #{style} #{destination} #{withlist}
           </CardInfo>
+          <MainLike />
         </TripCard>
       </Container>
     </React.Fragment>
@@ -26,6 +28,7 @@ const Container = styled.div`
 `;
 
 const TripCard = styled.div`
+  position: relative;
   font-family: "Roboto", sans-serif;
   width: 100%;
   height: 200px;
@@ -48,6 +51,12 @@ const CardInfo = styled.div`
   font-weight: 600;
   line-height: 24px;
   color: #ffffff;
+`;
+
+const BookMark = styled.div`
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
 `;
 
 export default MainTravelList;
