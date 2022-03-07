@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components'
 
 const Title = (props) => {
-    console.log(props)
     return (
         <Container>
             <h3>{props.title}</h3>

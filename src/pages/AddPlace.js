@@ -5,7 +5,7 @@ import { history } from "../redux/ConfigureStore";
 import Upload from '../shared/Upload';
 import Timedropdown from '../components/AddPlace/Timedropdown';
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as imageActions } from "../redux/modules/image";
+import { actionCreators as planActions } from "../redux/modules/plan";
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 
@@ -16,8 +16,13 @@ const AddPlace = () => {
     const [Minute, setMinute] = React.useState("00");
     const [AmPm, setAmPm] = React.useState("오전")
     const [Memo, setMemo] = React.useState("")
-    // const places = useSelector((state) => state.addPlace.addlocation);
-    // console.log(places)
+    const dayId = useSelector((state) => state.map.dayId);
+    const placeName = useSelector((state) => state.addPlace.placeName);
+    const lat = useSelector((state) => state.addPlace.lat);
+    const lng = useSelector((state) => state.addPlace.lng);
+    const address = useSelector((state) => state.addPlace.address);
+    const imageURL = useSelector((state) => state.addPlace.imageURL);
+
 
     const memoChange = (e) => {
         setMemo(e.target.value)
@@ -32,7 +37,7 @@ const AddPlace = () => {
         setMinute(e.target.value)
     };
 
-    console.log(AmPm, Hour, Minute)
+
     const HOUR_SELECT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
     const MINUTE_SELECT = ["00", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"]
     const AMPM = ["오전", "오후"]
@@ -95,13 +100,12 @@ const AddPlace = () => {
                 <div>장소</div>
                 <br />
                 <Location>
-                    <SearchLoaction
-                        onClick={() => {
-                            history.push("/searchplace")
-                        }}
-                    >
+
+                    {placeName !== "" ? <SearchLoaction onClick={() => { history.push("/searchplace") }}>
+                        {placeName}
+                    </SearchLoaction> : <SearchLoaction onClick={() => { history.push("/searchplace") }}>
                         +장소를 검색해주세요
-                    </SearchLoaction>
+                    </SearchLoaction>}
                 </Location>
                 <br />
                 <div>메모</div>
@@ -115,15 +119,19 @@ const AddPlace = () => {
                         cols="50"
                         rows="10" />
                 </div>
+                <Button onClick={() => {
+                    dispatch(planActions.saveLocationDB(dayId, AmPm, Hour, Minute, Memo, placeName, lat, lng, address, imageURL))
+                    history.push('/writeplan')
+                }}>
+                    <p>장소추가하기</p>
+                </Button>
                 <br />
                 <div>사진</div>
                 <br />
                 <div>
                     <Upload />
                 </div>
-                <Button>
-                    <p>장소추가하기</p>
-                </Button>
+               
             </Container>
 
         </>
@@ -179,7 +187,6 @@ color: gray;
 font-size: 13px ;
 text-align: center;
 line-height: 40px
-
 `
 
 const Button = styled.div`

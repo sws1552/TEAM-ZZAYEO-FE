@@ -6,9 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../../redux/ConfigureStore";
 
 const SearchBox = ({ mapApi, map, addPlace }) => {
-   
-    const dayId = useSelector((state) => state.map.dayId);
-    const image = useSelector((state) => state.image.preview);
 
     const dispatch = useDispatch();
     const input = useRef(null);
@@ -56,10 +53,6 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
     return (
         <>
         <ElInput ref={input} placeholder="장소찾기" type="text" />
-        <button onClick={()=>{
-            addPlace([])
-            dispatch(planActions.saveLocationDB(dayId, Addmap))
-        }}>장소추가</button>
         </>
     )
   };

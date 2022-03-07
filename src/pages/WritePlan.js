@@ -12,18 +12,15 @@ import { actionCreators as planActions } from "../redux/modules/plan";
 
 const WritePlan = () => {
   const dispatch = useDispatch();
-  const location = useSelector((state) => state.map.list);
-  const dayId = useSelector((state) => state.map.dayId);
-  const planId = useSelector((state) => state.plan.planId);
   const myPlan = useSelector((state) => state.plan.myPlan)
+  const dayId = useSelector((state)=> state.map.dayId)
   const [show, setShow] = React.useState(true);
 
   React.useEffect(() => {
-    // dispatch(mapActions.loadLocationDB(dayId,location));
     // dispatch(planActions.getdayPlanDB(planId));
-  }, [location, dayId, planId]);
-
+  }, []);
    console.log(myPlan)
+   console.log(dayId)
   return (
     <>
       <Container>

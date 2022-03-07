@@ -25,9 +25,9 @@ const WritePlanMap = () => {
   const dayId = useSelector((state) => state.map.dayId);
 
   const dayPlace_list = [] //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
-  // myPlan.days.forEach((doc) => {
-  //   dayPlace_list.push(doc);
-  // });
+  myPlan.days.forEach((doc) => {
+    dayPlace_list.push(doc);
+  });
   const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
  
   React.useEffect(() => {
@@ -56,14 +56,14 @@ const WritePlanMap = () => {
   return (
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
-      {apiReady && googlemaps && (
+      {/* {apiReady && googlemaps && (
         <SearchBar
           map={map}
           mapApi={googlemaps}
           addPlace={addPlace}
-        />)}
+        />)} */}
 
-      <div style={{ height: "220px", width: "100%", margin: "auto" }}>
+      <div style={{ height: "295px", width: "100%", margin: "auto" }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: "AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA",
@@ -94,7 +94,7 @@ const WritePlanMap = () => {
             ))}
 
 
-          {/* {EachDayPlaces && EachDayPlaces[0].places.length !== 0 &&
+          {EachDayPlaces && EachDayPlaces[0].places.length !== 0 &&
             EachDayPlaces[0].places.map((place, index) => {
               console.log(place)
               return (
@@ -106,7 +106,7 @@ const WritePlanMap = () => {
                   lng={place.lng}
                 />
               )
-            })} */}
+            })} 
 
           {apiReady && googlemaps && (
             <Polyline
