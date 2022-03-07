@@ -33,7 +33,7 @@ const Detailplan = () => {
                         </>
                     )
                 })}
-            <div style={{ width: "100%", border: "2px solid gray", height: "150px" }}>메모상자</div>
+            <input style={{ width: "100%", border: "2px solid gray", height: "150px" }}></input>
 
         </div>
     );

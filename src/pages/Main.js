@@ -1,20 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as planActions } from "../redux/modules/plan";
 import styled from "styled-components";
 import MainCategory from "../components/Main/MainCategory";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Searchbar from "../components/Search/Searchbar";
 
-const Main = (props) => {
+const Main = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user.user);
-  console.log(user);
-
   React.useEffect(() => {
-    dispatch(userActions.checkUserDB());
+    dispatch(planActions.getPlanDB());
   }, []);
 
   return (

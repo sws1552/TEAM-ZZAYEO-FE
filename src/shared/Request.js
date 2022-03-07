@@ -4,10 +4,10 @@ const token = localStorage.getItem("login-token");
 
 const instance = axios.create({
   baseURL: "http://3.34.131.246:3000/",
+  // baseURL: "https://2a3fd3af-9615-47e1-be4a-4e899ee6da64.mock.pstmn.io"
   headers: {
     Authorization: `Bearer ${token}`,
   },
-  // baseURL: "https://2a3fd3af-9615-47e1-be4a-4e899ee6da64.mock.pstmn.io"
 });
 
 // 가지고 있는 토큰 넣어주기!

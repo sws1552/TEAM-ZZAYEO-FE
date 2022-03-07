@@ -8,15 +8,41 @@ import Title from "../components/WritePlan/Title/Title";
 
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
+import { actionCreators as planActions } from "../redux/modules/plan";
 
 const WritePlan = () => {
   const dispatch = useDispatch();
   const location = useSelector((state) => state.map.list);
+  const dayId = useSelector((state) => state.map.dayId);
+  const planId = useSelector((state) => state.plan.planId);
+  const myPlan = useSelector((state) => state.plan.myPlan)
   const [show, setShow] = React.useState(true);
 
   React.useEffect(() => {
-    dispatch(mapActions.loadLocationDB(location));
-  }, []);
+    dispatch(mapActions.loadLocationDB(dayId,location));
+    dispatch(planActions.getdayPlanDB(planId));
+  }, [location, dayId, planId]);
+
+   console.log(myPlan)
+  return (
+    <>
+      <Container>
+        <Header/>
+        <Title {...myPlan}/>
+       
+        {show ? <WritePlanMap /> : null}
+        <div style={{ textAlign: "center" }}>
+          {show ? (
+            <button onClick={() => setShow(false)}>MapHide</button>
+          ) : (
+            <button onClick={() => setShow(true)}>MapShow</button>
+          )}
+        </div>
+        {show ? <BasicTabs {...myPlan}/> : <BasicTabsHide />}
+      </Container>
+    </>
+  );
+};
 
   // <Location>
   // {location.map((v, idx)=>{
@@ -30,25 +56,6 @@ const WritePlan = () => {
   //     )
   // })}
   // </Location>
-  return (
-    <>
-      <Container>
-        <Header />
-        <Title />
-        {show ? <WritePlanMap /> : null}
-        <div style={{ textAlign: "center" }}>
-          {show ? (
-            <button onClick={() => setShow(false)}>MapHide</button>
-          ) : (
-            <button onClick={() => setShow(true)}>MapShow</button>
-          )}
-        </div>
-        {show ? <BasicTabs /> : <BasicTabsHide />}
-      </Container>
-    </>
-  );
-};
-
 export default WritePlan;
 
 const Container = styled.div`

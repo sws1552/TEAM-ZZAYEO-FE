@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components'
 
-const Title = () => {
+const Title = (props) => {
+    console.log(props)
     return (
         <Container>
-            <h3>힐링을 위한 제주도 여행</h3>
-            <div>2002.3.9~3.15</div>
-            <div>국내 | 친구와 | 먹방투어 외 3개</div>
+            <h3>{props.title}</h3>
+            <div>{props.startDate}~{props.endDate}</div>
+            <div> 국내 | ㄷㄷ | 먹방투어 외 3개</div>
         </Container>
     );
 };

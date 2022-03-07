@@ -32,6 +32,8 @@ export default handleActions(
         const new_list = [...state.preview, action.payload.preview];
         //기존 배열에 새롭게 추가
         return { preview: new_list };
+        // console.log(action.payload.preview)
+        // draft.preview = action.payload.preview
       }),
     [DELETE_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
