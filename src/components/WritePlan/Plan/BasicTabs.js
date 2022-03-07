@@ -67,7 +67,7 @@ const BasicTabs = (props) => {
           {dayList && dayList.map((d, i) => {
             return (
               <Tab onClick={() => {
-                // dispatch(mapActions.sendDayId(d.dayId))
+                dispatch(mapActions.sendDayId(d.dayId))
               }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
             )
           })}

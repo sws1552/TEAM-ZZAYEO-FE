@@ -3,7 +3,6 @@ import { produce } from "immer";
 import instance from "../../shared/Request";
 
 const token = localStorage.getItem("token");
-let formData = new FormData();
 
 // 액션타입
 const GET_PLAN = "GET_PLAN";
@@ -48,9 +47,13 @@ const createPlanDB = (plan) => {
     instance
       .post("/api/plans", plan)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.result);
         const planId = res.data.planId;
         dispatch(createPlan(planId));
+        instance.get(`/api/plans/${planId}`, {}).then(function (response) {
+          console.log(response);
+          dispatch(getdayPlan(response.data.plan));
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -59,49 +62,69 @@ const createPlanDB = (plan) => {
 };
 
 //특정 여행 받아오기
-const getdayPlanDB = (planId) => {
-  return function (dispatch, getState, { history }) {
-    instance
-      .get(`/api/plans/${planId}`)
-      .then(function (response) {
-        dispatch(getPlan(response.data.plan));
-        //const myPlan = response.data.plan;
-        //dispatch(getdayPlan(myPlan));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-};
+// const getdayPlanDB = (planId) => {
+//   return function (dispatch, getState, { history }) {
+//     instance
+//       .get(`/api/plans/${planId}`, {})
+//       .then(function (response) {
 
-const saveLocationDB = (dayId, place) => {
+//         dispatch(getdayPlan(response.data.plan));
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//       });
+//   };
+// };
+
+export const saveLocationDB = (
+  dayId,
+  AmPm,
+  Hour,
+  Minute,
+  Memo,
+  placeName,
+  lat,
+  lng,
+  address,
+  imageURL
+) => {
   return (dispatch, getState, { history }) => {
-    const placeName = place[0].name;
-    const lat = place[0].geometry.location.lat();
-    const lng = place[0].geometry.location.lng();
-    const address = place[0].formatted_address;
-    console.log(placeName, lat, lng, address);
+    console.log(
+      dayId,
+      AmPm,
+      Hour,
+      Minute,
+      Memo,
+      placeName,
+      lat,
+      lng,
+      address,
+      imageURL
+    );
 
+    let formData = new FormData();
     formData.append("placeName", placeName);
     formData.append("lat", lat);
     formData.append("lng", lng);
     formData.append("address", address);
+    formData.append("time", `${Hour}시 ${Minute}분`);
+    formData.append("memoText", Memo);
+    imageURL.map((eachfile) => {
+      formData.append("imageFile", eachfile);
+    });
+    console.log(imageURL);
+    // formData.append("memoImage", imageURL);
+
     instance
-      .post(
-        `/api/plans/days/${dayId}`,
-        formData,
-        {
-          // time: "10시00분",
-          // memoText: "여행메모",
-          // memoImage: "이미지"
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      .post(`/api/plans/days/${dayId}`, formData, {})
       .then(function (response) {
         console.log(response);
         const planId = getState().plan.planId;
-        dispatch(createPlan(planId));
-        history.push("/writeplan");
+        console.log(planId);
+        instance.get(`/api/plans/${planId}`, {}).then(function (response) {
+          console.log(response);
+          dispatch(getdayPlan(response.data.plan));
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -162,7 +185,7 @@ const actionCreators = {
   getPlanDB,
   createPlan,
   createPlanDB,
-  getdayPlanDB,
+  // getdayPlanDB,
   saveLocationDB,
   addBookMark,
   addBookMarkDB,

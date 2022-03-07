@@ -22,7 +22,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
         const { 0: place } = selected
      
         addPlace(selected)
-        
+        console.log(selected)   
         if (!place.geometry) return;
         if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport)

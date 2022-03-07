@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import styled from "styled-components";
 import { actionCreators as imageActions } from "../redux/modules/image";
+import { actionCreators as addPlaceActions } from "../redux/modules/addPlace";
 import Image from '../elements/Images';
 
 const Upload = (props) => {
@@ -32,7 +33,7 @@ const Upload = (props) => {
     // 여러개 업로드
     const handleImageUpload = (e) => {
         const fileArr = e.target.files;
-
+        const filesArr = Array.from(e.target.files);
         let fileURLs = [];
 
         let file;
@@ -45,7 +46,7 @@ const Upload = (props) => {
             reader.onload = () => {
                 fileURLs[i] = reader.result;
                 dispatch(imageActions.setPreview(reader.result));
-
+                dispatch(addPlaceActions.imageURL(filesArr))
             };
             reader.readAsDataURL(file);
         }
@@ -76,7 +77,7 @@ const Upload = (props) => {
                         <>
                             <Container>
                                 <Image
-                                    key={idx}
+                                    key={v}
                                     width="100%"
                                     src={preview[idx] ? preview[idx] : "http://via.placeholder.com/400x300"} />
                                 <button onClick={() => {
