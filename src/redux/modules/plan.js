@@ -9,11 +9,13 @@ let formData = new FormData();
 const GET_PLAN = "GET_PLAN";
 const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
+const ADD_BOOKMARK = "ADD_BOOKMARK";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
 const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
+const addBookMark = createAction(ADD_BOOKMARK, (myPlan) => ({ myPlan }));
 
 // 초기 상태값
 const initialState = {
@@ -60,10 +62,11 @@ const createPlanDB = (plan) => {
 const getdayPlanDB = (planId) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/plans/${planId}`, {})
+      .get(`/api/plans/${planId}`)
       .then(function (response) {
-        const myPlan = response.data.plan;
-        dispatch(getdayPlan(myPlan));
+        dispatch(getPlan(response.data.plan));
+        //const myPlan = response.data.plan;
+        //dispatch(getdayPlan(myPlan));
       })
       .catch(function (error) {
         console.log(error);
@@ -71,7 +74,7 @@ const getdayPlanDB = (planId) => {
   };
 };
 
-export const saveLocationDB = (dayId, place) => {
+const saveLocationDB = (dayId, place) => {
   return (dispatch, getState, { history }) => {
     const placeName = place[0].name;
     const lat = place[0].geometry.location.lat();
@@ -106,12 +109,33 @@ export const saveLocationDB = (dayId, place) => {
   };
 };
 
-// const createPlanDB = (plan) => {
-//   //console.log(plan);
-//   return function (dispatch, getState, { history }) {
-//     dispatch(createPlan(plan));
-//   };
-// };
+//북마크 여행 불러오기
+const bookMarkDB = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post("/api/plans/bookmark")
+      .then((res) => {
+        console(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
+
+//특정 여행 북마크 추가하기
+const addBookMarkDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post(`/api/plans/${planId}/bookmark`, {})
+      .then((res) => {
+        console(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
 
 //리덕스
 export default handleActions(
@@ -140,6 +164,9 @@ const actionCreators = {
   createPlanDB,
   getdayPlanDB,
   saveLocationDB,
+  addBookMark,
+  addBookMarkDB,
+  bookMarkDB,
 };
 
 export { actionCreators };
