@@ -50,10 +50,11 @@ const createPlanDB = (plan) => {
         console.log(res.data.result);
         const planId = res.data.planId;
         dispatch(createPlan(planId));
-        instance.get(`/api/plans/${planId}`, {}).then(function (response) {
-          console.log(response);
-          dispatch(getdayPlan(response.data.plan));
-        });
+        history.push(`/writeplan/${planId}`);
+        // instance.get(`/api/plans/${planId}`, {}).then(function (response) {
+        //   console.log(response);
+        //   dispatch(getdayPlan(response.data.plan));
+        // });
       })
       .catch(function (error) {
         console.log(error);
@@ -62,19 +63,19 @@ const createPlanDB = (plan) => {
 };
 
 //특정 여행 받아오기
-// const getdayPlanDB = (planId) => {
-//   return function (dispatch, getState, { history }) {
-//     instance
-//       .get(`/api/plans/${planId}`, {})
-//       .then(function (response) {
-
-//         dispatch(getdayPlan(response.data.plan));
-//       })
-//       .catch(function (error) {
-//         console.log(error);
-//       });
-//   };
-// };
+const getdayPlanDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/plans/${planId}`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getdayPlan(res.data.plan));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
 
 export const saveLocationDB = (
   dayId,
@@ -121,10 +122,11 @@ export const saveLocationDB = (
         console.log(response);
         const planId = getState().plan.planId;
         console.log(planId);
-        instance.get(`/api/plans/${planId}`, {}).then(function (response) {
-          console.log(response);
-          dispatch(getdayPlan(response.data.plan));
-        });
+        history.push(`/writeplan/${planId}`);
+        // instance.get(`/api/plans/${planId}`, {}).then(function (response) {
+        //   console.log(response);
+        //   dispatch(getdayPlan(response.data.plan));
+        // });
       })
       .catch(function (error) {
         console.log(error);
@@ -185,7 +187,7 @@ const actionCreators = {
   getPlanDB,
   createPlan,
   createPlanDB,
-  // getdayPlanDB,
+  getdayPlanDB,
   saveLocationDB,
   addBookMark,
   addBookMarkDB,

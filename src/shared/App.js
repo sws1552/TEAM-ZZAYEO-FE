@@ -31,7 +31,7 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />
-            <Route path="/writeplan" exact component={WritePlan} />
+            <Route path="/writeplan/:planId" exact component={WritePlan} />
             <Route path="/addplace" exact component={AddPlace} />
             <Route path="/searchplace" exact component={SearchPlace} />
             <Route path="/search" exact component={Search}></Route>
