@@ -60,11 +60,11 @@ const Contents = (props) => {
   const createPlan = () => {
     let plan = {
       title: titleInput,
-      location: destList[clickedTripDest],
+      destination: destList[clickedTripDest],
       withlist: withList[clickedWithList],
-      startdate: moment(startDate).format("YYYY-MM-DD"),
-      enddate: moment(endDate).format("YYYY-MM-DD"),
-      category: tripStyle[clickedTripstyle],
+      startDate: moment(startDate).format("YYYY-MM-DD"),
+      endDate: moment(endDate).format("YYYY-MM-DD"),
+      style: tripStyle[clickedTripstyle],
     };
     dispatch(planActions.createPlanDB(plan));
     console.log(plan);
