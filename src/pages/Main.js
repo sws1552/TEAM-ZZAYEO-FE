@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
+import { actionCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
 import MainCategory from "../components/Main/MainCategory";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
@@ -11,11 +12,10 @@ const Main = (props) => {
   const dispatch = useDispatch();
 
   const is_token = localStorage.getItem("token") ? true : false;
-
   const plans = useSelector((store) => store.plan.list);
-  console.log(plans);
 
   React.useEffect(() => {
+    dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB());
   }, []);
 

@@ -1,15 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as planActions } from "../../redux/modules/plan";
 
 const MainLike = (props) => {
+  const dispatch = useDispatch();
+
   const [bookMarkIcon, setbookMarkIcon] = React.useState(false);
 
-  const onBookMark = () => {};
+  React.useEffect(() => {}, []);
 
+  const onBookMark = () => {
+    setbookMarkIcon(!bookMarkIcon);
+    // dispatch(planActions.addBookMarkDB(planId));
+  };
   return (
     <React.Fragment>
-      <BookMark onClick={() => setbookMarkIcon(!bookMarkIcon)}>
-        {bookMarkIcon === true ? (
+      <BookMark onClick={onBookMark}>
+        {bookMarkIcon ? (
           <svg
             width="23"
             height="24"

@@ -14,7 +14,9 @@ const ADD_BOOKMARK = "ADD_BOOKMARK";
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
 const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
-const addBookMark = createAction(ADD_BOOKMARK, (myPlan) => ({ myPlan }));
+const addBookMark = createAction(ADD_BOOKMARK, (planId) => ({
+  planId,
+}));
 
 // 초기 상태값
 const initialState = {
@@ -126,29 +128,15 @@ export const saveLocationDB = (
   };
 };
 
-//북마크 여행 불러오기
-const bookMarkDB = () => {
-  return function (dispatch, getState, { history }) {
-    instance
-      .post("/api/plans/bookmark")
-      .then((res) => {
-        console(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-};
-
 //특정 여행 북마크 추가하기
 const addBookMarkDB = (planId) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post(`/api/plans/${planId}/bookmark`, {})
+      .post(`/api/plans/${planId}/bookmark`)
       .then((res) => {
-        console(res);
+        console.log(res);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -161,7 +149,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.plans;
       }),
-
     [CREATE_PLAN]: (state, action) =>
       produce(state, (draft) => {
         draft.planId = action.payload.planId;
@@ -183,7 +170,6 @@ const actionCreators = {
   saveLocationDB,
   addBookMark,
   addBookMarkDB,
-  bookMarkDB,
 };
 
 export { actionCreators };

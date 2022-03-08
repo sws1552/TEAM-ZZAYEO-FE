@@ -3,7 +3,7 @@ import styled from "styled-components";
 import MainLike from "./MainLike";
 
 const MainTravelList = (props) => {
-  const { title, destination, style, withlist } = props;
+  const { title, destination, style, withlist, isBookmark, planId } = props;
 
   return (
     <React.Fragment>
@@ -13,7 +13,7 @@ const MainTravelList = (props) => {
           <CardInfo>
             #{style} #{destination} #{withlist}
           </CardInfo>
-          <MainLike />
+          <MainLike isBookmark={isBookmark} planId={planId} />
         </TripCard>
       </Container>
     </React.Fragment>
