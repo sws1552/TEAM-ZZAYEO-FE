@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import WritePlanMap from "../components/WritePlan/Map/WritePlanMap";
-import BasicTabs from "../components/WritePlan/Plan/BasicTabs";
-import BasicTabsHide from "../components/WritePlan/Plan/BasicTapsHide";
-import Header from "../components/WritePlan/Header/Header";
+import DetailDay from "../components/MainDetailPage/DetailDay";
+import DetailDayhide from "../components/MainDetailPage/DetailDayhide";
+import Header from "../components/MainDetailPage/Header";
 import Title from "../components/WritePlan/Title/Title";
 import { Collapse } from '@mui/material';
 import { Switch } from '@mui/material';
@@ -71,7 +71,7 @@ const WritePlan = (props) => {
             <WritePlanMap />
           </Collapse>
         </div>
-       {isChecked? <BasicTabs {...myPlan} />: <BasicTabsHide {...myPlan} />} 
+       {isChecked? <DetailDay {...myPlan} />: <DetailDayhide {...myPlan} />} 
       </Container>
     </>
   );

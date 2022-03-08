@@ -37,7 +37,7 @@ const WritePlanMap = () => {
  })
 
 
- console.log(Markers, EachDayPlaces[0].dayId)
+ 
 
   if (window.screen.width >= 768) {
     zoom = 15;
@@ -68,7 +68,7 @@ const WritePlanMap = () => {
           addPlace={addPlace}
         />)} */}
 
-      <div style={{ height: "295px", width: "100%", margin: "auto" }}>
+      <div style={{ height: "220px", width: "100%"}}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: "AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA",
@@ -110,13 +110,12 @@ const WritePlanMap = () => {
               )
             })} 
 
-          {apiReady && googlemaps && EachDayPlaces && EachDayPlaces[0].dayId ? (
+          {apiReady && googlemaps && (
             <Polyline
-              dayId = {EachDayPlaces[0].dayId}
               markers={Markers}
               map={map}
               maps={googlemaps}
-            />) : null}
+            />)}
 
         </GoogleMapReact>
       </div>
@@ -128,8 +127,7 @@ export default WritePlanMap;
 
 const Container = styled.div`
   width: 100%;
-  height: 300px;
+  height: 220px;
   box-sizing: border-box;
-  border: 3px solid gray;
-  margin: auto;
+  margin-top: 10px;
 `;

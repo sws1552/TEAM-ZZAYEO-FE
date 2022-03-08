@@ -1,14 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import MainLike from "./MainLike";
+import { history } from "../../redux/ConfigureStore";
 
 const MainTravelList = (props) => {
-  const { title, destination, style, withlist } = props;
+  const { title, destination, style, withlist, planId } = props;
 
   return (
     <React.Fragment>
       <Container>
-        <TripCard>
+        <TripCard
+          style={{cursor:"pointer"}}
+          onClick={() => {
+            history.push(`/detail/${planId}`)
+          }}>
           <CardTitle>{title}</CardTitle>
           <CardInfo>
             #{style} #{destination} #{withlist}
