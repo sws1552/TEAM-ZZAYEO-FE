@@ -4,13 +4,12 @@ import MainLike from "./MainLike";
 import { history } from "../../redux/ConfigureStore";
 
 const MainTravelList = (props) => {
-  const { title, destination, style, withlist, isBookmark, planId } = props;
+  const { title, destination, style, withlist, isLike, planId } = props;
 
   return (
     <React.Fragment>
       <Container>
         <TripCard
-          style={{ cursor: "pointer" }}
           onClick={() => {
             history.push(`/detail/${planId}`);
           }}
@@ -19,7 +18,7 @@ const MainTravelList = (props) => {
           <CardInfo>
             #{style} #{destination} #{withlist}
           </CardInfo>
-          <MainLike isBookmark={isBookmark} planId={planId} />
+          <MainLike isLike={isLike} planId={planId} />
         </TripCard>
       </Container>
     </React.Fragment>
@@ -58,12 +57,6 @@ const CardInfo = styled.div`
   font-weight: 600;
   line-height: 24px;
   color: #ffffff;
-`;
-
-const BookMark = styled.div`
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
 `;
 
 export default MainTravelList;

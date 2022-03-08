@@ -24,7 +24,10 @@ const Main = (props) => {
       <Container>
         <Searchbar />
         <MainCategory />
-        <MainBookMarkList />
+        <BookMarkListBox>
+          <p>내가 찜한 여행 스토리</p>
+          <MainBookMarkList />
+        </BookMarkListBox>
         <TravelListBox>
           <p>여행 일정 매거진</p>
           {plans.map((l, i) => {
@@ -67,3 +70,5 @@ const TravelListBox = styled.div`
     color: #1a1a1a;
   }
 `;
+
+const BookMarkListBox = styled(TravelListBox)``;

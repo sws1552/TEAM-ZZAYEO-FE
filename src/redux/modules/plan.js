@@ -2,21 +2,15 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 
-const token = localStorage.getItem("token");
-
 // 액션타입
 const GET_PLAN = "GET_PLAN";
 const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
-const ADD_BOOKMARK = "ADD_BOOKMARK";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
 const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
-const addBookMark = createAction(ADD_BOOKMARK, (planId) => ({
-  planId,
-}));
 
 // 초기 상태값
 const initialState = {
@@ -117,12 +111,24 @@ export const saveLocationDB = (
     instance
       .post(`/api/plans/days/${dayId}`, formData, {})
       .then(function (response) {
-        console.log(response);
         const planId = getState().plan.planId;
-        console.log(planId);
         history.push(`/writeplan/${planId}`);
       })
       .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
+
+//북마크 여행 불러오기
+const setBookMarkDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/plans/${planId}/bookmark`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -135,6 +141,50 @@ const addBookMarkDB = (planId) => {
       .post(`/api/plans/${planId}/bookmark`)
       .then((res) => {
         console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//특정 여행 북마크 취소하기
+const deleteBookMarkDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/api/plans/${planId}/bookmark`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//여행 좋아요
+const addLikeDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post(`/api/plans/${planId}/like`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getdayPlanDB(planId));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//여행 좋아요 취소하기
+const deleteLikeDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/api/plans/${planId}/like`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getdayPlanDB(planId));
       })
       .catch((error) => {
         console.log(error);
@@ -162,14 +212,15 @@ export default handleActions(
 );
 
 const actionCreators = {
-  getPlan,
   getPlanDB,
-  createPlan,
   createPlanDB,
   getdayPlanDB,
   saveLocationDB,
-  addBookMark,
+  setBookMarkDB,
   addBookMarkDB,
+  deleteBookMarkDB,
+  addLikeDB,
+  deleteLikeDB,
 };
 
 export { actionCreators };
