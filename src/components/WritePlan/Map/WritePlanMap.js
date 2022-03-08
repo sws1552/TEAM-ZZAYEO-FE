@@ -24,12 +24,12 @@ const WritePlanMap = () => {
   const myPlan = useSelector((state) => state.plan.myPlan);
   const dayId = useSelector((state) => state.map.dayId);
 
-  const dayPlace_list = [] //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
+  const dayPlace_list = []; //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
   myPlan?.days?.forEach((doc) => {
     dayPlace_list.push(doc);
   });
-  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
- 
+  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId);
+
   React.useEffect(() => {
     dispatch(lineActions.addlocation(location));
   }, [location]);
@@ -44,14 +44,13 @@ const WritePlanMap = () => {
       setMap(map);
       setGooglemaps(maps);
     }
-  }
+  };
   //장소찾기
   const addPlace = (places) => {
     if (places) {
       setPlaces(places);
     }
   };
-
 
   return (
     <Container>
@@ -76,12 +75,11 @@ const WritePlanMap = () => {
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
 
+          onGoogleApiLoaded={({ map, maps }) => {
+            handleApiloaded(map, maps);
+          }}
 
-          onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
-
-        // 위치를 렌더해주는 함수
-
-
+          // 위치를 렌더해주는 함수
         >
           {places?.length !== 0 &&
             places?.map((place, index) => (
@@ -93,10 +91,10 @@ const WritePlanMap = () => {
               />
             ))}
 
-
-          {EachDayPlaces && EachDayPlaces[0]?.places?.length !== 0 &&
+          {EachDayPlaces &&
+            EachDayPlaces[0]?.places?.length !== 0 &&
             EachDayPlaces[0]?.places?.map((place, index) => {
-              console.log(place)
+              console.log(place);
               return (
                 <Maker
                   key={index}
@@ -105,16 +103,12 @@ const WritePlanMap = () => {
                   lat={place.lat}
                   lng={place.lng}
                 />
-              )
-            })} 
+              );
+            })}
 
           {apiReady && googlemaps && (
-            <Polyline
-              markers={markers}
-              map={map}
-              maps={googlemaps}
-            />)}
-
+            <Polyline markers={markers} map={map} maps={googlemaps} />
+          )}
         </GoogleMapReact>
       </div>
     </Container>

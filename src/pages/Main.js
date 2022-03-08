@@ -25,9 +25,12 @@ const Main = (props) => {
         <Searchbar />
         <MainCategory />
         <MainBookMarkList />
-        {plans.map((l, i) => {
-          return <MainTravelList key={i} {...l} />;
-        })}
+        <TravelListBox>
+          <p>여행 일정 매거진</p>
+          {plans.map((l, i) => {
+            return <MainTravelList key={i} {...l} />;
+          })}
+        </TravelListBox>
       </Container>
     );
   }
@@ -50,5 +53,17 @@ const Container = styled.div`
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+const TravelListBox = styled.div`
+  p {
+    padding: 0px 24px;
+    margin-bottom: 16px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    color: #1a1a1a;
   }
 `;

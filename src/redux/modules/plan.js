@@ -51,10 +51,6 @@ const createPlanDB = (plan) => {
         const planId = res.data.planId;
         dispatch(createPlan(planId));
         history.push(`/writeplan/${planId}`);
-        // instance.get(`/api/plans/${planId}`, {}).then(function (response) {
-        //   console.log(response);
-        //   dispatch(getdayPlan(response.data.plan));
-        // });
       })
       .catch(function (error) {
         console.log(error);
@@ -123,10 +119,6 @@ export const saveLocationDB = (
         const planId = getState().plan.planId;
         console.log(planId);
         history.push(`/writeplan/${planId}`);
-        // instance.get(`/api/plans/${planId}`, {}).then(function (response) {
-        //   console.log(response);
-        //   dispatch(getdayPlan(response.data.plan));
-        // });
       })
       .catch(function (error) {
         console.log(error);

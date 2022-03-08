@@ -35,6 +35,7 @@ const TripCard = styled.div`
   background-color: #e6e6e6;
   border-radius: 8px;
   margin: 0px 0px 8px;
+  cursor: pointer;
 `;
 
 const CardTitle = styled.div`
