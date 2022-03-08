@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import { history } from "../../../redux/ConfigureStore";
+import { history } from "../../redux/ConfigureStore";
 
 const Header = () => {
     return (
@@ -10,7 +10,7 @@ const Header = () => {
             <CancelOutlinedIcon
                 style={{ fontSize: "30px", marginLeft: "350px", cursor: "pointer" }}
                 onClick={()=>{
-                    history.push('/myplan')
+                    history.push('/')
                 }}
                 />
                 

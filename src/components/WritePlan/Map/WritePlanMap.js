@@ -19,7 +19,6 @@ const WritePlanMap = () => {
 
   const [places, setPlaces] = useState([]);
   const location = useSelector((state) => state.map.list);
-  const markers = useSelector((state) => state.polyline.list);
 
   const myPlan = useSelector((state) => state.plan.myPlan);
   const dayId = useSelector((state) => state.map.dayId);
@@ -28,11 +27,12 @@ const WritePlanMap = () => {
   myPlan?.days?.forEach((doc) => {
     dayPlace_list.push(doc);
   });
-  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId);
 
-  React.useEffect(() => {
-    dispatch(lineActions.addlocation(location));
-  }, [location]);
+  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId);
+  const Markers = [];
+  EachDayPlaces[0]?.places?.filter((v, i) => {
+    return Markers.push({ lat: v.lat, lng: v.lng });
+  });
 
   if (window.screen.width >= 768) {
     zoom = 15;
@@ -62,7 +62,7 @@ const WritePlanMap = () => {
           addPlace={addPlace}
         />)} */}
 
-      <div style={{ height: "295px", width: "100%", margin: "auto" }}>
+      <div style={{ height: "220px", width: "100%" }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: "AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA",
@@ -74,7 +74,6 @@ const WritePlanMap = () => {
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
-
           onGoogleApiLoaded={({ map, maps }) => {
             handleApiloaded(map, maps);
           }}
@@ -94,7 +93,6 @@ const WritePlanMap = () => {
           {EachDayPlaces &&
             EachDayPlaces[0]?.places?.length !== 0 &&
             EachDayPlaces[0]?.places?.map((place, index) => {
-              console.log(place);
               return (
                 <Maker
                   key={index}
@@ -107,7 +105,7 @@ const WritePlanMap = () => {
             })}
 
           {apiReady && googlemaps && (
-            <Polyline markers={markers} map={map} maps={googlemaps} />
+            <Polyline markers={Markers} map={map} maps={googlemaps} />
           )}
         </GoogleMapReact>
       </div>
@@ -119,8 +117,7 @@ export default WritePlanMap;
 
 const Container = styled.div`
   width: 100%;
-  height: 300px;
+  height: 220px;
   box-sizing: border-box;
-  border: 3px solid gray;
-  margin: auto;
+  margin-top: 10px;
 `;
