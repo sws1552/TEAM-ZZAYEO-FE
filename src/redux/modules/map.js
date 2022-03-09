@@ -11,6 +11,7 @@ const POLYLINE = "POLYLINE"
 // action creators
 const sendDayId = createAction(SENDDAYID, (dayId) => ({ dayId }));
 const addPolyline = createAction(POLYLINE, (polyline) => ({ polyline }));
+
 // initial state
 const initialState = {
   dayId: "",
