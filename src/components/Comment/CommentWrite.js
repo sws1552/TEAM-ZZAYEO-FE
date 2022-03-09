@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
+import { useDispatch, useSelector } from 'react-redux';
+import {actionCreators as commentActions} from '../../redux/modules/comment';
+import {actionCreators as userActions} from '../../redux/modules/user';
+
 
 const CommentWrite = (props) => {
+
+    const {planId} = props;
+
+    const [comment, setComment] = useState('');
+
+    const dispatch = useDispatch();
+
+
+    const commentAdd = () => {
+        if(comment === "") {window.alert('내용을 입력해주세요'); return;}
+        dispatch(commentActions.addCommentFB(planId, comment));
+        setComment("");
+    }
+
     return (
         <WriteCon>
-            <Input placeholder='댓글을 입력해주세요.' />
-            <SendIconRe/>
+            <Input placeholder='댓글을 입력해주세요.' value={comment} onChange={(e) => setComment(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && commentAdd() }/>
+            <SendIconRe onClick={commentAdd}/>
         </WriteCon>
     );
 };
