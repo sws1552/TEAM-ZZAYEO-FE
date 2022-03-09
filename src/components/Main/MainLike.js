@@ -5,15 +5,6 @@ import { actionCreators as planActions } from "../../redux/modules/plan";
 
 const MainLike = (props) => {
   const is_like = props.isLike;
-  // const dispatch = useDispatch();
-  // const planId = props.planId;
-  // const [bookMarkIcon, setbookMarkIcon] = React.useState(false);
-
-  // const onBookMark = (e) => {
-  //   e.stopPropagation();
-  //   setbookMarkIcon(!bookMarkIcon);
-  //   dispatch(planActions.addBookMarkDB(planId));
-  // };
 
   return (
     <React.Fragment>

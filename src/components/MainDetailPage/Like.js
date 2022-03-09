@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
 
 const Like = (props) => {
@@ -35,7 +35,7 @@ const Like = (props) => {
             />
             <path
               d="M4.55643 7.29996L7.40158 1C7.96751 1 8.51027 1.22125 8.91044 1.61507C9.31062 2.0089 9.53544 2.54304 9.53544 3.09999V5.89997H13.5613C13.7675 5.89767 13.9718 5.93952 14.1599 6.02262C14.3481 6.10572 14.5156 6.22808 14.6509 6.38123C14.7862 6.53437 14.8861 6.71464 14.9436 6.90954C15.0011 7.10444 15.0148 7.30931 14.9839 7.50996L14.0023 13.8099C13.9509 14.1437 13.7786 14.448 13.5172 14.6667C13.2557 14.8854 12.9228 15.0037 12.5797 14.9999H4.55643M4.55643 7.29996V14.9999M4.55643 7.29996H2.42257C2.04528 7.29996 1.68345 7.44746 1.41666 7.71001C1.14988 7.97256 1 8.32865 1 8.69995V13.5999C1 13.9712 1.14988 14.3273 1.41666 14.5899C1.68345 14.8524 2.04528 14.9999 2.42257 14.9999H4.55643"
-              stroke="#999999"
+              stroke="#C4C4C4"
               strokeWidth="1.4"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -67,6 +67,7 @@ const Like = (props) => {
 const LikeBtn = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 18px;
 
   svg {
     margin-right: 8px;

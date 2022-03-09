@@ -12,6 +12,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import Like from "../components/MainDetailPage/Like";
+import BookMark from "../components/MainDetailPage/BookMark";
 
 const MainDetailPage = (props) => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const MainDetailPage = (props) => {
         <Title {...plans} />
         <BtnBox>
           <Like {...plans} />
+          <BookMark {...plans} />
         </BtnBox>
         <div>
           <FormControlLabel
@@ -69,6 +71,7 @@ const Container = styled.div`
 
 const BtnBox = styled.div`
   padding: 0px 24px;
+  margin-bottom: 27px;
   display: flex;
   flex-direction: row;
 `;

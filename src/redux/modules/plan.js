@@ -140,7 +140,7 @@ const addBookMarkDB = (planId) => {
     instance
       .post(`/api/plans/${planId}/bookmark`)
       .then((res) => {
-        console.log(res);
+        dispatch(getdayPlanDB(planId));
       })
       .catch((error) => {
         console.log(error);
@@ -154,7 +154,7 @@ const deleteBookMarkDB = (planId) => {
     instance
       .delete(`/api/plans/${planId}/bookmark`)
       .then((res) => {
-        console.log(res);
+        dispatch(getdayPlanDB(planId));
       })
       .catch((error) => {
         console.log(error);
