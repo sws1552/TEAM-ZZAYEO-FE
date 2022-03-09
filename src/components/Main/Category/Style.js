@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Style = (props) => {
-  const tripStyle = [
+  const style = [
     "액티비티 체험",
     "문화 예술 역사 체험",
     "명소 관광지 방문필수",
@@ -14,11 +14,25 @@ const Style = (props) => {
     "호캉스",
     "자연친화",
   ];
+  const [clickedStyle, changeStyle] = React.useState(0);
   return (
     <React.Fragment>
       <Container>
-        {tripStyle.map((l, i) => {
-          return <Category key={i}>{l}</Category>;
+        {style.map((l, i) => {
+          return (
+            <Category
+              onClick={() => {
+                changeStyle(i);
+              }}
+              style={{
+                backgroundColor: i === clickedStyle ? "#535353" : "#F4F4F4",
+                color: i === clickedStyle ? "#FFFFFF" : "#757575",
+              }}
+              key={i}
+            >
+              {l}
+            </Category>
+          );
         })}
       </Container>
     </React.Fragment>
@@ -32,15 +46,15 @@ const Container = styled.div`
   padding: 0px 24px;
 `;
 
-const Category = styled.li`
+const Category = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 5px 16px;
   margin-right: 8px;
   margin-bottom: 12px;
-  background-color: #f4f4f4;
   border-radius: 16px;
+  cursor: pointer;
 `;
 
 export default Style;
