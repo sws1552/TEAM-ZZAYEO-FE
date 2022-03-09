@@ -1,13 +1,46 @@
 import React from "react";
 import styled from "styled-components";
+import Destination from "./Category/Destination";
+import Style from "./Category/Style";
 
 const CategoryModal = (props) => {
   const { open, close } = props;
+
+  const [activeTab, setActiveTab] = React.useState(0);
+
+  const category = ["국내", "여행 스타일"];
+
+  const categoryContents = {
+    0: <Destination />,
+    1: <Style />,
+  };
+
+  const onClick = (id) => {
+    setActiveTab(id);
+  };
+
   if (open) {
     return (
       <React.Fragment>
         <OpenModal>
-          <Section></Section>
+          <Modal>
+            <Taps>
+              {/* <li onClick={() => onClick(0)}>국내</li>
+              <li onClick={() => onClick(1)}>여행스타일</li> */}
+              {category.map((c, i) => {
+                return (
+                  <Li
+                    style={{ color: i === activeTab ? "#000000" : "#bfbfbf" }}
+                    key={i}
+                    onClick={() => onClick(i)}
+                  >
+                    {c}
+                  </Li>
+                );
+              })}
+            </Taps>
+            <div>{categoryContents[activeTab]}</div>
+          </Modal>
         </OpenModal>
       </React.Fragment>
     );
@@ -36,7 +69,7 @@ const OpenModal = styled(ModalBox)`
   align-items: center;
 `;
 
-const Section = styled.div`
+const Modal = styled.div`
   position: absolute;
   bottom: 0;
   max-width: 420px;
@@ -46,6 +79,21 @@ const Section = styled.div`
   background-color: #ffffff;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;
+`;
+
+const Taps = styled.div`
+  box-sizing: border-box;
+  margin: 24px 0px 24px 24px;
+  display: inline-flex;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 25px;
+`;
+
+const Li = styled.li`
+  list-style-type: none;
+  margin-right: 24px;
 `;
 
 export default CategoryModal;
