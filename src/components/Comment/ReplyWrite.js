@@ -1,11 +1,31 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import {actionCreators as commentActions} from '../../redux/modules/comment';
 
 const ReplyWrite = (props) => {
+
+    const {planId, commentId} = props;
+
+    const dispatch = useDispatch();
+
+    const [reply, setReply] = useState("");
+
+    const ReplyAdd = () => {
+        if(reply === ""){window.alert('내용을 입력해주세요.'); return;}
+
+        dispatch(commentActions.addReplyFB(planId, commentId, reply));
+
+        setReply("");
+    }
+
     return (
         <ReplyCon>
-            <UserImg />
-            <Input placeholder='답글을 입력해주세요.'/>
+            <Input placeholder='답글을 입력해주세요.'
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && ReplyAdd()}/>
         </ReplyCon>
     );
 };
@@ -14,21 +34,12 @@ const ReplyCon = styled.div`
     margin-top: 10px;
     display: flex;
     align-items: center;
-`;
-
-const UserImg = styled.div`
-    background-image: url("https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200");
-    background-position: center;
-    background-size: cover;
-    box-shadow: 0 5px 5px 0 #BFBFBF;
-    width: 40px;
-    height: 40px;
-    border-radius: 25px;
+    width: 85%;
 `;
 
 const Input = styled.input`
     margin-left: 10px;
-    width: 80%;
+    width: 100%;
     height: 35px;
     border: 2px solid #F4F4F4;
     border-radius: 50px;

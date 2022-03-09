@@ -11,6 +11,7 @@ import image from "./modules/image";
 import addPlace from "./modules/addPlace";
 
 import chat from "./modules/chat";
+import comment from "./modules/comment";
 
 export const history = createBrowserHistory();
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   map: map,
   polyline: polyline,
   chat: chat,
+  comment: comment,
   router: connectRouter(history),
 });
 
