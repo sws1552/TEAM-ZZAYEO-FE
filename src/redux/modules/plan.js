@@ -51,10 +51,6 @@ const createPlanDB = (plan) => {
         const planId = res.data.planId;
         dispatch(createPlan(planId));
         history.push(`/writeplan/${planId}`);
-        // instance.get(`/api/plans/${planId}`, {}).then(function (response) {
-        //   console.log(response);
-        //   dispatch(getdayPlan(response.data.plan));
-        // });
       })
       .catch(function (error) {
         console.log(error);
@@ -108,7 +104,7 @@ export const saveLocationDB = (
     formData.append("lat", lat);
     formData.append("lng", lng);
     formData.append("address", address);
-    formData.append("time", `${Hour}시 ${Minute}분`);
+    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);

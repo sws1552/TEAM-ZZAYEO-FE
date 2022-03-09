@@ -15,6 +15,7 @@ import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
 import AddPlace from "../pages/AddPlace";
+import MainDetailPage from "../pages/MainDetailPage"
 
 import MyPage from "../pages/MyPage";
 import Myplan from "../pages/Myplan";
@@ -28,6 +29,7 @@ function App() {
         <ConnectedRouter history={history}>
           <Container>
             <Route path="/" exact component={Main} />
+            <Route path="/detail/:planId" exact component={MainDetailPage} />
             <Route path="/login" exact component={Login} />
             <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />

@@ -5,13 +5,13 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { boxSizing, height } from '@mui/system';
-import Image from '../../../elements/Images'
+import Image from '../../elements/Images'
 
 
 import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as mapActions } from "../../../redux/modules/map"
-import { history } from "../../../redux/ConfigureStore";
+import { actionCreators as mapActions } from "../../redux/modules/map"
+import { history } from "../../redux/ConfigureStore";
 
 const TabPanel = (props) => {
 
@@ -97,10 +97,6 @@ const BasicTabs = (props) => {
                 </div>
               )
             })}
-            <Button onClick={() => {
-              dispatch(mapActions.sendDayId(d.dayId))
-              history.push("/addplace")
-            }}>+장소추가하기</Button>
           </TabPanel>
         )
       })}
@@ -110,7 +106,7 @@ const BasicTabs = (props) => {
 
 const Container = styled(Box)`
   width: 100%;
-  height: 550px;
+  height: 300px;
   box-sizing: border-box;
   overflow-y: scroll;
   /* border: 1px solid gray; */
