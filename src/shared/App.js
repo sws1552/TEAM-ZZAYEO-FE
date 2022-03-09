@@ -14,13 +14,12 @@ import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
-import AddPlace from "../pages/AddPlace";
 import MainDetailPage from "../pages/MainDetailPage"
 
 import MyPage from "../pages/MyPage";
 import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
-import SearchPlace from "../pages/SearchPlace";
+
 
 function App() {
   return (
@@ -34,8 +33,6 @@ function App() {
             <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />
             <Route path="/writeplan/:planId" exact component={WritePlan} />
-            <Route path="/addplace" exact component={AddPlace} />
-            <Route path="/searchplace" exact component={SearchPlace} />
             <Route path="/search" exact component={Search}></Route>
             <Route
               path="/api/auth/kakao/callback"

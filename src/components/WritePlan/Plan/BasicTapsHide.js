@@ -79,12 +79,11 @@ const BasicTabs = (props) => {
         </Day>
       </Box>
       {dayList && dayList.map((d, i) => {
-        console.log(d)
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
             {d.places && d.places.map((v, i) => {
               return (
-                <div style={{ width: "100%" }}>
+                <div key={i} style={{ width: "100%" }}>
                   <Text>{i + 1}.{v.time}</Text>
                   <Text>{v.placeName}</Text>
                   <Address>주소:{v.address}</Address>

@@ -22,7 +22,9 @@ const initialState = {
   imageURL: [],
   ampm: "",
   hour: "",
-  minute: ""
+  minute: "",
+  geometry: "",
+  address_components: []
 };
 
 //middleware
@@ -34,15 +36,19 @@ export default handleActions(
     [LOCATION]: (state, action) =>
       produce(state, (draft) => {
         const place = action.payload.place
-
+        console.log(place)
         const placeName = place[0].name
         const lat = place[0].geometry.location.lat()
         const lng = place[0].geometry.location.lng()
         const address = place[0].formatted_address
+        const address_components = place[0].address_components
         draft.placeName = placeName
         draft.lat = lat
         draft.lng = lng
         draft.address = address
+        draft.geometry=  place[0].geometry
+        draft.address_components = address_components
+        // draft.places = place
       }),
     [IMAGEURL]: (state, action) =>
       produce(state, (draft) => {

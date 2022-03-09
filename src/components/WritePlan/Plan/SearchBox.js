@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { positions } from "@mui/system";
 // import { history } from "../../../redux/ConfigureStore";
-
+import "./SearchBox.css"
 
 const SearchBox = ({ mapApi, map, addPlace }) => {
    
@@ -13,14 +13,13 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
     const dispatch = useDispatch();
     const input = useRef(null);
     const searchBox = useRef(null);
-    
 
     //useCallback 계산된 값을 자료구조에 저장하고 이후 같은 계산을 반복하지 않고 자료구조에서 꺼내 재사용하는 것, 상태값이 변경된 경우에만 다시 생성된다.
     const handleOnPlacesChanged = useCallback(() => {
         const selected = searchBox.current.getPlaces();
         
         const { 0: place } = selected
-     
+        console.log(selected)
         addPlace(selected)
     
         if (!place.geometry) return;
@@ -54,7 +53,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
   
     return (
         <>
-        <ElInput ref={input} placeholder="장소찾기" type="text" />
+        <ElInput ref={input} className="pac-container" placeholder="장소찾기" type="text" />
         </>
     )
   };
