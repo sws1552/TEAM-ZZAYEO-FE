@@ -5,6 +5,7 @@ import DetailDay from "../components/MainDetailPage/DetailDay";
 import DetailDayhide from "../components/MainDetailPage/DetailDayhide";
 import Header from "../components/MainDetailPage/Header";
 import Title from "../components/WritePlan/Title/Title";
+import CommentList from "../components/Comment/CommentList";
 import { Collapse } from "@mui/material";
 import { Switch } from "@mui/material";
 
@@ -57,6 +58,7 @@ const MainDetailPage = (props) => {
           </Collapse>
         </div>
         {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
+        <CommentList planId={planId} />
       </Container>
     </>
   );
@@ -65,8 +67,13 @@ const MainDetailPage = (props) => {
 export default MainDetailPage;
 
 const Container = styled.div`
-  /* padding: 24px 24px; */
+  position: relative;
   width: 100%;
+  height: 90%;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const BtnBox = styled.div`
