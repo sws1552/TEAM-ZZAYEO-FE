@@ -1,7 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as planActions } from "../../redux/modules/plan";
 
 const MainLike = (props) => {
   const is_like = props.isLike;
@@ -38,7 +36,7 @@ const MainLike = (props) => {
                 width="27.4004"
                 height="23.3999"
                 filterUnits="userSpaceOnUse"
-                colorInterpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
                 <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix

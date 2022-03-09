@@ -17,6 +17,7 @@ const Main = (props) => {
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB());
+    dispatch(planActions.getBookMarkDB());
   }, []);
 
   if (is_token) {
@@ -71,4 +72,6 @@ const TravelListBox = styled.div`
   }
 `;
 
-const BookMarkListBox = styled(TravelListBox)``;
+const BookMarkListBox = styled(TravelListBox)`
+  margin-bottom: 36px;
+`;

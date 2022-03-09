@@ -6,11 +6,15 @@ import instance from "../../shared/Request";
 const GET_PLAN = "GET_PLAN";
 const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
+const GET_BOOKMARK = "GET_BOOKMARK";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
 const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
+const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
+  bookmark_list,
+}));
 
 // 초기 상태값
 const initialState = {
@@ -19,6 +23,7 @@ const initialState = {
   is_loaded: false,
   planId: "",
   aaa: [],
+  bookmark_list: [],
 };
 
 // 미들웨어
@@ -43,7 +48,6 @@ const createPlanDB = (plan) => {
     instance
       .post("/api/plans", plan)
       .then((res) => {
-        console.log(res.data.result);
         const planId = res.data.planId;
         dispatch(createPlan(planId));
         history.push(`/writeplan/${planId}`);
@@ -60,7 +64,6 @@ const getdayPlanDB = (planId) => {
     instance
       .get(`/api/plans/${planId}`)
       .then((res) => {
-        console.log(res);
         dispatch(getdayPlan(res.data.plan));
       })
       .catch(function (error) {
@@ -121,12 +124,12 @@ export const saveLocationDB = (
 };
 
 //북마크 여행 불러오기
-const setBookMarkDB = (planId) => {
+const getBookMarkDB = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/plans/${planId}/bookmark`)
+      .get(`/api/plans/bookmark`)
       .then((res) => {
-        console.log(res);
+        dispatch(getBookMark(res.data.plans));
       })
       .catch((error) => {
         console.log(error);
@@ -183,7 +186,6 @@ const deleteLikeDB = (planId) => {
     instance
       .delete(`/api/plans/${planId}/like`)
       .then((res) => {
-        console.log(res);
         dispatch(getdayPlanDB(planId));
       })
       .catch((error) => {
@@ -207,6 +209,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myPlan = action.payload.myPlan;
       }),
+    [GET_BOOKMARK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.bookmark_list = action.payload.bookmark_list;
+      }),
   },
   initialState
 );
@@ -216,7 +222,8 @@ const actionCreators = {
   createPlanDB,
   getdayPlanDB,
   saveLocationDB,
-  setBookMarkDB,
+  getBookMark,
+  getBookMarkDB,
   addBookMarkDB,
   deleteBookMarkDB,
   addLikeDB,
