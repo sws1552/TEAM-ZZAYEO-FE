@@ -66,6 +66,7 @@ const getCommentFB = (planId = null) => {
                     updatedAt: cur.updatedAt,
                     userId: cur.userId,
                     replies: cur.replies,
+                    isLike: cur.isLike,
                     // updateState: false,
                 });
 
@@ -225,7 +226,7 @@ const commentLikeTrue = (planId, commentId) => {
  
         await instance.post(`/api/plans/comments/${commentId}/like`)
         .then((res) => {
-            console.log('commentLike res !! ', res);
+            console.log('댓글 좋아요 res !! ', res);
 
             dispatch(getCommentFB(planId));
         })
@@ -236,6 +237,57 @@ const commentLikeTrue = (planId, commentId) => {
         
     }
 }
+
+const commentLikeFalse = (planId, commentId) => {
+    return async function (dispatch, getState, {history}) {
+
+        await instance.delete(`/api/plans/comments/${commentId}/like`)
+        .then((res) => {
+            console.log('댓글 좋아요 취소 !! ',res);
+            dispatch(getCommentFB(planId));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
+    }
+}
+
+
+const replyLikeTrue = (planId, replyId) => {
+    return async function (dispatch, getState, {history}) {
+
+        await instance.post(`/api/plans/comments/replies/${replyId}/like`)
+        .then((res) => {
+            console.log('답글 좋아요 res !! ', res);
+
+            dispatch(getCommentFB(planId));
+        })
+        .catch((err) => {
+            console.log(err.response);
+        })
+
+    }
+}
+
+
+const replyLikeFalse = (planId, replyId) => {
+    return async function (dispatch, getState, {history}) {
+
+        await instance.delete(`/api/plans/comments/replies/${replyId}/like`)
+        .then((res) => {
+            console.log('답글 좋아요 취소 res !! ', res);
+
+            dispatch(getCommentFB(planId));
+        })
+        .catch((err) => {
+            console.log(err.response);
+        })
+
+    }
+}
+
+
 
 
 export default handleActions (
@@ -281,6 +333,9 @@ const actionCreators = {
     updateReplyFB,
     deleteReplyFB,
     commentLikeTrue,
+    commentLikeFalse,
+    replyLikeTrue,
+    replyLikeFalse,
 }
 
 export {actionCreators};
