@@ -153,8 +153,6 @@ const CommentItem = (props) => {
 
     const [updateHide, setHide] = useState(false);
 
-    const [commentLike, setCommentLike] = useState(false);
-
     const updateComment = () => {
         dispatch(commentActions.realUpdateCommentFB(props.commentId, props.planId, upComment));
         setHide(!updateHide);
@@ -162,12 +160,14 @@ const CommentItem = (props) => {
 
     const commentLikeFunc = () => {
 
-        dispatch(commentActions.commentLikeTrue(props.planId, props.commentId));
+        if(props.isLike){
+            dispatch(commentActions.commentLikeFalse(props.planId, props.commentId));
+        }else{
+            dispatch(commentActions.commentLikeTrue(props.planId, props.commentId));
+        }
 
-        setCommentLike(!commentLike);
     }
 
-    // console.log('updateHide !! ',updateHide);
 
     return (
         <ItemCon>
@@ -200,7 +200,7 @@ const CommentItem = (props) => {
                 props.content }
 
                 <LikeandreplyCon>
-                    <LikeBtn className={commentLike ? 'likeTrue' : null}
+                    <LikeBtn className={props.isLike ? 'likeTrue' : null}
                     onClick={commentLikeFunc}>좋아요 {props.likeCount}</LikeBtn>
                     <ReplyBtn onClick={() => setReplyHide(!replyHide)}>답글 {props.replies.length}</ReplyBtn>
                 </LikeandreplyCon>

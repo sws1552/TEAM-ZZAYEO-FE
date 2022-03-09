@@ -83,6 +83,14 @@ const Reply = (props) => {
         setReplyHide(!upReplyhide);
     }
 
+    const replyLike = () => {
+        if(props.isLike){
+            dispatch(commentActions.replyLikeFalse(props.planId, props.replyId));
+        }else {
+            dispatch(commentActions.replyLikeTrue(props.planId, props.replyId));
+        }
+    }
+
     return (
         <ReplyCon>
             <UserCon>
@@ -112,7 +120,8 @@ const Reply = (props) => {
                     props.content}
 
                 <BtnCon>
-                    <LikeBtn>좋아요 {props.likeCount}</LikeBtn>
+                    <LikeBtn className={props.isLike ? 'likeTrue' : null}
+                    onClick={replyLike}>좋아요 {props.likeCount}</LikeBtn>
                 </BtnCon>
 
             </Context>
@@ -125,6 +134,12 @@ const ReplyCon = styled.div`
     
     /* background-color: red; */
     margin-bottom: 10px;
+
+    .likeTrue {
+        color: #12C5ED;
+        font-weight: bold;
+    }
+
 `;
 
 const UserCon = styled.div`
