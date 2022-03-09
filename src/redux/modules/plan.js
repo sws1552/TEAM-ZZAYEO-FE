@@ -131,6 +131,7 @@ export const saveLocationDB = (
   };
 };
 
+
 //북마크 여행 불러오기
 const getBookMarkDB = () => {
   return function (dispatch, getState, { history }) {
