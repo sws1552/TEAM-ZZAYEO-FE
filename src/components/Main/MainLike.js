@@ -90,7 +90,7 @@ const MainLike = (props) => {
                 width="27.4004"
                 height="23.3999"
                 filterUnits="userSpaceOnUse"
-                colorInterpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
                 <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix

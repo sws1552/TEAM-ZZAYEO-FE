@@ -7,8 +7,6 @@ const Like = (props) => {
   const dispatch = useDispatch();
   const planId = props.planId;
   const is_like = props.isLike;
-  console.log(is_like);
-  // const [is_like, setIsLike] = React.useState(false);
 
   const onLike = () => {
     if (is_like === false) {

@@ -12,6 +12,7 @@ const Main = (props) => {
   const dispatch = useDispatch();
 
   const is_token = localStorage.getItem("token") ? true : false;
+
   const plans = useSelector((store) => store.plan.list);
 
   React.useEffect(() => {

@@ -1,21 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { history } from "../../redux/ConfigureStore";
 
 const MainBookMark = (props) => {
   const planId = props.planId;
 
   const plans = useSelector((store) => store.plan.list);
-  const bookmark_plan = plans.find((p) => p.planId === planId);
+  const plan = plans.find((p) => p.planId === planId);
+
+  // React.useEffect(() => {
+  //   dispatch(planActions.getPlanDB());
+  // }, []);
 
   return (
     <React.Fragment>
       <Container>
-        <BookMarkCard>
+        <BookMarkCard
+          onClick={() => {
+            history.push(`detail/${planId}`);
+          }}
+        >
           <UserImg>
-            <img src={bookmark_plan.userId.profile_img} alt="" />
+            <img src={plan?.userId.profile_img} alt="" />
           </UserImg>
-          <UserName>{bookmark_plan.userId.nickname}</UserName>
+          <UserName>{plan?.userId.nickname}</UserName>
         </BookMarkCard>
       </Container>
     </React.Fragment>
