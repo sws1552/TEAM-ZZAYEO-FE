@@ -79,12 +79,12 @@ const BasicTabs = (props) => {
         </Day>
       </Box>
       {dayList && dayList.map((d, i) => {
-        console.log(d)
+       
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
             {d.places && d.places.map((v, i) => {
               return (
-                <div style={{ width: "100%" }}>
+                <div key={i} style={{ width: "100%" }}>
                   <Text>{i + 1}.{v.time}</Text>
                   <Text>{v.placeName}</Text>
                   <Address>주소:{v.address}</Address>
@@ -92,7 +92,7 @@ const BasicTabs = (props) => {
                     <Memo>{v.memoText}</Memo>
                   </MemoBox>
                   {v.memoImage && v.memoImage.map((m, i) => (
-                    <Image width="50%" height="50" src={m}></Image>
+                    <Image key={i} width="50%" height="50" src={m}></Image>
                   ))}
                 </div>
               )
@@ -106,7 +106,7 @@ const BasicTabs = (props) => {
 
 const Container = styled(Box)`
   width: 100%;
-  height: 550px;
+  height: 580px;
   box-sizing: border-box;
   overflow-y: scroll;
   /* border: 1px solid gray; */
@@ -128,20 +128,7 @@ const Day = styled(Tabs)`
     width: 30px;
   }
 `
-const Button = styled.div`
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    height: 32px;
-    margin: 20px auto;
-    padding: 15px 12px;
-    box-sizing: border-box;
-    border-radius: 50px;
-    font-size: 12px;
-    background-color: #eee;
-    font-weight: 400;
-    cursor: pointer;
-`
+
 const Text = styled.div`
 font-weight: 800;
 font-size: 17px ;

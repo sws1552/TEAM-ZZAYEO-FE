@@ -23,6 +23,7 @@ const initialState = {
   is_loaded: false,
   planId: "",
   aaa: [],
+  
 };
 
 // 미들웨어
@@ -83,7 +84,8 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL
+  imageURL,
+  address_components
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -96,7 +98,8 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL
+      imageURL,
+      address_components
     );
 
     let formData = new FormData();
@@ -106,6 +109,9 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
+    address_components.map((eachfile) => {
+      formData.append("address_components", eachfile);
+    });
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });
@@ -118,11 +124,11 @@ export const saveLocationDB = (
         console.log(response);
         const planId = getState().plan.planId;
         console.log(planId);
-        history.push(`/writeplan/${planId}`);
-        // instance.get(`/api/plans/${planId}`, {}).then(function (response) {
-        //   console.log(response);
-        //   dispatch(getdayPlan(response.data.plan));
-        // });
+        instance.get(`/api/plans/${planId}`, {})
+        .then(function (response) {
+          console.log(response);
+          dispatch(getdayPlan(response.data.plan));
+        });
       })
       .catch(function (error) {
         console.log(error);

@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import { boxSizing, height } from '@mui/system';
 import Image from '../../../elements/Images'
 
-
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map"
 import { history } from "../../../redux/ConfigureStore";
+import WritePlanModal from "./WritePlanModal"
 
 const TabPanel = (props) => {
 
@@ -75,11 +75,10 @@ const BasicTabs = (props) => {
                 }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
             )
           })}
-
         </Day>
       </Box>
       {dayList && dayList.map((d, i) => {
-        console.log(d)
+
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
             {d.places && d.places.map((v, i) => {
@@ -97,10 +96,12 @@ const BasicTabs = (props) => {
                 </div>
               )
             })}
-            <Button onClick={() => {
+
+            <WritePlanModal dayId={d.dayId}/>
+            {/* <Button onClick={() => {
               dispatch(mapActions.sendDayId(d.dayId))
               history.push("/addplace")
-            }}>+장소추가하기</Button>
+            }}>+장소추가하기</Button> */}
           </TabPanel>
         )
       })}

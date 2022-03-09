@@ -18,13 +18,11 @@ const WritePlan = (props) => {
   const dispatch = useDispatch();
 
   const planId = props.match.params.planId;
-
   const myPlan = useSelector((state) => state.plan.myPlan);
-  const dayId = useSelector((state) => state.map.dayId);
-  const [show, setShow] = React.useState(true);
+  
   const [clickedTripDest, changeTripDest] = React.useState(0);
-
   const [isChecked, setIsChecked] = React.useState(true);
+  
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
@@ -71,6 +69,7 @@ const WritePlan = (props) => {
             <WritePlanMap />
           </Collapse>
         </div>
+
        {isChecked? <BasicTabs {...myPlan} />: <BasicTabsHide {...myPlan} />} 
       </Container>
     </>

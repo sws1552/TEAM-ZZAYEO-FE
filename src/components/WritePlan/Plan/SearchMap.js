@@ -3,11 +3,11 @@ import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import SearchBar from "./SearchBar";
-import { actionCreators as addPlaceActions } from "../../redux/modules/addPlace";
-import { history } from "../../redux/ConfigureStore";
+import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
+import { history } from "../../../redux/ConfigureStore";
 import { useDispatch, useSelector } from "react-redux";
 
-const WritePlanMap = () => {
+const SearchMap = () => {
   const dispatch = useDispatch();
   const [apiReady, setApiReady] = useState(false);
   const [map, setMap] = useState(null);
@@ -17,7 +17,6 @@ const WritePlanMap = () => {
 
   const [places, setPlaces] = useState([]);
   
- 
   if (window.screen.width >= 768) {
     zoom = 15;
   }
@@ -36,7 +35,7 @@ const WritePlanMap = () => {
     }
   };
 
-
+  console.log(places)
   return (
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
@@ -47,7 +46,7 @@ const WritePlanMap = () => {
           addPlace={addPlace}
         />)}
 
-      <div style={{ height: "750px", width: "100%", margin: "auto" }}>
+      <div style={{ height: "700px", width: "100%", margin: "auto" }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: "AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA",
@@ -59,8 +58,6 @@ const WritePlanMap = () => {
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
-
-
           onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
 
         // 위치를 렌더해주는 함수
@@ -80,14 +77,13 @@ const WritePlanMap = () => {
       <Button
       onClick={()=>{
         dispatch(addPlaceActions.addlocation(places))
-        history.push('/addplace')
       }}
       >장소추가</Button>
     </Container>
   );
 };
 
-export default WritePlanMap;
+export default SearchMap;
 
 const Container = styled.div`
   width: 100%;

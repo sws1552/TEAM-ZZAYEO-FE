@@ -36,7 +36,7 @@ const WritePlan = (props) => {
       <Container>
         <Header />
         <Title {...myPlan} />
-        <TripDestBox>
+        {/* <TripDestBox>
           <div>
             {decideShare.map((l, i) => {
               return (
@@ -56,7 +56,7 @@ const WritePlan = (props) => {
               );
             })}
           </div>
-        </TripDestBox>
+        </TripDestBox> */}
 
 
         <div>
