@@ -5,11 +5,11 @@ import BasicTabs from "../components/WritePlan/Plan/BasicTabs";
 import BasicTabsHide from "../components/WritePlan/Plan/BasicTapsHide";
 import Header from "../components/WritePlan/Header/Header";
 import Title from "../components/WritePlan/Title/Title";
-import { Collapse } from '@mui/material';
-import { Switch } from '@mui/material';
-import { Paper } from '@mui/material';
+import { Collapse } from "@mui/material";
+import { Switch } from "@mui/material";
+import { Paper } from "@mui/material";
 
-import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as planActions } from "../redux/modules/plan";
@@ -25,6 +25,7 @@ const WritePlan = (props) => {
   const [clickedTripDest, changeTripDest] = React.useState(0);
 
   const [isChecked, setIsChecked] = React.useState(true);
+
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
@@ -58,27 +59,31 @@ const WritePlan = (props) => {
           </div>
         </TripDestBox>
 
-
         <div>
           <FormControlLabel
-            style={{ display: 'block', padding: "10px 24px" , color:"gray"}}
-            control={<Switch style={{color:"#12C5ED"}}checked={isChecked} onChange={() => {
-              setIsChecked((prev) => !prev);
-            }} />}
+            style={{ display: "block", padding: "10px 24px", color: "gray" }}
+            control={
+              <Switch
+                style={{ color: "#12C5ED" }}
+                checked={isChecked}
+                onChange={() => {
+                  setIsChecked((prev) => !prev);
+                }}
+              />
+            }
             label="지도보기"
           />
           <Collapse in={isChecked}>
             <WritePlanMap />
           </Collapse>
         </div>
-       {isChecked? <BasicTabs {...myPlan} />: <BasicTabsHide {...myPlan} />} 
+        {isChecked ? <BasicTabs {...myPlan} /> : <BasicTabsHide {...myPlan} />}
       </Container>
     </>
   );
 };
 
 export default WritePlan;
-
 
 const Container = styled.div`
   /* padding: 24px 24px; */
@@ -88,8 +93,7 @@ const Container = styled.div`
 const TitleBox = styled.div`
   display: block;
   width: 100%;
-  padding: 0px 24px ;
- 
+  padding: 0px 24px;
 `;
 const TripDestBox = styled(TitleBox)`
   div {
@@ -113,5 +117,3 @@ const TripDestBox = styled(TitleBox)`
     font-weight: 500;
   }
 `;
-
-

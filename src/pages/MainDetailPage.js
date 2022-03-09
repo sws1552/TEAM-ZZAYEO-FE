@@ -1,117 +1,106 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import WritePlanMap from "../components/WritePlan/Map/WritePlanMap";
 import DetailDay from "../components/MainDetailPage/DetailDay";
 import DetailDayhide from "../components/MainDetailPage/DetailDayhide";
 import Header from "../components/MainDetailPage/Header";
 import Title from "../components/WritePlan/Title/Title";
-import { Collapse } from '@mui/material';
-import { Switch } from '@mui/material';
-import { Paper } from '@mui/material';
+import { Collapse } from "@mui/material";
+import { Switch } from "@mui/material";
 
-import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as planActions } from "../redux/modules/plan";
+import Like from "../components/MainDetailPage/Like";
+import BookMark from "../components/MainDetailPage/BookMark";
 
-const WritePlan = (props) => {
+const MainDetailPage = (props) => {
   const dispatch = useDispatch();
 
   const planId = props.match.params.planId;
 
-  const myPlan = useSelector((state) => state.plan.myPlan);
-  const dayId = useSelector((state) => state.map.dayId);
-  const [show, setShow] = React.useState(true);
-  const [clickedTripDest, changeTripDest] = React.useState(0);
+  const plans = useSelector((state) => state.plan.myPlan);
+  // const plan = plans.find((p) => p.planId === planId);
+  // console.log(plans);
 
   const [isChecked, setIsChecked] = React.useState(true);
+
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
-
-  const decideShare = ["공개", "비공개"];
 
   return (
     <>
       <Container>
         <Header />
-        <Title {...myPlan} />
-        <TripDestBox>
-          <div>
-            {decideShare.map((l, i) => {
-              return (
-                <li
-                  key={i}
-                  onClick={() => {
-                    changeTripDest(i);
-                  }}
-                  style={{
-                    backgroundColor:
-                      i === clickedTripDest ? "#12C5ED" : "#EDEDED",
-                    color: i === clickedTripDest ? "#FFFFFF" : "#979797",
-                  }}
-                >
-                  {l}
-                </li>
-              );
-            })}
-          </div>
-        </TripDestBox>
-
-
+        <Title {...plans} />
+        <BtnBox>
+          <Like {...plans} />
+          <BookMark {...plans} />
+        </BtnBox>
         <div>
           <FormControlLabel
-            style={{ display: 'block', padding: "10px 24px" , color:"gray"}}
-            control={<Switch style={{color:"#12C5ED"}}checked={isChecked} onChange={() => {
-              setIsChecked((prev) => !prev);
-            }} />}
+            style={{ display: "block", padding: "10px 24px", color: "gray" }}
+            control={
+              <Switch
+                style={{ color: "#12C5ED" }}
+                checked={isChecked}
+                onChange={() => {
+                  setIsChecked((prev) => !prev);
+                }}
+              />
+            }
             label="지도보기"
           />
           <Collapse in={isChecked}>
             <WritePlanMap />
           </Collapse>
         </div>
-       {isChecked? <DetailDay {...myPlan} />: <DetailDayhide {...myPlan} />} 
+        {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
       </Container>
     </>
   );
 };
 
-export default WritePlan;
-
+export default MainDetailPage;
 
 const Container = styled.div`
   /* padding: 24px 24px; */
   width: 100%;
 `;
 
-const TitleBox = styled.div`
-  display: block;
-  width: 100%;
-  padding: 0px 24px ;
- 
-`;
-const TripDestBox = styled(TitleBox)`
-  div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    cursor: pointer;
-  }
-
-  li {
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    height: 32px;
-    margin: 0px 10px 5px 0px;
-    padding: 15px 12px;
-    box-sizing: border-box;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 500;
-  }
+const BtnBox = styled.div`
+  padding: 0px 24px;
+  margin-bottom: 27px;
+  display: flex;
+  flex-direction: row;
 `;
 
+// const TitleBox = styled.div`
+//   display: block;
+//   width: 100%;
+//   padding: 0px 24px;
+// `;
 
+// const TripDestBox = styled(TitleBox)`
+//   div {
+//     width: 100%;
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: wrap;
+//     cursor: pointer;
+//   }
+
+//   li {
+//     display: flex;
+//     align-items: center;
+//     width: fit-content;
+//     height: 32px;
+//     margin: 0px 10px 5px 0px;
+//     padding: 15px 12px;
+//     box-sizing: border-box;
+//     border-radius: 50px;
+//     font-size: 14px;
+//     font-weight: 500;
+//   }
+// `;
