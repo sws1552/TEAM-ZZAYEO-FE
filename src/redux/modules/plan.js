@@ -2,19 +2,19 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 
-const token = localStorage.getItem("token");
-
 // 액션타입
 const GET_PLAN = "GET_PLAN";
 const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
-const ADD_BOOKMARK = "ADD_BOOKMARK";
+const GET_BOOKMARK = "GET_BOOKMARK";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
 const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
-const addBookMark = createAction(ADD_BOOKMARK, (myPlan) => ({ myPlan }));
+const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
+  bookmark_list,
+}));
 
 // 초기 상태값
 const initialState = {
@@ -23,7 +23,7 @@ const initialState = {
   is_loaded: false,
   planId: "",
   aaa: [],
-  
+  bookmark_list: [],
 };
 
 // 미들웨어
@@ -48,7 +48,6 @@ const createPlanDB = (plan) => {
     instance
       .post("/api/plans", plan)
       .then((res) => {
-        console.log(res.data.result);
         const planId = res.data.planId;
         dispatch(createPlan(planId));
         history.push(`/writeplan/${planId}`);
@@ -65,7 +64,6 @@ const getdayPlanDB = (planId) => {
     instance
       .get(`/api/plans/${planId}`)
       .then((res) => {
-        console.log(res);
         dispatch(getdayPlan(res.data.plan));
       })
       .catch(function (error) {
@@ -84,8 +82,7 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL,
-  address_components
+  imageURL
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -98,8 +95,7 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL,
-      address_components
+      imageURL
     );
 
     let formData = new FormData();
@@ -109,9 +105,6 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
-    address_components.map((eachfile) => {
-      formData.append("address_components", eachfile);
-    });
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });
@@ -121,14 +114,8 @@ export const saveLocationDB = (
     instance
       .post(`/api/plans/days/${dayId}`, formData, {})
       .then(function (response) {
-        console.log(response);
         const planId = getState().plan.planId;
-        console.log(planId);
-        instance.get(`/api/plans/${planId}`, {})
-        .then(function (response) {
-          console.log(response);
-          dispatch(getdayPlan(response.data.plan));
-        });
+        history.push(`/writeplan/${planId}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -137,14 +124,14 @@ export const saveLocationDB = (
 };
 
 //북마크 여행 불러오기
-const bookMarkDB = () => {
+const getBookMarkDB = () => {
   return function (dispatch, getState, { history }) {
     instance
-      .post("/api/plans/bookmark")
+      .get(`/api/plans/bookmark`)
       .then((res) => {
-        console(res);
+        dispatch(getBookMark(res.data.plans));
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -154,11 +141,54 @@ const bookMarkDB = () => {
 const addBookMarkDB = (planId) => {
   return function (dispatch, getState, { history }) {
     instance
-      .post(`/api/plans/${planId}/bookmark`, {})
+      .post(`/api/plans/${planId}/bookmark`)
       .then((res) => {
-        console(res);
+        dispatch(getdayPlanDB(planId));
       })
-      .catch(function (error) {
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//특정 여행 북마크 취소하기
+const deleteBookMarkDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/api/plans/${planId}/bookmark`)
+      .then((res) => {
+        dispatch(getdayPlanDB(planId));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//여행 좋아요
+const addLikeDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post(`/api/plans/${planId}/like`)
+      .then((res) => {
+        console.log(res);
+        dispatch(getdayPlanDB(planId));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//여행 좋아요 취소하기
+const deleteLikeDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/api/plans/${planId}/like`)
+      .then((res) => {
+        dispatch(getdayPlanDB(planId));
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -171,7 +201,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.plans;
       }),
-
     [CREATE_PLAN]: (state, action) =>
       produce(state, (draft) => {
         draft.planId = action.payload.planId;
@@ -180,20 +209,25 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myPlan = action.payload.myPlan;
       }),
+    [GET_BOOKMARK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.bookmark_list = action.payload.bookmark_list;
+      }),
   },
   initialState
 );
 
 const actionCreators = {
-  getPlan,
   getPlanDB,
-  createPlan,
   createPlanDB,
   getdayPlanDB,
   saveLocationDB,
-  addBookMark,
+  getBookMark,
+  getBookMarkDB,
   addBookMarkDB,
-  bookMarkDB,
+  deleteBookMarkDB,
+  addLikeDB,
+  deleteLikeDB,
 };
 
 export { actionCreators };

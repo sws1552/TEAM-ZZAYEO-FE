@@ -1,21 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import MainBookMark from "./MainBookMark";
+import { useSelector } from "react-redux";
 
-const MainBookMarkList = () => {
-    return (
-    
-        <Container>
-            나의 북마크리스트
-        </Container>
-        
-    );
+const MainBookMarkList = (props) => {
+  const bookmark_list = useSelector((store) => store.plan.bookmark_list);
+
+  return (
+    <Container>
+      {bookmark_list.map((list, idx) => {
+        return <MainBookMark key={idx} {...list} index={idx} />;
+      })}
+    </Container>
+  );
 };
 
-export default MainBookMarkList;
-
 const Container = styled.div`
-width: 100%;
-height: 200px;
-box-sizing: border-box;
-border: 4px solid gray;
-`
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  padding-left: 24px;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export default MainBookMarkList;

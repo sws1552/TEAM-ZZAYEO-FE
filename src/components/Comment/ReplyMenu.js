@@ -14,27 +14,26 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function LongMenu(props) {
+export default function ReplyMenu(props) {
 
-  const {commentId, planId, hide} = props;
-  
+    const {planId, commentId, replyId, hide} = props;
+
   const dispatch = useDispatch();
 
-  // console.log('commentId !! ',commentId);
-
   const itemClick = (e) => {
-    // console.log('e.target.id !! ',e.target.id);
+
+    // console.log(e.target.id);
 
     if(e.target.id === "수정하기"){
-      
-      hide();
 
-      // dispatch(commentActions.updateComment(commentId, planId));
+        hide();        
 
     }else {
 
       if(window.confirm("정말로 삭제하시겠습니까?")){
-        dispatch(commentActions.removeCommentFB(commentId, planId));
+        
+        dispatch(commentActions.deleteReplyFB(planId, replyId));
+
       }else {
         return;
       }
@@ -55,7 +54,7 @@ export default function LongMenu(props) {
   };
 
   return (
-    <div style={{position:"absolute", right: "0"}}>
+    <div id='ReplyCon' style={{position:"absolute", right: "0"}}>
       <IconButton
         aria-label="more"
         id="long-button"
