@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import {actionCreators as commentActions} from '../../redux/modules/comment';
 
-const ReplyWrite = (props) => {
+const ReplyWrite = (props) => {   
 
     const {planId, commentId} = props;
 
