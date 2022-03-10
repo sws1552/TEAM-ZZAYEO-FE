@@ -8,6 +8,7 @@ const CategoryModal = (props) => {
 
   const [activeTab, setActiveTab] = React.useState(0);
 
+
   const category = ["국내", "여행 스타일"];
 
   const categoryContents = {
@@ -32,7 +33,9 @@ const CategoryModal = (props) => {
                   <Li
                     style={{ color: i === activeTab ? "#000000" : "#bfbfbf" }}
                     key={i}
-                    onClick={() => onClick(i)}
+                    onClick={() => {
+                      onClick(i)
+                    }}
                   >
                     {c}
                   </Li>
