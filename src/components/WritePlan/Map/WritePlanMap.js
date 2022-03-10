@@ -2,9 +2,9 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Maker from "./Maker";
+import Polyline from "./Polyline";
 import MakerDirect from "./MakerDirect";
 import SearchBar from "./SearchBar";
-import Polyline from "./Polyline";
 import { useDispatch, useSelector } from "react-redux";
 // import { actionCreators as mapActions } from "../../../redux/modules/map";
 import { actionCreators as lineActions } from "../../../redux/modules/polyline";
@@ -33,7 +33,7 @@ const WritePlanMap = (props) => {
   });
 
   const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
-  
+
   const Markers = []
   EachDayPlaces[0]?.places?.filter((v, i) => {
     return (
@@ -41,21 +41,26 @@ const WritePlanMap = (props) => {
     )
   })
 
+
   const handleApiloaded = (map, maps) => {
     if (map && maps) {
       setApiReady(true);
       setMap(map);
       setGooglemaps(maps);
     }
-
   }
 
   if (window.screen.width >= 768) {
     zoom = 15;
   }
   //serchBar
+  
+  React.useEffect(() => {
+    handleOnPlacesChanged(geometry.location, geometry.viewport)
+  }, [map, googlemaps, geometry]);
 
-  //gemotry가 바뀔때 useCallback 실행시키기
+
+  //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
   const handleOnPlacesChanged = useCallback(() => {
     // console.log(geometry.location)
     if (!geometry) return;
@@ -66,19 +71,8 @@ const WritePlanMap = (props) => {
       map.setZoom(17)
     }
     // 
-  }, [geometry.location, geometry.viewport]);
+  }, [geometry.location, geometry.viewport])
 
-  React.useEffect(() => {
-    handleOnPlacesChanged(geometry.location, geometry.viewport)
-  }, [map, googlemaps, geometry]);
-
-
-  //장소찾기
-  // const addPlace = (places) => {
-  //   if (places) {
-  //     setPlaces(places);
-  //   }
-  // };
 
   return (
 
@@ -90,25 +84,13 @@ const WritePlanMap = (props) => {
             libraries: "places",
             //GoogleMap로드시 라이브러리로 places를 추가
           }}
-
           defaultCenter={center}
           defaultZoom={zoom}
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
           onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
-
-        // 위치를 렌더해주는 함수
         >
-          {/* {places?.length !== 0 &&
-            places?.map((place, index) => (
-              <MakerDirect
-                key={index}
-                text={place.name}
-                lat={place.lat}
-                lng={place.lng}
-              />
-            ))} */}
 
           {EachDayPlaces && EachDayPlaces[0]?.places?.length !== 0 &&
             EachDayPlaces[0]?.places?.map((place, index) => {
@@ -123,7 +105,7 @@ const WritePlanMap = (props) => {
               )
             })}
 
-         {apiReady && googlemaps && (
+          {apiReady && googlemaps && (
             <Polyline
               markers={Markers}
               map={map}

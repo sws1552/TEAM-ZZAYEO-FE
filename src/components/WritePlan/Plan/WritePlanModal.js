@@ -42,7 +42,6 @@ export default function BasicModal(props) {
     const lat = useSelector((state) => state.addPlace.lat);
     const lng = useSelector((state) => state.addPlace.lng);
     const address = useSelector((state) => state.addPlace.address);
-    const address_components = useSelector((state) => state.addPlace.address_components)
     const imageURL = useSelector((state) => state.addPlace.imageURL);
   
     const memoChange = (e) => {
@@ -219,7 +218,6 @@ export default function BasicModal(props) {
                                         lng,
                                         address,
                                         imageURL,
-                                        address_components
                                     )
                                 );
                             }}

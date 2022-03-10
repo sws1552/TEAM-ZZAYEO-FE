@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map";
 
 const Polyline = ({ maps, map, markers }) => {
+
   const dispatch = useDispatch()
   const myPlan = useSelector((state) => state.plan.myPlan);
   const dayId = useSelector((state) => state.map.dayId);// dayId를 넘겨서 같은 dayI인지 비교하려고!
@@ -11,75 +12,135 @@ const Polyline = ({ maps, map, markers }) => {
     dayPlace_list.push(doc);
   });
 
-  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
+  React.useEffect(() => {
+    PloyLineChanged(maps, map, markers)
+  }, [maps, map, markers]);
 
+  const PloyLineChanged = useCallback(() => {
+
+    let line = []
+    let PolyLine = []
+
+    markers.map((v, i) => {
+      return (
+        line.push(new maps.LatLng(v.lat, v.lng))
+      )
+    })
+    console.log(line)
+   
+    for (let i = 0; i < myPlan.days.length; i++) {
+      PolyLine.push({ dayId: myPlan.days[i].dayId })
+    }
+   
+    let createPolyline = new maps.Polyline({
+      path: line,
+      geodesic: true,
+      strokeColor: 'green',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    })
+
+    let deletePolyline = new maps.Polyline({
+      path: [],
+      geodesic: true,
+      strokeColor: 'blue',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    })
+    console.log(createPolyline)
+    console.log(deletePolyline)
+
+    PolyLine.map((v, i) => {
+      if (v.dayId === dayId) {  
+        createPolyline.setMap(map)
+        createPolyline.setVisible(true)
  
-  var line = []
-  markers.map((v, i) => {
-    return (
-      line.push(new maps.LatLng(v.lat, v.lng))
-    )
-  })
+      } else {
+        deletePolyline.setMap(null)
+        deletePolyline.setVisible(false)
+      }
+      
+    })
+   
 
-  let geodesicPolyline = new maps.Polyline({
-    path: line,
-    geodesic: true,
-    strokeColor: 'red',
-    strokeOpacity: 1.0,
-    strokeWeight: 2
-  })
+  }, [maps, map, markers])
 
-
-  
-  
-  // var PolyLine = []
-
-  // for (let i = 0; i < myPlan.days.length; i++) {
-  //   PolyLine.push({ dayId: myPlan.days[i].dayId})
-  // }
-
-  // const geodesicPolylines = PolyLine.map((v,i)=>{
-  //   return(
-  //     i =  new maps.Polyline({
-  //       path: [],
+  // const geodesicPolylines = PolyLine.map((v, i) => {
+  //   return (
+  //     i = new maps.Polyline({
+  //       path: line,
   //       geodesic: true,
-  //       strokeColor: 'red',
+  //       strokeColor: 'blue',
   //       strokeOpacity: 1.0,
   //       strokeWeight: 2
   //     })
   //   )
   // })
-  // console.log(geodesicPolylines)
- 
+
   // PolyLine.map((v, i) => {
   //   if (v.dayId === dayId) {
-  //     var line = geodesicPolylines[i].latLngs.Ed[0]
+  //     console.log(v.dayId)
+  //     console.log(i)
   //     geodesicPolylines[i].setMap(map)
-  //     // geodesicPolylines[i].setVisible(true)
+  //     geodesicPolylines[i].setVisible(true)
+  //   } else {
+  //     geodesicPolylines[i].setVisible(false)
+  //     geodesicPolylines[i].setMap(null)
+  //   }
+  // })
+
+  // let geodesicPolyline = new maps.Polyline({
+  //   path: line,
+  //   geodesic: true,
+  //   strokeColor: 'red',
+  //   strokeOpacity: 1.0,
+  //   strokeWeight: 2
+  // })
+
+  // console.log(line)
+
+  //   let PolyLine = []
+
+  // for (let i = 0; i < myPlan.days.length; i++) {
+  //   PolyLine.push({ dayId: myPlan.days[i].dayId })
+  // }
+
+
+  // PolyLine.map((v, i) => {
+  //   if (v.dayId === dayId) {
+  //     var line = geodesicPolylines && geodesicPolylines[i]?.latLngs?.Ed[0]
+  //     geodesicPolylines[i].setMap(map)
+  //     geodesicPolylines[i].setVisible(true)
   //     return (
   //       markers.map((v, i) => {
   //         return (
   //           line.push(new maps.LatLng(v.lat, v.lng))
   //         )
   //       })
-  //      )
+  //     )
   //   } else {
-  //     // geodesicPolylines[i].setVisible(false)
+  //     geodesicPolylines[i].setVisible(false)
   //     geodesicPolylines[i].setMap(null)
-  //   }     
-  // })
+
+  //   const geodesicPolylines = PolyLine.map((v,i)=>{
+  //     return(
+  //       i =  new maps.Polyline({
+  //         path: [],
+  //         geodesic: true,
+  //         strokeColor: 'blue',
+  //         strokeOpacity: 1.0,
+  //         strokeWeight: 2
+  //       })
+  //     )
+  //   })
+  //  console.log(geodesicPolylines)
 
 
 
+  //   })
+  //   React.useEffect(() => {
 
-  // React.useEffect(() => {
-
-  // }, []);
-
-  // const handlegeodesicPolyline = useCallback(() => {
-  //   // 
-  // }, [markers, map, maps]);
-
+  //   }, [PolyLine, geodesicPolylines]);
   // const nonGeodesicPolyline = new maps.Polyline({
   //   path: 
   //   geodesic: false,
@@ -89,27 +150,9 @@ const Polyline = ({ maps, map, markers }) => {
   // })
 
   // nonGeodesicPolyline.setMap(map)
-  const add = () => {
-    geodesicPolyline.setMap(map)
-    console.log(geodesicPolyline)
- 
-  }
-  const adddelete =  () => {
-    geodesicPolyline.setMap(null)
-    console.log(geodesicPolyline)
-    // geodesicPolyline.setVisible(false)
-  }
-
 
   return (
-    <>
-    <button onClick={()=>{
-        add()
-    }}>라인생기기</button>
-    <button onClick={()=>{
-        adddelete()
-    }}>라인지우기</button>
-    </>
+    null
   );
 };
 
