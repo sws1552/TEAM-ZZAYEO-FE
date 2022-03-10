@@ -14,12 +14,12 @@ import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
-import MainDetailPage from "../pages/MainDetailPage"
+import MainDetailPage from "../pages/MainDetailPage";
 
 import MyPage from "../pages/MyPage";
 import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
-
+import OtherUserPage from "../pages/OtherUserPage";
 
 function App() {
   return (
@@ -45,6 +45,7 @@ function App() {
             <Route path="/chatroom" exact component={ChatRoom} />
 
             <Route path="/mypage" exact component={MyPage} />
+            <Route path="/otheruser/:userId" exact component={OtherUserPage} />
 
             <Navigation />
           </Container>

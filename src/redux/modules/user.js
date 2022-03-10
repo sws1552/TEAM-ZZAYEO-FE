@@ -5,15 +5,20 @@ import axios from "axios";
 
 //actions
 const SET_USER = "SET_USER";
+const SET_USERPROFILE = "SET_USERPROFILE";
 const LOG_OUT = "LOG_OUT";
 
 //actioncreator
 const setUser = createAction(SET_USER, (user) => ({ user }));
+const setUserProfile = createAction(SET_USERPROFILE, (userprofile) => ({
+  userprofile,
+}));
 const logOut = createAction(LOG_OUT, () => ({}));
 
 //initial
 const initialState = {
   user: { userId: null, nickname: null, userImg: null },
+  userprofile: {},
   is_login: false,
 };
 
@@ -78,6 +83,21 @@ const checkUserDB = () => {
   };
 };
 
+//유저프로필 조회
+const userProfileDB = (userId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/users/${userId}`)
+      .then((res) => {
+        console.log(res.data.user);
+        dispatch(setUserProfile(res.data.user));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 //reducer
 export default handleActions(
   {
@@ -88,6 +108,10 @@ export default handleActions(
         draft.user.userImg = action.payload.user.userImg;
         draft.is_login = true;
       }),
+    [SET_USERPROFILE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.userprofile = action.payload.userprofile;
+      }),
   },
   initialState
 );
@@ -96,6 +120,8 @@ const actionCreators = {
   setUser,
   kakaoLogin,
   checkUserDB,
+  setUserProfile,
+  userProfileDB,
   // naverLogin,
 };
 

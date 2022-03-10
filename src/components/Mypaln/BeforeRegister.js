@@ -19,7 +19,6 @@ const ContainerBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 312px;
   height: 65vh;
 
   & .CropSquare {

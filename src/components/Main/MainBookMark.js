@@ -8,7 +8,12 @@ const MainBookMark = (props) => {
 
   const bookmark_list = useSelector((store) => store.plan.bookmark_list);
   const plan = bookmark_list.find((p) => p.planId === planId);
+  const userId = plan.planId.userId.userId;
 
+  const onProfile = (e) => {
+    e.stopPropagation();
+    history.push(`/otheruser/${userId}`);
+  };
   return (
     <React.Fragment>
       <Container>
@@ -17,7 +22,7 @@ const MainBookMark = (props) => {
             history.push(`detail/${planId.planId}`);
           }}
         >
-          <UserImg>
+          <UserImg onClick={onProfile}>
             <img src={plan.planId.userId.profile_img} alt="" />
           </UserImg>
           <UserName>{plan.planId.userId.nickname}</UserName>
