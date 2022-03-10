@@ -1,9 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as planActions } from "../redux/modules/plan";
 import BeforeRegister from "../components/Mypaln/BeforeRegister";
+import AfterRegister from "../components/Mypaln/AfterRegister";
 
 const Myplan = (props) => {
+  const dispatch = useDispatch();
   const { history } = props;
+
+  const myplans = useSelector((store) => store.plan.myplans);
+
+  React.useEffect(() => {
+    dispatch(planActions.getMyPlanDB());
+  }, []);
 
   return (
     <React.Fragment>
@@ -20,7 +30,16 @@ const Myplan = (props) => {
             <P>+</P>
             <P>새로운 여행을 작성해주세요</P>
           </AddPlanBtn>
-          <BeforeRegister />
+          {myplans.length === 0 ? (
+            <BeforeRegister />
+          ) : (
+            <Div>
+              <p>여행 리스트</p>
+              {myplans.map((l, i) => {
+                return <AfterRegister key={i} {...l} />;
+              })}
+            </Div>
+          )}
         </Bottom>
       </Container>
     </React.Fragment>
@@ -29,7 +48,6 @@ const Myplan = (props) => {
 
 const Container = styled.div`
   position: relative;
-  width: 100%;
   height: 100%;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -43,7 +61,7 @@ const Top = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #fbeaff;
+  border-bottom: 1px solid #d2dbdd;
 `;
 
 const TText = styled.div`
@@ -55,9 +73,9 @@ const TText = styled.div`
 
 const Bottom = styled.div`
   position: absolute;
-  left: 12%;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const AddPlanBtn = styled.div`
@@ -66,18 +84,30 @@ const AddPlanBtn = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 312px;
   height: 81px;
   margin-top: 20px;
+  margin: 20px 24px 0px 24px;
   background: #ffffff;
   border: 1px solid #666666;
   box-sizing: border-box;
 `;
+
 const P = styled.p`
   font-size: 14px;
   font-weight: 300;
   line-height: 20.27px;
   margin: 0;
+`;
+
+const Div = styled.div`
+  p {
+    margin-left: 24px;
+    margin-top: 35px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    color: #000000;
+  }
 `;
 
 export default Myplan;

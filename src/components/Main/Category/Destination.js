@@ -4,6 +4,8 @@ import styled from "styled-components";
 const Destination = (props) => {
   const destination = ["국내", "해외"];
   const [clickedDestination, changeDestination] = React.useState(0);
+
+  React.useEffect(() => {}, []);
   return (
     <React.Fragment>
       <Container>
@@ -45,4 +47,4 @@ const Category = styled.option`
   cursor: pointer;
 `;
 
-export default Destination;
+export default React.memo(Destination);

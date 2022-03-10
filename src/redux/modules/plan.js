@@ -7,6 +7,7 @@ const GET_PLAN = "GET_PLAN";
 const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
 const GET_BOOKMARK = "GET_BOOKMARK";
+const GET_MYPLAN = "GET_MYPLAN";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
@@ -15,6 +16,7 @@ const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
 const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
   bookmark_list,
 }));
+const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
 
 // 초기 상태값
 const initialState = {
@@ -24,6 +26,7 @@ const initialState = {
   planId: "",
   aaa: [],
   bookmark_list: [],
+  myplans: [],
 };
 
 // 미들웨어
@@ -118,12 +121,10 @@ export const saveLocationDB = (
       .post(`/api/plans/days/${dayId}`, formData, {})
       .then(function (response) {
         const planId = getState().plan.planId;
-        instance
-          .get(`/api/plans/${planId}`)
-          .then((res) => {
-            console.log(res)
-            dispatch(getdayPlan(res.data.plan));
-          })
+        instance.get(`/api/plans/${planId}`).then((res) => {
+          console.log(res);
+          dispatch(getdayPlan(res.data.plan));
+        });
       })
       .catch(function (error) {
         console.log(error);
@@ -202,6 +203,20 @@ const deleteLikeDB = (planId) => {
   };
 };
 
+//북마크 여행 불러오기
+const getMyPlanDB = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/myplans`)
+      .then((res) => {
+        dispatch(getMyPlan(res.data.plans));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 //리덕스
 export default handleActions(
   {
@@ -221,6 +236,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.bookmark_list = action.payload.bookmark_list;
       }),
+    [GET_MYPLAN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.myplans = action.payload.myplans;
+      }),
   },
   initialState
 );
@@ -236,6 +255,7 @@ const actionCreators = {
   deleteBookMarkDB,
   addLikeDB,
   deleteLikeDB,
+  getMyPlanDB,
 };
 
 export { actionCreators };
