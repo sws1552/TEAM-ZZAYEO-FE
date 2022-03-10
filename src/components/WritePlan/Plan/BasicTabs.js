@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map"
 import { history } from "../../../redux/ConfigureStore";
 import WritePlanModal from "./WritePlanModal"
+import EditMenu from "./EditMenu"
 
 const TabPanel = (props) => {
 
@@ -90,9 +91,13 @@ const BasicTabs = (props) => {
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
             {d.places && d.places.map((v, i) => {
+              
               return (
                 <div style={{ width: "100%" }}>
-                  <Text>{i + 1}.{v.time}</Text>
+                  <div style={{ display: "flex", justifyContent:"space-between"}}>
+                    <Text>{i + 1}.{v.time}</Text>
+                    <EditMenu placeId = {v.placeId}/>
+                  </div>
                   <Text>{v.placeName}</Text>
                   <Address>주소:{v.address}</Address>
                   <MemoBox>
@@ -105,7 +110,7 @@ const BasicTabs = (props) => {
               )
             })}
 
-            <WritePlanModal dayId={d.dayId}/>
+            <WritePlanModal dayId={d.dayId} />
             {/* <Button onClick={() => {
               dispatch(mapActions.sendDayId(d.dayId))
               history.push("/addplace")

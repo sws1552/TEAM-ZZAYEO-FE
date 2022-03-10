@@ -163,7 +163,9 @@ const Contents = (props) => {
           })}
         </div>
       </TripstyleBox>
-      <Button onClick={createPlan}>
+      <Button onClick={()=>{
+        "ㅎㅇ"
+        createPlan()}}>
         <p>세부일정 작성하기</p>
       </Button>
     </React.Fragment>

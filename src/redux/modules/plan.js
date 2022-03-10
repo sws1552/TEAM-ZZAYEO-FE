@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
+import { push } from "connected-react-router";
 
 // 액션타입
 const GET_PLAN = "GET_PLAN";
@@ -8,6 +9,8 @@ const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
 const GET_BOOKMARK = "GET_BOOKMARK";
 const GET_MYPLAN = "GET_MYPLAN";
+const STATUS = "STATUS"
+const DELETEMYDAYPOST = "DELETEMYDAYPOST";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
@@ -17,6 +20,8 @@ const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
   bookmark_list,
 }));
 const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
+const status = createAction(STATUS, (status) => ({ status }))
+const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
 
 // 초기 상태값
 const initialState = {
@@ -24,9 +29,10 @@ const initialState = {
   myPlan: [],
   is_loaded: false,
   planId: "",
-  aaa: [],
   bookmark_list: [],
   myplans: [],
+  status: ""
+
 };
 
 // 미들웨어
@@ -213,6 +219,68 @@ const getMyPlanDB = () => {
   };
 };
 
+//공개, 비공개 설정하기
+const statusDB = (planId, status) => {
+  return function (dispatch, getState, { history }) {
+    console.log(planId, status)
+    instance
+      .post(`api/plans/${planId}/public`,
+        {
+          status: status
+        })
+      .then((res) => {
+        console.log(res)
+        instance
+        .get("/api/plans")
+        .then((res) => {
+          dispatch(getPlan(res.data.plans));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//나의 Plan 삭제(여행리스트삭제)
+const deleteMyPlanDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    console.log(planId)
+    instance
+      .delete(`/api/plans/${planId}`)
+      .then((res) => {
+       console.log(res)
+       history.push('/myplan')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+//나의 DayPost(특정장소삭제) 삭제
+const deleteMyPostDB = (placeId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/api/plans/days/places/${placeId}`)
+      .then((res) => {
+        const planId = getState().plan.planId;
+        instance.get(`/api/plans/${planId}`).then((res) => {
+          console.log(res);
+          dispatch(getdayPlan(res.data.plan));
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
 //리덕스
 export default handleActions(
   {
@@ -236,6 +304,9 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myplans = action.payload.myplans;
       }),
+    [DELETEMYDAYPOST]: (state, action) =>
+      produce(state, (draft) => {
+      }),
   },
   initialState
 );
@@ -252,6 +323,9 @@ const actionCreators = {
   addLikeDB,
   deleteLikeDB,
   getMyPlanDB,
+  statusDB,
+  deleteMyPostDB,
+  deleteMyPlanDB
 };
 
 export { actionCreators };

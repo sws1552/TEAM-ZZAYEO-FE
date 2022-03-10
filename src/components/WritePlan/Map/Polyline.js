@@ -11,8 +11,24 @@ const Polyline = ({ maps, map, markers }) => {
   myPlan?.days?.forEach((doc) => {
     dayPlace_list.push(doc);
   });
+  // let line = []
+  // markers.map((v, i) => {
+  //   return (
+  //     line.push(new maps.LatLng(v.lat, v.lng))
+  //   )
+  // })
+  // let geodesicPolyline = new maps.Polyline({
+  //   path: line,
+  //   geodesic: true,
+  //   strokeColor: 'red',
+  //   strokeOpacity: 1.0,
+  //   strokeWeight: 2
+  // })
 
-  
+
+  // geodesicPolyline.setMap(map)
+
+
   const line = markers.reduce((acc, cur, i) => { 
     acc.push(new maps.LatLng(cur.lat, cur.lng));
     return acc;
@@ -38,15 +54,6 @@ const Polyline = ({ maps, map, markers }) => {
   }, [markers, map, maps])
 
 
-
-
-
-
-  
-
-
-
-
   // React.useEffect(() => {
   //   PloyLineChanged(maps, map, markers)
   // }, [maps, map, markers]);
@@ -61,18 +68,16 @@ const Polyline = ({ maps, map, markers }) => {
   //       line.push(new maps.LatLng(v.lat, v.lng))
   //     )
   //   })
-  //   console.log(line)
-   
+
+
   //   for (let i = 0; i < myPlan.days.length; i++) {
-  //     if(myPlan.days[i].places.length !== 0){
-  //       PolyLine.push({ dayId: myPlan.days[i].places[i].dayId })
-  //     }
+  //     PolyLine.push({ dayId: myPlan.days[i].dayId })
   //   }
-   
+
   //   let createPolyline = new maps.Polyline({
   //     path: line,
   //     geodesic: true,
-  //     strokeColor: 'green',
+  //     strokeColor: 'red',
   //     strokeOpacity: 1.0,
   //     strokeWeight: 2
   //   })
@@ -84,21 +89,20 @@ const Polyline = ({ maps, map, markers }) => {
   //     strokeOpacity: 1.0,
   //     strokeWeight: 2
   //   })
-  //   console.log(createPolyline)
-  //   console.log(deletePolyline)
+
 
   //   PolyLine.map((v, i) => {
   //     if (v.dayId === dayId) {  
   //       createPolyline.setMap(map)
   //       createPolyline.setVisible(true)
- 
+
   //     } else {
-  //       createPolyline.setMap(null)
-  //       createPolyline.setVisible(false)
+  //       deletePolyline.setMap(null)
+  //       deletePolyline.setVisible(false)
   //     }
-      
+
   //   })
-   
+
 
   // }, [maps, map, markers])
 
@@ -126,13 +130,7 @@ const Polyline = ({ maps, map, markers }) => {
   //   }
   // })
 
-  // let geodesicPolyline = new maps.Polyline({
-  //   path: line,
-  //   geodesic: true,
-  //   strokeColor: 'red',
-  //   strokeOpacity: 1.0,
-  //   strokeWeight: 2
-  // })
+
 
   // console.log(line)
 
