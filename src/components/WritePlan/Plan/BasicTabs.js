@@ -50,11 +50,18 @@ const a11yProps = (index) => {
 const BasicTabs = (props) => {
   const dayList = props.days
 
+  const polyLinedata = useSelector((state) => state.map.polyline);
+
+  console.log('polyLinedata !! ', polyLinedata);
+
+
   const dispatch = useDispatch()
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+ 
 
   return (
     <Container>
@@ -71,6 +78,7 @@ const BasicTabs = (props) => {
               <Tab
                 disableRipple //퍼지는 듯한 효과차단
                 onClick={() => {
+                  polyLinedata.setMap(null);
                   dispatch(mapActions.sendDayId(d.dayId))
                 }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
             )
