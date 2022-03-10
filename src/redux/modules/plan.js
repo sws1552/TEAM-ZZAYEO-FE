@@ -86,7 +86,6 @@ export const saveLocationDB = (
   lng,
   address,
   imageURL,
-  address_components
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -100,7 +99,6 @@ export const saveLocationDB = (
       lng,
       address,
       imageURL,
-      address_components
     );
 
     let formData = new FormData();
@@ -110,9 +108,6 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
-    address_components.map((eachfile) => {
-      formData.append("address_components", eachfile);
-    });
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });
@@ -131,6 +126,7 @@ export const saveLocationDB = (
       });
   };
 };
+
 
 //북마크 여행 불러오기
 const getBookMarkDB = () => {
