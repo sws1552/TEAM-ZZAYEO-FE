@@ -11,59 +11,100 @@ const Polyline = ({ maps, map, markers }) => {
   myPlan?.days?.forEach((doc) => {
     dayPlace_list.push(doc);
   });
+  // let line = []
+  // markers.map((v, i) => {
+  //   return (
+  //     line.push(new maps.LatLng(v.lat, v.lng))
+  //   )
+  // })
+  // let geodesicPolyline = new maps.Polyline({
+  //   path: line,
+  //   geodesic: true,
+  //   strokeColor: 'red',
+  //   strokeOpacity: 1.0,
+  //   strokeWeight: 2
+  // })
 
-  React.useEffect(() => {
-    PloyLineChanged(maps, map, markers)
-  }, [maps, map, markers]);
 
-  const PloyLineChanged = useCallback(() => {
+  // geodesicPolyline.setMap(map)
 
-    let line = []
-    let PolyLine = []
 
-    markers.map((v, i) => {
-      return (
-        line.push(new maps.LatLng(v.lat, v.lng))
-      )
-    })
-    console.log(line)
-   
-    for (let i = 0; i < myPlan.days.length; i++) {
-      PolyLine.push({ dayId: myPlan.days[i].dayId })
-    }
-   
-    let createPolyline = new maps.Polyline({
-      path: line,
-      geodesic: true,
-      strokeColor: 'green',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    })
+  const line = markers.reduce((acc, cur, i) => { 
+    acc.push(new maps.LatLng(cur.lat, cur.lng));
+    return acc;
+  }, []);
 
-    let deletePolyline = new maps.Polyline({
-      path: [],
-      geodesic: true,
-      strokeColor: 'blue',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    })
-    console.log(createPolyline)
-    console.log(deletePolyline)
+  let createPolyline = new maps.Polyline({
+    path: line,
+    geodesic: true,
+    strokeColor: 'green',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  })
 
-    PolyLine.map((v, i) => {
-      if (v.dayId === dayId) {  
-        createPolyline.setMap(map)
-        createPolyline.setVisible(true)
- 
-      } else {
-        deletePolyline.setMap(null)
-        deletePolyline.setVisible(false)
-      }
-      
-    })
-   
 
-  }, [maps, map, markers])
+  useEffect(() => {
+
+    createPolyline.setMap(map);
+    dispatch(mapActions.addPolyline(createPolyline));
+    
+    console.log('createPolyline !! ',createPolyline);
+    
+    // createPolyline.setMap(null);
+  }, [markers, map, maps])
+
+
+  // React.useEffect(() => {
+  //   PloyLineChanged(maps, map, markers)
+  // }, [maps, map, markers]);
+
+  // const PloyLineChanged = useCallback(() => {
+
+  //   let line = []
+  //   let PolyLine = []
+
+  //   markers.map((v, i) => {
+  //     return (
+  //       line.push(new maps.LatLng(v.lat, v.lng))
+  //     )
+  //   })
+
+
+  //   for (let i = 0; i < myPlan.days.length; i++) {
+  //     PolyLine.push({ dayId: myPlan.days[i].dayId })
+  //   }
+
+  //   let createPolyline = new maps.Polyline({
+  //     path: line,
+  //     geodesic: true,
+  //     strokeColor: 'red',
+  //     strokeOpacity: 1.0,
+  //     strokeWeight: 2
+  //   })
+
+  //   let deletePolyline = new maps.Polyline({
+  //     path: [],
+  //     geodesic: true,
+  //     strokeColor: 'blue',
+  //     strokeOpacity: 1.0,
+  //     strokeWeight: 2
+  //   })
+
+
+  //   PolyLine.map((v, i) => {
+  //     if (v.dayId === dayId) {  
+  //       createPolyline.setMap(map)
+  //       createPolyline.setVisible(true)
+
+  //     } else {
+  //       deletePolyline.setMap(null)
+  //       deletePolyline.setVisible(false)
+  //     }
+
+  //   })
+
+
+  // }, [maps, map, markers])
 
   // const geodesicPolylines = PolyLine.map((v, i) => {
   //   return (
@@ -89,13 +130,7 @@ const Polyline = ({ maps, map, markers }) => {
   //   }
   // })
 
-  // let geodesicPolyline = new maps.Polyline({
-  //   path: line,
-  //   geodesic: true,
-  //   strokeColor: 'red',
-  //   strokeOpacity: 1.0,
-  //   strokeWeight: 2
-  // })
+
 
   // console.log(line)
 

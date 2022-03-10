@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { history } from "../../redux/ConfigureStore";
+import MyEditPost from "./MyEditPost"
 
 const AfterRegister = (props) => {
   return (
     <React.Fragment>
       <Container>
         <TripCard
-          onClick={() => {
+          onClick={(e) => {
             history.push(`/detail/${props.planId}`);
           }}
         >
-          <CardTitle>{props.title}</CardTitle>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <CardTitle>{props.title}</CardTitle>
+            <MyEditPost planId={props.planId}/>
+          </div>
           <CardInfo>
             {props.startDate}~{props.endDate}
           </CardInfo>

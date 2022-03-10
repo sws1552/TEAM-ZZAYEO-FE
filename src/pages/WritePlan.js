@@ -19,7 +19,7 @@ const WritePlan = (props) => {
 
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
-  
+  console.log(myPlan)
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
   
@@ -27,8 +27,10 @@ const WritePlan = (props) => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
 
-  const decideShare = ["공개", "비공개"];
-
+  const decideShare = ["나만의 일정", "모두에게 공유"];
+  const share = "공개"
+  const unshare = "비공개"
+  
   return (
     <>
       <Container>
@@ -42,6 +44,12 @@ const WritePlan = (props) => {
                   key={i}
                   onClick={() => {
                     changeTripDest(i);
+                    if (l==="모두에게 공유") {
+                      dispatch(planActions.statusDB(myPlan.planId, share))
+                    }
+                    if(l==="나만의 일정") {
+                      dispatch(planActions.statusDB(myPlan.planId, unshare))
+                    }
                   }}
                   style={{
                     backgroundColor:

@@ -48,7 +48,9 @@ const a11yProps = (index) => {
 }
 
 const BasicTabs = (props) => {
-  const dayList = props.days
+  
+  const dayList = props.days;
+
 
   const dispatch = useDispatch()
   const [value, setValue] = React.useState(0);

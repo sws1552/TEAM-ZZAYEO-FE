@@ -15,7 +15,7 @@ const addPolyline = createAction(POLYLINE, (polyline) => ({ polyline }));
 // initial state
 const initialState = {
   dayId: "",
-  polyline: {}
+  polyline: null
 };
 
 //middleware
