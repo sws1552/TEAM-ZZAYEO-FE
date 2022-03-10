@@ -19,7 +19,7 @@ const MainCategory = (props) => {
     <Container>
       <SelectBox>
         <Destination onClick={openModal}>
-          어디로
+          국내
           <svg
             width="12"
             height="7"

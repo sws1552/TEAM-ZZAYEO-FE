@@ -85,7 +85,7 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL,
+  imageURL
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -98,7 +98,7 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL,
+      imageURL
     );
 
     let formData = new FormData();
@@ -126,7 +126,6 @@ export const saveLocationDB = (
       });
   };
 };
-
 
 //북마크 여행 불러오기
 const getBookMarkDB = () => {

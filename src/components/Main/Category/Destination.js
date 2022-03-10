@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { actionCreators as categoryActions } from "../../../redux/modules/category";
 
 const Destination = (props) => {
+  const dispatch = useDispatch();
   const destination = ["국내", "해외"];
   const [clickedDestination, changeDestination] = React.useState(0);
 
-  React.useEffect(() => {}, []);
   return (
     <React.Fragment>
       <Container>
@@ -14,6 +16,7 @@ const Destination = (props) => {
             <Category
               onClick={() => {
                 changeDestination(i);
+                // dispatch(categoryActions.addCategoryDB(destination[i]));
               }}
               style={{
                 backgroundColor:
@@ -21,6 +24,7 @@ const Destination = (props) => {
                 color: i === clickedDestination ? "#FFFFFF" : "#757575",
               }}
               key={i}
+              value={l}
             >
               {l}
             </Category>

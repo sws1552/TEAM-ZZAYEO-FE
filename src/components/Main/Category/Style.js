@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { actionCreators as categoryActions } from "../../../redux/modules/category";
 
 const Style = (props) => {
+  const dispatch = useDispatch();
   const style = [
     "액티비티 체험",
     "문화 예술 역사 체험",
@@ -14,7 +17,9 @@ const Style = (props) => {
     "호캉스",
     "자연친화",
   ];
+
   const [clickedStyle, changeStyle] = React.useState(0);
+
   return (
     <React.Fragment>
       <Container>
@@ -23,6 +28,7 @@ const Style = (props) => {
             <Category
               onClick={() => {
                 changeStyle(i);
+                // dispatch(categoryActions.addCategoryDB(style[i]));
               }}
               style={{
                 backgroundColor: i === clickedStyle ? "#535353" : "#F4F4F4",
