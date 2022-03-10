@@ -2,12 +2,29 @@ import React from "react";
 import styled from "styled-components";
 
 const Destination = (props) => {
-  const destList = ["국내", "해외"];
+  const destination = ["국내", "해외"];
+  const [clickedDestination, changeDestination] = React.useState(0);
+
+  React.useEffect(() => {}, []);
   return (
     <React.Fragment>
       <Container>
-        {destList.map((l, i) => {
-          return <Category key={i}>{l}</Category>;
+        {destination.map((l, i) => {
+          return (
+            <Category
+              onClick={() => {
+                changeDestination(i);
+              }}
+              style={{
+                backgroundColor:
+                  i === clickedDestination ? "#535353" : "#F4F4F4",
+                color: i === clickedDestination ? "#FFFFFF" : "#757575",
+              }}
+              key={i}
+            >
+              {l}
+            </Category>
+          );
         })}
       </Container>
     </React.Fragment>
@@ -20,14 +37,14 @@ const Container = styled.div`
   padding: 0px 24px;
 `;
 
-const Category = styled.div`
+const Category = styled.option`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   padding: 5px 16px;
   margin-right: 8px;
-  background-color: #f4f4f4;
   border-radius: 16px;
+  cursor: pointer;
 `;
 
-export default Destination;
+export default React.memo(Destination);

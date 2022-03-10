@@ -40,6 +40,11 @@ const CategoryModal = (props) => {
               })}
             </Taps>
             <div>{categoryContents[activeTab]}</div>
+            <Div>
+              <Button onClick={close}>
+                <p>여행 확인하기</p>
+              </Button>
+            </Div>
           </Modal>
         </OpenModal>
       </React.Fragment>
@@ -74,7 +79,6 @@ const Modal = styled.div`
   bottom: 0;
   max-width: 420px;
   width: 100%;
-  margin: auto;
   height: 586px;
   background-color: #ffffff;
   border-top-left-radius: 21px;
@@ -94,6 +98,28 @@ const Taps = styled.div`
 const Li = styled.li`
   list-style-type: none;
   margin-right: 24px;
+`;
+
+const Div = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 36px;
+`;
+const Button = styled.div`
+  height: 48px;
+  margin: 0px 24px;
+  background-color: #535353;
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 export default CategoryModal;

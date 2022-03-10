@@ -6,25 +6,21 @@ import { history } from "../../redux/ConfigureStore";
 const MainBookMark = (props) => {
   const planId = props.planId;
 
-  const plans = useSelector((store) => store.plan.list);
-  const plan = plans.find((p) => p.planId === planId);
-
-  // React.useEffect(() => {
-  //   dispatch(planActions.getPlanDB());
-  // }, []);
+  const bookmark_list = useSelector((store) => store.plan.bookmark_list);
+  const plan = bookmark_list.find((p) => p.planId === planId);
 
   return (
     <React.Fragment>
       <Container>
         <BookMarkCard
           onClick={() => {
-            history.push(`detail/${planId}`);
+            history.push(`detail/${planId.planId}`);
           }}
         >
           <UserImg>
-            <img src={plan?.userId.profile_img} alt="" />
+            <img src={plan.planId.userId.profile_img} alt="" />
           </UserImg>
-          <UserName>{plan?.userId.nickname}</UserName>
+          <UserName>{plan.planId.userId.nickname}</UserName>
         </BookMarkCard>
       </Container>
     </React.Fragment>
