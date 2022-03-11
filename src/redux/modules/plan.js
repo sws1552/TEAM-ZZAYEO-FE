@@ -46,7 +46,7 @@ const getPlanDB = () => {
     instance
       .get("/api/plans")
       .then((res) => {
-        dispatch(getPlan(res.data.plans));
+        dispatch(getPlan(res.data));
       })
       .catch(function (error) {
         console.log(error);
@@ -286,8 +286,7 @@ const searchDB = (keyword) => {
     instance
       .get(`/api/plans/search?query=${keyword}`)
       .then(function (res) {
-        console.log(res.data.plans);
-        // dispatch(search(res.data.plans));
+        dispatch(search(res.data.plans));
       })
       .catch(function (error) {
         console.log(error);
@@ -300,7 +299,8 @@ export default handleActions(
   {
     [GET_PLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.plans;
+        draft.list = action.payload.plans.plans;
+        draft.endPage = action.payload.plans.endPage;
       }),
     [CREATE_PLAN]: (state, action) =>
       produce(state, (draft) => {
@@ -321,7 +321,6 @@ export default handleActions(
     [DELETEMYDAYPOST]: (state, action) => produce(state, (draft) => {}),
     [SEARCH]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.search_list);
         draft.search_list = action.payload.search_list;
       }),
   },

@@ -8,7 +8,7 @@ const Filter = (props) => {
   const [styleShowModal, setStyleShowModal] = React.useState(false);
 
   const [dest, setDest] = React.useState("국내");
-  const [style, setStyle] = React.useState("여행스타일");
+  const [style, setStyle] = React.useState("여행 스타일");
 
   // 국내,해외 모달 열기
   const destOpenModal = () => {

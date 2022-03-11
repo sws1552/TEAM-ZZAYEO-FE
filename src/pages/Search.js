@@ -14,7 +14,6 @@ const Search = (props) => {
   const search = query.query;
 
   const searchList = useSelector((store) => store.plan.search_list);
-  console.log(searchList);
 
   React.useEffect(() => {
     const search = decodeURI(props.location.search).split("=")[1];
