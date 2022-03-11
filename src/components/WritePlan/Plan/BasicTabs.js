@@ -53,8 +53,6 @@ const BasicTabs = (props) => {
 
   const polyLinedata = useSelector((state) => state.map.polyline);
 
-  console.log('polyLinedata !! ', polyLinedata);
-
 
   const dispatch = useDispatch()
   const [value, setValue] = React.useState(0);
@@ -80,7 +78,8 @@ const BasicTabs = (props) => {
                 disableRipple //퍼지는 듯한 효과차단
                 onClick={() => {
                   polyLinedata.setMap(null);
-                  polyLinedata.setVisible(false)
+                  console.log('tabs polyLineddata !! ', polyLinedata.map);
+                  dispatch(mapActions.addPolyline(polyLinedata));
                   dispatch(mapActions.sendDayId(d.dayId))
                 }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
             )
