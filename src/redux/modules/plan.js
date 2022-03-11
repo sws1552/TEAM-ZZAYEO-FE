@@ -12,6 +12,7 @@ const GET_MYPLAN = "GET_MYPLAN";
 const STATUS = "STATUS"
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
 
+
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
@@ -31,8 +32,7 @@ const initialState = {
   planId: "",
   bookmark_list: [],
   myplans: [],
-  status: ""
-
+  status: "",
 };
 
 // 미들웨어
@@ -230,13 +230,13 @@ const statusDB = (planId, status) => {
       .then((res) => {
         console.log(res)
         instance
-        .get("/api/plans")
-        .then((res) => {
-          dispatch(getPlan(res.data.plans));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .get("/api/plans")
+          .then((res) => {
+            dispatch(getPlan(res.data.plans));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -251,8 +251,8 @@ const deleteMyPlanDB = (planId) => {
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
-       console.log(res)
-       history.push('/myplan')
+        console.log(res)
+        history.push('/myplan')
       })
       .catch((error) => {
         console.log(error);
@@ -301,7 +301,7 @@ export default handleActions(
       }),
     [GET_MYPLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.myplans = action.payload.myplans;
+        draft.myplans = action.payload.myplans+1
       }),
     [DELETEMYDAYPOST]: (state, action) =>
       produce(state, (draft) => {
@@ -324,7 +324,7 @@ const actionCreators = {
   getMyPlanDB,
   statusDB,
   deleteMyPostDB,
-  deleteMyPlanDB
+  deleteMyPlanDB,
 };
 
 export { actionCreators };

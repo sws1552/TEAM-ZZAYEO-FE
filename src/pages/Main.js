@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, memo, useEffect, useCallback } from "react"
+import { useInView } from "react-intersection-observer"
+import instance from "../shared/Request";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -6,15 +8,64 @@ import styled from "styled-components";
 import MainCategory from "../components/Main/MainCategory";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
+import Loader from "../components/Main/Loader";
+import Item from "./Item";
 import Searchbar from "../components/Search/Searchbar";
+
 
 const Main = (props) => {
   const dispatch = useDispatch();
-
   const is_token = localStorage.getItem("token") ? true : false;
 
+  //무한 스크롤
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [itemLists, setItemLists] = useState([]);
+  const [page, setPage] = useState(1)
+  
+  
+  useEffect(() => {
+    console.log(itemLists)
+ 
+  }, [itemLists]);
+
+  console.log(page)
+  const getMoreItem = async (page) => {
+    setIsLoaded(true);
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await instance.get(`/api/plans?page=${page}`)
+      .then((res) => {
+        let Items = res.data.plans
+        setItemLists((itemLists) => itemLists.concat(Items));
+      })
+    setIsLoaded(false);
+  };
+
+  const onIntersect = useCallback (async([entry], observer)=>{
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target)
+      await getMoreItem(page);
+      setPage((num)=>num+1)
+      console.log(page)
+      observer.observe(entry.target);
+    }
+  },[page])
+   
+  
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, page]);
+
+
+
   const plans = useSelector((store) => store.plan.list);
-  console.log(plans)
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB());
@@ -31,10 +82,15 @@ const Main = (props) => {
           <MainBookMarkList />
         </BookMarkListBox>
         <TravelListBox>
+
           <p>여행 일정 매거진</p>
-          {plans.map((l, i) => {
+
+          {itemLists.map((l, i) => {
             return <MainTravelList key={i} {...l} />;
           })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
         </TravelListBox>
       </Container>
     );
