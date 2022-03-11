@@ -112,6 +112,12 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userprofile = action.payload.userprofile;
       }),
+    [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        localStorage.removeItem("token");
+        draft.user = null;
+        draft.is_login = false;
+      }),
   },
   initialState
 );
@@ -122,6 +128,7 @@ const actionCreators = {
   checkUserDB,
   setUserProfile,
   userProfileDB,
+  logOut,
   // naverLogin,
 };
 
