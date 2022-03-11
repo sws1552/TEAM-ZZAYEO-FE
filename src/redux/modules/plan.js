@@ -9,8 +9,9 @@ const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
 const GET_BOOKMARK = "GET_BOOKMARK";
 const GET_MYPLAN = "GET_MYPLAN";
-const STATUS = "STATUS"
+const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
+const SEARCH = "SEARCH";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
@@ -20,8 +21,10 @@ const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
   bookmark_list,
 }));
 const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
-const status = createAction(STATUS, (status) => ({ status }))
+const status = createAction(STATUS, (status) => ({ status }));
 const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
+
+const search = createAction(SEARCH, (search_list) => ({ search_list }));
 
 // 초기 상태값
 const initialState = {
@@ -31,8 +34,8 @@ const initialState = {
   planId: "",
   bookmark_list: [],
   myplans: [],
-  status: ""
-
+  status: "",
+  search_list: [],
 };
 
 // 미들웨어
@@ -221,22 +224,21 @@ const getMyPlanDB = () => {
 //공개, 비공개 설정하기
 const statusDB = (planId, status) => {
   return function (dispatch, getState, { history }) {
-    console.log(planId, status)
+    console.log(planId, status);
     instance
-      .post(`api/plans/${planId}/public`,
-        {
-          status: status
-        })
+      .post(`api/plans/${planId}/public`, {
+        status: status,
+      })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         instance
-        .get("/api/plans")
-        .then((res) => {
-          dispatch(getPlan(res.data.plans));
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          .get("/api/plans")
+          .then((res) => {
+            dispatch(getPlan(res.data.plans));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -247,19 +249,18 @@ const statusDB = (planId, status) => {
 //나의 Plan 삭제(여행리스트삭제)
 const deleteMyPlanDB = (planId) => {
   return function (dispatch, getState, { history }) {
-    console.log(planId)
+    console.log(planId);
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
-       console.log(res)
-       history.push('/myplan')
+        console.log(res);
+        history.push("/myplan");
       })
       .catch((error) => {
         console.log(error);
       });
   };
 };
-
 
 //나의 DayPost(특정장소삭제) 삭제
 const deleteMyPostDB = (placeId) => {
@@ -279,6 +280,20 @@ const deleteMyPostDB = (placeId) => {
   };
 };
 
+// 검색하기
+const searchDB = (keyword) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/plans/search?query=${keyword}`)
+      .then(function (res) {
+        console.log(res.data.plans);
+        // dispatch(search(res.data.plans));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
 
 //리덕스
 export default handleActions(
@@ -303,8 +318,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myplans = action.payload.myplans;
       }),
-    [DELETEMYDAYPOST]: (state, action) =>
+    [DELETEMYDAYPOST]: (state, action) => produce(state, (draft) => {}),
+    [SEARCH]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload.search_list);
+        draft.search_list = action.payload.search_list;
       }),
   },
   initialState
@@ -324,7 +342,8 @@ const actionCreators = {
   getMyPlanDB,
   statusDB,
   deleteMyPostDB,
-  deleteMyPlanDB
+  deleteMyPlanDB,
+  searchDB,
 };
 
 export { actionCreators };

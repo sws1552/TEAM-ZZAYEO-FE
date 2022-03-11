@@ -1,25 +1,40 @@
 import React from "react";
 import styled from "styled-components";
-import CategoryModal from "./CategoryModal";
+import DestinationModal from "./Modal/DestinationModal";
+import StyleModal from "./Modal/StyleModal";
 
-const MainCategory = (props) => {
-  let [modalopen, setModalopen] = React.useState(false);
+const Filter = (props) => {
+  const [destShowModal, setDestShowModal] = React.useState(false);
+  const [styleShowModal, setStyleShowModal] = React.useState(false);
 
-  //카테고리 모달 열기
-  const openModal = () => {
-    setModalopen(true);
+  const [dest, setDest] = React.useState("국내");
+  const [style, setStyle] = React.useState("여행스타일");
+
+  // 국내,해외 모달 열기
+  const destOpenModal = () => {
+    setDestShowModal(true);
+  };
+  // 국내,해외 모달 닫기
+  const destCloseModal = (e) => {
+    e.stopPropagation();
+    setDestShowModal(false);
   };
 
-  //카테고리 모달 닫기
-  const closeModal = () => {
-    setModalopen(false);
+  // 여행스타일 모달 열기
+  const styleOpenModal = () => {
+    setStyleShowModal(true);
   };
 
+  // 여행스타일 모달 닫기
+  const styleCloseModal = (e) => {
+    e.stopPropagation();
+    setStyleShowModal(false);
+  };
   return (
     <Container>
       <SelectBox>
-        <Destination onClick={openModal}>
-          국내
+        <Destination onClick={destOpenModal}>
+          {dest}
           <svg
             width="12"
             height="7"
@@ -36,9 +51,14 @@ const MainCategory = (props) => {
             />
           </svg>
         </Destination>
-        <CategoryModal open={modalopen} close={closeModal}></CategoryModal>
-        <Style onClick={openModal}>
-          여행스타일
+        <DestinationModal
+          destShowModal={destShowModal}
+          destCloseModal={destCloseModal}
+          dest={dest}
+          setDest={setDest}
+        ></DestinationModal>
+        <Style onClick={styleOpenModal}>
+          {style}
           <svg
             width="12"
             height="7"
@@ -55,12 +75,16 @@ const MainCategory = (props) => {
             />
           </svg>
         </Style>
+        <StyleModal
+          styleShowModal={styleShowModal}
+          styleCloseModal={styleCloseModal}
+          style={style}
+          setStyle={setStyle}
+        ></StyleModal>
       </SelectBox>
     </Container>
   );
 };
-
-export default MainCategory;
 
 const Container = styled.div`
   padding: 0px 24px;
@@ -92,3 +116,5 @@ const Destination = styled.div`
 `;
 
 const Style = styled(Destination)``;
+
+export default Filter;
