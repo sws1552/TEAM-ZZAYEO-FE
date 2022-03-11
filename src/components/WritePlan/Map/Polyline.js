@@ -44,12 +44,8 @@ const Polyline = ({ maps, map, markers }) => {
 
 
   useEffect(() => {
-
     createPolyline.setMap(map);
     dispatch(mapActions.addPolyline(createPolyline));
-    
-    console.log('createPolyline !! ',createPolyline);
-    
     // createPolyline.setMap(null);
   }, [markers, map, maps])
 

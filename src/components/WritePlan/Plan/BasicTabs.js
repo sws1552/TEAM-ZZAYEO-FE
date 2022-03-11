@@ -80,6 +80,7 @@ const BasicTabs = (props) => {
                 disableRipple //퍼지는 듯한 효과차단
                 onClick={() => {
                   polyLinedata.setMap(null);
+                  polyLinedata.setVisible(false)
                   dispatch(mapActions.sendDayId(d.dayId))
                 }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
             )
