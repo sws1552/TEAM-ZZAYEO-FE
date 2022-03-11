@@ -29,13 +29,16 @@ const ChatRoom = (props) => {
         if(curMsg !== ""){
             const msgData = {
                 roomId: roomData.roomId,
-                author: roomData.userId,
-                message: curMsg,
+                author: roomData.userId, // 메세지보내는사람 snsId,
+                message: curMsg, // 메세지 텍스트
                 time: time,
+                // 메세지보내는사람 fromSnsId,
+                // 메세지받는사람 toSnsId,
+                // 메세지 텍스트 chatText
             }
 
             // 서버에 메시지 데이터 전송
-            await roomData.socket.emit("send_message", msgData);
+            await roomData.socket.emit("room", msgData);
 
             setMessageList((preState) => {
                 console.log('전에 있던 채팅리스트 데이터 ', preState);
@@ -50,7 +53,8 @@ const ChatRoom = (props) => {
     // 소켓서버에 변경사항이 있을때마다 내부함수 실행
     React.useEffect(() => {
         // 서버에서 메시지데이터 받아오기
-        roomData.socket.on("receive_message", (data) => {
+        roomData.socket.on("chat", (data) => {
+            // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
             console.log("상대방 메시지 수신~!! ", data);
             
             // 상대방 메시지 채팅방 메시지 리스트에 저장
@@ -61,6 +65,7 @@ const ChatRoom = (props) => {
         });
 
         return () => {
+            console.log('채팅방나간다잉');
             setMessageList([]);
         }
 
