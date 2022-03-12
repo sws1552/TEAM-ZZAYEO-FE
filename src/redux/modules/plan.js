@@ -391,7 +391,13 @@ export default handleActions(
       }),
     [STYLELIST]: (state, action) =>
       produce(state, (draft) => {
-        draft.style_list = action.payload.style_list;
+        const style = action.payload.style_list;
+        if(style.length === 0) {
+          draft.style_list = [{none:"없음"}]
+        } else {
+          draft.style_list = action.payload.style_list
+        }
+        
       }),
   },
   initialState
