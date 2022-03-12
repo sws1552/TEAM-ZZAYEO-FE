@@ -19,7 +19,7 @@ const Main = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [itemLists, setItemLists] = useState([]);
   const [page, setPage] = useState(1);
-  const [endPage, setEndPage] = useState(0)
+  const [endPage, setEndPage] = useState(0);
 
   useEffect(() => {
     console.log(itemLists);
@@ -31,7 +31,7 @@ const Main = (props) => {
     await instance.get(`/api/plans?page=${page}`).then((res) => {
       let Items = res.data.plans;
       setItemLists((itemLists) => itemLists.concat(Items));
-      setEndPage(res.data.endPage)
+      setEndPage(res.data.endPage);
     });
     setIsLoaded(false);
   };
@@ -42,7 +42,7 @@ const Main = (props) => {
         observer.unobserve(entry.target);
         await getMoreItem(page);
         if (page === endPage) {
-          return page
+          return page;
         } else {
           setPage((num) => num + 1);
         }
@@ -64,15 +64,65 @@ const Main = (props) => {
   }, [target, page]);
 
   const plans = useSelector((store) => store.plan.list);
-
   const style = useSelector((store) => store.category.style);
+  const destination = useSelector((store) => store.category.destination);
   const style_list = useSelector((store) => store.plan.style_list);
+  const destination_list = useSelector((store) => store.plan.destination_list);
+  console.log(style_list);
+  console.log(destination);
+
+  const myDestination = style_list.filter((v) => v.destination === destination);
+  console.log(myDestination);
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB(style));
+    // dispatch(planActions.getdestinationDB(destination));
     dispatch(planActions.getBookMarkDB());
-  }, [style]);
+  }, [style, destination]);
+
+  if (is_token && destination === "국내") {
+    return (
+      <Container>
+        <Searchbar />
+        <Filter />
+        <BookMarkListBox>
+          <p>내가 찜한 여행 스토리</p>
+          <MainBookMarkList />
+        </BookMarkListBox>
+        <TravelListBox>
+          <p>여행 일정 매거진</p>
+          {myDestination.map((l, i) => {
+            return <MainTravelList key={i} {...l} />;
+          })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
+        </TravelListBox>
+      </Container>
+    );
+  }
+  if (is_token && destination === "해외") {
+    return (
+      <Container>
+        <Searchbar />
+        <Filter />
+        <BookMarkListBox>
+          <p>내가 찜한 여행 스토리</p>
+          <MainBookMarkList />
+        </BookMarkListBox>
+        <TravelListBox>
+          <p>여행 일정 매거진</p>
+          {myDestination.map((l, i) => {
+            return <MainTravelList key={i} {...l} />;
+          })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
+        </TravelListBox>
+      </Container>
+    );
+  }
 
   if (is_token && style_list.length === 0) {
     return (
@@ -107,14 +157,12 @@ const Main = (props) => {
         </BookMarkListBox>
         <TravelListBox>
           <p>여행 일정 매거진</p>
-
           {style_list.map((l, i) => {
             if (l.none) {
-              return "하이"
+              return "하이";
             } else {
               return <MainTravelList key={i} {...l} />;
             }
-
           })}
           <div ref={setTarget} className="Target-Element">
             {isLoaded && <Loader />}
