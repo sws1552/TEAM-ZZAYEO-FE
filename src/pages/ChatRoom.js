@@ -8,6 +8,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 import { history } from '../redux/ConfigureStore';
 import {useDispatch, useSelector} from 'react-redux';
+import {socket} from '../shared/Socket';
 
 const ChatRoom = (props) => {
 
@@ -21,29 +22,32 @@ const ChatRoom = (props) => {
     const [curMsg, setCurMsg] = useState("");
     // 채팅방메세지리스트
     const [msgList, setMessageList] = useState([]);
-    let time = moment().format("LT");
+    // let time = moment().format("LT");
+
+    console.log('msgList !! ',msgList);
 
     // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
     const sendMessage = async () => {
 
         if(curMsg !== ""){
             const msgData = {
-                roomId: roomData.roomId,
-                author: roomData.userId, // 메세지보내는사람 snsId,
-                message: curMsg, // 메세지 텍스트
-                time: time,
+                // roomId: roomData.roomId,
+                fromSnsId: roomData.fromSnsId, // 메세지보내는사람 snsId,
+                toSnsId: roomData.toSnsId, // 메세지받는사람 snsId,
+                chatText: curMsg, // 메세지 텍스트
+                // time: time,
                 // 메세지보내는사람 fromSnsId,
                 // 메세지받는사람 toSnsId,
                 // 메세지 텍스트 chatText
             }
 
             // 서버에 메시지 데이터 전송
-            await roomData.socket.emit("room", msgData);
+            await socket.emit("room", msgData);
 
-            setMessageList((preState) => {
-                console.log('전에 있던 채팅리스트 데이터 ', preState);
-                return [...preState, msgData];
-            });
+            // setMessageList((preState) => {
+            //     console.log('전에 있던 채팅리스트 데이터 ', preState);
+            //     return [...preState, msgData];
+            // });
 
         }
 
@@ -53,7 +57,7 @@ const ChatRoom = (props) => {
     // 소켓서버에 변경사항이 있을때마다 내부함수 실행
     React.useEffect(() => {
         // 서버에서 메시지데이터 받아오기
-        roomData.socket.on("chat", (data) => {
+        socket.on("chat", (data) => {
             // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
             console.log("상대방 메시지 수신~!! ", data);
             
@@ -70,7 +74,7 @@ const ChatRoom = (props) => {
         }
 
 
-    }, [roomData.socket]);
+    }, [socket]);
 
 
     return (
@@ -87,10 +91,10 @@ const ChatRoom = (props) => {
                             <div>
                                 <UserCon className={roomData.userId === item.author ? "me" : "other"}>{item.author}</UserCon>
                                 <MsgCon className={roomData.userId === item.author ? "me" : "other"}>
-                                    <p>{item.time}</p>
+                                    {/* <p>{item.time}</p> */}
                                     {/* <UserImg /> */}
                                     <MessageContent className={roomData.userId === item.author ? "me" : "other"}>
-                                        <p>{item.message}</p>
+                                        <p>{item.chatText}</p>
                                     </MessageContent>
                                 </MsgCon>
                             </div>

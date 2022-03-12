@@ -100,6 +100,8 @@ const userProfileDB = (userId) => {
   };
 };
 
+
+
 //reducer
 export default handleActions(
   {
@@ -114,6 +116,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userInfo = action.payload.userInfo;
       }),
+   
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         localStorage.removeItem("token");
