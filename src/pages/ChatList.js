@@ -6,7 +6,7 @@ import Onechat from "../components/Chat/Onechat";
 import { history } from "../redux/ConfigureStore";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
-import { socket } from '../shared/Socket';
+import { actionCreators as userActions } from "../redux/modules/user";
 
 // import io from "socket.io-client";
 
@@ -16,6 +16,10 @@ import { socket } from '../shared/Socket';
 
 const ChatList = (props) => {
   const dispatch = useDispatch();
+
+  const chat_list = useSelector((state) => state.chat.list);
+
+  console.log('chat_list !! ',chat_list);
 
   const [userId, setUserId] = useState("");
   const [roomId, setRoomId] = useState("1");
@@ -36,21 +40,39 @@ const ChatList = (props) => {
     history.push("/chatroom");
   };
 
-  return (
-    <ListContainer>
-      <Header />
-      <ListWrap>
-        <OneChatWrap>
-          테스트용 userId입력
-          <input onChange={(e) => setUserId(e.target.value)} />
-          <Onechat _onClick={joinRoom} />
-          <Onechat _onClick={() => console.log("test")} />
-          <Onechat _onClick={() => console.log("test")} />
-        </OneChatWrap>
+  React.useEffect(() => {
+    if(chat_list.length === 0){
+      dispatch(chatActions.getChatListFB());
+    }
+  }, []);
 
-      </ListWrap>
-    </ListContainer>
-  );
+  if(chat_list.length === 0){
+    return null;
+  }else {
+
+    return (
+      <ListContainer>
+        <Header />
+        <ListWrap>
+          <OneChatWrap>
+            {/* 테스트용 userId입력
+            <input onChange={(e) => setUserId(e.target.value)} /> */}
+            {chat_list.map((item, i) => {
+              // if(typeof item.roomNum !== "undefined"){
+                return <Onechat key={item._id} {...item} />
+              // }else {
+              //   return null;
+              // }
+            })}
+            
+            
+          </OneChatWrap>
+
+        </ListWrap>
+      </ListContainer>
+    );
+
+  }
 };
 
 const ListContainer = styled.div`

@@ -1,13 +1,45 @@
 import React from 'react';
 import styled from "styled-components";
+import moment from 'moment';
+import { socket } from "../../shared/Socket";
+import { history } from "../../redux/ConfigureStore";
+import { actionCreators as chatActions } from "../../redux/modules/chat";
+import { actionCreators as userActions } from "../../redux/modules/user";
+import instance from "../../shared/Request";
+import { useSelector, useDispatch } from "react-redux";
 
 const Onechat = (props) => {
+
+    const dispatch = useDispatch();
+
+    // console.log('props !! ',props);
+
+    const joinRoom = () => {
+        
+        const roomUserInfo = {
+            user: props.userId2,
+            curUserInfo: props.userId,
+        }
+
+        const roomData = {
+            fromSnsId: props.userId.snsId,
+            toSnsId: props.userId2.snsId,
+        }
+
+        dispatch(chatActions.getRoom(roomUserInfo));
+
+        socket.emit("joinRoom", roomData);
+
+        history.push("/chatroom");
+
+    }
+
     return (
-        <Container onClick={props._onClick}>
-            <UserImg profileImg={props.profileImg}/>
+        <Container onClick={joinRoom}>
+            <UserImg profileImg={props.userId2.profile_img}/>
             <NickCon>
-                <Text>{props.userNick}</Text>
-                <div style={{color: "#757575"}}>{props.pretime}</div>
+                <Text>{props.userId2.nickname}</Text>
+                <div style={{color: "#757575"}}>{moment(props.updatedAt).format("YYYY-MM-DD")}</div>
             </NickCon>
         </Container>
     );
@@ -39,7 +71,7 @@ const UserImg = styled.div`
     width: 70px;
     height: 70px;
     border-radius: 35px;
-    background-image: url(${(props) => (props.profileImg)});
+    background-image: url(${(props) => (props.profileImg ? props.profileImg : "https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg")});
     background-position: center;
     background-size: cover;
     object-fit: contain;
