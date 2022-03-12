@@ -21,6 +21,7 @@ const Main = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [itemLists, setItemLists] = useState([]);
   const [page, setPage] = useState(1);
+  const [endPage, setendPage] = useState(0)
 
   useEffect(() => {
     console.log(itemLists);
@@ -32,6 +33,7 @@ const Main = (props) => {
     await instance.get(`/api/plans?page=${page}`).then((res) => {
       let Items = res.data.plans;
       setItemLists((itemLists) => itemLists.concat(Items));
+      setendPage(res.data.endPage)
     });
     setIsLoaded(false);
   };
@@ -41,7 +43,11 @@ const Main = (props) => {
       if (entry.isIntersecting && !isLoaded) {
         observer.unobserve(entry.target);
         await getMoreItem(page);
-        setPage((num) => num + 1);
+        if (endPage === page) {
+          return page
+        } else {
+          setPage((num) => num + 1);
+        }
         observer.observe(entry.target);
       }
     },
@@ -86,9 +92,12 @@ const Main = (props) => {
           {itemLists.map((l, i) => {
             return <MainTravelList key={i} {...l} />;
           })}
+
           <div ref={setTarget} className="Target-Element">
             {isLoaded && <Loader />}
           </div>
+
+
         </TravelListBox>
       </Container>
     );
@@ -105,9 +114,12 @@ const Main = (props) => {
         </BookMarkListBox>
         <TravelListBox>
           <p>여행 일정 매거진</p>
-
           {style_list.map((l, i) => {
-            return <MainTravelList key={i} {...l} />;
+            if (l.none) {
+              return "하이"
+            } else {
+              return <MainTravelList key={i} {...l} />;
+            }
           })}
           <div ref={setTarget} className="Target-Element">
             {isLoaded && <Loader />}
