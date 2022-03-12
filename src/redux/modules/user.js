@@ -89,8 +89,8 @@ const userProfileDB = (userId) => {
     instance
       .get(`/api/users/${userId}`)
       .then((res) => {
-        console.log(res.data.user);
-        dispatch(setUserProfile(res.data.user));
+        // console.log(res.data.userInfo);
+        dispatch(setUserProfile(res.data.userInfo));
       })
       .catch((err) => {
         console.log(err);

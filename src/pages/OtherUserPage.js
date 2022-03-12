@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { socket } from "../shared/Socket";
 
 const OtherUserPage = (props) => {
   const dispatch = useDispatch();
@@ -9,8 +10,8 @@ const OtherUserPage = (props) => {
   const userid = props.match.params.userId;
   console.log(userid);
 
-  //   const user = useSelector((store) => store.user.userprofile);
-  //   console.log(user);
+    const user = useSelector((store) => store.user.userprofile);
+    console.log('userInfo !! ', user);
 
   React.useEffect(() => {
     dispatch(userActions.userProfileDB(userid));
