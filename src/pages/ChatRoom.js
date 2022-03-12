@@ -9,6 +9,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import { history } from '../redux/ConfigureStore';
 import {useDispatch, useSelector} from 'react-redux';
 import {socket} from '../shared/Socket';
+import {actionCreators as chatActions} from '../redux/modules/chat';
 
 const ChatRoom = (props) => {
 
@@ -16,15 +17,19 @@ const ChatRoom = (props) => {
 
     const roomData = useSelector((state) => state.chat.one_chat);
 
-    console.log("roomData !! ",roomData);
+    const roomChatData = useSelector((state) => state.chat.chatRoom_list);
+
+    // console.log("roomData !! ",roomData);
+
+    // console.log('roomChatData !! ',roomChatData);
 
     // 보내려는메세지
     const [curMsg, setCurMsg] = useState("");
     // 채팅방메세지리스트
     const [msgList, setMessageList] = useState([]);
-    // let time = moment().format("LT");
+    let time = moment().format("LT");
 
-    console.log('msgList !! ',msgList);
+    // console.log('msgList !! ',msgList);
 
     // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
     const sendMessage = async () => {
@@ -35,7 +40,7 @@ const ChatRoom = (props) => {
                 fromSnsId: roomData.curUserInfo.snsId, // 메세지보내는사람 snsId,
                 toSnsId: roomData.user.snsId, // 메세지받는사람 snsId,
                 chatText: curMsg, // 메세지 텍스트
-                // time: time,
+                createdAt: time, // 채팅 보낸 시간
                 // 메세지보내는사람 fromSnsId,
                 // 메세지받는사람 toSnsId,
                 // 메세지 텍스트 chatText
@@ -48,6 +53,8 @@ const ChatRoom = (props) => {
             //     console.log('전에 있던 채팅리스트 데이터 ', preState);
             //     return [...preState, msgData];
             // });
+            // console.log('msgList !! ', msgList);
+            // console.log("roomData !! ",roomData);
 
         }
 
@@ -60,10 +67,23 @@ const ChatRoom = (props) => {
         socket.on("chat", (data) => {
             // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
             console.log("메시지 수신~!! ", data);
+
+            const oneChat = {
+                chatText: data.chatText,
+                checkChat: data.checkChat,
+                // createdAt: data.createdAt,
+                fromUserId:{
+                    snsId: data.fromSnsId,
+                },
+                toUserId:{
+                    snsId: data.toSnsId,
+                }
+
+            }
             
             // 상대방 메시지 채팅방 메시지 리스트에 저장
             setMessageList((preState) => {
-                return [...preState, data];
+                return [...preState, oneChat];
             });
 
         });
@@ -76,6 +96,27 @@ const ChatRoom = (props) => {
 
     }, [socket]);
 
+    React.useEffect(() => {
+        if(typeof roomData.user.nickname === "undefined"){
+            window.alert('잘못된 접근입니다.');
+            history.push('/chatlist');
+        }else{
+            
+            dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
+            
+        }
+
+        return () => {
+
+        }
+
+    }, []);
+
+    React.useEffect(() => {
+        setMessageList(roomChatData);
+
+    }, [roomChatData]);
+
 
     return (
         <RoomContainer>
@@ -87,15 +128,24 @@ const ChatRoom = (props) => {
                 <ScrollToBottomNew className="msg-container">
                 {msgList.map((item, i) => {
                     return (
-                        <Message key={`msgKey${i}`} className={roomData.userId === item.author ? "me" : "other"} >
+                        <Message key={`msgKey${i}`} className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"} >
                             <div>
-                                <UserCon className={roomData.userId === item.author ? "me" : "other"}>{item.author}</UserCon>
-                                <MsgCon className={roomData.userId === item.author ? "me" : "other"}>
-                                    {/* <p>{item.time}</p> */}
-                                    {/* <UserImg /> */}
-                                    <MessageContent className={roomData.userId === item.author ? "me" : "other"}>
+                                <UserCon className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"}>
+                                    {roomData.curUserInfo.snsId === item.fromUserId.snsId ? null : roomData.user.nickname}
+                                </UserCon>
+                                <MsgCon className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"}>
+                                    
+                                    
+                                    {roomData.curUserInfo.snsId === item.fromUserId.snsId ? 
+                                        null
+                                    :
+                                        <UserImg profile_img={roomData.user.profile_img} onClick={() => history.push(`/otheruser/${roomData.user.userId}`)}/>
+                                    }
+                                    <MessageContent className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"}>
                                         <p>{item.chatText}</p>
                                     </MessageContent>
+
+                                    <TimeCon>{moment(item.createdAt).format("LT")}</TimeCon>
                                 </MsgCon>
                             </div>
                         </Message>
@@ -163,10 +213,11 @@ const UserImg = styled.div`
     width: 70px;
     height: 70px;
     border-radius: 35px;
-    background-image: url("https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg");
+    background-image: url("${(props) => props.profile_img ? props.profile_img : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200"}");
     background-position: center;
     background-size: cover;
     object-fit: contain;
+    cursor: pointer;
 `;
 
 const UserCon = styled.div`
@@ -176,7 +227,12 @@ const UserCon = styled.div`
 
 const MsgCon = styled.div`
     display: flex;
-    flex-direction: ${(props) => (props.className === 'me' ? "row" : "row-reverse")};
+    flex-direction: ${(props) => (props.className === 'me' ? "row-reverse" : "row")};
+`;
+
+const TimeCon = styled.div`
+    display:flex;
+    flex-direction: column-reverse;
 `;
 
 const MessageContent = styled.div`

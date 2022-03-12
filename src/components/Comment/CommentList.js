@@ -248,10 +248,7 @@ const UserCon = styled.div`
 `;
 
 const UserImg = styled.div`
-  background-image: url("${(props) =>
-    props.profile_img
-      ? props.profile_img
-      : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200"}");
+  background-image: url("${(props) => props.profile_img ? props.profile_img : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200"}");
   background-position: center;
   background-size: cover;
   box-shadow: 0 5px 5px 0 #bfbfbf;
