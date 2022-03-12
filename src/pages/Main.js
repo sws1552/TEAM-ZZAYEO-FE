@@ -64,7 +64,6 @@ const Main = (props) => {
   }, [target, page]);
 
   const plans = useSelector((store) => store.plan.list);
-
   const style = useSelector((store) => store.category.style);
   const style_list = useSelector((store) => store.plan.style_list);
 
