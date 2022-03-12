@@ -16,7 +16,7 @@ const ChatRoom = (props) => {
 
     const roomData = useSelector((state) => state.chat.one_chat);
 
-    // console.log("roomData !! ",roomData);
+    console.log("roomData !! ",roomData);
 
     // 보내려는메세지
     const [curMsg, setCurMsg] = useState("");
@@ -32,8 +32,8 @@ const ChatRoom = (props) => {
         if(curMsg !== ""){
             const msgData = {
                 // roomId: roomData.roomId,
-                fromSnsId: roomData.fromSnsId, // 메세지보내는사람 snsId,
-                toSnsId: roomData.toSnsId, // 메세지받는사람 snsId,
+                fromSnsId: roomData.curUserInfo.snsId, // 메세지보내는사람 snsId,
+                toSnsId: roomData.user.snsId, // 메세지받는사람 snsId,
                 chatText: curMsg, // 메세지 텍스트
                 // time: time,
                 // 메세지보내는사람 fromSnsId,
@@ -59,7 +59,7 @@ const ChatRoom = (props) => {
         // 서버에서 메시지데이터 받아오기
         socket.on("chat", (data) => {
             // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
-            console.log("상대방 메시지 수신~!! ", data);
+            console.log("메시지 수신~!! ", data);
             
             // 상대방 메시지 채팅방 메시지 리스트에 저장
             setMessageList((preState) => {
@@ -80,7 +80,7 @@ const ChatRoom = (props) => {
     return (
         <RoomContainer>
             <Header 
-            title="wonseok"
+            title={roomData.user.nickname}
             showBack={true}
             _onClick={() => history.goBack()}/>
             <ChatBody>

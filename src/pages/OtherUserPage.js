@@ -30,18 +30,23 @@ const OtherUserPage = (props) => {
       });
 
     // console.log('user !! ',user);
-    // console.log('curUserInfo !! ',curUserInfo.snsId);
+    // console.log('curUserInfo !! ',curUserInfo);
 
-    const data = {
+    const roomUserInfo = {
+      user: user,
+      curUserInfo: curUserInfo,
+    }
+
+    const roomData = {
       fromSnsId: curUserInfo.snsId,
       toSnsId: user.snsId,
     }
 
-    console.log('data !! ',data);
+    // console.log('roomData !! ',roomData);
 
-    dispatch(chatActions.getRoom(data));
+    dispatch(chatActions.getRoom(roomUserInfo));
 
-    socket.emit("joinRoom", data);
+    socket.emit("joinRoom", roomData);
 
     history.push("/chatroom");
 
