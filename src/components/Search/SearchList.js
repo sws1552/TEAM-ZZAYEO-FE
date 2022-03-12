@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const SearchList = (props) => {
-  const { title, destination, category, withList } = props;
+  const { title, destination, style, withlist } = props;
 
   return (
     <React.Fragment>
@@ -10,7 +10,7 @@ const SearchList = (props) => {
         <TripCard>
           <CardTitle>{title}</CardTitle>
           <CardInfo>
-            #{category} #{destination} #{withList}
+            #{style} #{destination} #{withlist}
           </CardInfo>
         </TripCard>
       </Container>

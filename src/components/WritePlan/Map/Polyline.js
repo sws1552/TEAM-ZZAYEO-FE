@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map";
 
@@ -9,8 +9,8 @@ const Polyline = ({ maps, map, markers }) => {
   const polyLinedata = useSelector((state) => state.map.polyline);
 
   const myPlan = useSelector((state) => state.plan.myPlan);
-  const dayId = useSelector((state) => state.map.dayId);// dayId를 넘겨서 같은 dayI인지 비교하려고!
-  const dayPlace_list = [] //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
+  const dayId = useSelector((state) => state.map.dayId); // dayId를 넘겨서 같은 dayI인지 비교하려고!
+  const dayPlace_list = []; //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
   myPlan?.days?.forEach((doc) => {
     dayPlace_list.push(doc);
   });
@@ -28,9 +28,7 @@ const Polyline = ({ maps, map, markers }) => {
   //   strokeWeight: 2
   // })
 
-
   // geodesicPolyline.setMap(map)
-
 
   // const line = markers.reduce((acc, cur, i) => { 
   //   acc.push(new maps.LatLng(cur.lat, cur.lng));
@@ -40,11 +38,10 @@ const Polyline = ({ maps, map, markers }) => {
   let createPolyline = new maps.Polyline({
     path: markers,
     geodesic: true,
-    strokeColor: 'green',
+    strokeColor: "green",
     strokeOpacity: 1.0,
-    strokeWeight: 2
-  })
-
+    strokeWeight: 2,
+  });
 
   useEffect(() => {
     dispatch(mapActions.addPolyline(createPolyline));
@@ -60,6 +57,10 @@ const Polyline = ({ maps, map, markers }) => {
     // createPolyline.setMap(null);
   }, [markers, map, maps])
 
+    console.log("createPolyline !! ", createPolyline);
+
+    // createPolyline.setMap(null);
+  }, [markers, map, maps]);
 
 
   // React.useEffect(() => {
@@ -76,7 +77,6 @@ const Polyline = ({ maps, map, markers }) => {
   //       line.push(new maps.LatLng(v.lat, v.lng))
   //     )
   //   })
-
 
   //   for (let i = 0; i < myPlan.days.length; i++) {
   //     PolyLine.push({ dayId: myPlan.days[i].dayId })
@@ -98,9 +98,8 @@ const Polyline = ({ maps, map, markers }) => {
   //     strokeWeight: 2
   //   })
 
-
   //   PolyLine.map((v, i) => {
-  //     if (v.dayId === dayId) {  
+  //     if (v.dayId === dayId) {
   //       createPolyline.setMap(map)
   //       createPolyline.setVisible(true)
 
@@ -110,7 +109,6 @@ const Polyline = ({ maps, map, markers }) => {
   //     }
 
   //   })
-
 
   // }, [maps, map, markers])
 
@@ -138,8 +136,6 @@ const Polyline = ({ maps, map, markers }) => {
   //   }
   // })
 
-
-
   // console.log(line)
 
   //   let PolyLine = []
@@ -147,7 +143,6 @@ const Polyline = ({ maps, map, markers }) => {
   // for (let i = 0; i < myPlan.days.length; i++) {
   //   PolyLine.push({ dayId: myPlan.days[i].dayId })
   // }
-
 
   // PolyLine.map((v, i) => {
   //   if (v.dayId === dayId) {
@@ -178,14 +173,12 @@ const Polyline = ({ maps, map, markers }) => {
   //   })
   //  console.log(geodesicPolylines)
 
-
-
   //   })
   //   React.useEffect(() => {
 
   //   }, [PolyLine, geodesicPolylines]);
   // const nonGeodesicPolyline = new maps.Polyline({
-  //   path: 
+  //   path:
   //   geodesic: false,
   //   strokeColor: 'red',
   //   strokeOpacity: 0.8,
@@ -194,9 +187,7 @@ const Polyline = ({ maps, map, markers }) => {
 
   // nonGeodesicPolyline.setMap(map)
 
-  return (
-    null
-  );
+  return null;
 };
 
 export default Polyline;

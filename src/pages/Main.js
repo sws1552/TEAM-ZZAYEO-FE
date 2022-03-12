@@ -5,12 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
-import MainCategory from "../components/Main/MainCategory";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
 import Item from "./Item";
 import Searchbar from "../components/Search/Searchbar";
+import Filter from "../components/Main/Filter";
 
 
 const Main = (props) => {
@@ -66,6 +66,7 @@ const Main = (props) => {
 
 
   const plans = useSelector((store) => store.plan.list);
+
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB());
@@ -76,7 +77,8 @@ const Main = (props) => {
     return (
       <Container>
         <Searchbar />
-        <MainCategory />
+        {/* <MainCategory /> */}
+        <Filter />
         <BookMarkListBox>
           <p>내가 찜한 여행 스토리</p>
           <MainBookMarkList />

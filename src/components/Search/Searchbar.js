@@ -8,7 +8,6 @@ const Searchbar = (props) => {
     if (e.key === "Enter") {
       console.log(search);
       window.location.replace(`search?query=${search}`);
-      //주소 임의 설정
     }
   };
   return (
