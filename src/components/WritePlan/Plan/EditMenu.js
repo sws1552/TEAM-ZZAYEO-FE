@@ -5,15 +5,17 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../../../redux/modules/plan"
+import EditPlanModal from "./EditPlanModal"
 
 const options = [
-    '게시물 삭제'
+    '게시물 삭제',
+    '게시물 수정'
 ];
 
 const ITEM_HEIGHT = 48;
 
 export default function LongMenu(props) {
-    const {placeId} = props
+    const { placeId } = props
 
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -53,11 +55,15 @@ export default function LongMenu(props) {
                 }}
             >
                 {options.map((option) => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={()=>{
-                        handleClose()
-                        dispatch(planActions.deleteMyPostDB(placeId))
-                    }}>
-                        {option}
+                    <MenuItem key={option}
+                        selected={option === 'Pyxis'}
+                        onClick={() => {
+                            if (option === "게시물 삭제") {
+                                dispatch(planActions.deleteMyPostDB(placeId))
+                            }
+                        }}>
+                          {option === "게시물 삭제"? "삭제하기" : <EditPlanModal placeId={placeId}/>}  
+                         
                     </MenuItem>
                 ))}
             </Menu>
