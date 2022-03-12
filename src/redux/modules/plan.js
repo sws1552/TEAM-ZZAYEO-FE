@@ -316,7 +316,7 @@ export default handleActions(
       }),
     [GET_MYPLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.myplans = action.payload.myplans;
+        draft.myplans = action.payload.myplans + 1;
       }),
     [DELETEMYDAYPOST]: (state, action) => produce(state, (draft) => {}),
     [SEARCH]: (state, action) =>

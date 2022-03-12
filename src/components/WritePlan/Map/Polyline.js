@@ -4,6 +4,9 @@ import { actionCreators as mapActions } from "../../../redux/modules/map";
 
 const Polyline = ({ maps, map, markers }) => {
   const dispatch = useDispatch();
+
+  const polyLinedata = useSelector((state) => state.map.polyline);
+
   const myPlan = useSelector((state) => state.plan.myPlan);
   const dayId = useSelector((state) => state.map.dayId); // dayId를 넘겨서 같은 dayI인지 비교하려고!
   const dayPlace_list = []; //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
@@ -26,13 +29,13 @@ const Polyline = ({ maps, map, markers }) => {
 
   // geodesicPolyline.setMap(map)
 
-  const line = markers.reduce((acc, cur, i) => {
-    acc.push(new maps.LatLng(cur.lat, cur.lng));
-    return acc;
-  }, []);
+  // const line = markers.reduce((acc, cur, i) => {
+  //   acc.push(new maps.LatLng(cur.lat, cur.lng));
+  //   return acc;
+  // }, []);
 
   let createPolyline = new maps.Polyline({
-    path: line,
+    path: markers,
     geodesic: true,
     strokeColor: "green",
     strokeOpacity: 1.0,
@@ -41,9 +44,14 @@ const Polyline = ({ maps, map, markers }) => {
 
   useEffect(() => {
     dispatch(mapActions.addPolyline(createPolyline));
+
+    if (polyLinedata !== null) {
+      polyLinedata.setMap(null);
+    }
+
     createPolyline.setMap(map);
 
-    console.log("createPolyline !! ", createPolyline);
+    console.log("createPolyline.map !! ", createPolyline.map);
 
     // createPolyline.setMap(null);
   }, [markers, map, maps]);
