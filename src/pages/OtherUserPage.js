@@ -1,18 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
+import instance from "../shared/Request";
+import { actionCreators as chatActions } from "../redux/modules/chat";
+import { socket } from "../shared/Socket";
+import { history } from "../redux/ConfigureStore";
+
 
 const OtherUserPage = (props) => {
   const dispatch = useDispatch();
 
   const userId = props.match.params.userId;
 
+  const myInfo = useSelector((store) => store.user.user);
+
   const user = useSelector((store) => store.user.userInfo);
 
+  
+  const joinRoom = async () => {
+
+    const curUserInfo = await instance
+      .get(`/api/users/${myInfo.userId}`)
+      .then((res) => {
+        return res.data.userInfo;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // console.log('user !! ',user);
+    // console.log('curUserInfo !! ',curUserInfo.snsId);
+
+    const data = {
+      fromSnsId: curUserInfo.snsId,
+      toSnsId: user.snsId,
+    }
+
+    console.log('data !! ',data);
+
+    dispatch(chatActions.getRoom(data));
+
+    socket.emit("joinRoom", data);
+
+    history.push("/chatroom");
+
+  }
+  
+
   React.useEffect(() => {
+    dispatch(userActions.checkUserDB());
     dispatch(userActions.userProfileDB(userId));
   }, [userId]);
+
+  
 
   return (
     <Container>
@@ -21,7 +62,7 @@ const OtherUserPage = (props) => {
         <UserImgCon>
           <UserImg src={user.profile_img} />
         </UserImgCon>
-        <MessageBtn>메시지 보내기</MessageBtn>
+        <MessageBtn onClick={joinRoom}>메시지 보내기</MessageBtn>
       </UserInfo>
     </Container>
   );
