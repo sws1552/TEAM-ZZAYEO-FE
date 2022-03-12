@@ -1,5 +1,4 @@
-import React, { useState, memo, useEffect, useCallback } from "react";
-import { useInView } from "react-intersection-observer";
+import React, { useState, useEffect, useCallback } from "react";
 import instance from "../shared/Request";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
@@ -8,7 +7,6 @@ import styled from "styled-components";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
-import Item from "./Item";
 import Searchbar from "../components/Search/Searchbar";
 import Filter from "../components/Main/Filter";
 
@@ -63,8 +61,8 @@ const Main = (props) => {
 
   const style = useSelector((store) => store.category.style);
   const style_list = useSelector((store) => store.plan.style_list);
-  console.log(style_list);
 
+  console.log(style_list.length);
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB(style));
@@ -82,13 +80,18 @@ const Main = (props) => {
         </BookMarkListBox>
         <TravelListBox>
           <p>여행 일정 매거진</p>
-
-          {itemLists.map((l, i) => {
-            return <MainTravelList key={i} {...l} />;
-          })}
-          <div ref={setTarget} className="Target-Element">
-            {isLoaded && <Loader />}
-          </div>
+          {style_list.length === 0 ? (
+            "없음"
+          ) : (
+            <>
+              {itemLists.map((l, i) => {
+                return <MainTravelList key={i} {...l} />;
+              })}
+              <div ref={setTarget} className="Target-Element">
+                {isLoaded && <Loader />}
+              </div>
+            </>
+          )}
         </TravelListBox>
       </Container>
     );
