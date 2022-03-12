@@ -2,27 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { socket } from "../shared/Socket";
 
 const OtherUserPage = (props) => {
   const dispatch = useDispatch();
 
-  const userid = props.match.params.userId;
-  console.log(userid);
+  const userId = props.match.params.userId;
 
-    const user = useSelector((store) => store.user.userprofile);
-    console.log('userInfo !! ', user);
+  const user = useSelector((store) => store.user.userInfo);
 
   React.useEffect(() => {
-    dispatch(userActions.userProfileDB(userid));
-  }, [dispatch]);
+    dispatch(userActions.userProfileDB(userId));
+  }, [userId]);
 
   return (
     <Container>
       <UserInfo>
-        <UserNickName>구미리</UserNickName>
+        <UserNickName>{user.nickname}</UserNickName>
         <UserImgCon>
-          <UserImg />
+          <UserImg src={user.profile_img} />
         </UserImgCon>
         <MessageBtn>메시지 보내기</MessageBtn>
       </UserInfo>
@@ -61,15 +58,15 @@ const UserImgCon = styled.div`
   margin-bottom: 22px;
 `;
 
-const UserImg = styled.div`
+const UserImg = styled.img`
   width: 82px;
   height: 82px;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  background-image: url("https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200");
   background-position: center;
   background-size: cover;
   border-radius: 82px;
 `;
+
 const MessageBtn = styled.div`
   background: #ffffff;
   border: 1px solid #bfbfbf;

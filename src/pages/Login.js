@@ -1,8 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { history } from "../redux/ConfigureStore";
+
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../shared/Auth";
 
 const Login = (props) => {
+  const dispatch = useDispatch();
+
   return (
     <React.Fragment>
       <BtnBox>
@@ -13,7 +20,6 @@ const Login = (props) => {
             viewBox="0 0 21 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            xmlns="http://www.w3.org/1999/xlink"
           >
             <rect width="21" height="20" fill="url(#pattern0)" />
             <defs>
@@ -36,9 +42,16 @@ const Login = (props) => {
               />
             </defs>
           </svg>
-
-          <a href={KAKAO_AUTH_URL}>카카오로 로그인하기</a>
+          <a href={KAKAO_AUTH_URL}>카카오로 시작하기</a>
         </KaKaoBtn>
+        <LogoutBtn
+          onClick={() => {
+            dispatch(userActions.logOut());
+            history.replace("/");
+          }}
+        >
+          <p>로그아웃</p>
+        </LogoutBtn>
         {/* <NaverBtn href={NAVER_AUTH_URL}></NaverBtn> */}
       </BtnBox>
     </React.Fragment>
@@ -63,7 +76,6 @@ const KaKaoBtn = styled.div`
   box-sizing: border-box;
   background-color: #fee500;
   border-radius: 8px;
-
   cursor: pointer;
 
   a {
@@ -74,6 +86,28 @@ const KaKaoBtn = styled.div`
     line-height: 23.17px;
     letter-spacing: -2%;
     text-decoration-line: none;
+  }
+`;
+
+const LogoutBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  background-color: #d2dbdd;
+  border-radius: 8px;
+  cursor: pointer;
+
+  p {
+    margin-left: 5px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 23.17px;
+    letter-spacing: -2%;
   }
 `;
 
