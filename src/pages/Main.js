@@ -61,17 +61,20 @@ const Main = (props) => {
 
   const plans = useSelector((store) => store.plan.list);
 
+  const style = useSelector((store) => store.category.style);
+  const style_list = useSelector((store) => store.plan.style_list);
+  console.log(style_list);
+
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
-    dispatch(planActions.getPlanDB());
+    dispatch(planActions.getPlanDB(style));
     dispatch(planActions.getBookMarkDB());
-  }, []);
+  }, [style]);
 
-  if (is_token) {
+  if (is_token && style_list.length === 0) {
     return (
       <Container>
         <Searchbar />
-        {/* <MainCategory /> */}
         <Filter />
         <BookMarkListBox>
           <p>내가 찜한 여행 스토리</p>
@@ -90,6 +93,30 @@ const Main = (props) => {
       </Container>
     );
   }
+
+  if (is_token && style_list.length !== 0) {
+    return (
+      <Container>
+        <Searchbar />
+        <Filter />
+        <BookMarkListBox>
+          <p>내가 찜한 여행 스토리</p>
+          <MainBookMarkList />
+        </BookMarkListBox>
+        <TravelListBox>
+          <p>여행 일정 매거진</p>
+
+          {style_list.map((l, i) => {
+            return <MainTravelList key={i} {...l} />;
+          })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
+        </TravelListBox>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Searchbar />

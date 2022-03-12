@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import DestinationModal from "./Modal/DestinationModal";
 import StyleModal from "./Modal/StyleModal";
+import { history } from "../../redux/ConfigureStore";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as categoryActions } from "../../redux/modules/category";
 
 const Filter = (props) => {
+  const dispatch = useDispatch();
   const [destShowModal, setDestShowModal] = React.useState(false);
   const [styleShowModal, setStyleShowModal] = React.useState(false);
 
@@ -29,6 +33,7 @@ const Filter = (props) => {
   const styleCloseModal = (e) => {
     e.stopPropagation();
     setStyleShowModal(false);
+    dispatch(categoryActions.addStyle(style));
   };
   return (
     <Container>
