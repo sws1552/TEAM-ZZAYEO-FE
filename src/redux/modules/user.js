@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 import axios from "axios";
+import { ContentCutOutlined } from "@mui/icons-material";
 
 //actions
 const SET_USER = "SET_USER";
@@ -10,15 +11,15 @@ const LOG_OUT = "LOG_OUT";
 
 //actioncreator
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const setUserProfile = createAction(SET_USERPROFILE, (userprofile) => ({
-  userprofile,
+const setUserProfile = createAction(SET_USERPROFILE, (userInfo) => ({
+  userInfo,
 }));
 const logOut = createAction(LOG_OUT, () => ({}));
 
 //initial
 const initialState = {
   user: { userId: null, nickname: null, userImg: null },
-  userprofile: {},
+  userInfo: {},
   is_login: false,
 };
 
@@ -89,8 +90,7 @@ const userProfileDB = (userId) => {
     instance
       .get(`/api/users/${userId}`)
       .then((res) => {
-        console.log(res.data.user);
-        dispatch(setUserProfile(res.data.user));
+        dispatch(setUserProfile(res.data.userInfo));
       })
       .catch((err) => {
         console.log(err);
@@ -110,7 +110,7 @@ export default handleActions(
       }),
     [SET_USERPROFILE]: (state, action) =>
       produce(state, (draft) => {
-        draft.userprofile = action.payload.userprofile;
+        draft.userInfo = action.payload.userInfo;
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
