@@ -1,5 +1,4 @@
-import React, { useState, memo, useEffect, useCallback } from "react";
-import { useInView } from "react-intersection-observer";
+import React, { useState, useEffect, useCallback } from "react";
 import instance from "../shared/Request";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
@@ -8,7 +7,6 @@ import styled from "styled-components";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
-import Item from "./Item";
 import Searchbar from "../components/Search/Searchbar";
 import Filter from "../components/Main/Filter";
 
@@ -21,6 +19,7 @@ const Main = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [itemLists, setItemLists] = useState([]);
   const [page, setPage] = useState(1);
+  const [endPage, setEndPage] = useState(0)
 
   useEffect(() => {
     console.log(itemLists);
@@ -32,6 +31,7 @@ const Main = (props) => {
     await instance.get(`/api/plans?page=${page}`).then((res) => {
       let Items = res.data.plans;
       setItemLists((itemLists) => itemLists.concat(Items));
+      setEndPage(res.data.endPage)
     });
     setIsLoaded(false);
   };
@@ -41,7 +41,11 @@ const Main = (props) => {
       if (entry.isIntersecting && !isLoaded) {
         observer.unobserve(entry.target);
         await getMoreItem(page);
-        setPage((num) => num + 1);
+        if (page === endPage) {
+          return page
+        } else {
+          setPage((num) => num + 1);
+        }
         observer.observe(entry.target);
       }
     },
@@ -63,7 +67,6 @@ const Main = (props) => {
 
   const style = useSelector((store) => store.category.style);
   const style_list = useSelector((store) => store.plan.style_list);
-  console.log(style_list);
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
@@ -82,7 +85,6 @@ const Main = (props) => {
         </BookMarkListBox>
         <TravelListBox>
           <p>여행 일정 매거진</p>
-
           {itemLists.map((l, i) => {
             return <MainTravelList key={i} {...l} />;
           })}
@@ -107,7 +109,12 @@ const Main = (props) => {
           <p>여행 일정 매거진</p>
 
           {style_list.map((l, i) => {
-            return <MainTravelList key={i} {...l} />;
+            if (l.none) {
+              return "하이"
+            } else {
+              return <MainTravelList key={i} {...l} />;
+            }
+
           })}
           <div ref={setTarget} className="Target-Element">
             {isLoaded && <Loader />}
