@@ -25,6 +25,8 @@
     "react-google-flight-datepicker": "^0.1.18",
     "react-google-map": "^3.1.1",
     "react-icons": "^4.3.1",
+    "react-intersection-observer": "^8.33.1",
+    "react-loading": "^2.0.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "5.2.1",
     "react-scripts": "5.0.0",

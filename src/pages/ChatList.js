@@ -6,13 +6,12 @@ import Onechat from "../components/Chat/Onechat";
 import { history } from "../redux/ConfigureStore";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
+import { socket } from '../shared/Socket';
 
-// 테스트용 댓글보기용
-import CommentList from "../components/Comment/CommentList";
-
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 // 서버와 클라이언트 연결
+// const socket = io.connect("http://3.36.50.53:3000");
 // const socket = io.connect("http://localhost:5000");
 
 const ChatList = (props) => {
@@ -28,8 +27,11 @@ const ChatList = (props) => {
       // socket: socket,
     };
 
+    dispatch(chatActions.getRoom(data));
+
     // 서버에 방id 전송 같은 방일경우에 서로의 채팅이 보인다.
-    // socket.emit("join_room", roomId);
+    // 방입장할때는 메세지 보내는자 Id랑 받는자 Id 그그그 email형식 아이디
+    // socket.emit("joinRoom", roomId);
 
     history.push("/chatroom");
   };
@@ -46,8 +48,6 @@ const ChatList = (props) => {
           <Onechat _onClick={() => console.log("test")} />
         </OneChatWrap>
 
-        {/* 테스트용 댓글작업하려고 */}
-        <CommentList />
       </ListWrap>
     </ListContainer>
   );

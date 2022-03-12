@@ -21,11 +21,8 @@ const MainDetailPage = (props) => {
   const planId = props.match.params.planId;
   const plans = useSelector((state) => state.plan.myPlan);
   const myplans = useSelector((store) => store.plan.myplans);
-
   const allPlans = useSelector((store) => store.plan.list);
-  const planShare = allPlans.filter((v, i) => (v.userId.userId === myplans[0]?.userId)) ? true : false
 
-  console.log(planShare)
   const [isChecked, setIsChecked] = React.useState(true);
   const [clickedTripDest, changeTripDest] = React.useState(0);
 
@@ -38,17 +35,16 @@ const MainDetailPage = (props) => {
   const share = "공개"
   const unshare = "비공개"
   
-  if(planShare) {
-    return (
-      <>
-        <Container>
-          <Header />
-          <Title {...plans} />
-          <BtnBox>
-            <Like {...plans} />
-            <BookMark {...plans} />
-          </BtnBox>
-          <TripDestBox>
+  return (
+    <>
+      <Container>
+        <Header />
+        <Title {...plans} />
+        <BtnBox>
+          <Like {...plans} />
+          <BookMark {...plans} />
+        </BtnBox>
+        <TripDestBox>
             <div>
               {decideShare.map((l, i) => {
                 return (
@@ -75,40 +71,7 @@ const MainDetailPage = (props) => {
               })}
             </div>
           </TripDestBox>
-          <div>
-            <FormControlLabel
-              style={{ display: "block", padding: "10px 24px", color: "gray" }}
-              control={
-                <Switch
-                  style={{ color: "#12C5ED" }}
-                  checked={isChecked}
-                  onChange={() => {
-                    setIsChecked((prev) => !prev);
-                  }}
-                />
-              }
-              label="지도보기"
-            />
-            <Collapse in={isChecked}>
-              <WritePlanMap />
-            </Collapse>
-          </div>
-          {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
-          <CommentList planId={planId} />
-        </Container>
-      </>
-    );
-  }
 
-  return (
-    <>
-      <Container>
-        <Header />
-        <Title {...plans} />
-        <BtnBox>
-          <Like {...plans} />
-          <BookMark {...plans} />
-        </BtnBox>
         <div>
           <FormControlLabel
             style={{ display: "block", padding: "10px 24px", color: "gray" }}

@@ -13,6 +13,7 @@ const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
 const SEARCH = "SEARCH";
 
+
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
 const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
@@ -253,8 +254,8 @@ const deleteMyPlanDB = (planId) => {
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
-        console.log(res);
-        history.push("/myplan");
+        console.log(res)
+        history.push('/myplan')
       })
       .catch((error) => {
         console.log(error);
@@ -316,7 +317,7 @@ export default handleActions(
       }),
     [GET_MYPLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.myplans = action.payload.myplans;
+        draft.myplans = action.payload.myplans+1
       }),
     [DELETEMYDAYPOST]: (state, action) => produce(state, (draft) => {}),
     [SEARCH]: (state, action) =>
