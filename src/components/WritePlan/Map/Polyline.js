@@ -54,10 +54,6 @@ const Polyline = ({ maps, map, markers }) => {
     // createPolyline.setMap(null);
   }, [markers, map, maps])
 
-    console.log("createPolyline !! ", createPolyline);
-
-    // createPolyline.setMap(null);
-  }, [markers, map, maps]);
 
 
   // React.useEffect(() => {

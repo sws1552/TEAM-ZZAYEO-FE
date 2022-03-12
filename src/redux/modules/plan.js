@@ -281,6 +281,57 @@ const deleteMyPostDB = (placeId) => {
   };
 };
 
+export const editMyPostDB = (
+  placeId,
+  AmPm,
+  Hour,
+  Minute,
+  Memo,
+  placeName,
+  lat,
+  lng,
+  address,
+  imageURL
+) => {
+  return (dispatch, getState, { history }) => {
+    console.log(
+      placeId,
+      AmPm,
+      Hour,
+      Minute,
+      Memo,
+      placeName,
+      lat,
+      lng,
+      address,
+      imageURL
+    );
+
+    let formData = new FormData();
+    formData.append("placeName", placeName);
+    formData.append("lat", lat);
+    formData.append("lng", lng);
+    formData.append("address", address);
+    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
+    formData.append("memoText", Memo);
+    imageURL.map((eachfile) => {
+      formData.append("imageFile", eachfile);
+    });
+
+    instance
+      .post(`/api/plans/days/${placeId}`, formData, {})
+      .then(function (response) {
+        const planId = getState().plan.planId;
+        instance.get(`/api/plans/${planId}`).then((res) => {
+          console.log(res);
+          dispatch(getdayPlan(res.data.plan));
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
 // 검색하기
 const searchDB = (keyword) => {
   return function (dispatch, getState, { history }) {
@@ -344,6 +395,7 @@ const actionCreators = {
   deleteMyPostDB,
   deleteMyPlanDB,
   searchDB,
+  editMyPostDB
 };
 
 export { actionCreators };

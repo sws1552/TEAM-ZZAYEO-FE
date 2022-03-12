@@ -36,7 +36,7 @@ const MainDetailPage = (props) => {
   const share = "공개"
   const unshare = "비공개"
   
-  if (plans.userId.email === userId) {
+  if (plans?.userId?.email === userId) {
     return (
       <>
         <Container>
