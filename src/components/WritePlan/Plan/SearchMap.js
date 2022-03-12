@@ -35,7 +35,6 @@ const SearchMap = () => {
     }
   };
 
-  console.log(places)
   return (
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
@@ -87,9 +86,8 @@ export default SearchMap;
 
 const Container = styled.div`
   width: 100%;
-  height: 867px;
+  height: 800px;
   box-sizing: border-box;
-  border: 1px solid gray;
   margin: auto;
 `;
 
@@ -97,7 +95,7 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px auto 0px auto;
+  margin: 30px auto 0px auto;
   width: 120px;
   height: 45px;
   background-color: #12c5ed;

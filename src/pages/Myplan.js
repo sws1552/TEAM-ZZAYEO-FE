@@ -30,12 +30,12 @@ const Myplan = (props) => {
             <P>+</P>
             <P>새로운 여행을 작성해주세요</P>
           </AddPlanBtn>
-          {myplans.length === 0 ? (
+          {myplans?.length === 0 ? (
             <BeforeRegister />
           ) : (
             <Div>
               <p>여행 리스트</p>
-              {myplans.map((l, i) => {
+              {myplans?.map((l, i) => {
                 return <AfterRegister key={i} {...l} />;
               })}
             </Div>

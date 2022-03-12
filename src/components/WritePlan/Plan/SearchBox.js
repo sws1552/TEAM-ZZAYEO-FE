@@ -60,7 +60,7 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
   
 const ElInput = styled.input`
     border: none;
-    width: 100%;
+    width: 75%;
     height: 45px;
     box-sizing: border-box;
     :focus {

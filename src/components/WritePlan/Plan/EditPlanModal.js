@@ -20,30 +20,31 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "350px",
+    width: "360px",
     height: "800px",
     bgcolor: 'background.paper',
-    border: 'none',
-    borderRadius: '10px',
+    border: '2px solid #000',
     boxShadow: 24,
-    p: 3,
+    p: 4,
 };
 
 export default function BasicModal(props) {
-    const dayId = props.dayId
-
+    // const dayId = props.dayId
+    const { placeId } = props
+    console.log(placeId)
     const dispatch = useDispatch();
     const [Hour, setHour] = React.useState("0");
     const [Minute, setMinute] = React.useState("00");
     const [AmPm, setAmPm] = React.useState("오전");
     const [Memo, setMemo] = React.useState("");
 
+    // const dayId = useSelector((state) => state.map.dayId);
     const placeName = useSelector((state) => state.addPlace.placeName);
     const lat = useSelector((state) => state.addPlace.lat);
     const lng = useSelector((state) => state.addPlace.lng);
     const address = useSelector((state) => state.addPlace.address);
     const imageURL = useSelector((state) => state.addPlace.imageURL);
-
+    console.log(placeName, Hour)
     const memoChange = (e) => {
         setMemo(e.target.value);
     };
@@ -93,10 +94,10 @@ export default function BasicModal(props) {
 
     return (
         <div>
-            <ADDPlace onClick={() => {
+            <Button onClick={() => {
                 handleOpen()
-                dispatch(mapActions.sendDayId(dayId))
-            }}>+장소추가하기</ADDPlace>
+                // dispatch(mapActions.sendDayId(dayId))
+            }}>수정하기</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -111,7 +112,7 @@ export default function BasicModal(props) {
                         <div>시간</div>
                         <br />
                         <Time>
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <NativeSelect
                                     defaultValue={AmPm}
                                     onChange={ampmChange}
@@ -130,7 +131,7 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <NativeSelect
                                     defaultValue={Hour}
                                     onChange={hourChange}
@@ -149,7 +150,7 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <NativeSelect
                                     defaultValue={Minute}
                                     onChange={minuteChange}
@@ -172,8 +173,23 @@ export default function BasicModal(props) {
                         <div>장소</div>
                         <br />
                         <Location>
-                            <SearchLoaction>
-                                <SearchModal />
+                            {/* {placeName !== "" ? (
+                                <SearchLoaction
+
+                                >
+                                    {placeName}
+                                </SearchLoaction>
+                            ) : (
+                                <SearchLoaction
+                                 
+                                >
+                                    <SearchModal />
+                                </SearchLoaction>
+                            )} */}
+                            <SearchLoaction
+
+                            >
+                            <SearchModal/>
                             </SearchLoaction>
                         </Location>
                         <br />
@@ -192,8 +208,8 @@ export default function BasicModal(props) {
                         <AddButton
                             onClick={() => {
                                 dispatch(
-                                    planActions.saveLocationDB(
-                                        dayId,
+                                    planActions.editMyPostDB(
+                                        placeId,
                                         AmPm,
                                         Hour,
                                         Minute,
@@ -205,13 +221,9 @@ export default function BasicModal(props) {
                                         imageURL,
                                     )
                                 );
-                                setHour("0");
-                                setMinute("00");
-                                setAmPm("오전");
-                                setMemo("");
                             }}
                         >
-                            <div>장소추가하기</div>
+                        장소 수정하기
                         </AddButton>
                         <br />
                         <div>사진</div>
@@ -228,7 +240,7 @@ export default function BasicModal(props) {
 
 const Container = styled.div`
   width: 100%;
-  padding: 0px 10px;
+  /* padding: 0px 24px; */
   box-sizing: border-box;
   height: 100%;
   overflow-y: scroll;
@@ -274,7 +286,6 @@ const SearchLoaction = styled.div`
   font-size: 13px;
   text-align: center;
   line-height: 40px;
-  width: 100%;
 `;
 
 const AddButton = styled.div`
@@ -289,8 +300,3 @@ const AddButton = styled.div`
   font-weight: 500;
   color: #ffffff;
 `;
-const ADDPlace = styled.div`
-  color: gray;
-  border: none;
-  cursor: pointer;
-`

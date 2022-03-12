@@ -11,7 +11,7 @@ import { Switch } from "@mui/material";
 
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as planActions } from "../redux/modules/plan";
+import plan, { actionCreators as planActions } from "../redux/modules/plan";
 import Like from "../components/MainDetailPage/Like";
 import BookMark from "../components/MainDetailPage/BookMark";
 
@@ -20,31 +20,33 @@ const MainDetailPage = (props) => {
 
   const planId = props.match.params.planId;
   const plans = useSelector((state) => state.plan.myPlan);
-  const myplans = useSelector((store) => store.plan.myplans);
-  const allPlans = useSelector((store) => store.plan.list);
+  console.log(plans)
+
+  const userId = localStorage.getItem("userId");
+  console.log(userId)
 
   const [isChecked, setIsChecked] = React.useState(true);
   const [clickedTripDest, changeTripDest] = React.useState(0);
 
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
-    dispatch(planActions.getMyPlanDB());
   }, []);
 
   const decideShare = ["나만의 일정", "모두에게 공유"];
   const share = "공개"
   const unshare = "비공개"
   
-  return (
-    <>
-      <Container>
-        <Header />
-        <Title {...plans} />
-        <BtnBox>
-          <Like {...plans} />
-          <BookMark {...plans} />
-        </BtnBox>
-        <TripDestBox>
+  if (plans.userId.email === userId) {
+    return (
+      <>
+        <Container>
+          <Header />
+          <Title {...plans} />
+          <BtnBox>
+            <Like {...plans} />
+            <BookMark {...plans} />
+          </BtnBox>
+          <TripDestBox>
             <div>
               {decideShare.map((l, i) => {
                 return (
@@ -71,6 +73,42 @@ const MainDetailPage = (props) => {
               })}
             </div>
           </TripDestBox>
+
+          <div>
+            <FormControlLabel
+              style={{ display: "block", padding: "10px 24px", color: "gray" }}
+              control={
+                <Switch
+                  style={{ color: "#12C5ED" }}
+                  checked={isChecked}
+                  onChange={() => {
+                    setIsChecked((prev) => !prev);
+                  }}
+                />
+              }
+              label="지도보기"
+            />
+            <Collapse in={isChecked}>
+              <WritePlanMap />
+            </Collapse>
+          </div>
+          {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
+          <CommentList planId={planId} />
+        </Container>
+      </>
+    );
+  }
+
+
+  return (
+    <>
+      <Container>
+        <Header />
+        <Title {...plans} />
+        <BtnBox>
+          <Like {...plans} />
+          <BookMark {...plans} />
+        </BtnBox>
 
         <div>
           <FormControlLabel

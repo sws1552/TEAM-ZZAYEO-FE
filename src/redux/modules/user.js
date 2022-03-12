@@ -31,7 +31,9 @@ const kakaoLogin = (code) => {
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
+        const userId = res.data.userId;
         localStorage.setItem("token", token); //예시로 로컬에 저장
+        localStorage.setItem("userId", userId);
         dispatch(checkUserDB());
         history.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
       })

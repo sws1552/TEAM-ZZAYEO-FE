@@ -81,6 +81,7 @@ const BasicTabs = (props) => {
                   console.log('tabs polyLineddata !! ', polyLinedata.map);
                   dispatch(mapActions.addPolyline(polyLinedata));
                   dispatch(mapActions.sendDayId(d.dayId))
+            
                 }} key={i} label={`day${i + 1}`} {...a11yProps(i)} />
             )
           })}
@@ -91,7 +92,6 @@ const BasicTabs = (props) => {
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
             {d.places && d.places.map((v, i) => {
-              
               return (
                 <div style={{ width: "100%" }}>
                   <div style={{ display: "flex", justifyContent:"space-between"}}>

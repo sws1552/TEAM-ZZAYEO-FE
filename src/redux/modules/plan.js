@@ -24,6 +24,7 @@ const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
 const status = createAction(STATUS, (status) => ({ status }))
 const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
 
+
 // 초기 상태값
 const initialState = {
   list: [],
@@ -114,9 +115,9 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
-    imageURL.map((eachfile) => {
-      formData.append("imageFile", eachfile);
-    });
+    // imageURL.map((eachfile) => {
+    //   formData.append("imageFile", eachfile);
+    // });
 
     instance
       .post(`/api/plans/days/${dayId}`, formData, {})
@@ -279,6 +280,59 @@ const deleteMyPostDB = (placeId) => {
   };
 };
 
+//나의 DayPost(특정장소수정) 수정
+export const editMyPostDB = (
+  placeId,
+  AmPm,
+  Hour,
+  Minute,
+  Memo,
+  placeName,
+  lat,
+  lng,
+  address,
+  imageURL
+) => {
+  return (dispatch, getState, { history }) => {
+    console.log(
+      placeId,
+      AmPm,
+      Hour,
+      Minute,
+      Memo,
+      placeName,
+      lat,
+      lng,
+      address,
+      imageURL
+    );
+
+    let formData = new FormData();
+    formData.append("placeName", placeName);
+    formData.append("lat", lat);
+    formData.append("lng", lng);
+    formData.append("address", address);
+    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
+    formData.append("memoText", Memo);
+    imageURL.map((eachfile) => {
+      formData.append("imageFile", eachfile);
+    });
+    // formData.append("imageFile", "");
+    instance
+      .post(`/api/plans/days/places/${placeId}`, formData, {})
+      .then(function (response) {
+        console.log(response)
+        const planId = getState().plan.planId;
+        instance.get(`/api/plans/${planId}`).then((res) => {
+          console.log(res);
+          dispatch(getdayPlan(res.data.plan));
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
 
 //리덕스
 export default handleActions(
@@ -301,7 +355,7 @@ export default handleActions(
       }),
     [GET_MYPLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.myplans = action.payload.myplans+1
+        draft.myplans = action.payload.myplans
       }),
     [DELETEMYDAYPOST]: (state, action) =>
       produce(state, (draft) => {
@@ -325,6 +379,7 @@ const actionCreators = {
   statusDB,
   deleteMyPostDB,
   deleteMyPlanDB,
+  editMyPostDB
 };
 
 export { actionCreators };

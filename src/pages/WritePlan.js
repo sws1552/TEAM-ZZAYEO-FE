@@ -19,10 +19,10 @@ const WritePlan = (props) => {
 
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
-  console.log(myPlan)
+
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
-  
+
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);

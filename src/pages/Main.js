@@ -26,10 +26,8 @@ const Main = (props) => {
   
   useEffect(() => {
     console.log(itemLists)
- 
   }, [itemLists]);
 
-  console.log(page)
   const getMoreItem = async (page) => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -46,7 +44,6 @@ const Main = (props) => {
       observer.unobserve(entry.target)
       await getMoreItem(page);
       setPage((num)=>num+1)
-      console.log(page)
       observer.observe(entry.target);
     }
   },[page])

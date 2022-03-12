@@ -54,9 +54,6 @@ const Polyline = ({ maps, map, markers }) => {
     }
 
     createPolyline.setMap(map);  
-    
-    console.log('createPolyline.map !! ',createPolyline.map);
-    
     // createPolyline.setMap(null);
   }, [markers, map, maps])
 
