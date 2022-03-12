@@ -9,8 +9,9 @@ const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
 const GET_BOOKMARK = "GET_BOOKMARK";
 const GET_MYPLAN = "GET_MYPLAN";
-const STATUS = "STATUS"
+const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
+const SEARCH = "SEARCH";
 
 
 // 액션 생성 함수
@@ -21,9 +22,10 @@ const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
   bookmark_list,
 }));
 const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
-const status = createAction(STATUS, (status) => ({ status }))
+const status = createAction(STATUS, (status) => ({ status }));
 const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
 
+const search = createAction(SEARCH, (search_list) => ({ search_list }));
 
 // 초기 상태값
 const initialState = {
@@ -34,6 +36,7 @@ const initialState = {
   bookmark_list: [],
   myplans: [],
   status: "",
+  search_list: [],
 };
 
 // 미들웨어
@@ -44,7 +47,7 @@ const getPlanDB = () => {
     instance
       .get("/api/plans")
       .then((res) => {
-        dispatch(getPlan(res.data.plans));
+        dispatch(getPlan(res.data));
       })
       .catch(function (error) {
         console.log(error);
@@ -115,9 +118,9 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
-    // imageURL.map((eachfile) => {
-    //   formData.append("imageFile", eachfile);
-    // });
+    imageURL.map((eachfile) => {
+      formData.append("imageFile", eachfile);
+    });
 
     instance
       .post(`/api/plans/days/${dayId}`, formData, {})
@@ -222,14 +225,13 @@ const getMyPlanDB = () => {
 //공개, 비공개 설정하기
 const statusDB = (planId, status) => {
   return function (dispatch, getState, { history }) {
-    console.log(planId, status)
+    console.log(planId, status);
     instance
-      .post(`api/plans/${planId}/public`,
-        {
-          status: status
-        })
+      .post(`api/plans/${planId}/public`, {
+        status: status,
+      })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         instance
           .get("/api/plans")
           .then((res) => {
@@ -248,7 +250,7 @@ const statusDB = (planId, status) => {
 //나의 Plan 삭제(여행리스트삭제)
 const deleteMyPlanDB = (planId) => {
   return function (dispatch, getState, { history }) {
-    console.log(planId)
+    console.log(planId);
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
@@ -260,7 +262,6 @@ const deleteMyPlanDB = (planId) => {
       });
   };
 };
-
 
 //나의 DayPost(특정장소삭제) 삭제
 const deleteMyPostDB = (placeId) => {
@@ -280,53 +281,13 @@ const deleteMyPostDB = (placeId) => {
   };
 };
 
-//나의 DayPost(특정장소수정) 수정
-export const editMyPostDB = (
-  placeId,
-  AmPm,
-  Hour,
-  Minute,
-  Memo,
-  placeName,
-  lat,
-  lng,
-  address,
-  imageURL
-) => {
-  return (dispatch, getState, { history }) => {
-    console.log(
-      placeId,
-      AmPm,
-      Hour,
-      Minute,
-      Memo,
-      placeName,
-      lat,
-      lng,
-      address,
-      imageURL
-    );
-
-    let formData = new FormData();
-    formData.append("placeName", placeName);
-    formData.append("lat", lat);
-    formData.append("lng", lng);
-    formData.append("address", address);
-    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
-    formData.append("memoText", Memo);
-    imageURL.map((eachfile) => {
-      formData.append("imageFile", eachfile);
-    });
-    // formData.append("imageFile", "");
+// 검색하기
+const searchDB = (keyword) => {
+  return function (dispatch, getState, { history }) {
     instance
-      .post(`/api/plans/days/places/${placeId}`, formData, {})
-      .then(function (response) {
-        console.log(response)
-        const planId = getState().plan.planId;
-        instance.get(`/api/plans/${planId}`).then((res) => {
-          console.log(res);
-          dispatch(getdayPlan(res.data.plan));
-        });
+      .get(`/api/plans/search?query=${keyword}`)
+      .then(function (res) {
+        dispatch(search(res.data.plans));
       })
       .catch(function (error) {
         console.log(error);
@@ -339,7 +300,8 @@ export default handleActions(
   {
     [GET_PLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.plans;
+        draft.list = action.payload.plans.plans;
+        draft.endPage = action.payload.plans.endPage;
       }),
     [CREATE_PLAN]: (state, action) =>
       produce(state, (draft) => {
@@ -357,8 +319,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.myplans = action.payload.myplans
       }),
-    [DELETEMYDAYPOST]: (state, action) =>
+    [DELETEMYDAYPOST]: (state, action) => produce(state, (draft) => {}),
+    [SEARCH]: (state, action) =>
       produce(state, (draft) => {
+        draft.search_list = action.payload.search_list;
       }),
   },
   initialState
@@ -379,7 +343,7 @@ const actionCreators = {
   statusDB,
   deleteMyPostDB,
   deleteMyPlanDB,
-  editMyPostDB
+  searchDB,
 };
 
 export { actionCreators };

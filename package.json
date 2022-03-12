@@ -16,6 +16,7 @@
     "google-map-react": "^2.1.10",
     "history": "4.10.1",
     "immer": "^9.0.12",
+    "intersection-observer": "^0.12.0",
     "moment": "^2.29.1",
     "node-sass": "^7.0.1",
     "query-string": "^7.1.1",
