@@ -22,6 +22,7 @@ const Filter = (props) => {
   const destCloseModal = (e) => {
     e.stopPropagation();
     setDestShowModal(false);
+    dispatch(categoryActions.addDestination(dest));
   };
 
   // 여행스타일 모달 열기
