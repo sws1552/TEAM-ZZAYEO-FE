@@ -1,5 +1,5 @@
-import React, { useState, memo, useEffect, useCallback } from "react"
-import { useInView } from "react-intersection-observer"
+import React, { useState, memo, useEffect, useCallback } from "react";
+import { useInView } from "react-intersection-observer";
 import instance from "../shared/Request";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
@@ -12,7 +12,6 @@ import Item from "./Item";
 import Searchbar from "../components/Search/Searchbar";
 import Filter from "../components/Main/Filter";
 
-
 const Main = (props) => {
   const dispatch = useDispatch();
   const is_token = localStorage.getItem("token") ? true : false;
@@ -21,34 +20,34 @@ const Main = (props) => {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [itemLists, setItemLists] = useState([]);
-  const [page, setPage] = useState(1)
-  
-  
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    console.log(itemLists)
+    console.log(itemLists);
   }, [itemLists]);
 
   const getMoreItem = async (page) => {
     setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    await instance.get(`/api/plans?page=${page}`)
-      .then((res) => {
-        let Items = res.data.plans
-        setItemLists((itemLists) => itemLists.concat(Items));
-      })
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await instance.get(`/api/plans?page=${page}`).then((res) => {
+      let Items = res.data.plans;
+      setItemLists((itemLists) => itemLists.concat(Items));
+    });
     setIsLoaded(false);
   };
 
-  const onIntersect = useCallback (async([entry], observer)=>{
-    if (entry.isIntersecting && !isLoaded) {
-      observer.unobserve(entry.target)
-      await getMoreItem(page);
-      setPage((num)=>num+1)
-      observer.observe(entry.target);
-    }
-  },[page])
-   
-  
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded) {
+        observer.unobserve(entry.target);
+        await getMoreItem(page);
+        setPage((num) => num + 1);
+        observer.observe(entry.target);
+      }
+    },
+    [page]
+  );
+
   useEffect(() => {
     let observer;
     if (target) {
@@ -60,28 +59,28 @@ const Main = (props) => {
     return () => observer && observer.disconnect();
   }, [target, page]);
 
-
-
   const plans = useSelector((store) => store.plan.list);
+
+  const style = useSelector((store) => store.category.style);
+  const style_list = useSelector((store) => store.plan.style_list);
+  console.log(style_list);
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
-    dispatch(planActions.getPlanDB());
+    dispatch(planActions.getPlanDB(style));
     dispatch(planActions.getBookMarkDB());
-  }, []);
+  }, [style]);
 
-  if (is_token) {
+  if (is_token && style_list.length === 0) {
     return (
       <Container>
         <Searchbar />
-        {/* <MainCategory /> */}
         <Filter />
         <BookMarkListBox>
           <p>내가 찜한 여행 스토리</p>
           <MainBookMarkList />
         </BookMarkListBox>
         <TravelListBox>
-
           <p>여행 일정 매거진</p>
 
           {itemLists.map((l, i) => {
@@ -94,6 +93,30 @@ const Main = (props) => {
       </Container>
     );
   }
+
+  if (is_token && style_list.length !== 0) {
+    return (
+      <Container>
+        <Searchbar />
+        <Filter />
+        <BookMarkListBox>
+          <p>내가 찜한 여행 스토리</p>
+          <MainBookMarkList />
+        </BookMarkListBox>
+        <TravelListBox>
+          <p>여행 일정 매거진</p>
+
+          {style_list.map((l, i) => {
+            return <MainTravelList key={i} {...l} />;
+          })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
+        </TravelListBox>
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <Searchbar />

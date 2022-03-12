@@ -5,47 +5,41 @@ import styled from "styled-components";
 import Searchbar from "../components/Search/Searchbar";
 import SearchList from "../components/Search/SearchList";
 import queryString from "query-string";
+import Filter from "../components/Main/Filter";
 
 const Search = (props) => {
   const dispatch = useDispatch();
 
-  //const search = decodeURI(props.location.search).split("=")[1];
   const query = queryString.parse(window.location.search);
+  console.log(query);
   const search = query.query;
 
   const searchList = useSelector((store) => store.plan.search_list);
-
+  // const style = useSelector((store) => store.category.style);
+  // console.log(style);
+  // console.log(searchList[0].style[0]);
   React.useEffect(() => {
-    const search = decodeURI(props.location.search).split("=")[1];
+    // const search = decodeURI(props.location.search).split("=")[1];
     dispatch(planActions.searchDB(search));
-  }, [search]);
+  }, []);
 
   if (searchList.length !== 0) {
     return (
       <React.Fragment>
         <Container>
           <Searchbar />
-          <SearchKeword>
-            <p>
-              <span>"{search}"</span>에 대한 검색 결과입니다.
-            </p>
-          </SearchKeword>
-          {searchList
-            ? searchList.map((l, i) => {
-                return <SearchList key={i} {...l} />;
-              })
-            : ""}
-          {/* {plans
-            .filter((p) => {
-              if (search === "") {
-                return p;
-              } else if (p.title.includes(search)) {
-                return p;
-              }
-            })
-            .map((p, i) => {
-              return <SearchList key={i} {...p} />;
-            })} */}
+          <>
+            <SearchKeword>
+              <p>
+                <span>"{search}"</span>에 대한 검색 결과입니다.
+              </p>
+            </SearchKeword>
+            {searchList
+              ? searchList.map((l, i) => {
+                  return <SearchList key={i} {...l} />;
+                })
+              : ""}
+          </>
         </Container>
       </React.Fragment>
     );

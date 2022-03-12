@@ -12,7 +12,7 @@ const GET_MYPLAN = "GET_MYPLAN";
 const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
 const SEARCH = "SEARCH";
-
+const STYLELIST = "STYLELIST";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
@@ -24,9 +24,8 @@ const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
 const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
 const status = createAction(STATUS, (status) => ({ status }));
 const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
-
 const search = createAction(SEARCH, (search_list) => ({ search_list }));
-
+const styleList = createAction(STYLELIST, (style_list) => ({ style_list }));
 // 초기 상태값
 const initialState = {
   list: [],
@@ -37,12 +36,27 @@ const initialState = {
   myplans: [],
   status: "",
   search_list: [],
+  style_list: [],
 };
 
 // 미들웨어
 
-//전체포스트 내용 받아오기
-const getPlanDB = () => {
+//스타일별 목록 가져오기
+const getPlanDB = (style) => {
+  if (style) {
+    return function (dispatch, getState, { history }) {
+      instance
+        .get(`/api/plans?style=${style}`)
+        .then((res) => {
+          console.log(res);
+          dispatch(styleList(res.data.plans));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+  }
+  //전체포스트 내용 받아오기
   return function (dispatch, getState, { history }) {
     instance
       .get("/api/plans")
@@ -254,8 +268,8 @@ const deleteMyPlanDB = (planId) => {
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
-        console.log(res)
-        history.push('/myplan')
+        console.log(res);
+        history.push("/myplan");
       })
       .catch((error) => {
         console.log(error);
@@ -368,12 +382,16 @@ export default handleActions(
       }),
     [GET_MYPLAN]: (state, action) =>
       produce(state, (draft) => {
-        draft.myplans = action.payload.myplans
+        draft.myplans = action.payload.myplans;
       }),
     [DELETEMYDAYPOST]: (state, action) => produce(state, (draft) => {}),
     [SEARCH]: (state, action) =>
       produce(state, (draft) => {
         draft.search_list = action.payload.search_list;
+      }),
+    [STYLELIST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.style_list = action.payload.style_list;
       }),
   },
   initialState
@@ -395,7 +413,7 @@ const actionCreators = {
   deleteMyPostDB,
   deleteMyPlanDB,
   searchDB,
-  editMyPostDB
+  editMyPostDB,
 };
 
 export { actionCreators };

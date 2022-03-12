@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 // actions
 
-const SENDDAYID = "SENDDAYID"
-const POLYLINE = "POLYLINE"
+const SENDDAYID = "SENDDAYID";
+const POLYLINE = "POLYLINE";
 
 // action creators
 const sendDayId = createAction(SENDDAYID, (dayId) => ({ dayId }));
@@ -15,7 +15,7 @@ const addPolyline = createAction(POLYLINE, (polyline) => ({ polyline }));
 // initial state
 const initialState = {
   dayId: "",
-  polyline: null
+  polyline: null,
 };
 
 //middleware
@@ -26,12 +26,12 @@ export default handleActions(
   {
     [SENDDAYID]: (state, action) =>
       produce(state, (draft) => {
-        draft.dayId = action.payload.dayId
+        draft.dayId = action.payload.dayId;
       }),
     [POLYLINE]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.polyline)
-        draft.polyline = action.payload.polyline
+        console.log(action.payload.polyline);
+        draft.polyline = action.payload.polyline;
       }),
   },
   initialState

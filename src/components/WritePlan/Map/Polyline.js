@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map";
 
 const Polyline = ({ maps, map, markers }) => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const polyLinedata = useSelector((state) => state.map.polyline);
 
@@ -30,7 +29,7 @@ const Polyline = ({ maps, map, markers }) => {
 
   // geodesicPolyline.setMap(map)
 
-  // const line = markers.reduce((acc, cur, i) => { 
+  // const line = markers.reduce((acc, cur, i) => {
   //   acc.push(new maps.LatLng(cur.lat, cur.lng));
   //   return acc;
   // }, []);
@@ -46,15 +45,13 @@ const Polyline = ({ maps, map, markers }) => {
   useEffect(() => {
     dispatch(mapActions.addPolyline(createPolyline));
 
-    if(polyLinedata !== null){
+    if (polyLinedata !== null) {
       polyLinedata.setMap(null);
     }
 
-    createPolyline.setMap(map);  
+    createPolyline.setMap(map);
     // createPolyline.setMap(null);
-  }, [markers, map, maps])
-
-
+  }, [markers, map, maps]);
 
   // React.useEffect(() => {
   //   PloyLineChanged(maps, map, markers)
