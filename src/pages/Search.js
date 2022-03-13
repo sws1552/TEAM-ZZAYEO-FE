@@ -5,40 +5,42 @@ import styled from "styled-components";
 import Searchbar from "../components/Search/Searchbar";
 import SearchList from "../components/Search/SearchList";
 import queryString from "query-string";
+import Filter from "../components/Search/Filter";
+import { useLocation } from "react-router";
 
 const Search = (props) => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
-  const query = queryString.parse(window.location.search);
+  const query = location.search;
+
+  const search = queryString.parse(window.location.search);
   console.log(query);
-  const search = query.query;
+
+  const keyword = search.query;
 
   const searchList = useSelector((store) => store.plan.search_list);
-  // const style = useSelector((store) => store.category.style);
-  // console.log(style);
-  // console.log(searchList[0].style[0]);
+
   React.useEffect(() => {
-    // const search = decodeURI(props.location.search).split("=")[1];
-    dispatch(planActions.searchDB(search));
-  }, []);
+    dispatch(planActions.searchDB(query));
+  }, [query]);
 
   if (searchList.length !== 0) {
     return (
       <React.Fragment>
         <Container>
           <Searchbar />
-          <>
-            <SearchKeword>
-              <p>
-                <span>"{search}"</span>에 대한 검색 결과입니다.
-              </p>
-            </SearchKeword>
-            {searchList
-              ? searchList.map((l, i) => {
-                  return <SearchList key={i} {...l} />;
-                })
-              : ""}
-          </>
+          <Filter />
+          <SearchKeword>
+            <p>
+              <span>"{keyword}"</span>에 대한 검색 결과입니다.
+            </p>
+          </SearchKeword>
+          {searchList
+            ? searchList.map((l, i) => {
+                return <SearchList key={i} {...l} />;
+              })
+            : ""}
         </Container>
       </React.Fragment>
     );
@@ -47,6 +49,7 @@ const Search = (props) => {
     <React.Fragment>
       <Container>
         <Searchbar />
+        <Filter />
         <Div>
           <svg
             width="62"

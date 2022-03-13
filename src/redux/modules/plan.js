@@ -343,10 +343,10 @@ export const editMyPostDB = (
   };
 };
 // 검색하기
-const searchDB = (keyword) => {
+const searchDB = (query) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/plans/search?query=${keyword}`)
+      .get(`/api/plans/search${query}`)
       .then(function (res) {
         dispatch(search(res.data.plans));
       })

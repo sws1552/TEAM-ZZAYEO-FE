@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import DestinationModal from "./Modal/DestinationModal";
-import StyleModal from "./Modal/StyleModal";
+import DestinationModal from "../Main/Modal/DestinationModal";
+import StyleModal from "../Main/Modal/StyleModal";
 import { history } from "../../redux/ConfigureStore";
+import queryString from "query-string";
 
 const Filter = (props) => {
+  const search = queryString.parse(window.location.search);
+  console.log(search);
+
   const [destShowModal, setDestShowModal] = React.useState(false);
   const [styleShowModal, setStyleShowModal] = React.useState(false);
 
   const [dest, setDest] = React.useState("국내");
   const [style, setStyle] = React.useState("여행 스타일");
 
-  let data = { key1: dest, key2: style };
+  let data = { key1: search.query, key2: dest, key3: style };
 
   // 국내,해외 모달 열기
   const destOpenModal = () => {
@@ -22,8 +26,8 @@ const Filter = (props) => {
     e.stopPropagation();
     setDestShowModal(false);
     history.push({
-      pathname: "/",
-      search: `?destination=${data.key1}`,
+      pathname: "/search",
+      search: `?query=${data.key1}&destination=${data.key2}`,
       data: data,
     });
   };
@@ -38,8 +42,8 @@ const Filter = (props) => {
     e.stopPropagation();
     setStyleShowModal(false);
     history.push({
-      pathname: "/",
-      search: `?destination=${data.key1}&style=${data.key2}`,
+      pathname: "/search",
+      search: `?query=${data.key1}&destination=${data.key2}&style=${data.key3}`,
       data: data,
     });
   };

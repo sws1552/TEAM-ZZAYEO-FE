@@ -41,12 +41,12 @@ const Container = styled.div`
 
 const BookMarkCard = styled.div`
   position: relative;
+  width: 152.57px;
+  height: 192.65px;
   font-family: "Roboto", sans-serif;
-  width: 120px;
-  height: 200px;
   background-color: #e6e6e6;
   border-radius: 8px;
-  margin-right: 8px;
+  margin-right: 5px;
   cursor: pointer;
 `;
 

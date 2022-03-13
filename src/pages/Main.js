@@ -7,9 +7,9 @@ import styled from "styled-components";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
-import Searchbar from "../components/Search/Searchbar";
 import Filter from "../components/Main/Filter";
 import { useLocation } from "react-router";
+import HeaderBar from "../components/Main/HeaderBar";
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -79,38 +79,47 @@ const Main = (props) => {
   if (is_token) {
     return (
       <Container>
-        <Searchbar />
-        <Filter />
-        <BookMarkListBox>
-          <p>내가 찜한 여행 스토리</p>
-          <MainBookMarkList />
-        </BookMarkListBox>
-        <TravelListBox>
-          <p>여행 일정 매거진</p>
-          {query ? (
-            <>
-              {plans.map((l, i) => {
-                return <MainTravelList key={i} {...l} />;
-              })}
-            </>
-          ) : (
-            <>
-              {itemLists.map((l, i) => {
-                return <MainTravelList key={i} {...l} />;
-              })}
-            </>
-          )}
-          <div ref={setTarget} className="Target-Element">
-            {isLoaded && <Loader />}
-          </div>
-        </TravelListBox>
+        <HeaderBar />
+        <Banner>
+          <p>
+            트리플랜과 함께
+            <br />
+            여행을 나눌 준비됐나요?
+          </p>
+        </Banner>
+        <Content>
+          <BookMarkListBox>
+            <p>내가 찜한 여행기 📚😆</p>
+            <MainBookMarkList />
+          </BookMarkListBox>
+          <TravelListBox>
+            <p>여행 일정 매거진</p>
+            <Filter />
+            {query ? (
+              <>
+                {plans.map((l, i) => {
+                  return <MainTravelList key={i} {...l} />;
+                })}
+              </>
+            ) : (
+              <>
+                {itemLists.map((l, i) => {
+                  return <MainTravelList key={i} {...l} />;
+                })}
+              </>
+            )}
+            <div ref={setTarget} className="Target-Element">
+              {isLoaded && <Loader />}
+            </div>
+          </TravelListBox>
+        </Content>
       </Container>
     );
   }
 
   return (
     <Container>
-      <Searchbar />
+      <Filter />
       {plans.map((l, i) => {
         return <MainTravelList key={i} {...l} />;
       })}
@@ -128,6 +137,30 @@ const Container = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const Banner = styled.div`
+  position: relative;
+  height: 148px;
+  background-color: #cfcfff;
+  padding: 0px 24px;
+
+  p {
+    margin: 0;
+    position: absolute;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    bottom: 40px;
+    color: #212121;
+  }
+`;
+
+const Content = styled.div`
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 `;
 
 const TravelListBox = styled.div`

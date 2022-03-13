@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { history } from "../../redux/ConfigureStore";
 
 const Searchbar = (props) => {
   const [search, setSearch] = React.useState(null);
@@ -7,7 +8,11 @@ const Searchbar = (props) => {
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log(search);
-      window.location.replace(`search?query=${search}`);
+      history.push({
+        pathname: "/search",
+        search: `?query=${search}`,
+        data: search,
+      });
     }
   };
   return (
