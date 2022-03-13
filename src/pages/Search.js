@@ -5,7 +5,6 @@ import styled from "styled-components";
 import Searchbar from "../components/Search/Searchbar";
 import SearchList from "../components/Search/SearchList";
 import queryString from "query-string";
-import Filter from "../components/Main/Filter";
 
 const Search = (props) => {
   const dispatch = useDispatch();

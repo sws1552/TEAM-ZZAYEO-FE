@@ -1,9 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
-import { push } from "connected-react-router";
-import DestinationModal from "../../components/Main/Modal/DestinationModal";
-import { useSelector, useDispatch } from "react-redux";
 
 // 액션타입
 const GET_PLAN = "GET_PLAN";
@@ -14,8 +11,6 @@ const GET_MYPLAN = "GET_MYPLAN";
 const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
 const SEARCH = "SEARCH";
-const STYLELIST = "STYLELIST";
-const DESTINATION = "DESTINATION";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
@@ -28,17 +23,7 @@ const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
 const status = createAction(STATUS, (status) => ({ status }));
 const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
 const search = createAction(SEARCH, (search_list) => ({ search_list }));
-const styleList = createAction(STYLELIST, (style_list, style) => ({
-  style_list,
-  style,
-}));
-const destinationList = createAction(
-  STYLELIST,
-  (destination_list, destination) => ({
-    destination_list,
-    destination,
-  })
-);
+
 // 초기 상태값
 const initialState = {
   list: [],
@@ -53,33 +38,14 @@ const initialState = {
   destination_list: [],
 };
 
-//국내, 해외 목록 가져오기
-const getdestinationDB = (destination) => {
-  return function (dispatch, getState, { history }) {
-    const style = getState().category.style;
-    instance
-      .get(`/api/plans?destination=${destination}`)
-      .then((res) => {
-        console.log(res);
-        dispatch(destinationList(res.data.destination, style));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-};
-
-//스타일별 목록 가져오기
-const getPlanDB = (style) => {
-  console.log(style);
-  if (style) {
+//카테고리 선택 목록 가져오기
+const getPlanDB = (query) => {
+  if (query) {
     return function (dispatch, getState, { history }) {
-      const destination = getState().category.destination;
       instance
-        .get(`/api/plans?style=${style}`)
+        .get(`/api/plans${query}`)
         .then((res) => {
-          console.log(res);
-          dispatch(styleList(res.data.plans, destination));
+          dispatch(getPlan(res.data));
         })
         .catch(function (error) {
           console.log(error);
@@ -419,68 +385,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.search_list = action.payload.search_list;
       }),
-    [STYLELIST]: (state, action) =>
-      produce(state, (draft) => {
-        const style = action.payload.style_list;
-        const destination = action.payload.destination;
-        if (style.length === 0) {
-          draft.style_list = [{ none: "없음" }];
-        } else {
-          draft.style_list = action.payload.style_list;
-        }
-        // if (style.length !== 0) {
-        //   if (destination === "국내") {
-        //     const domestic = style.filter((v) => v.destination === destination);
-        //     draft.style_list = domestic;
-        //   } else if (destination === "해외") {
-        //     const abroad = style.filter((v) => v.destination === destination);
-        //     draft.style_list = abroad;
-        //   } else if (destination === "") {
-        //     draft.style_list = style;
-        //   }
-        // }
-      }),
-    [DESTINATION]: (state, action) =>
-      produce(state, (draft) => {
-        // const destination = action.payload.destination_list;
-        // const style = action.payload.style;
-        // if (destination.length === 0) {
-        //   draft.destination_list = [{ none: "없음" }];
-        // }
-        // if (destination.length !== 0) {
-        //   if (style === "액티비티 체험") {
-        //     const activity = destination.filter((v) => v.style === style);
-        //     draft.destination_list = activity;
-        //   } else if (style === "문화 예술 역사 체험") {
-        //     const culture = destination.filter((v) => v.style === style);
-        //     draft.destination_list = culture;
-        //   } else if (style === "명소 관광지 방문필수") {
-        //     const tourism = destination.filter((v) => v.style === style);
-        //     draft.destination_list = tourism;
-        //   } else if (style === "페스티벌 참여") {
-        //     const festival = destination.filter((v) => v.style === style);
-        //     draft.destination_list = festival;
-        //   } else if (style === "먹방투어") {
-        //     const food = destination.filter((v) => v.style === destination);
-        //     draft.destination_list = food;
-        //   } else if (style === "쇼핑 좋아") {
-        //     const shopping = destination.filter((v) => v.style === style);
-        //     draft.destination_list = shopping;
-        //   } else if (style === "편하게 쉬는 휴양") {
-        //     const relax = destination.filter((v) => v.style === style);
-        //     draft.style_list = relax;
-        //   } else if (style === "SNS 핫플 투어") {
-        //     const SNS = destination.filter((v) => v.style === style);
-        //     draft.destination_list = SNS;
-        //   } else if (style === "호캉스") {
-        //     const hotel = destination.filter((v) => v.style === style);
-        //     draft.destination_list = hotel;
-        //   } else if (style === "자연친화") {
-        //     const nature = destination.filter((v) => v.style === style);
-        //     draft.destination_list = nature;
-        //   }
-        // }
-      }),
   },
   initialState
 );
@@ -502,7 +406,6 @@ const actionCreators = {
   deleteMyPlanDB,
   searchDB,
   editMyPostDB,
-  getdestinationDB,
 };
 
 export { actionCreators };

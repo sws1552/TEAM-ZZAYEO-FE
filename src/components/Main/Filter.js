@@ -3,16 +3,15 @@ import styled from "styled-components";
 import DestinationModal from "./Modal/DestinationModal";
 import StyleModal from "./Modal/StyleModal";
 import { history } from "../../redux/ConfigureStore";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as categoryActions } from "../../redux/modules/category";
 
 const Filter = (props) => {
-  const dispatch = useDispatch();
   const [destShowModal, setDestShowModal] = React.useState(false);
   const [styleShowModal, setStyleShowModal] = React.useState(false);
 
   const [dest, setDest] = React.useState("국내");
   const [style, setStyle] = React.useState("여행 스타일");
+
+  let data = { key1: dest, key2: style };
 
   // 국내,해외 모달 열기
   const destOpenModal = () => {
@@ -22,7 +21,11 @@ const Filter = (props) => {
   const destCloseModal = (e) => {
     e.stopPropagation();
     setDestShowModal(false);
-    dispatch(categoryActions.addDestination(dest));
+    history.push({
+      pathname: "/",
+      search: `?destination=${data.key1}`,
+      data: data,
+    });
   };
 
   // 여행스타일 모달 열기
@@ -34,7 +37,11 @@ const Filter = (props) => {
   const styleCloseModal = (e) => {
     e.stopPropagation();
     setStyleShowModal(false);
-    dispatch(categoryActions.addStyle(style));
+    history.push({
+      pathname: "/",
+      search: `?destination=${data.key1}&style=${data.key2}`,
+      data: data,
+    });
   };
   return (
     <Container>
