@@ -22,9 +22,13 @@ const WritePlan = (props) => {
   const myPlan = useSelector((state) => state.plan.myPlan);
 
   const [clickedTripDest, changeTripDest] = React.useState(0);
-  const [isChecked, setIsChecked] = React.useState(true);
+  const [isChecked, setIsChecked] = React.useState(false);
+  const toggleMenu = () => {
+    setIsChecked(isChecked => !isChecked); 
+  }
+  
 
-  React.useEffect(() => {
+React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
 
@@ -65,28 +69,25 @@ const WritePlan = (props) => {
           </div>
         </TripDestBox>
 
-
-        <div>
-          <FormControlLabel
-            style={{ display: 'block', padding: "10px 24px", color: "gray" }}
-            control={<Switch style={{ color: "#12C5ED" }} checked={isChecked} onChange={() => {
-              setIsChecked((prev) => !prev);
-            }} />}
-            label="지도보기"
-          />
           <Collapse in={isChecked}>
             <WritePlanMap />
           </Collapse>
-        </div>
-        <div>
+    
+        <div style={{width: "100%", display:"flex",  justifyContent:"center"}}>
+        {isChecked ? 
+        <div onClick={()=>toggleMenu()} style={{cursor:"pointer"}}>
           <svg width="38" height="8" viewBox="0 0 38 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M37 6.5L19 2L1 6.5" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" />
           </svg>
-
+        </div> : 
+        <div onClick={()=>toggleMenu()} style={{cursor:"pointer"}}>
           <svg width="38" height="7" viewBox="0 0 38 7" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 1L19 5.5L37 1" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" />
           </svg>
         </div>
+        }
+        </div>
+
 
         {isChecked ? <ChooseDay {...myPlan} /> : null}
         {/* {isChecked ? <BasicTabs {...myPlan} /> : <BasicTabsHide {...myPlan} />} */}
