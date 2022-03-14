@@ -99,7 +99,6 @@ const Filter = (props) => {
 
 const Container = styled.div`
   padding: 0px 24px;
-  position: relative;
 `;
 
 const SelectBox = styled.div`

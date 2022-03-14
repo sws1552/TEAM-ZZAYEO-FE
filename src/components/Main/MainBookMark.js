@@ -53,7 +53,7 @@ const BookMarkCard = styled.div`
   background-size: cover;
   font-family: "Roboto", sans-serif;
   cursor: pointer;
-  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.06));
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
 `;
 
 const UserInfo = styled.div`
