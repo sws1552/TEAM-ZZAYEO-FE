@@ -24,7 +24,7 @@ const ChooseDay = (props) => {
         <TabMenu>
           {dayList && dayList.map((d, i) => {
             return (
-              <div
+              <Button
                 key={i}
                 className={currentTab === i ? "submenu focused" : "submenu"}
                 onClick={() => {
@@ -35,7 +35,7 @@ const ChooseDay = (props) => {
                 }}
               >
                 day{i + 1}
-              </div>
+              </Button>
             )
           })}
         </TabMenu>
@@ -115,11 +115,26 @@ const TabMenu = styled.div`
   justify-items: center;
   align-items: center;
   list-style: none;
-
+    
   .submenu {
     width:100% auto;
     padding: 15px 10px;
     cursor: pointer;
   }
 `;
+
+const Button = styled.div`
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 32px;
+    margin: 20px auto;
+    padding: 15px 12px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-size: 12px;
+    background-color: #eee;
+    font-weight: 400;
+    cursor: pointer;
+`
 export default ChooseDay;

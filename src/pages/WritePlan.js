@@ -20,7 +20,7 @@ const WritePlan = (props) => {
 
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
- 
+
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
 
@@ -77,6 +77,15 @@ const WritePlan = (props) => {
           <Collapse in={isChecked}>
             <WritePlanMap />
           </Collapse>
+        </div>
+        <div>
+          <svg width="38" height="8" viewBox="0 0 38 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M37 6.5L19 2L1 6.5" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" />
+          </svg>
+
+          <svg width="38" height="7" viewBox="0 0 38 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L19 5.5L37 1" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" />
+          </svg>
         </div>
 
         {isChecked ? <ChooseDay {...myPlan} /> : null}
