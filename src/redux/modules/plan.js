@@ -95,7 +95,8 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL
+  imageURL,
+  geometry
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -108,7 +109,8 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL
+      imageURL,
+      geometry.viewport
     );
 
     let formData = new FormData();
@@ -118,6 +120,7 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
+    formData.append("geometry_viewport", geometry.viewport);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });

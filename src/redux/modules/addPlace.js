@@ -8,10 +8,12 @@ import { useSelector, useDispatch } from "react-redux";
 const LOCATION = "LOCATION"
 const IMAGEURL = "IMAGEURL"
 const ADDTIME = "ADDTIME"
+
 // action creators
 const addlocation = createAction(LOCATION, (place) => ({ place }));
 const imageURL = createAction(IMAGEURL, (imageURL) => ({ imageURL }));
 const addhour = createAction(ADDTIME, (hour) => ({ hour }));
+
 
 // initial state
 const initialState = {
@@ -24,7 +26,6 @@ const initialState = {
   hour: "",
   minute: "",
   geometry: "",
-
 };
 
 //middleware
@@ -41,14 +42,13 @@ export default handleActions(
         const lat = place[0].geometry.location.lat()
         const lng = place[0].geometry.location.lng()
         const address = place[0].formatted_address
-      
+
         draft.placeName = placeName
         draft.lat = lat
         draft.lng = lng
         draft.address = address
-        draft.geometry=  place[0].geometry
-    
-        // draft.places = place
+        draft.geometry = place[0].geometry
+
       }),
     [IMAGEURL]: (state, action) =>
       produce(state, (draft) => {
@@ -58,6 +58,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.hour = action.payload.hour
       }),
+   
   },
   initialState
 );

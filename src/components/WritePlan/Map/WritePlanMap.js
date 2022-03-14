@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Maker from "./Maker";
@@ -10,11 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as lineActions } from "../../../redux/modules/polyline";
 
 const WritePlanMap = (props) => {
-
   const dispatch = useDispatch();
   const [apiReady, setApiReady] = useState(false);
   const [map, setMap] = useState(null);
   const [googlemaps, setGooglemaps] = useState(null);
+  const googleRef = useRef(null);
 
   let zoom = 10;
 
@@ -34,7 +34,10 @@ const WritePlanMap = (props) => {
 
   const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
 
+
+  //Markers
   const Markers = []
+
   EachDayPlaces[0]?.places?.filter((v, i) => {
     return (
       Markers.push({ lat: v.lat, lng: v.lng })
@@ -53,26 +56,28 @@ const WritePlanMap = (props) => {
   if (window.screen.width >= 768) {
     zoom = 15;
   }
-  //serchBar
-  
+
+
   React.useEffect(() => {
-    handleOnPlacesChanged(geometry.location, geometry.viewport)
-  }, [map, googlemaps, geometry]);
+    handleOnPlacesChanged(Markers, googlemaps)
+  }, [map, googlemaps, Markers]);
 
 
   //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
   const handleOnPlacesChanged = useCallback(() => {
-    // console.log(geometry.location)
-    if (!geometry) return;
-    if (geometry.viewport) {
-      map.fitBounds(geometry.viewport)
-    } else {
-      map.setCenter(geometry.location)
-      map.setZoom(17)
+    if (Markers.length !== 0) {
+      const bounds = new googlemaps.LatLngBounds();
+      Markers.map(item => {
+        bounds.extend(item);
+      });
+      if(bounds) {
+        map.fitBounds(bounds);
+      } else {
+        map.setCenter(new googlemaps.LatLng(Markers[Markers.length - 1].lat, Markers[Markers.length - 1].lng))
+        map.setZoom(17)
+      }
     }
-    // 
-  }, [geometry.location, geometry.viewport])
-
+  }, [Markers, googlemaps])
 
   return (
 
@@ -85,6 +90,7 @@ const WritePlanMap = (props) => {
             //GoogleMap로드시 라이브러리로 places를 추가
           }}
           defaultCenter={center}
+          ref={googleRef}
           defaultZoom={zoom}
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
@@ -110,7 +116,7 @@ const WritePlanMap = (props) => {
               markers={Markers}
               map={map}
               maps={googlemaps}
-            />)} 
+            />)}
 
         </GoogleMapReact>
       </div>

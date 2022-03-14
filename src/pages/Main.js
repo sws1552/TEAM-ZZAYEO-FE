@@ -9,6 +9,7 @@ import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
 import Searchbar from "../components/Search/Searchbar";
 import Filter from "../components/Main/Filter";
+import { history } from "../redux/ConfigureStore";
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -82,6 +83,7 @@ const Main = (props) => {
         .then((res) => {
           if (res.data.plans.length === 0) {
             alert("선택하신 여행 스타일이 없습니다.")
+            window.location.reload('/')
           } else {
             dispatch(planActions.destinationList(res.data.plans));
           }
@@ -91,6 +93,7 @@ const Main = (props) => {
         .then((res) => {
           if (res.data.plans.length === 0) {
             alert("선택하신 여행 스타일이 없습니다.")
+            window.location.reload('/') //dispatch로 list에 배열을 하나만들어주고 length===0아니면 실행시키게
           } else {
             dispatch(planActions.destinationList(res.data.plans));
           }

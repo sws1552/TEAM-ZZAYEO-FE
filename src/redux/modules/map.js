@@ -30,7 +30,7 @@ export default handleActions(
       }),
     [POLYLINE]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.polyline);
+   
         draft.polyline = action.payload.polyline;
       }),
   },

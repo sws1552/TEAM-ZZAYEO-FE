@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { boxSizing, height } from '@mui/system';
 import Image from '../../../elements/Images'
-
 import styled from 'styled-components';
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../../../redux/modules/map"
@@ -50,8 +49,8 @@ const a11yProps = (index) => {
 
 const BasicTabs = (props) => {
   const dayList = props.days
-
   const polyLinedata = useSelector((state) => state.map.polyline);
+
 
 
   const dispatch = useDispatch()
@@ -73,12 +72,12 @@ const BasicTabs = (props) => {
           allowScrollButtonsMobile
           aria-label="basic tabs example" >
           {dayList && dayList.map((d, i) => {
+          
             return (
               <Tab
                 disableRipple //퍼지는 듯한 효과차단
                 onClick={() => {
                   polyLinedata.setMap(null);
-                  console.log('tabs polyLineddata !! ', polyLinedata.map);
                   dispatch(mapActions.addPolyline(polyLinedata));
                   dispatch(mapActions.sendDayId(d.dayId))
             
@@ -87,8 +86,8 @@ const BasicTabs = (props) => {
           })}
         </Day>
       </Box>
+     
       {dayList && dayList.map((d, i) => {
-
         return (
           <TabPanel key={i} style={{ height: "100%" }} value={value} index={i} >
             {d.places && d.places.map((v, i) => {
@@ -109,12 +108,7 @@ const BasicTabs = (props) => {
                 </div>
               )
             })}
-
             <WritePlanModal dayId={d.dayId} />
-            {/* <Button onClick={() => {
-              dispatch(mapActions.sendDayId(d.dayId))
-              history.push("/addplace")
-            }}>+장소추가하기</Button> */}
           </TabPanel>
         )
       })}
@@ -145,6 +139,7 @@ const Day = styled(Tabs)`
     color: gray;
     width: 30px;
   }
+  
 `
 const Button = styled.div`
     display: flex;
