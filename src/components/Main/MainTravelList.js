@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import MainLike from "./MainLike";
 import { history } from "../../redux/ConfigureStore";
-import { memo } from "react";
 
 const MainTravelList = (props) => {
   const { title, destination, style, withlist, isLike, planId } = props;
@@ -34,7 +33,6 @@ const Container = styled.div`
 `;
 
 const TripCard = styled.div`
-  position: relative;
   font-family: "Roboto", sans-serif;
   width: 100%;
   height: 200px;
@@ -60,4 +58,4 @@ const CardInfo = styled.div`
   color: #ffffff;
 `;
 
-export default MainTravelList
+export default MainTravelList;
