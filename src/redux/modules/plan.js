@@ -34,8 +34,6 @@ const initialState = {
   myplans: [],
   status: "",
   search_list: [],
-  style_list: [],
-  destination_list: [],
 };
 
 //카테고리 선택 목록 가져오기
@@ -52,6 +50,7 @@ const getPlanDB = (query) => {
         });
     };
   }
+
   //전체포스트 내용 받아오기
   return function (dispatch, getState, { history }) {
     instance
@@ -105,7 +104,8 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL
+  imageURL,
+  geometry
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -118,7 +118,8 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL
+      imageURL,
+      geometry.viewport
     );
 
     let formData = new FormData();
@@ -128,6 +129,7 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
+    formData.append("geometry_viewport", geometry.viewport);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });

@@ -13,13 +13,14 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as planActions } from "../redux/modules/plan";
+import ChooseDay from "../components/WritePlan/Plan/ChooseDay";
 
 const WritePlan = (props) => {
   const dispatch = useDispatch();
 
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
-
+ 
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
 
@@ -30,7 +31,7 @@ const WritePlan = (props) => {
   const decideShare = ["나만의 일정", "모두에게 공유"];
   const share = "공개"
   const unshare = "비공개"
-  
+
   return (
     <>
       <Container>
@@ -44,10 +45,10 @@ const WritePlan = (props) => {
                   key={i}
                   onClick={() => {
                     changeTripDest(i);
-                    if (l==="모두에게 공유") {
+                    if (l === "모두에게 공유") {
                       dispatch(planActions.statusDB(myPlan.planId, share))
                     }
-                    if(l==="나만의 일정") {
+                    if (l === "나만의 일정") {
                       dispatch(planActions.statusDB(myPlan.planId, unshare))
                     }
                   }}
@@ -67,8 +68,8 @@ const WritePlan = (props) => {
 
         <div>
           <FormControlLabel
-            style={{ display: 'block', padding: "10px 24px" , color:"gray"}}
-            control={<Switch style={{color:"#12C5ED"}}checked={isChecked} onChange={() => {
+            style={{ display: 'block', padding: "10px 24px", color: "gray" }}
+            control={<Switch style={{ color: "#12C5ED" }} checked={isChecked} onChange={() => {
               setIsChecked((prev) => !prev);
             }} />}
             label="지도보기"
@@ -78,7 +79,8 @@ const WritePlan = (props) => {
           </Collapse>
         </div>
 
-       {isChecked? <BasicTabs {...myPlan} />: <BasicTabsHide {...myPlan} />} 
+        {isChecked ? <ChooseDay {...myPlan} /> : null}
+        {/* {isChecked ? <BasicTabs {...myPlan} /> : <BasicTabsHide {...myPlan} />} */}
       </Container>
     </>
   );
