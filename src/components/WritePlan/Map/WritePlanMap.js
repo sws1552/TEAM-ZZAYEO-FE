@@ -14,7 +14,6 @@ const WritePlanMap = (props) => {
   const [apiReady, setApiReady] = useState(false);
   const [map, setMap] = useState(null);
   const [googlemaps, setGooglemaps] = useState(null);
-  const googleRef = useRef(null);
 
   let zoom = 10;
 
@@ -90,7 +89,6 @@ const WritePlanMap = (props) => {
             //GoogleMap로드시 라이브러리로 places를 추가
           }}
           defaultCenter={center}
-          ref={googleRef}
           defaultZoom={zoom}
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
