@@ -10,6 +10,7 @@ import Loader from "../components/Main/Loader";
 import Filter from "../components/Main/Filter";
 import { useLocation } from "react-router";
 import HeaderBar from "../components/Main/HeaderBar";
+import Banner from "../components/Main/Banner";
 
 const Main = (props) => {
   const dispatch = useDispatch();
@@ -80,20 +81,14 @@ const Main = (props) => {
     return (
       <Container>
         <HeaderBar />
-        <Banner>
-          <p>
-            트리플랜과 함께
-            <br />
-            여행을 나눌 준비됐나요?
-          </p>
-        </Banner>
+        <Banner />
         <Content>
           <BookMarkListBox>
             <p>내가 찜한 여행기 📚😆</p>
             <MainBookMarkList />
           </BookMarkListBox>
           <TravelListBox>
-            <p>여행 일정 매거진</p>
+            <p>여행기 모아보기 🌄📝</p>
             <Filter />
             {query ? (
               <>
@@ -119,10 +114,20 @@ const Main = (props) => {
 
   return (
     <Container>
-      <Filter />
-      {plans.map((l, i) => {
-        return <MainTravelList key={i} {...l} />;
-      })}
+      <HeaderBar />
+      <Banner />
+      <Content>
+        <TravelListBox>
+          <p>여행기 모아보기 🌄📝</p>
+          <Filter />
+          {itemLists.map((l, i) => {
+            return <MainTravelList key={i} {...l} />;
+          })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
+        </TravelListBox>
+      </Content>
     </Container>
   );
 };
@@ -130,43 +135,26 @@ const Main = (props) => {
 export default Main;
 
 const Container = styled.div`
-  position: relative;
   width: 100%;
   height: 90%;
+  background-color: #cfcfff;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const Banner = styled.div`
-  position: relative;
-  height: 148px;
-  background-color: #cfcfff;
-  padding: 0px 24px;
-
-  p {
-    margin: 0;
-    position: absolute;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 30px;
-    bottom: 40px;
-    color: #212121;
-  }
-`;
-
 const Content = styled.div`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  background-color: #ffffff;
 `;
 
 const TravelListBox = styled.div`
   p {
+    margin: 0;
+    margin-bottom: 12px;
     padding: 0px 24px;
-    margin-bottom: 16px;
     font-family: "Roboto", sans-serif;
     font-weight: 600;
     font-size: 18px;
@@ -176,5 +164,9 @@ const TravelListBox = styled.div`
 `;
 
 const BookMarkListBox = styled(TravelListBox)`
-  margin-bottom: 36px;
+  padding-top: 32px;
+  p {
+    margin: 0;
+    margin-bottom: 16px;
+  }
 `;

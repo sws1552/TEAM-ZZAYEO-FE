@@ -56,11 +56,10 @@ const Filter = (props) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M1 1L6 6L11 1"
-              stroke="#BFBFBF"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11.2946 0.704616C10.9053 0.315343 10.2743 0.314999 9.88462 0.703847L6 4.58L2.11538 0.703847C1.72569 0.314999 1.09466 0.315343 0.705384 0.704616C0.315811 1.09419 0.315811 1.72581 0.705385 2.11538L5.29289 6.70289C5.68342 7.09342 6.31658 7.09342 6.70711 6.70289L11.2946 2.11538C11.6842 1.72581 11.6842 1.09419 11.2946 0.704616Z"
+              fill="#BDBDBD"
             />
           </svg>
         </Destination>
@@ -80,11 +79,10 @@ const Filter = (props) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M1 1L6 6L11 1"
-              stroke="#BFBFBF"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M11.2946 0.704616C10.9053 0.315343 10.2743 0.314999 9.88462 0.703847L6 4.58L2.11538 0.703847C1.72569 0.314999 1.09466 0.315343 0.705384 0.704616C0.315811 1.09419 0.315811 1.72581 0.705385 2.11538L5.29289 6.70289C5.68342 7.09342 6.31658 7.09342 6.70711 6.70289L11.2946 2.11538C11.6842 1.72581 11.6842 1.09419 11.2946 0.704616Z"
+              fill="#BDBDBD"
             />
           </svg>
         </Style>
@@ -114,14 +112,13 @@ const SelectBox = styled.div`
 `;
 
 const Destination = styled.div`
-  color: #535353;
-  border: 1px solid #ededed;
-  box-sizing: border-box;
-  border-radius: 15.5px;
-  padding: 4px 16px;
-  margin-right: 8px;
   display: flex;
   align-items: center;
+  margin-right: 8px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  background-color: #f5f5f5;
+  color: #757575;
   cursor: pointer;
 
   svg {

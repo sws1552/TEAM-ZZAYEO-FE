@@ -78,7 +78,8 @@ const HeaderBar = (props) => {
 };
 
 const Container = styled.div`
-  position: relative;
+  position: sticky;
+  top: 0;
   height: 56px;
   background-color: #cfcfff;
   box-sizing: border-box;
