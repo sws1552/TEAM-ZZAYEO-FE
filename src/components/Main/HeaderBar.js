@@ -86,6 +86,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 0px;
+  z-index: 1;
 `;
 
 const Logo = styled.div`
