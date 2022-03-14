@@ -7,12 +7,15 @@ import styled from "styled-components";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
-import Searchbar from "../components/Search/Searchbar";
 import Filter from "../components/Main/Filter";
-import { history } from "../redux/ConfigureStore";
+import { useLocation } from "react-router";
+import HeaderBar from "../components/Main/HeaderBar";
+import Banner from "../components/Main/Banner";
 
 const Main = (props) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const is_token = localStorage.getItem("token") ? true : false;
 
   //무한 스크롤
@@ -65,81 +68,58 @@ const Main = (props) => {
   }, [target, page]);
 
   const plans = useSelector((store) => store.plan.list);
-  const style = useSelector((store) => store.category.style);
-  const destination = useSelector((store) => store.category.destination);
-  const destination_list = useSelector((store) => store.plan.destination_list);
-  console.log(destination_list)
 
-  console.log(style, destination)
-
-  const getPost = async (style, destination) => {
-    if (style === "") {
-      await instance.get(`/api/plans?destination=${destination}`)
-        .then((res) => {
-          dispatch(planActions.destinationList(res.data.plans));
-        });
-    } else if (style !== "" & destination !== "") {
-      await instance.get(`/api/plans?destination=${destination}&style=${style}`)
-        .then((res) => {
-          if (res.data.plans.length === 0) {
-            alert("선택하신 여행 스타일이 없습니다.")
-            window.location.reload('/')
-          } else {
-            dispatch(planActions.destinationList(res.data.plans));
-          }
-        });
-    } else if (destination === "") {
-      await instance.get(`/api/plans?style=${style}`)
-        .then((res) => {
-          if (res.data.plans.length === 0) {
-            alert("선택하신 여행 스타일이 없습니다.")
-            window.location.reload('/') //dispatch로 list에 배열을 하나만들어주고 length===0아니면 실행시키게
-          } else {
-            dispatch(planActions.destinationList(res.data.plans));
-          }
-        });
-    }
-  };
+  const query = location.search;
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
+    dispatch(planActions.getPlanDB(query));
     dispatch(planActions.getBookMarkDB());
-    getPost(style, destination)
-  }, [style, destination]);
-
-  if (is_token && destination_list.length !== 0) {
-    return (
-      <Container>
-        <Searchbar />
-        <Filter />
-        <BookMarkListBox>
-          <p>내가 찜한 여행 스토리</p>
-          <MainBookMarkList />
-        </BookMarkListBox>
-        <TravelListBox>
-          <p>여행 일정 매거진</p>
-          {destination_list.map((l, i) => {
-            return <MainTravelList key={i} {...l} />;
-          })}
-          <div ref={setTarget} className="Target-Element">
-            {isLoaded && <Loader />}
-          </div>
-        </TravelListBox>
-      </Container>
-    );
-  }
+  }, [query]);
 
   if (is_token) {
     return (
       <Container>
-        <Searchbar />
-        <Filter />
-        <BookMarkListBox>
-          <p>내가 찜한 여행 스토리</p>
-          <MainBookMarkList />
-        </BookMarkListBox>
+        <HeaderBar />
+        <Banner />
+        <Content>
+          <BookMarkListBox>
+            <p>내가 찜한 여행기 📚😆</p>
+            <MainBookMarkList />
+          </BookMarkListBox>
+          <TravelListBox>
+            <p>여행기 모아보기 🌄📝</p>
+            <Filter />
+            {query ? (
+              <>
+                {plans.map((l, i) => {
+                  return <MainTravelList key={i} {...l} />;
+                })}
+              </>
+            ) : (
+              <>
+                {itemLists.map((l, i) => {
+                  return <MainTravelList key={i} {...l} />;
+                })}
+              </>
+            )}
+            <div ref={setTarget} className="Target-Element">
+              {isLoaded && <Loader />}
+            </div>
+          </TravelListBox>
+        </Content>
+      </Container>
+    );
+  }
+
+  return (
+    <Container>
+      <HeaderBar />
+      <Banner />
+      <Content>
         <TravelListBox>
-          <p>여행 일정 매거진</p>
+          <p>여행기 모아보기 🌄📝</p>
+          <Filter />
           {itemLists.map((l, i) => {
             return <MainTravelList key={i} {...l} />;
           })}
@@ -147,16 +127,7 @@ const Main = (props) => {
             {isLoaded && <Loader />}
           </div>
         </TravelListBox>
-      </Container>
-    );
-  }
-
-  return (
-    <Container>
-      <Searchbar />
-      {plans.map((l, i) => {
-        return <MainTravelList key={i} {...l} />;
-      })}
+      </Content>
     </Container>
   );
 };
@@ -164,19 +135,26 @@ const Main = (props) => {
 export default Main;
 
 const Container = styled.div`
-  position: relative;
   width: 100%;
   height: 90%;
+  background-color: #cfcfff;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
+const Content = styled.div`
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background-color: #ffffff;
+`;
+
 const TravelListBox = styled.div`
   p {
+    margin: 0;
+    margin-bottom: 12px;
     padding: 0px 24px;
-    margin-bottom: 16px;
     font-family: "Roboto", sans-serif;
     font-weight: 600;
     font-size: 18px;
@@ -186,5 +164,9 @@ const TravelListBox = styled.div`
 `;
 
 const BookMarkListBox = styled(TravelListBox)`
-  margin-bottom: 36px;
+  padding-top: 32px;
+  p {
+    margin: 0;
+    margin-bottom: 16px;
+  }
 `;

@@ -1,13 +1,26 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { actionCreators as planActions } from "../../redux/modules/plan";
+import { history } from "../../redux/ConfigureStore";
+import { useLocation } from "react-router";
 
 const Searchbar = (props) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
   const [search, setSearch] = React.useState(null);
+
+  const query = location.search;
 
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log(search);
-      window.location.replace(`search?query=${search}`);
+      history.push({
+        pathname: "/search",
+        search: `?query=${search}`,
+        data: search,
+      });
+      dispatch(planActions.searchDB(query));
     }
   };
   return (

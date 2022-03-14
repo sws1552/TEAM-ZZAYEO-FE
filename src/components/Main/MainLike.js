@@ -126,7 +126,6 @@ const MainLike = (props) => {
 };
 
 const Like = styled.div`
-  position: absolute;
   right: 16px;
   bottom: 16px;
 `;

@@ -18,7 +18,6 @@ const MainBookMarkList = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  /* align-items: center; */
   padding-left: 24px;
   overflow-x: scroll;
   ::-webkit-scrollbar {

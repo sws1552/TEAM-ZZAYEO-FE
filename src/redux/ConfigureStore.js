@@ -9,7 +9,6 @@ import map from "./modules/map";
 import polyline from "./modules/polyline";
 import image from "./modules/image";
 import addPlace from "./modules/addPlace";
-import category from "./modules/category";
 
 import chat from "./modules/chat";
 import comment from "./modules/comment";
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
   polyline: polyline,
   chat: chat,
   comment: comment,
-  category: category,
   router: connectRouter(history),
 });
 
