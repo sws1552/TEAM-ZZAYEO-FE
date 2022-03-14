@@ -348,6 +348,7 @@ const searchDB = (query) => {
     instance
       .get(`/api/plans/search${query}`)
       .then(function (res) {
+        console.log(res);
         dispatch(search(res.data.plans));
       })
       .catch(function (error) {

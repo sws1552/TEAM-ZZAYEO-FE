@@ -7,30 +7,29 @@ import queryString from "query-string";
 
 const Filter = (props) => {
   const search = queryString.parse(window.location.search);
-  console.log(search);
 
-  const [destShowModal, setDestShowModal] = React.useState(false);
+  // const [destShowModal, setDestShowModal] = React.useState(false);
   const [styleShowModal, setStyleShowModal] = React.useState(false);
 
-  const [dest, setDest] = React.useState("국내");
+  // const [dest, setDest] = React.useState("국내");
   const [style, setStyle] = React.useState("여행 스타일");
 
-  let data = { key1: search.query, key2: dest, key3: style };
+  let data = { key1: search.query, key2: style };
 
   // 국내,해외 모달 열기
-  const destOpenModal = () => {
-    setDestShowModal(true);
-  };
+  // const destOpenModal = () => {
+  //   setDestShowModal(true);
+  // };
   // 국내,해외 모달 닫기
-  const destCloseModal = (e) => {
-    e.stopPropagation();
-    setDestShowModal(false);
-    history.push({
-      pathname: "/search",
-      search: `?query=${data.key1}&destination=${data.key2}`,
-      data: data,
-    });
-  };
+  // const destCloseModal = (e) => {
+  //   e.stopPropagation();
+  //   setDestShowModal(false);
+  //   history.push({
+  //     pathname: "/search",
+  //     search: `?query=${data.key1}&destination=${data.key2}`,
+  //     data: data,
+  //   });
+  // };
 
   // 여행스타일 모달 열기
   const styleOpenModal = () => {
@@ -43,14 +42,14 @@ const Filter = (props) => {
     setStyleShowModal(false);
     history.push({
       pathname: "/search",
-      search: `?query=${data.key1}&destination=${data.key2}&style=${data.key3}`,
+      search: `?query=${data.key1}&style=${data.key2}`,
       data: data,
     });
   };
   return (
     <Container>
       <SelectBox>
-        <Destination onClick={destOpenModal}>
+        {/* <Destination onClick={destOpenModal}>
           {dest}
           <svg
             width="12"
@@ -73,7 +72,7 @@ const Filter = (props) => {
           destCloseModal={destCloseModal}
           dest={dest}
           setDest={setDest}
-        ></DestinationModal>
+        ></DestinationModal> */}
         <Style onClick={styleOpenModal}>
           {style}
           <svg

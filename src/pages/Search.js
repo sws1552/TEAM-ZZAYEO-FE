@@ -10,26 +10,23 @@ import { useLocation } from "react-router";
 
 const Search = (props) => {
   const dispatch = useDispatch();
+
   const location = useLocation();
 
   const query = location.search;
-
   const search = queryString.parse(window.location.search);
-  console.log(query);
-
   const keyword = search.query;
-
-  const searchList = useSelector((store) => store.plan.search_list);
+  const searchList = useSelector((store) => store.plan.search_list.plans);
 
   React.useEffect(() => {
     dispatch(planActions.searchDB(query));
   }, [query]);
 
-  if (searchList.length !== 0) {
+  if (searchList) {
     return (
       <React.Fragment>
         <Container>
-          <Searchbar />
+          <Searchbar query={query} />
           <Filter />
           <SearchKeword>
             <p>
@@ -48,7 +45,7 @@ const Search = (props) => {
   return (
     <React.Fragment>
       <Container>
-        <Searchbar />
+        <Searchbar query={query} />
         <Filter />
         <Div>
           <svg
