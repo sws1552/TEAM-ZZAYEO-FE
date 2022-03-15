@@ -17,7 +17,6 @@ const OtherUserPage = (props) => {
 
   const user = useSelector((store) => store.user.userInfo);
 
-  
   const joinRoom = async () => {
 
     const curUserInfo = await instance

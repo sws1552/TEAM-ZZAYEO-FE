@@ -92,6 +92,7 @@ const userProfileDB = (userId) => {
     instance
       .get(`/api/users/${userId}`)
       .then((res) => {
+        console.log('res !! ',res);
         dispatch(setUserProfile(res.data.userInfo));
       })
       .catch((err) => {

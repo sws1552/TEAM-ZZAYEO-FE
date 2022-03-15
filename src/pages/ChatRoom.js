@@ -29,6 +29,8 @@ const ChatRoom = (props) => {
     const [msgList, setMessageList] = useState([]);
     let time = moment().format("LT");
 
+    
+    // console.log('시간 !! ', moment().format('YYYY-MM-DD HH:mm:ss'));
     // console.log('msgList !! ',msgList);
 
     // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
@@ -40,7 +42,7 @@ const ChatRoom = (props) => {
                 fromSnsId: roomData.curUserInfo.snsId, // 메세지보내는사람 snsId,
                 toSnsId: roomData.user.snsId, // 메세지받는사람 snsId,
                 chatText: curMsg, // 메세지 텍스트
-                createdAt: time, // 채팅 보낸 시간
+                createdAt: moment().format('YYYY-MM-DD HH:mm:ss'), // 채팅 보낸 시간
                 // 메세지보내는사람 fromSnsId,
                 // 메세지받는사람 toSnsId,
                 // 메세지 텍스트 chatText
@@ -174,7 +176,8 @@ const RoomContainer = styled.div`
         margin-left: 10px;
         color: #c4c4c4;
         cursor: pointer;
-        font-size: 30px;
+        font-size: 25px;
+        color: #4E49E2;
     }
 
     & .msg-container {
@@ -240,8 +243,8 @@ const MessageContent = styled.div`
     height: auto;
     min-height: 40px;
     max-width: 120px;
-    background-color: ${(props) => (props.className === 'me' ? "#EDEDED" : "#EDEDED")};
-    border-radius: 5px;
+    background-color: ${(props) => (props.className === 'me' ? "#EDEDED" : "#CFCFFF")};
+    border-radius: 10px;
     color: black;
     display: flex;
     align-items: center;
