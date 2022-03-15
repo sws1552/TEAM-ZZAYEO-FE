@@ -24,7 +24,7 @@ const ChooseDay = (props) => {
         <TabMenu>
           {dayList && dayList.map((d, i) => {
             return (
-              <div
+              <Button
                 key={i}
                 className={currentTab === i ? "submenu focused" : "submenu"}
                 onClick={() => {
@@ -35,13 +35,13 @@ const ChooseDay = (props) => {
                 }}
               >
                 day{i + 1}
-              </div>
+              </Button>
             )
           })}
         </TabMenu>
 
         <Container>
-          {dayList && dayList[currentTab].places.map((v, i) => {
+          {dayList && dayList[currentTab]?.places.map((v, i) => {
             return (
               <>
                 <div key= {v} style={{ width: "100%" }}>
@@ -61,7 +61,7 @@ const ChooseDay = (props) => {
               </>
             )
           })}
-          <WritePlanModal dayId={dayList && dayList[currentTab].dayId} />
+          <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} />
         </Container>
       </div>
 
@@ -112,14 +112,30 @@ const TabMenu = styled.div`
   font-weight: bold;
   display: flex;
   flex-direction: row;
-  justify-items: center;
+  justify-content: flex-start;
   align-items: center;
   list-style: none;
-
-  .submenu {
+  padding-left: 24px;
+    
+  /* .submenu {
     width:100% auto;
     padding: 15px 10px;
     cursor: pointer;
-  }
+  } */
 `;
+
+const Button = styled.div`
+    display: flex;
+    align-items: center;
+    width: fit-content; //글자크기만큼
+    height: 32px;
+    margin: 22.5px 8px 22px 0px;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-size: 14px;
+    background-color: #eee;
+    font-weight: 400;
+    cursor: pointer;
+`
 export default ChooseDay;

@@ -31,7 +31,7 @@ const Main = (props) => {
 
   const getMoreItem = async (page) => {
     setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     await instance.get(`/api/plans?page=${page}`).then((res) => {
       let Items = res.data.plans;
       setItemLists((itemLists) => itemLists.concat(Items));
@@ -53,7 +53,7 @@ const Main = (props) => {
         observer.observe(entry.target);
       }
     },
-    [page]
+    [target, page]
   );
 
   useEffect(() => {
@@ -101,11 +101,12 @@ const Main = (props) => {
                 {itemLists.map((l, i) => {
                   return <MainTravelList key={i} {...l} />;
                 })}
+                <div ref={setTarget} className="Target-Element">
+                  {isLoaded && <Loader />}
+                </div>
               </>
             )}
-            <div ref={setTarget} className="Target-Element">
-              {isLoaded && <Loader />}
-            </div>
+
           </TravelListBox>
         </Content>
       </Container>

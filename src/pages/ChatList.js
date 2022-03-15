@@ -21,58 +21,61 @@ const ChatList = (props) => {
 
   console.log('chat_list !! ',chat_list);
 
-  const [userId, setUserId] = useState("");
-  const [roomId, setRoomId] = useState("1");
+  // const [userId, setUserId] = useState("");
+  // const [roomId, setRoomId] = useState("1");
 
-  const joinRoom = () => {
-    const data = {
-      userId: userId,
-      roomId: roomId,
-      // socket: socket,
-    };
+  // const joinRoom = () => {
+  //   const data = {
+  //     userId: userId,
+  //     roomId: roomId,
+  //     // socket: socket,
+  //   };
 
-    dispatch(chatActions.getRoom(data));
+  //   dispatch(chatActions.getRoom(data));
 
-    // 서버에 방id 전송 같은 방일경우에 서로의 채팅이 보인다.
-    // 방입장할때는 메세지 보내는자 Id랑 받는자 Id 그그그 email형식 아이디
-    // socket.emit("joinRoom", roomId);
+  //   // 서버에 방id 전송 같은 방일경우에 서로의 채팅이 보인다.
+  //   // 방입장할때는 메세지 보내는자 Id랑 받는자 Id 그그그 email형식 아이디
+  //   // socket.emit("joinRoom", roomId);
 
-    history.push("/chatroom");
-  };
+  //   history.push("/chatroom");
+  // };
 
   React.useEffect(() => {
     if(chat_list.length === 0){
       dispatch(chatActions.getChatListFB());
     }
+    dispatch(chatActions.getNewChatFB());
   }, []);
 
-  if(chat_list.length === 0){
-    return null;
-  }else {
 
-    return (
-      <ListContainer>
-        <Header />
-        <ListWrap>
-          <OneChatWrap>
-            {/* 테스트용 userId입력
-            <input onChange={(e) => setUserId(e.target.value)} /> */}
-            {chat_list.map((item, i) => {
-              // if(typeof item.roomNum !== "undefined"){
-                return <Onechat key={item._id} {...item} />
-              // }else {
-              //   return null;
-              // }
-            })}
-            
-            
-          </OneChatWrap>
+  return (
+    <ListContainer>
+      <Header />
+      <ListWrap>
+        <OneChatWrap>
+          
+          {
+          chat_list.length === 0 
+          ?
+          null
+          : 
+          chat_list.map((item, i) => {
+            // if(typeof item.roomNum !== "undefined"){
+              return <Onechat key={item._id} {...item} />
+            // }else {
+            //   return null;
+            // }
+          })
+          }
+          
+          
+        </OneChatWrap>
 
-        </ListWrap>
-      </ListContainer>
-    );
+      </ListWrap>
+    </ListContainer>
+  );
 
-  }
+  
 };
 
 const ListContainer = styled.div`
