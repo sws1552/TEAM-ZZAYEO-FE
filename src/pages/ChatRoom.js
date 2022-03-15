@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
 import Header from '../components/Chat/Header';
@@ -10,6 +10,7 @@ import { history } from '../redux/ConfigureStore';
 import {useDispatch, useSelector} from 'react-redux';
 import {socket} from '../shared/Socket';
 import {actionCreators as chatActions} from '../redux/modules/chat';
+import { ContentPasteSearchOutlined } from '@mui/icons-material';
 
 const ChatRoom = (props) => {
 
@@ -29,6 +30,11 @@ const ChatRoom = (props) => {
     const [msgList, setMessageList] = useState([]);
     let time = moment().format("LT");
 
+    // const [checkChat, setCheckChat] = useState(false);
+
+    
+
+    // const upCheckChat = useCallback(() => setCheckChat(!checkChat), [checkChat]);
     
     // console.log('시간 !! ', moment().format('YYYY-MM-DD HH:mm:ss'));
     // console.log('msgList !! ',msgList);
@@ -85,13 +91,35 @@ const ChatRoom = (props) => {
             
             // 상대방 메시지 채팅방 메시지 리스트에 저장
             setMessageList((preState) => {
+                console.log('preState !! ',preState);
                 return [...preState, oneChat];
             });
 
         });
 
+        socket.on("join", (data) => {
+            console.log('data 상대방이 입장했는지 !! ',data);
+            
+            if(data === roomData.curUserInfo.snsId){
+                
+                dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
+
+            }
+            
+        });
+
         return () => {
             console.log('채팅방나간다잉');
+            // upCheckChat();
+            // console.log('checkChat 컴포넌트가 사라질때!! ',checkChat);
+
+            const room = {
+                fromSnsId: roomData.curUserInfo.snsId,
+                toSnsId: roomData.user.snsId,
+            }
+
+            socket.emit("leaveRoom", room);
+
             setMessageList([]);
         }
 
@@ -147,7 +175,12 @@ const ChatRoom = (props) => {
                                         <p>{item.chatText}</p>
                                     </MessageContent>
 
-                                    <TimeCon>{moment(item.createdAt).format("LT")}</TimeCon>
+                                    <TimeCon>
+                                        {moment(item.createdAt).format("LT")}
+                                        {item.checkChat ? null : <CheckChatCon>1</CheckChatCon> }
+                                    </TimeCon>
+
+                                    
                                 </MsgCon>
                             </div>
                         </Message>
@@ -236,6 +269,10 @@ const MsgCon = styled.div`
 const TimeCon = styled.div`
     display:flex;
     flex-direction: column-reverse;
+`;
+
+const CheckChatCon = styled.div`
+    color: purple;
 `;
 
 const MessageContent = styled.div`
