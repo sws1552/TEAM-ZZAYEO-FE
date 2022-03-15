@@ -71,6 +71,26 @@ const getChatListFB = () => {
 
 
 
+const getNewChatFB = () => {
+    return async function (dispatch, getState, {history}) {
+        
+        await instance.get(`/api/chat/new`)
+        .then((res) => {
+
+            console.log('신규 채팅 확인 res !! ', res.data);
+            
+
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+        
+
+    }
+}
+
+
+
 export default handleActions (
     {
 
@@ -96,6 +116,7 @@ const actionCreators = {
     getRoom,
     getChatRoomListFB,
     getChatListFB,
+    getNewChatFB,
 }
 
 export {actionCreators};
