@@ -30,14 +30,14 @@ const ChatRoom = (props) => {
     const [msgList, setMessageList] = useState([]);
     let time = moment().format("LT");
 
-    const [checkChat, setCheckChat] = useState(false);
+    // const [checkChat, setCheckChat] = useState(false);
 
     
 
-    const upCheckChat = useCallback(() => setCheckChat(!checkChat), []);
+    // const upCheckChat = useCallback(() => setCheckChat(!checkChat), [checkChat]);
     
     // console.log('시간 !! ', moment().format('YYYY-MM-DD HH:mm:ss'));
-    console.log('msgList !! ',msgList);
+    // console.log('msgList !! ',msgList);
 
     // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
     const sendMessage = async () => {
@@ -78,7 +78,7 @@ const ChatRoom = (props) => {
 
             const oneChat = {
                 chatText: data.chatText,
-                checkChat: checkChat ? true : false,
+                checkChat: data.checkChat,
                 createdAt: data.createdAt,
                 fromUserId:{
                     snsId: data.fromSnsId,
@@ -101,8 +101,7 @@ const ChatRoom = (props) => {
             console.log('data 상대방이 입장했는지 !! ',data);
             
             if(data === roomData.curUserInfo.snsId){
-                upCheckChat();
-                console.log('checkChat 상대방이 입장했을때 !! ',checkChat);    
+                
                 dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
 
             }
@@ -111,8 +110,16 @@ const ChatRoom = (props) => {
 
         return () => {
             console.log('채팅방나간다잉');
-            upCheckChat();
-            console.log('checkChat 컴포넌트가 사라질때!! ',checkChat);
+            // upCheckChat();
+            // console.log('checkChat 컴포넌트가 사라질때!! ',checkChat);
+
+            const room = {
+                fromSnsId: roomData.curUserInfo.snsId,
+                toSnsId: roomData.user.snsId,
+            }
+
+            socket.emit("leaveRoom", room);
+
             setMessageList([]);
         }
 
