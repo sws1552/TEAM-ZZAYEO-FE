@@ -66,7 +66,6 @@ const LikeBtn = styled.div`
 `;
 
 const LikeCnt = styled.div`
-  font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;

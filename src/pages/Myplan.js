@@ -27,7 +27,28 @@ const Myplan = (props) => {
               history.push("/addplan");
             }}
           >
-            <P>+</P>
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="16" cy="16" r="16" fill="#4E49E2" />
+              <path
+                d="M16.3232 10.667V21.9807"
+                stroke="white"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+              <path
+                d="M21.9795 16.3237H10.6658"
+                stroke="white"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+              />
+            </svg>
+
             <P>새로운 여행을 작성해주세요</P>
           </AddPlanBtn>
           {myplans?.length === 0 ? (
@@ -47,6 +68,7 @@ const Myplan = (props) => {
 };
 
 const Container = styled.div`
+  width: 100%;
   height: 100%;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -56,10 +78,10 @@ const Container = styled.div`
 
 const Top = styled.div`
   height: 56px;
+  padding-left: 24px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  border-bottom: 1px solid #d2dbdd;
 `;
 
 const TText = styled.div`
@@ -72,6 +94,7 @@ const Bottom = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-top: 19px;
 `;
 
 const AddPlanBtn = styled.div`
@@ -79,18 +102,21 @@ const AddPlanBtn = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 81px;
-  margin-top: 20px;
-  margin: 20px 24px 0px 24px;
-  background: #ffffff;
-  border: 1px solid #666666;
-  box-sizing: border-box;
+  height: 128px;
+  margin: 0px 24px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  svg {
+    margin-bottom: 16px;
+  }
 `;
 
 const P = styled.p`
+  font-weight: 600;
   font-size: 14px;
-  font-weight: 300;
-  line-height: 20.27px;
+  line-height: 16px;
+  text-align: center;
+  color: #212121;
   margin: 0;
 `;
 
@@ -98,9 +124,9 @@ const Div = styled.div`
   p {
     margin-left: 24px;
     margin-top: 35px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
-    line-height: 23px;
+    line-height: 19px;
     color: #000000;
   }
 `;
