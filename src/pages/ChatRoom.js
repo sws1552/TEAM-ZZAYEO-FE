@@ -10,7 +10,7 @@ import { history } from '../redux/ConfigureStore';
 import {useDispatch, useSelector} from 'react-redux';
 import {socket} from '../shared/Socket';
 import {actionCreators as chatActions} from '../redux/modules/chat';
-import { ContentPasteSearchOutlined } from '@mui/icons-material';
+
 
 const ChatRoom = (props) => {
 
@@ -30,13 +30,6 @@ const ChatRoom = (props) => {
     const [msgList, setMessageList] = useState([]);
     let time = moment().format("LT");
 
-    // const [checkChat, setCheckChat] = useState(false);
-
-    
-
-    // const upCheckChat = useCallback(() => setCheckChat(!checkChat), [checkChat]);
-    
-    // console.log('시간 !! ', moment().format('YYYY-MM-DD HH:mm:ss'));
     // console.log('msgList !! ',msgList);
 
     // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
@@ -57,10 +50,6 @@ const ChatRoom = (props) => {
             // 서버에 메시지 데이터 전송
             await socket.emit("room", msgData);
 
-            // setMessageList((preState) => {
-            //     console.log('전에 있던 채팅리스트 데이터 ', preState);
-            //     return [...preState, msgData];
-            // });
             // console.log('msgList !! ', msgList);
             // console.log("roomData !! ",roomData);
 
@@ -74,7 +63,7 @@ const ChatRoom = (props) => {
         // 서버에서 메시지데이터 받아오기
         socket.on("chat", (data) => {
             // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
-            console.log("메시지 수신~!! ", data);
+            // console.log("메시지 수신~!! ", data);
 
             const oneChat = {
                 chatText: data.chatText,
@@ -91,14 +80,14 @@ const ChatRoom = (props) => {
             
             // 상대방 메시지 채팅방 메시지 리스트에 저장
             setMessageList((preState) => {
-                console.log('preState !! ',preState);
+                // console.log('preState !! ',preState);
                 return [...preState, oneChat];
             });
 
         });
 
         socket.on("join", (data) => {
-            console.log('data 상대방이 입장했는지 !! ',data);
+            // console.log('data 상대방이 입장했는지 !! ',data);
             
             if(data === roomData.curUserInfo.snsId){
                 
@@ -161,7 +150,7 @@ const ChatRoom = (props) => {
                         <Message key={`msgKey${i}`} className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"} >
                             <div>
                                 <UserCon className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"}>
-                                    {roomData.curUserInfo.snsId === item.fromUserId.snsId ? null : roomData.user.nickname}
+                                    {/* {roomData.curUserInfo.snsId === item.fromUserId.snsId ? null : roomData.user.nickname} */}
                                 </UserCon>
                                 <MsgCon className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"}>
                                     
@@ -177,7 +166,7 @@ const ChatRoom = (props) => {
 
                                     <TimeCon>
                                         {moment(item.createdAt).format("LT")}
-                                        {item.checkChat ? null : <CheckChatCon>1</CheckChatCon> }
+                                        {item.checkChat ? null : <CheckChatCon className={roomData.curUserInfo.snsId === item.fromUserId.snsId ? "me" : "other"}>1</CheckChatCon> }
                                     </TimeCon>
 
                                     
@@ -191,7 +180,7 @@ const ChatRoom = (props) => {
                 <InputBar>
                     <ChatInput value={curMsg} placeholder='메세지를 입력하세요.' onChange={(e) => setCurMsg(e.target.value)} 
                     onKeyPress={(e) => e.key === "Enter" && sendMessage()} />
-                    <SendIcon className='sendIcon' onClick={sendMessage} />
+                    <SendIcon className='sendIcon' style={{color: curMsg.length !== 0 ? "#4E49E2" : null}} onClick={sendMessage} />
                 </InputBar>
             </ChatBody>
         </RoomContainer>
@@ -203,14 +192,15 @@ const RoomContainer = styled.div`
     width: 100%;
     height: 90%;
     box-sizing: border-box;
-    padding: 25px;
+    padding: 25px 0;
+    
 
     & .sendIcon {
         margin-left: 10px;
         color: #c4c4c4;
         cursor: pointer;
         font-size: 25px;
-        color: #4E49E2;
+        /* color: #4E49E2; */
     }
 
     & .msg-container {
@@ -218,7 +208,10 @@ const RoomContainer = styled.div`
         height: 93%;
         overflow-y: auto;
         overflow-x: hidden;
+
     }
+
+    
 
 `;
 
@@ -228,11 +221,14 @@ const ChatBody = styled.div`
     height:100%;
     flex-direction: column;
     position: relative;
+    background-color: #F5F5F5;
+    
 `;
 
 const ScrollToBottomNew = styled(ScrollToBottom)`
     
-    /* & .react-scroll-to-bottom--css-cqiwg-79elbk::-webkit-scrollbar {
+    /* & .react-scroll-to-bottom--css-xhzoi-1n7m0yu::-webkit-scrollbar {
+        overflow-y: auto;
         display: none;
     } */
 
@@ -259,6 +255,7 @@ const UserImg = styled.div`
 const UserCon = styled.div`
     display: flex;
     justify-content: ${(props) => (props.className === 'me' ? "flex-end" : "flex-start")};
+    margin-left: ${(props) => (props.className === 'me' ? null : "12px")};
 `;
 
 const MsgCon = styled.div`
@@ -269,18 +266,21 @@ const MsgCon = styled.div`
 const TimeCon = styled.div`
     display:flex;
     flex-direction: column-reverse;
+    color: #9E9E9E;
 `;
 
 const CheckChatCon = styled.div`
     color: purple;
+    display: flex;
+    justify-content: ${(props) => (props.className === 'me' ? "flex-end" : "flex-start")};
 `;
 
 const MessageContent = styled.div`
     width: auto;
     height: auto;
     min-height: 40px;
-    max-width: 120px;
-    background-color: ${(props) => (props.className === 'me' ? "#EDEDED" : "#CFCFFF")};
+    max-width: ${(props) => (props.className === 'me' ? "200px" : "140px")};
+    background-color: ${(props) => (props.className === 'me' ? "#E0E0E0" : "#CFCFFF")};
     border-radius: 10px;
     color: black;
     display: flex;
@@ -291,11 +291,11 @@ const MessageContent = styled.div`
     padding-left: 5px;
     overflow-wrap: break-word;
     word-break: break-word;
-    box-shadow: 1px 1px 1px 1px gray;
+    /* box-shadow: 1px 1px 1px 1px gray; */
 `;
 
 const InputBar = styled.div`
-    border-top: 1px solid #E5E5E5;
+    /* border-top: 1px solid #E5E5E5; */
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -304,16 +304,23 @@ const InputBar = styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    /* background-color: orange; */
+    background-color: white;
 `;
 
-const ChatInput = styled.input`
+const ChatInput = styled.textarea`
     width: 100%;
     height: 35px;
-    border: 1px solid #BDBDBD;
+    /* border: 1px solid #BDBDBD; */
+    border: none;
     border-radius: 50px;
     padding: 10px 20px;
     box-sizing: border-box;
+    background-color: #F4F4F4;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
 
     &:focus {
         outline: none;

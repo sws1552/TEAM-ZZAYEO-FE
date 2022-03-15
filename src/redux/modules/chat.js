@@ -36,7 +36,12 @@ const initialState = {
 const getChatRoomListFB = (toUserId) => {
     return async function (dispatch, getState, {history}) {
         // console.log('toUserId !! ',toUserId);
-        await instance.get(`/api/chat/${toUserId}`)
+        await axios.get(`http://3.36.50.53:3000/api/chat/${toUserId}`,
+        {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
         .then((res) => {
 
             // console.log('채팅방 글 조회 res !! ', res.data.chatMessages);
@@ -54,7 +59,11 @@ const getChatRoomListFB = (toUserId) => {
 const getChatListFB = () => {
     return async function (dispatch, getState, {history}) {
         
-        await instance.get(`/api/chat/list`)
+        await axios.get(`http://3.36.50.53:3000/api/chat/list`,{
+            headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        })
         .then((res) => {
 
             // console.log('채팅방 목록 조회 res !! ', res.data.chatRoomList);
