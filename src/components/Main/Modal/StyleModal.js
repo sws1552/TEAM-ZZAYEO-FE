@@ -119,6 +119,7 @@ const Div = styled.div`
   position: absolute;
   width: 100%;
   bottom: 36px;
+  font-family: "Roboto", sans-serif;
 `;
 
 const Button = styled.div`
@@ -129,17 +130,21 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
+
   p {
     margin: 0;
     color: #ffffff;
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
     font-size: 16px;
     line-height: 19px;
+    font-weight: 500;
     justify-content: center;
     align-items: center;
+  }
+
+  :hover {
+    background-color: #4e49e2;
+    color: #ffffff;
   }
 `;
 

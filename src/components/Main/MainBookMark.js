@@ -37,7 +37,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-right: 5.43px;
+  padding-right: 6px;
   margin-bottom: 47.35px;
 `;
 
