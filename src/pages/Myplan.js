@@ -48,7 +48,6 @@ const Myplan = (props) => {
                 strokeLinecap="round"
               />
             </svg>
-
             <P>새로운 여행을 작성해주세요</P>
           </AddPlanBtn>
           {myplans?.length === 0 ? (
@@ -106,6 +105,7 @@ const AddPlanBtn = styled.div`
   margin: 0px 24px;
   background-color: #f5f5f5;
   border-radius: 8px;
+  cursor: pointer;
   svg {
     margin-bottom: 16px;
   }

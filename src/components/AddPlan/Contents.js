@@ -70,17 +70,18 @@ const Contents = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <Container>
       <TitleBox>
         <Text>여행제목</Text>
-        <Input
-          type="text"
-          placeholder="제목을 입력해주세요"
-          onChange={(e) => {
-            setTitleInput(e.target.value);
-          }}
-        ></Input>
-        {/* 글자수 설정시 사용 minlength="4" maxlength="8" */}
+        <InputBox>
+          <input
+            type="text"
+            placeholder="제목을 입력해주세요"
+            onChange={(e) => {
+              setTitleInput(e.target.value);
+            }}
+          />
+        </InputBox>
       </TitleBox>
       <DateBox>
         <Text>언제</Text>
@@ -163,32 +164,51 @@ const Contents = (props) => {
           })}
         </div>
       </TripstyleBox>
-      <Button onClick={()=>{
-        "ㅎㅇ"
-        createPlan()}}>
+      <Button
+        onClick={() => {
+          "ㅎㅇ";
+          createPlan();
+        }}
+      >
         <p>세부일정 작성하기</p>
       </Button>
-    </React.Fragment>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  padding: 30px 24px 0px 24px;
+`;
+
 const TitleBox = styled.div`
-  display: block;
-  width: 321px;
-  height: 100%;
-  margin: 10px auto;
+  width: 100%;
 `;
 
 const Text = styled.div`
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
-  margin: 13px 0px;
+  margin-bottom: 12px;
 `;
 
-const Input = styled.input`
-  width: 312px;
+const InputBox = styled.div`
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-bottom: 1px solid #bdbdbd;
+  width: 100%;
   height: 41px;
+  padding-left: 8px;
+
+  input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    :focus {
+      outline: none;
+    }
+  }
 `;
 
 const DateBox = styled(TitleBox)``;
