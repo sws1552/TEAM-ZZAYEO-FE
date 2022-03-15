@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useRef } from "react";
 import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
-import Maker from "./Maker";
+import Marker from "./Marker";
 import Polyline from "./Polyline";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 // import { actionCreators as mapActions } from "../../../redux/modules/map";
 import { actionCreators as lineActions } from "../../../redux/modules/polyline";
+import { red } from "@mui/material/colors";
 
 const WritePlanMap = (props) => {
   const dispatch = useDispatch();
@@ -17,10 +18,8 @@ const WritePlanMap = (props) => {
   let zoom = 10;
 
   const [places, setPlaces] = useState([]);
-
   const myPlan = useSelector((state) => state.plan.myPlan);
   const geometry = useSelector((state) => state.addPlace.geometry);
-
 
   const dayId = useSelector((state) => state.map.dayId);// dayId를 넘겨서 같은 dayI인지 비교하려고!
   const [center, setCenter] = useState({ lat: 37.5, lng: 127 });
@@ -68,7 +67,7 @@ const WritePlanMap = (props) => {
       Markers.map(item => {
         bounds.extend(item);
       });
-      if(bounds) {
+      if (bounds) {
         map.fitBounds(bounds);
       } else {
         map.setCenter(new googlemaps.LatLng(Markers[Markers.length - 1].lat, Markers[Markers.length - 1].lng))
@@ -77,8 +76,8 @@ const WritePlanMap = (props) => {
     }
   }, [Markers, googlemaps])
 
+  
   return (
-
     <Container>
       <div style={{ height: "220px", width: "100%" }}>
         <GoogleMapReact
@@ -94,27 +93,27 @@ const WritePlanMap = (props) => {
           // 구글맵 api의 internals(내부)를 사용한다.
           onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
         >
+          
+            {EachDayPlaces && EachDayPlaces[0]?.places?.length !== 0 &&
+              EachDayPlaces[0]?.places?.map((place, index) => {
+                return (
+                  <Marker
+                    key={place.id}
+                    Num={index}
+                    text={place.placeName}
+                    lat={place.lat}
+                    lng={place.lng}
+                  />
+                )
+              })}
 
-          {EachDayPlaces && EachDayPlaces[0]?.places?.length !== 0 &&
-            EachDayPlaces[0]?.places?.map((place, index) => {
-              return (
-                <Maker
-                  key={index}
-                  Num={index}
-                  text={place.placeName}
-                  lat={place.lat}
-                  lng={place.lng}
-                />
-              )
-            })}
-
-          {apiReady && googlemaps && (
-            <Polyline
-              markers={Markers}
-              map={map}
-              maps={googlemaps}
-            />)}
-
+            {apiReady && googlemaps && (
+              <Polyline
+                markers={Markers}
+                map={map}
+                maps={googlemaps}
+              />)}
+         
         </GoogleMapReact>
       </div>
     </Container>

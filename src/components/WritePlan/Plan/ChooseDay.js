@@ -9,14 +9,41 @@ import WritePlanModal from "./WritePlanModal"
 const ChooseDay = (props) => {
   const dayList = props.days
   const [currentTab, setCurrentTab] = useState(0);
-  console.log(dayList)
+
   const polyLinedata = useSelector((state) => state.map.polyline);
+  const myPlan = useSelector((state) => state.plan.myPlan);
+ 
+  const startDate = myPlan.startDate
+  const endDate= myPlan.endDate
+  
+  const betweenDay = (startDate, endDate) => {
+    var res_day = [];
+    var ss_day = new Date(startDate);
+    var ee_day = new Date(endDate);
+    while (ss_day.getTime() <= ee_day.getTime()) {
+      var _mon_ = (ss_day.getMonth() + 1);
+      _mon_ = _mon_ < 10 ? '0' + _mon_ : _mon_;
+      var _day_ = ss_day.getDate();
+      _day_ = _day_ < 10 ? '0' + _day_ : _day_;
+      res_day.push(ss_day.getFullYear() + '-' + _mon_ + '-' + _day_);
+      ss_day.setDate(ss_day.getDate() + 1);
+    }
+    return res_day;
+  }
+
+  const _myDays = betweenDay(startDate, endDate)
+
+  const myDays = _myDays[currentTab]
+  const mygetDate = new Date(myDays).getDate()
+  const mygetMonth = new Date(myDays).getMonth()+1
+  const getDay = new Date(myDays).getDay()
+  const getmyDay = ["일", "월", "화", "수", "목", "금", "토"]
+
   const dispatch = useDispatch()
 
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
   };
-
 
   return (
     <>
@@ -24,7 +51,8 @@ const ChooseDay = (props) => {
         <TabMenu>
           {dayList && dayList.map((d, i) => {
             return (
-              <Button
+              <div>
+              <DayButton
                 key={i}
                 className={currentTab === i ? "submenu focused" : "submenu"}
                 onClick={() => {
@@ -33,18 +61,26 @@ const ChooseDay = (props) => {
                   dispatch(mapActions.addPolyline(polyLinedata));
                   dispatch(mapActions.sendDayId(d.dayId))
                 }}
+                style={{
+                  backgroundColor:
+                    i === currentTab ? "#4E49E2" : "#F4F4F4",
+                  color: i === currentTab ? "#FFFFFF" : "#9E9E9E",
+                }}
               >
                 day{i + 1}
-              </Button>
+              </DayButton>
+              </div>
             )
           })}
         </TabMenu>
-
+          <TravelDay>
+           {`${mygetMonth}.${mygetDate}/${getmyDay[getDay]}`}
+          </TravelDay>
         <Container>
           {dayList && dayList[currentTab]?.places.map((v, i) => {
             return (
               <>
-                <div key= {v} style={{ width: "100%" }}>
+                <div key={v} style={{ width: "100%" }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Text>{i + 1}.{v.time}</Text>
                     <EditMenu placeId={v.placeId} />
@@ -61,7 +97,9 @@ const ChooseDay = (props) => {
               </>
             )
           })}
+          <AddPlaceBox>
           <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} />
+          </AddPlaceBox>
         </Container>
       </div>
 
@@ -75,7 +113,6 @@ const Container = styled.div`
   box-sizing: border-box;
   overflow-y: scroll;
   padding: 0px 24px;
-  border: 1px solid gray;
   &::-webkit-scrollbar {
         display: none;
     }
@@ -116,7 +153,10 @@ const TabMenu = styled.div`
   align-items: center;
   list-style: none;
   padding-left: 24px;
-    
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+        display: none;
+    }
   /* .submenu {
     width:100% auto;
     padding: 15px 10px;
@@ -124,18 +164,37 @@ const TabMenu = styled.div`
   } */
 `;
 
-const Button = styled.div`
-    display: flex;
-    align-items: center;
-    width: fit-content; //글자크기만큼
-    height: 32px;
-    margin: 22.5px 8px 22px 0px;
-    padding: 8px 16px;
-    box-sizing: border-box;
-    border-radius: 50px;
-    font-size: 14px;
-    background-color: #eee;
-    font-weight: 400;
-    cursor: pointer;
+const TravelDay = styled.div`
+  padding: 0px 24px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+
+`
+
+const AddPlaceBox = styled.div`
+  width: 100%;
+  height: 41px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  margin-top: 22px;
+  line-height: 41px;
+  text-align: center;
+`
+
+const DayButton = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content; //글자크기만큼
+  height: 32px;
+  margin: 22.5px 8px 22px 0px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  font-size: 14px;
+  background-color: #eee;
+  font-weight: 400;
+  cursor: pointer;
 `
 export default ChooseDay;
