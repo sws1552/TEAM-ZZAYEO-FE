@@ -14,7 +14,7 @@ const DestinationModal = (props) => {
           <Overlay onClick={destCloseModal}>
             <Modal>
               <Taps>
-                <Ul>국내</Ul>
+                <Ul>지역</Ul>
               </Taps>
               <Container>
                 {destination.map((l, i) => {
@@ -91,7 +91,7 @@ const Modal = styled.div`
 
 const Taps = styled.div`
   box-sizing: border-box;
-  margin: 24px 0px 24px 24px;
+  margin: 32px 0px 24px 24px;
   display: inline-flex;
   font-family: "Roboto", sans-serif;
   font-size: 16px;

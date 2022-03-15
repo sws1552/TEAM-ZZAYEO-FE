@@ -16,10 +16,10 @@ export default function LabelBottomNavigation() {
 
   return (
     <BottomNavigation
-      sx={{ width: 420, height: 72 }}
+      sx={{ width: "100%", height: "56px" }}
       value={value}
       onChange={handleChange}
-      style={{ position: "absolute", bottom: 0 }}
+      style={{ position: "absolute", bottom: "0" }}
     >
       <BottomNavigationAction
         onClick={() => {
