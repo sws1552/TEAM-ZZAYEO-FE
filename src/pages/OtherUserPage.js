@@ -7,7 +7,6 @@ import { actionCreators as chatActions } from "../redux/modules/chat";
 import { socket } from "../shared/Socket";
 import { history } from "../redux/ConfigureStore";
 
-
 const OtherUserPage = (props) => {
   const dispatch = useDispatch();
 
@@ -18,7 +17,6 @@ const OtherUserPage = (props) => {
   const user = useSelector((store) => store.user.userInfo);
 
   const joinRoom = async () => {
-
     const curUserInfo = await instance
       .get(`/api/users/${myInfo.userId}`)
       .then((res) => {
@@ -34,12 +32,12 @@ const OtherUserPage = (props) => {
     const roomUserInfo = {
       user: user,
       curUserInfo: curUserInfo,
-    }
+    };
 
     const roomData = {
       fromSnsId: curUserInfo.snsId,
       toSnsId: user.snsId,
-    }
+    };
 
     // console.log('roomData !! ',roomData);
 
@@ -48,16 +46,12 @@ const OtherUserPage = (props) => {
     socket.emit("joinRoom", roomData);
 
     history.push("/chatroom");
-
-  }
-  
+  };
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(userActions.userProfileDB(userId));
   }, [userId]);
-
-  
 
   return (
     <Container>

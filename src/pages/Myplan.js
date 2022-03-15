@@ -47,7 +47,6 @@ const Myplan = (props) => {
 };
 
 const Container = styled.div`
-  position: relative;
   height: 100%;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -56,7 +55,6 @@ const Container = styled.div`
 `;
 
 const Top = styled.div`
-  position: relative;
   height: 56px;
   display: flex;
   justify-content: center;
@@ -65,21 +63,18 @@ const Top = styled.div`
 `;
 
 const TText = styled.div`
-  position: absolute;
   font-size: 18px;
   font-weight: 700;
   line-height: 24px;
 `;
 
 const Bottom = styled.div`
-  position: absolute;
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
 
 const AddPlanBtn = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
