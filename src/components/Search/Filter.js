@@ -16,21 +16,6 @@ const Filter = (props) => {
 
   let data = { key1: search.query, key2: style };
 
-  // 국내,해외 모달 열기
-  // const destOpenModal = () => {
-  //   setDestShowModal(true);
-  // };
-  // 국내,해외 모달 닫기
-  // const destCloseModal = (e) => {
-  //   e.stopPropagation();
-  //   setDestShowModal(false);
-  //   history.push({
-  //     pathname: "/search",
-  //     search: `?query=${data.key1}&destination=${data.key2}`,
-  //     data: data,
-  //   });
-  // };
-
   // 여행스타일 모달 열기
   const styleOpenModal = () => {
     setStyleShowModal(true);
@@ -49,30 +34,6 @@ const Filter = (props) => {
   return (
     <Container>
       <SelectBox>
-        {/* <Destination onClick={destOpenModal}>
-          {dest}
-          <svg
-            width="12"
-            height="7"
-            viewBox="0 0 12 7"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L6 6L11 1"
-              stroke="#BFBFBF"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Destination>
-        <DestinationModal
-          destShowModal={destShowModal}
-          destCloseModal={destCloseModal}
-          dest={dest}
-          setDest={setDest}
-        ></DestinationModal> */}
         <Style onClick={styleOpenModal}>
           {style}
           <svg
@@ -117,14 +78,13 @@ const SelectBox = styled.div`
 `;
 
 const Destination = styled.div`
-  color: #535353;
-  border: 1px solid #ededed;
-  box-sizing: border-box;
-  border-radius: 15.5px;
-  padding: 4px 16px;
-  margin-right: 8px;
   display: flex;
   align-items: center;
+  margin-right: 8px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  background-color: #f5f5f5;
+  color: #757575;
   cursor: pointer;
 
   svg {

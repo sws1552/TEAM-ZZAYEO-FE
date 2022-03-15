@@ -24,7 +24,6 @@ const Container = styled.div`
   p {
     margin: 0;
     padding-bottom: 40px;
-    font-family: "Roboto";
     font-style: normal;
     font-weight: 600;
     font-size: 20px;

@@ -82,33 +82,34 @@ const Main = (props) => {
       <Container>
         <HeaderBar />
         <Banner />
-        <Content>
-          <BookMarkListBox>
-            <p>내가 찜한 여행기 📚😆</p>
-            <MainBookMarkList />
-          </BookMarkListBox>
-          <TravelListBox>
-            <p>여행기 모아보기 🌄📝</p>
-            <Filter />
-            {query ? (
-              <>
-                {plans.map((l, i) => {
-                  return <MainTravelList key={i} {...l} />;
-                })}
-              </>
-            ) : (
-              <>
-                {itemLists.map((l, i) => {
-                  return <MainTravelList key={i} {...l} />;
-                })}
-                <div ref={setTarget} className="Target-Element">
-                  {isLoaded && <Loader />}
-                </div>
-              </>
-            )}
-
-          </TravelListBox>
-        </Content>
+        <Div>
+          <Content>
+            <BookMarkListBox>
+              <p>내가 찜한 여행기 📚😆</p>
+              <MainBookMarkList />
+            </BookMarkListBox>
+            <TravelListBox>
+              <p>여행기 모아보기 🌄📝</p>
+              <Filter />
+              {query ? (
+                <>
+                  {plans.map((l, i) => {
+                    return <MainTravelList key={i} {...l} />;
+                  })}
+                </>
+              ) : (
+                <>
+                  {itemLists.map((l, i) => {
+                    return <MainTravelList key={i} {...l} />;
+                  })}
+                  <div ref={setTarget} className="Target-Element">
+                    {isLoaded && <Loader />}
+                  </div>
+                </>
+              )}
+            </TravelListBox>
+          </Content>
+        </Div>
       </Container>
     );
   }
@@ -117,18 +118,20 @@ const Main = (props) => {
     <Container>
       <HeaderBar />
       <Banner />
-      <Content>
-        <TravelListBox>
-          <p>여행기 모아보기 🌄📝</p>
-          <Filter />
-          {itemLists.map((l, i) => {
-            return <MainTravelList key={i} {...l} />;
-          })}
-          <div ref={setTarget} className="Target-Element">
-            {isLoaded && <Loader />}
-          </div>
-        </TravelListBox>
-      </Content>
+      <Div>
+        <Content>
+          <TravelListBox>
+            <p>여행기 모아보기 🌄📝</p>
+            <Filter />
+            {itemLists.map((l, i) => {
+              return <MainTravelList key={i} {...l} />;
+            })}
+            <div ref={setTarget} className="Target-Element">
+              {isLoaded && <Loader />}
+            </div>
+          </TravelListBox>
+        </Content>
+      </Div>
     </Container>
   );
 };
@@ -138,7 +141,6 @@ export default Main;
 const Container = styled.div`
   width: 100%;
   height: 93%;
-  background-color: #cfcfff;
   bottom: 0;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -150,6 +152,11 @@ const Content = styled.div`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: #ffffff;
+  padding-top: 12px;
+`;
+
+const Div = styled.div`
+  background-color: #cfcfff;
 `;
 
 const TravelListBox = styled.div`
@@ -157,7 +164,6 @@ const TravelListBox = styled.div`
     margin: 0;
     margin-bottom: 12px;
     padding: 0px 24px;
-    font-family: "Roboto", sans-serif;
     font-weight: 600;
     font-size: 18px;
     line-height: 25px;
@@ -166,7 +172,7 @@ const TravelListBox = styled.div`
 `;
 
 const BookMarkListBox = styled(TravelListBox)`
-  padding-top: 32px;
+  padding-top: 20px;
   p {
     margin: 0;
     margin-bottom: 16px;
