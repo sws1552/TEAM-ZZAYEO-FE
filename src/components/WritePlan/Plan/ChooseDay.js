@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { actionCreators as mapActions } from "../../../redux/modules/map"
 import { useDispatch, useSelector } from "react-redux";
 import EditMenu from "./EditMenu"
-import Image from '../../../elements/Images'
 import WritePlanModal from "./WritePlanModal"
+import { display } from '@mui/system';
+import SwiperImage from "./SwiperImage"
+
 
 const ChooseDay = (props) => {
   const dayList = props.days
@@ -12,10 +14,10 @@ const ChooseDay = (props) => {
 
   const polyLinedata = useSelector((state) => state.map.polyline);
   const myPlan = useSelector((state) => state.plan.myPlan);
- 
-  const startDate = myPlan.startDate
-  const endDate= myPlan.endDate
-  
+
+  const startDate = myPlan?.startDate
+  const endDate = myPlan?.endDate
+
   const betweenDay = (startDate, endDate) => {
     var res_day = [];
     var ss_day = new Date(startDate);
@@ -35,7 +37,7 @@ const ChooseDay = (props) => {
 
   const myDays = _myDays[currentTab]
   const mygetDate = new Date(myDays).getDate()
-  const mygetMonth = new Date(myDays).getMonth()+1
+  const mygetMonth = new Date(myDays).getMonth() + 1
   const getDay = new Date(myDays).getDay()
   const getmyDay = ["일", "월", "화", "수", "목", "금", "토"]
 
@@ -45,6 +47,7 @@ const ChooseDay = (props) => {
     setCurrentTab(index);
   };
 
+
   return (
     <>
       <div>
@@ -52,53 +55,58 @@ const ChooseDay = (props) => {
           {dayList && dayList.map((d, i) => {
             return (
               <div>
-              <DayButton
-                key={i}
-                className={currentTab === i ? "submenu focused" : "submenu"}
-                onClick={() => {
-                  selectMenuHandler(i)
-                  polyLinedata.setMap(null);
-                  dispatch(mapActions.addPolyline(polyLinedata));
-                  dispatch(mapActions.sendDayId(d.dayId))
-                }}
-                style={{
-                  backgroundColor:
-                    i === currentTab ? "#4E49E2" : "#F4F4F4",
-                  color: i === currentTab ? "#FFFFFF" : "#9E9E9E",
-                }}
-              >
-                day{i + 1}
-              </DayButton>
+                <DayButton
+                  key={i}
+                  className={currentTab === i ? "submenu focused" : "submenu"}
+                  onClick={() => {
+                    selectMenuHandler(i)
+                    polyLinedata.setMap(null);
+                    dispatch(mapActions.addPolyline(polyLinedata));
+                    dispatch(mapActions.sendDayId(d.dayId))
+                  }}
+                  style={{
+                    backgroundColor:
+                      i === currentTab ? "#4E49E2" : "#F4F4F4",
+                    color: i === currentTab ? "#FFFFFF" : "#9E9E9E",
+                  }}
+                >
+                  day{i + 1}
+                </DayButton>
               </div>
             )
           })}
         </TabMenu>
-          <TravelDay>
-           {`${mygetMonth}.${mygetDate}/${getmyDay[getDay]}`}
-          </TravelDay>
         <Container>
+          <TravelDay>
+            {`${mygetMonth}.${mygetDate}/${getmyDay[getDay]}`}
+          </TravelDay>
+
           {dayList && dayList[currentTab]?.places.map((v, i) => {
             return (
-              <>
-                <div key={v} style={{ width: "100%" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Text>{i + 1}.{v.time}</Text>
+              <div style={{ marginTop: "16px", display: "table" }}>
+                <Line>
+                  {(i + 1) % 2 !== 0 ?
+                    <CirclePurPle> {i + 1} </CirclePurPle> :
+                    <CircleGreen> {i + 1} </CircleGreen>}
+                </Line>
+                <div key={v} style={{ width: "100%", display: "table-cell" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Text>{v.time}</Text>
                     <EditMenu placeId={v.placeId} />
                   </div>
-                  <Text>{v.placeName}</Text>
+                  <PlaceName>{v.placeName}</PlaceName>
                   <Address>주소:{v.address}</Address>
                   <MemoBox>
                     <Memo>{v.memoText}</Memo>
                   </MemoBox>
-                  {v.memoImage && v.memoImage.map((m, i) => (
-                    <Image width="50%" height="50" src={m}></Image>
-                  ))}
+                  <SwiperImage image = {v.memoImage} />
                 </div>
-              </>
+
+              </div>
             )
           })}
           <AddPlaceBox>
-          <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} />
+            <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} />
           </AddPlaceBox>
         </Container>
       </div>
@@ -107,41 +115,65 @@ const ChooseDay = (props) => {
   );
 };
 
+const Line = styled.div`
+ border-left: 1px solid #E0E0E0;
+ display: table-cell;
+`
 const Container = styled.div`
   width: 100%;
   height: 255px;
   box-sizing: border-box;
   overflow-y: scroll;
-  padding: 0px 24px;
+  padding: 0px 18px 0px 44px;
   &::-webkit-scrollbar {
         display: none;
     }
 `
 const Text = styled.div`
-font-weight: 800;
-font-size: 17px ;
-margin-top: 20px;
+font-family: "Roboto", sans-serif;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+justify-content: center;
+color: #212121;
+`
+
+const PlaceName = styled.div`
+font-family: "Roboto", sans-serif;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+justify-content: center;
+color: #212121;
+margin-top: 11px;
 `
 
 const Address = styled.span`
-color: gray;
+font-family: "Roboto", sans-serif;
+color: #757575;
 font-size: 13px;
-
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+margin-top: 6px;
 `
-
 const MemoBox = styled.div`
 width: 100%;
-height: 95px;
-background-color: #f4f4f4;
+height: 128px;
+background-color: #FFFFFF;
 border-radius: 8px;
 box-sizing: border-box;
-padding: 10px;
-margin-top: 15px;
-margin-bottom: 15px;
+margin-top: 16px;
+padding: 16px 17px;
+box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
 `
 
 const Memo = styled.div`
-color: #666666;
+font-family: "Roboto", sans-serif;
+font-weight: 500;
+color: #757575;
+font-size: 12px;
+line-height: 16px;
 `
 
 const TabMenu = styled.div`
@@ -165,14 +197,13 @@ const TabMenu = styled.div`
 `;
 
 const TravelDay = styled.div`
-  padding: 0px 24px;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: 600;
   line-height: 22px;
+  margin-left: -20px;
 
 `
-
 const AddPlaceBox = styled.div`
   width: 100%;
   height: 41px;
@@ -197,4 +228,41 @@ const DayButton = styled.div`
   font-weight: 400;
   cursor: pointer;
 `
+
+const CirclePurPle = styled.div`
+    background-color: #4E49E2;
+    color: white;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    align-items: center;
+    /* width: fit-content; */
+    height: 20px;
+    width: 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    line-height: 25px;
+    margin-top: 8px;
+    margin-right: -3px;
+    transform: translate(-50%, 0%);
+`
+const CircleGreen = styled.div`
+    background-color: #8CE569;
+    color: white;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    align-items: center;
+    /* width: fit-content; */
+    height: 20px;
+    width: 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    line-height: 25px;
+    margin-top: 8px;
+    margin-right: -3px;
+    transform: translate(-50%, 0%);
+`
+
+
 export default ChooseDay;

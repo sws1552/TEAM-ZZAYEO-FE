@@ -28,7 +28,7 @@ export default function LongMenu(props) {
     };
 
     return (
-        <div>
+        <div style={{marginRight:"-16px"}}>
             <IconButton
                 aria-label="more"
                 id="long-button"
