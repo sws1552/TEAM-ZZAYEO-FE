@@ -82,33 +82,34 @@ const Main = (props) => {
       <Container>
         <HeaderBar />
         <Banner />
-        <Content>
-          <BookMarkListBox>
-            <p>내가 찜한 여행기 📚😆</p>
-            <MainBookMarkList />
-          </BookMarkListBox>
-          <TravelListBox>
-            <p>여행기 모아보기 🌄📝</p>
-            <Filter />
-            {query ? (
-              <>
-                {plans.map((l, i) => {
-                  return <MainTravelList key={i} {...l} />;
-                })}
-              </>
-            ) : (
-              <>
-                {itemLists.map((l, i) => {
-                  return <MainTravelList key={i} {...l} />;
-                })}
-                <div ref={setTarget} className="Target-Element">
-                  {isLoaded && <Loader />}
-                </div>
-              </>
-            )}
-
-          </TravelListBox>
-        </Content>
+        <Div>
+          <Content>
+            <BookMarkListBox>
+              <p>내가 찜한 여행기 📚😆</p>
+              <MainBookMarkList />
+            </BookMarkListBox>
+            <TravelListBox>
+              <p>여행기 모아보기 🌄📝</p>
+              <Filter />
+              {query ? (
+                <>
+                  {plans.map((l, i) => {
+                    return <MainTravelList key={i} {...l} />;
+                  })}
+                </>
+              ) : (
+                <>
+                  {itemLists.map((l, i) => {
+                    return <MainTravelList key={i} {...l} />;
+                  })}
+                  <div ref={setTarget} className="Target-Element">
+                    {isLoaded && <Loader />}
+                  </div>
+                </>
+              )}
+            </TravelListBox>
+          </Content>
+        </Div>
       </Container>
     );
   }
@@ -138,7 +139,6 @@ export default Main;
 const Container = styled.div`
   width: 100%;
   height: 93%;
-  background-color: #cfcfff;
   bottom: 0;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -150,6 +150,10 @@ const Content = styled.div`
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: #ffffff;
+`;
+
+const Div = styled.div`
+  background-color: #cfcfff;
 `;
 
 const TravelListBox = styled.div`

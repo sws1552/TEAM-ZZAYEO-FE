@@ -33,7 +33,7 @@ const initialState = {
   bookmark_list: [],
   myplans: [],
   status: "",
-  search_list: [],
+  search_list: [{}],
 };
 
 //카테고리 선택 목록 가져오기

@@ -5,16 +5,7 @@ import { history } from "../../redux/ConfigureStore";
 import Bookmark from "./Bookmark";
 
 const MainTravelList = (props) => {
-  const {
-    title,
-    destination,
-    style,
-    withlist,
-    isLike,
-    isBookmark,
-    planId,
-    userId,
-  } = props;
+  const { title, isLike, isBookmark, planId, userId } = props;
 
   return (
     <React.Fragment>
