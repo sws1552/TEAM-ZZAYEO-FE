@@ -19,7 +19,7 @@ const logOut = createAction(LOG_OUT, () => ({}));
 //initial
 const initialState = {
   user: { userId: null, nickname: null, userImg: null },
-  userInfo: {},
+  userInfo: [],
   is_login: false,
 };
 
@@ -92,6 +92,7 @@ const userProfileDB = (userId) => {
     instance
       .get(`/api/users/${userId}`)
       .then((res) => {
+        console.log('res !! ',res);
         dispatch(setUserProfile(res.data.userInfo));
       })
       .catch((err) => {
@@ -99,8 +100,6 @@ const userProfileDB = (userId) => {
       });
   };
 };
-
-
 
 //reducer
 export default handleActions(
@@ -116,7 +115,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userInfo = action.payload.userInfo;
       }),
-   
+
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         localStorage.removeItem("token");

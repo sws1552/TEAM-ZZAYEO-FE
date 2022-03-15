@@ -39,7 +39,7 @@ const Onechat = (props) => {
             <UserImg profileImg={props.userId2.profile_img}/>
             <NickCon>
                 <Text>{props.userId2.nickname}</Text>
-                <div style={{color: "#757575"}}>{moment(props.updatedAt).format("YYYY-MM-DD")}</div>
+                <div style={{color: "#757575"}}>{moment(props.updatedAt).format("YYYY. MM. DD")}</div>
             </NickCon>
         </Container>
     );
