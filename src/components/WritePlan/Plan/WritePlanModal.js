@@ -97,7 +97,7 @@ export default function BasicModal(props) {
             <ADDPlace onClick={() => {
                 handleOpen()
                 dispatch(mapActions.sendDayId(dayId))
-            }}>+장소추가하기</ADDPlace>
+            }}>+장소를 추가해주세요</ADDPlace>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -295,4 +295,7 @@ const ADDPlace = styled.div`
   color: gray;
   border: none;
   cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 `

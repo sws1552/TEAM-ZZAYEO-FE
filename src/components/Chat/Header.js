@@ -24,7 +24,7 @@ Header.defaultProps = {
 }
 
 const HeaderCon = styled.div`
-    border-bottom: 1px solid #D2DBDD;
+    /* border-bottom: 1px solid #D2DBDD; */
     /* background-color: orange; */
 `;
 
@@ -35,6 +35,7 @@ const Text = styled.div`
     font-size: 16px;
     display: flex;
     align-items: center;
+    margin-left: 15px;
 
     & .backIcon {
         padding: 0;
