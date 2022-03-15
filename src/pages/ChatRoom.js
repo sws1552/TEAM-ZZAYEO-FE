@@ -71,7 +71,7 @@ const ChatRoom = (props) => {
             const oneChat = {
                 chatText: data.chatText,
                 checkChat: data.checkChat,
-                // createdAt: data.createdAt,
+                createdAt: data.createdAt,
                 fromUserId:{
                     snsId: data.fromSnsId,
                 },
