@@ -22,10 +22,11 @@ const MainBookMark = (props) => {
             history.push(`detail/${planId.planId}`);
           }}
         >
-          <UserImg onClick={onProfile}>
+          <UserInfo onClick={onProfile}>
             <img src={plan.planId.userId.profile_img} alt="" />
-          </UserImg>
-          <UserName>{plan.planId.userId.nickname}</UserName>
+            <UserName>{plan.planId.userId.nickname}</UserName>
+          </UserInfo>
+          <CardTitle>{plan.planId.title}</CardTitle>
         </BookMarkCard>
       </Container>
     </React.Fragment>
@@ -36,37 +37,53 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-right: 8px;
+  padding-right: 5.43px;
+  margin-bottom: 47.35px;
 `;
 
 const BookMarkCard = styled.div`
-  position: relative;
-  font-family: "Roboto", sans-serif;
-  width: 120px;
-  height: 200px;
-  background-color: #e6e6e6;
+  display: flex;
+  flex-direction: column;
+  width: 152.57px;
+  height: 192.65px;
   border-radius: 8px;
-  margin-right: 8px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("https://i.pinimg.com/564x/14/cc/f4/14ccf4687851ce8f59889384c8f6018a.jpg");
+  background-position: center;
+  background-size: cover;
+  font-family: "Roboto", sans-serif;
   cursor: pointer;
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
 `;
 
-const UserImg = styled.div`
+const UserInfo = styled.div`
   margin: 10px 0px 0px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   img {
-    width: 34px;
-    height: 34px;
+    width: 25px;
+    height: 25px;
     border-radius: 34px;
   }
 `;
 
 const UserName = styled.div`
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  font-family: "Roboto", sans-serif;
+  margin-left: 4.07px;
+  font-weight: 700;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
+  line-height: 16px;
+  color: #ffffff;
+`;
+
+const CardTitle = styled.div`
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  padding: 0px 16.27px 15.41px;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
   color: #ffffff;
 `;
 

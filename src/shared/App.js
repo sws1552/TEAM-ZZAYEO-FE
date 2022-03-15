@@ -62,7 +62,6 @@ const Fullscreen = styled.div`
 
 const Container = styled.div`
   background-color: white;
-  border-radius: 10px;
   height: 100vh;
   width: 420px;
   margin: auto;

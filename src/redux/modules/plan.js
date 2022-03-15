@@ -1,7 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
-import { push } from "connected-react-router";
 
 // 액션타입
 const GET_PLAN = "GET_PLAN";
@@ -12,7 +11,6 @@ const GET_MYPLAN = "GET_MYPLAN";
 const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
 const SEARCH = "SEARCH";
-const STYLELIST = "STYLELIST";
 
 // 액션 생성 함수
 const getPlan = createAction(GET_PLAN, (plans) => ({ plans }));
@@ -25,7 +23,7 @@ const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
 const status = createAction(STATUS, (status) => ({ status }));
 const deleteMyPost = createAction(DELETEMYDAYPOST, (placeId) => ({ placeId }));
 const search = createAction(SEARCH, (search_list) => ({ search_list }));
-const styleList = createAction(STYLELIST, (style_list) => ({ style_list }));
+
 // 초기 상태값
 const initialState = {
   list: [],
@@ -36,26 +34,23 @@ const initialState = {
   myplans: [],
   status: "",
   search_list: [],
-  style_list: [],
 };
 
-// 미들웨어
-
-//스타일별 목록 가져오기
-const getPlanDB = (style) => {
-  if (style) {
+//카테고리 선택 목록 가져오기
+const getPlanDB = (query) => {
+  if (query) {
     return function (dispatch, getState, { history }) {
       instance
-        .get(`/api/plans?style=${style}`)
+        .get(`/api/plans${query}`)
         .then((res) => {
-          console.log(res);
-          dispatch(styleList(res.data.plans));
+          dispatch(getPlan(res.data));
         })
         .catch(function (error) {
           console.log(error);
         });
     };
   }
+
   //전체포스트 내용 받아오기
   return function (dispatch, getState, { history }) {
     instance
@@ -109,7 +104,8 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL
+  imageURL,
+  geometry
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -122,7 +118,8 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL
+      imageURL,
+      geometry.viewport
     );
 
     let formData = new FormData();
@@ -132,6 +129,7 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
+    formData.append("geometry_viewport", geometry.viewport);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });
@@ -347,11 +345,12 @@ export const editMyPostDB = (
   };
 };
 // 검색하기
-const searchDB = (keyword) => {
+const searchDB = (query) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/plans/search?query=${keyword}`)
+      .get(`/api/plans/search${query}`)
       .then(function (res) {
+        console.log(res);
         dispatch(search(res.data.plans));
       })
       .catch(function (error) {
@@ -388,16 +387,6 @@ export default handleActions(
     [SEARCH]: (state, action) =>
       produce(state, (draft) => {
         draft.search_list = action.payload.search_list;
-      }),
-    [STYLELIST]: (state, action) =>
-      produce(state, (draft) => {
-        const style = action.payload.style_list;
-        if(style.length === 0) {
-          draft.style_list = [{none:"없음"}]
-        } else {
-          draft.style_list = action.payload.style_list
-        }
-        
       }),
   },
   initialState
