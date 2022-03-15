@@ -33,12 +33,24 @@ const Polyline = ({ maps, map, markers }) => {
   //   acc.push(new maps.LatLng(cur.lat, cur.lng));
   //   return acc;
   // }, []);
+  const lineSymbol = {
+    path: "M 0,-1 0,1",
+    strokeOpacity: 1,
+    scale: 1.5,
+  };
 
   let createPolyline = new maps.Polyline({
     path: markers,
     geodesic: true,
-    strokeColor: "green",
-    strokeOpacity: 1.0,
+    strokeColor: "#757575",
+    strokeOpacity: 0,
+    icons: [
+      {
+        icon: lineSymbol,
+        offset: "0",
+        repeat: "7px",
+      },
+    ],
     strokeWeight: 2,
   });
 
