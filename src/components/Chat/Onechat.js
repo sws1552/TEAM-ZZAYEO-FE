@@ -38,7 +38,13 @@ const Onechat = (props) => {
         <Container onClick={joinRoom}>
             <UserImg profileImg={props.userId2.profile_img}/>
             <NickCon>
-                <Text>{props.userId2.nickname}</Text>
+                <Text>{props.userId2.nickname} 
+                    {props.notReadCount !== 0 ? 
+                    <NotReadCount>안 읽은 메세지: {props.notReadCount}개</NotReadCount>
+                    :
+                    null}
+                </Text>
+                <LastChat>{props.lastChat.chatText}</LastChat>
                 <div style={{color: "#757575"}}>{moment(props.updatedAt).format("YYYY. MM. DD")}</div>
             </NickCon>
         </Container>
@@ -51,6 +57,13 @@ Onechat.defaultProps = {
     pretime: "2022-03-03",
     _onClick: () => {},
 }
+
+const LastChat = styled.div`
+    max-width: 270px;
+    height: 24px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+`;
 
 const Container = styled.div`
     display: flex;
@@ -65,6 +78,11 @@ const Container = styled.div`
         background-color: #F5F5F5;
     }
 
+`;
+
+const NotReadCount = styled.div`
+    color: purple;
+    margin-left: 10px;
 `;
 
 const UserImg = styled.div`
@@ -83,6 +101,7 @@ const NickCon = styled.div`
 
 const Text = styled.div`
     font-weight: bold;
+    display: flex;
 `;
 
 export default Onechat;

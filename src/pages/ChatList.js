@@ -19,59 +19,51 @@ const ChatList = (props) => {
 
   const chat_list = useSelector((state) => state.chat.list);
 
-  console.log('chat_list !! ',chat_list);
+  // console.log('chat_list !! ',chat_list);
 
-  // const [userId, setUserId] = useState("");
-  // const [roomId, setRoomId] = useState("1");
-
-  // const joinRoom = () => {
-  //   const data = {
-  //     userId: userId,
-  //     roomId: roomId,
-  //     // socket: socket,
-  //   };
-
-  //   dispatch(chatActions.getRoom(data));
-
-  //   // 서버에 방id 전송 같은 방일경우에 서로의 채팅이 보인다.
-  //   // 방입장할때는 메세지 보내는자 Id랑 받는자 Id 그그그 email형식 아이디
-  //   // socket.emit("joinRoom", roomId);
-
-  //   history.push("/chatroom");
-  // };
+  const is_token = localStorage.getItem("token") ? true : false;
 
   React.useEffect(() => {
-    if(chat_list.length === 0){
+
+    if(is_token){
       dispatch(chatActions.getChatListFB());
+      // dispatch(chatActions.getNewChatFB());
     }
-    dispatch(chatActions.getNewChatFB());
+
   }, []);
 
+  
 
   return (
     <ListContainer>
       <Header />
-      <ListWrap>
-        <OneChatWrap>
-          
-          {
-          chat_list.length === 0 
-          ?
-          <NotMsg>메세지가 없습니다.</NotMsg>
-          : 
-          chat_list.map((item, i) => {
-            // if(typeof item.roomNum !== "undefined"){
-              return <Onechat key={item._id} {...item} />
-            // }else {
-            //   return null;
-            // }
-          })
-          }
-          
-          
-        </OneChatWrap>
+      {is_token ? 
+        <ListWrap>
+          <OneChatWrap>
+            
+            {
+            chat_list.length === 0 
+            ?
+            // <NotMsg>메세지가 없습니다.</NotMsg>
+            null
+            : 
+            chat_list.map((item, i) => {
+              // if(typeof item.roomNum !== "undefined"){
+                return <Onechat key={item._id} {...item} />
+              // }else {
+              //   return null;
+              // }
+            })
+            }
+            
+            
+          </OneChatWrap>
 
-      </ListWrap>
+        </ListWrap>
+      : 
+        '로그인 후 이용 가능합니다.'
+      }
+      
     </ListContainer>
   );
 
@@ -82,7 +74,7 @@ const ListContainer = styled.div`
   width: 100%;
   height: 90%;
   /* background-color: orange; */
-  padding: 25px;
+  padding: 25px 0;
   box-sizing: border-box;
   border-radius: 10px;
 `;
@@ -122,6 +114,8 @@ const ListWrap = styled.div`
 
 
 
-const OneChatWrap = styled.div``;
+const OneChatWrap = styled.div`
+  padding: 0 15px;
+`;
 
 export default ChatList;

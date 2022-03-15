@@ -20,10 +20,10 @@ const MainDetailPage = (props) => {
 
   const planId = props.match.params.planId;
   const plans = useSelector((state) => state.plan.myPlan);
-  console.log(plans)
+  console.log(plans);
 
   const userId = localStorage.getItem("userId");
-  console.log(userId)
+  console.log(userId);
 
   const [isChecked, setIsChecked] = React.useState(true);
   const [clickedTripDest, changeTripDest] = React.useState(0);
@@ -33,9 +33,9 @@ const MainDetailPage = (props) => {
   }, []);
 
   const decideShare = ["나만의 일정", "모두에게 공유"];
-  const share = "공개"
-  const unshare = "비공개"
-  
+  const share = "공개";
+  const unshare = "비공개";
+
   if (plans?.userId?.email === userId) {
     return (
       <>
@@ -55,10 +55,10 @@ const MainDetailPage = (props) => {
                     onClick={() => {
                       changeTripDest(i);
                       if (l === "모두에게 공유") {
-                        dispatch(planActions.statusDB(plans.planId, share))
+                        dispatch(planActions.statusDB(plans.planId, share));
                       }
                       if (l === "나만의 일정") {
-                        dispatch(planActions.statusDB(plans.planId, unshare))
+                        dispatch(planActions.statusDB(plans.planId, unshare));
                       }
                     }}
                     style={{
@@ -98,7 +98,6 @@ const MainDetailPage = (props) => {
       </>
     );
   }
-
 
   return (
     <>
@@ -157,8 +156,7 @@ const BtnBox = styled.div`
 const TitleBox = styled.div`
   display: block;
   width: 100%;
-  padding: 0px 24px ;
- 
+  padding: 0px 24px;
 `;
 const TripDestBox = styled(TitleBox)`
   div {
@@ -182,4 +180,3 @@ const TripDestBox = styled(TitleBox)`
     font-weight: 500;
   }
 `;
-

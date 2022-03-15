@@ -27,7 +27,7 @@ const DestinationModal = (props) => {
                       }}
                       style={{
                         backgroundColor:
-                          i === clickedDestination ? "#535353" : "#F4F4F4",
+                          i === clickedDestination ? "#4E49E2" : "#F5F5F5",
                         color: i === clickedDestination ? "#FFFFFF" : "#757575",
                       }}
                       key={i}
@@ -95,8 +95,8 @@ const Taps = styled.div`
   display: inline-flex;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  font-weight: 600;
-  line-height: 25px;
+  font-weight: 700;
+  line-height: 24px;
 `;
 
 const Ul = styled.div`
@@ -108,39 +108,51 @@ const Div = styled.div`
   position: absolute;
   width: 100%;
   bottom: 36px;
+  font-family: "Roboto", sans-serif;
 `;
 
 const Button = styled.div`
-  height: 48px;
+  height: 54px;
   margin: 0px 24px;
-  background-color: #535353;
+  background-color: #bdbdbd;
   border-radius: 8px;
-  color: #ffffff;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  p {
+    margin: 0;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+  }
+
+  :hover {
+    background-color: #4e49e2;
+    color: #ffffff;
+  }
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   padding: 0px 24px;
 `;
 
-const Category = styled.option`
+const Category = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 5px 16px;
+  padding: 10px 16px;
   margin-right: 8px;
-  border-radius: 16px;
+  margin-bottom: 12px;
+  border-radius: 20px;
   cursor: pointer;
 `;
 
