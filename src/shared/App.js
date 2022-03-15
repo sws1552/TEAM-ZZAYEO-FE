@@ -46,7 +46,6 @@ function App() {
 
             <Route path="/mypage" exact component={MyPage} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
-
             <Navigation />
           </Container>
         </ConnectedRouter>
@@ -58,15 +57,20 @@ function App() {
 const Fullscreen = styled.div`
   background-color: #e6f4fa;
   height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 `;
 
 const Container = styled.div`
+  display: flex;
+  justify-content: center;
   background-color: white;
-  height: 100vh;
+  height: 100%;
   width: 420px;
-  margin: auto;
   box-sizing: border-box;
   position: relative;
+  bottom: 0;
 `;
 
 export default App;

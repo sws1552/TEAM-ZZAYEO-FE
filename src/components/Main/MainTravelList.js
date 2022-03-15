@@ -1,10 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import MainLike from "./MainLike";
+import Like from "./Like";
 import { history } from "../../redux/ConfigureStore";
+import Bookmark from "./Bookmark";
 
 const MainTravelList = (props) => {
-  const { title, destination, style, withlist, isLike, planId, userId } = props;
+  const {
+    title,
+    destination,
+    style,
+    withlist,
+    isLike,
+    isBookmark,
+    planId,
+    userId,
+  } = props;
 
   return (
     <React.Fragment>
@@ -18,7 +28,10 @@ const MainTravelList = (props) => {
           <UserImg src={userId.profile_img} />
           <UserNickName>{userId.nickname}</UserNickName>
           <CardTitle>{title}</CardTitle>
-          <MainLike isLike={isLike} planId={planId} />
+          <Box>
+            <Like isLike={isLike} />
+            <Bookmark isBookmark={isBookmark} />
+          </Box>
         </TripCard>
       </Container>
     </React.Fragment>
@@ -67,6 +80,7 @@ const UserImg = styled.img`
 `;
 
 const UserNickName = styled.div`
+  position: absolute;
   margin: 12px 0px 0px 80px;
   font-weight: 700;
   font-size: 14px;
@@ -75,11 +89,19 @@ const UserNickName = styled.div`
 `;
 
 const CardTitle = styled.div`
-  margin: 12px 16px 80px;
+  position: absolute;
+  padding: 40px 16px;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
   color: #212121;
+`;
+
+const Box = styled.div`
+  position: absolute;
+  display: flex;
+  margin-top: 4px;
+  right: 12px;
 `;
 
 export default MainTravelList;
