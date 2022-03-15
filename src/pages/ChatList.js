@@ -57,7 +57,7 @@ const ChatList = (props) => {
           {
           chat_list.length === 0 
           ?
-          null
+          <NotMsg>메세지가 없습니다.</NotMsg>
           : 
           chat_list.map((item, i) => {
             // if(typeof item.roomNum !== "undefined"){
@@ -85,6 +85,13 @@ const ListContainer = styled.div`
   padding: 25px;
   box-sizing: border-box;
   border-radius: 10px;
+`;
+
+const NotMsg = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 `;
 
 const ListWrap = styled.div`

@@ -39,7 +39,7 @@ const getChatRoomListFB = (toUserId) => {
         await instance.get(`/api/chat/${toUserId}`)
         .then((res) => {
 
-            // console.log('채팅방 글 조회 res !! ', res.data.chatMessages);
+            console.log('채팅방 글 조회 res !! ', res.data.chatMessages);
             dispatch(getChat(res.data.chatMessages));
         })
         .catch((err) => {
