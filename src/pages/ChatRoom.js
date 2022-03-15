@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
 import Header from '../components/Chat/Header';
@@ -32,6 +32,9 @@ const ChatRoom = (props) => {
 
     const [checkChat, setCheckChat] = useState(false);
 
+    
+
+    const upCheckChat = useCallback(() => setCheckChat(!checkChat), []);
     
     // console.log('시간 !! ', moment().format('YYYY-MM-DD HH:mm:ss'));
     console.log('msgList !! ',msgList);
@@ -75,7 +78,7 @@ const ChatRoom = (props) => {
 
             const oneChat = {
                 chatText: data.chatText,
-                checkChat: checkChat,
+                checkChat: checkChat ? true : false,
                 createdAt: data.createdAt,
                 fromUserId:{
                     snsId: data.fromSnsId,
@@ -96,9 +99,10 @@ const ChatRoom = (props) => {
 
         socket.on("join", (data) => {
             console.log('data 상대방이 입장했는지 !! ',data);
-            setCheckChat(true);
+            
             if(data === roomData.curUserInfo.snsId){
-                
+                upCheckChat();
+                console.log('checkChat 상대방이 입장했을때 !! ',checkChat);    
                 dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
 
             }
@@ -107,6 +111,8 @@ const ChatRoom = (props) => {
 
         return () => {
             console.log('채팅방나간다잉');
+            upCheckChat();
+            console.log('checkChat 컴포넌트가 사라질때!! ',checkChat);
             setMessageList([]);
         }
 
