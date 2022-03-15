@@ -25,8 +25,8 @@ const SwiperImage = (props) => {
                 }}
             >
                 {image && image.map((m, i) => (
-                    <SwiperSlide key={i}>
-                        <Image src={m}></Image>
+                    <SwiperSlide >
+                        <Image key={i} src={m}></Image>
                     </SwiperSlide>
                 ))}
             </SwiperSlider>

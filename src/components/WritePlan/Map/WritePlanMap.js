@@ -62,7 +62,7 @@ const WritePlanMap = (props) => {
 
   //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
   const handleOnPlacesChanged = useCallback(() => {
-    if (Markers.length !== 0) {
+    if (Markers.length !== 0 && apiReady) {
       const bounds = new googlemaps.LatLngBounds();
       Markers.map(item => {
         bounds.extend(item);

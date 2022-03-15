@@ -124,7 +124,7 @@ const Container = styled.div`
   height: 255px;
   box-sizing: border-box;
   overflow-y: scroll;
-  padding: 0px 18px 0px 44px;
+  padding: 0px 24px 0px 44px;
   &::-webkit-scrollbar {
         display: none;
     }
@@ -212,6 +212,7 @@ const AddPlaceBox = styled.div`
   margin-top: 22px;
   line-height: 41px;
   text-align: center;
+  margin-left: -10px;
 `
 
 const DayButton = styled.div`
