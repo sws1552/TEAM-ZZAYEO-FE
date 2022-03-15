@@ -4,23 +4,42 @@ import styled from 'styled-components'
 const Title = (props) => {
     return (
         <Container>
-            <h2>{props.title}</h2>
-            <Text>{props.startDate}~{props.endDate}</Text>
-            <Text> {props.destination} | {props && props?.withlist} | {props && props?.style}</Text>
+            <TitleText>{props.title}</TitleText>
+            <DateText>{props.startDate}~{props.endDate}</DateText>
+            <DetailText> {props.destination} | {props && props?.withlist} | {props && props?.style}</DetailText>
         </Container>
     );
 };
 
 const Container = styled.div`
 width: 100%;
-height: 165px;
 box-sizing: border-box;
 margin: auto;
 overflow: hidden;
 padding: 0px 24px;
 `
-const Text = styled.p`
-color: gray;
-font-size: 15px;
+
+const TitleText = styled.div`
+margin-top: 22px;
+font-size: 22px;
+font-weight: 600;
+line-height: 25px;
 `
+
+const DateText = styled.div`
+color: #616161;
+font-size: 14px;
+font-weight: 400;
+line-height: 22px;
+margin-top: 6px;
+`
+
+const DetailText = styled.div`
+color: #616161;
+font-size: 14px;
+font-weight: 500;
+line-height: 22px;
+margin-top: 1px;
+`
+
 export default Title;

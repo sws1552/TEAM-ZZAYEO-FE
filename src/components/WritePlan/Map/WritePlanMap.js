@@ -3,7 +3,6 @@ import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Maker from "./Maker";
 import Polyline from "./Polyline";
-import MakerDirect from "./MakerDirect";
 import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 // import { actionCreators as mapActions } from "../../../redux/modules/map";

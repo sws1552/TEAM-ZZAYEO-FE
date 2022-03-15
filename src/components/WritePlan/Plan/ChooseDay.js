@@ -41,7 +41,7 @@ const ChooseDay = (props) => {
         </TabMenu>
 
         <Container>
-          {dayList && dayList[currentTab].places.map((v, i) => {
+          {dayList && dayList[currentTab]?.places.map((v, i) => {
             return (
               <>
                 <div key= {v} style={{ width: "100%" }}>
@@ -61,7 +61,7 @@ const ChooseDay = (props) => {
               </>
             )
           })}
-          <WritePlanModal dayId={dayList && dayList[currentTab].dayId} />
+          <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} />
         </Container>
       </div>
 
@@ -112,27 +112,28 @@ const TabMenu = styled.div`
   font-weight: bold;
   display: flex;
   flex-direction: row;
-  justify-items: center;
+  justify-content: flex-start;
   align-items: center;
   list-style: none;
+  padding-left: 24px;
     
-  .submenu {
+  /* .submenu {
     width:100% auto;
     padding: 15px 10px;
     cursor: pointer;
-  }
+  } */
 `;
 
 const Button = styled.div`
     display: flex;
     align-items: center;
-    width: fit-content;
+    width: fit-content; //글자크기만큼
     height: 32px;
-    margin: 20px auto;
-    padding: 15px 12px;
+    margin: 22.5px 8px 22px 0px;
+    padding: 8px 16px;
     box-sizing: border-box;
     border-radius: 50px;
-    font-size: 12px;
+    font-size: 14px;
     background-color: #eee;
     font-weight: 400;
     cursor: pointer;
