@@ -7,11 +7,24 @@ import { history } from "../redux/ConfigureStore";
 
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../shared/Auth";
 
+import Mypage from "./MyPage";
+
 const Login = (props) => {
+
+  const is_token = localStorage.getItem("token") ? true : false;
+
   const dispatch = useDispatch();
 
+  if(is_token){
+
+    return (
+      <Mypage />
+    )
+
+  }else {
+
   return (
-    <React.Fragment>
+    <LoginCon>
       <BtnBox>
         <KaKaoBtn>
           <svg
@@ -44,19 +57,25 @@ const Login = (props) => {
           </svg>
           <a href={KAKAO_AUTH_URL}>카카오로 시작하기</a>
         </KaKaoBtn>
-        <LogoutBtn
+        {/* <LogoutBtn
           onClick={() => {
             dispatch(userActions.logOut());
             history.replace("/");
           }}
         >
           <p>로그아웃</p>
-        </LogoutBtn>
+        </LogoutBtn> */}
         {/* <NaverBtn href={NAVER_AUTH_URL}></NaverBtn> */}
       </BtnBox>
-    </React.Fragment>
+    </LoginCon>
   );
+  }
+
 };
+
+const LoginCon = styled.div`
+  width: 100%;
+`;
 
 const BtnBox = styled.div`
   display: flex;
