@@ -1,23 +1,19 @@
-import * as React from 'react';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import styled from 'styled-components';
-import {actionCreators as commentActions} from '../../redux/modules/comment';
-import {useDispatch} from "react-redux";
+import * as React from "react";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import styled from "styled-components";
+import { actionCreators as commentActions } from "../../redux/modules/comment";
+import { useDispatch } from "react-redux";
 
-const options = [
-  '수정하기',
-  '삭제하기',
-];
+const options = ["수정하기", "삭제하기"];
 
 const ITEM_HEIGHT = 48;
 
 export default function LongMenu(props) {
+  const { commentId, planId, hide } = props;
 
-  const {commentId, planId, hide} = props;
-  
   const dispatch = useDispatch();
 
   // console.log('commentId !! ',commentId);
@@ -25,25 +21,20 @@ export default function LongMenu(props) {
   const itemClick = (e) => {
     // console.log('e.target.id !! ',e.target.id);
 
-    if(e.target.id === "수정하기"){
-      
+    if (e.target.id === "수정하기") {
       hide();
 
       // dispatch(commentActions.updateComment(commentId, planId));
-
-    }else {
-
-      if(window.confirm("정말로 삭제하시겠습니까?")){
+    } else {
+      if (window.confirm("정말로 삭제하시겠습니까?")) {
         dispatch(commentActions.removeCommentFB(commentId, planId));
-      }else {
+      } else {
         return;
       }
-
     }
-    
-    handleClose();
 
-  }
+    handleClose();
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -55,12 +46,12 @@ export default function LongMenu(props) {
   };
 
   return (
-    <div style={{position:"absolute", right: "0"}}>
+    <div style={{ position: "absolute", right: "0" }}>
       <IconButton
         aria-label="more"
         id="long-button"
-        aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
       >
@@ -69,7 +60,7 @@ export default function LongMenu(props) {
       <Menu
         id="long-menu"
         MenuListProps={{
-          'aria-labelledby': 'long-button',
+          "aria-labelledby": "long-button",
         }}
         anchorEl={anchorEl}
         open={open}
@@ -77,12 +68,11 @@ export default function LongMenu(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
+            width: "20ch",
           },
         }}
-
         style={{
-            left: '-150px',
+          left: "-150px",
         }}
       >
         {options.map((option) => (

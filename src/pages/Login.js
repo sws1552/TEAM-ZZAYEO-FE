@@ -47,12 +47,12 @@ const Login = (props) => {
         <LogoutBtn
           onClick={() => {
             dispatch(userActions.logOut());
-            history.replace("/");
+            window.location.replace("/");
           }}
         >
           <p>로그아웃</p>
+          {/* <NaverBtn href={NAVER_AUTH_URL}></NaverBtn> */}
         </LogoutBtn>
-        {/* <NaverBtn href={NAVER_AUTH_URL}></NaverBtn> */}
       </BtnBox>
     </React.Fragment>
   );

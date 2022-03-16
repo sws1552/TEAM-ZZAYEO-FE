@@ -36,7 +36,7 @@ const kakaoLogin = (code) => {
         localStorage.setItem("token", token); //예시로 로컬에 저장
         localStorage.setItem("userId", userId);
         dispatch(checkUserDB());
-        history.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
+        window.location.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);
@@ -92,7 +92,7 @@ const userProfileDB = (userId) => {
     instance
       .get(`/api/users/${userId}`)
       .then((res) => {
-        console.log('res !! ',res);
+        console.log("res !! ", res);
         dispatch(setUserProfile(res.data.userInfo));
       })
       .catch((err) => {

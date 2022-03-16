@@ -10,7 +10,7 @@ const Myplan = (props) => {
   const { history } = props;
 
   const myplans = useSelector((store) => store.plan.myplans);
-  console.log(myplans)
+  console.log(myplans);
   React.useEffect(() => {
     dispatch(planActions.getMyPlanDB());
   }, []);
@@ -68,7 +68,7 @@ const Myplan = (props) => {
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 90%;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
