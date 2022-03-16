@@ -17,6 +17,8 @@ import ChatRoom from "../pages/ChatRoom";
 import MainDetailPage from "../pages/MainDetailPage";
 
 import MyPage from "../pages/MyPage";
+import MypageProUp from "../pages/MypageProUp";
+import MypageSetting from "../pages/MypageSetting";
 import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
@@ -45,6 +47,8 @@ function App() {
             <Route path="/chatroom" exact component={ChatRoom} />
 
             <Route path="/mypage" exact component={MyPage} />
+            <Route path="/mypageproup" exact component={MypageProUp} />
+            <Route path="/mypageset" exact component={MypageSetting} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
             <Navigation />
           </Container>
