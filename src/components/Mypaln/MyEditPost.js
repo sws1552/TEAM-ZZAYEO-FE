@@ -3,10 +3,8 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useDispatch, useSelector } from "react-redux";
-import { history } from "../../redux/ConfigureStore";
+import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
-import styled from "styled-components";
 
 const options = ["게시물 삭제"];
 
@@ -18,18 +16,12 @@ export default function MyEditPost(props) {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {};
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const BtnBox = styled.div`
-    display: flex;
-    justify-content: flex-end;
-  `;
-
   return (
-    <BtnBox>
+    <div style={{ display: "flex", justifyContent: "flex-end" }}>
       <IconButton
         aria-label="more"
         id="long-button"
@@ -71,6 +63,6 @@ export default function MyEditPost(props) {
           </MenuItem>
         ))}
       </Menu>
-    </BtnBox>
+    </div>
   );
 }
