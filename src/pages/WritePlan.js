@@ -1,8 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import WritePlanMap from "../components/WritePlan/Map/WritePlanMap";
-import BasicTabs from "../components/WritePlan/Plan/BasicTabs";
-import BasicTabsHide from "../components/WritePlan/Plan/BasicTapsHide";
 import Header from "../components/WritePlan/Header/Header";
 import Title from "../components/WritePlan/Title/Title";
 import { Collapse } from '@mui/material';
@@ -14,7 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import ChooseDay from "../components/WritePlan/Plan/ChooseDay";
-import { border } from "@mui/system";
+import ChooseDayHide from "../components/WritePlan/Plan/ChooseDayHide";
+
 
 const WritePlan = (props) => {
   const dispatch = useDispatch();
@@ -101,8 +100,8 @@ const WritePlan = (props) => {
         </div>
 
 
-        {isChecked ? <ChooseDay {...myPlan} /> : null}
-        {/* {isChecked ? <BasicTabs {...myPlan} /> : <BasicTabsHide {...myPlan} />} */}
+        {isChecked ? <ChooseDay {...myPlan} /> : <ChooseDayHide {...myPlan} />}
+    
       </Container>
     </>
   );

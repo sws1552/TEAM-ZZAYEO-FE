@@ -4,8 +4,10 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useSelector, useDispatch } from "react-redux";
 
+import { actionCreators as imageActions } from "../../../redux/modules/image";
 import { actionCreators as mapActions } from "../../../redux/modules/map"
 import { actionCreators as planActions } from "../../../redux/modules/plan";
+
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import React, { useEffect } from "react";
@@ -43,8 +45,8 @@ export default function BasicModal(props) {
     const lat = useSelector((state) => state.addPlace.lat);
     const lng = useSelector((state) => state.addPlace.lng);
     const address = useSelector((state) => state.addPlace.address);
-    const imageURL = useSelector((state) => state.addPlace.imageURL);
-    console.log(placeName, Hour)
+    const imageURL = useSelector((state) => state.image.imageURL);
+
     const memoChange = (e) => {
         setMemo(e.target.value);
     };
@@ -94,10 +96,10 @@ export default function BasicModal(props) {
 
     return (
         <div>
-            <Button onClick={() => {
+            <EditButton onClick={() => {
                 handleOpen()
                 // dispatch(mapActions.sendDayId(dayId))
-            }}>수정하기</Button>
+            }}>수정하기</EditButton>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -221,7 +223,14 @@ export default function BasicModal(props) {
                                         imageURL,
                                     )
                                 );
+                                setHour("0");
+                                setMinute("00");
+                                setAmPm("오전");
+                                setMemo("");
+                                dispatch(imageActions.initialPreview([]));
+                                dispatch(imageActions.initialImage([]));
                             }}
+                            
                         >
                         장소 수정하기
                         </AddButton>
@@ -237,6 +246,12 @@ export default function BasicModal(props) {
         </div>
     );
 }
+
+const EditButton = styled.div`
+
+`
+
+
 
 const Container = styled.div`
   width: 100%;

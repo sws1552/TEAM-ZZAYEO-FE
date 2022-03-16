@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Marker = ({ text, Num, target }) => {
-    let icon = target ? { name: "icon_dot", width: "10px" } : { name: "icon_default", width: "40px" }
-
-
-
+const Marker = ({ text, Num }) => {
+    
     return (
         <Wrapper
             className="marker"

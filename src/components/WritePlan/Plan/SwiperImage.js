@@ -14,10 +14,10 @@ const SwiperImage = (props) => {
     const { image } = props
 
     return (
-        <div style={{ maxWidth: "340px" }}>
+        <div style={{ maxWidth: "355px" }}>
             <SwiperSlider
                 className="banner"
-                spaceBetween={50}
+                spaceBetween={10}
                 slidesPerView={1}
                 // navigation
                 pagination={{
@@ -48,13 +48,18 @@ const Image = styled.div`
 const SwiperSlider = styled(Swiper)`
 
 .swiper-pagination {
-    width: "100px";
-    top: 30px;
-    margin: 0px 130px;
-    position: absolute;
-    color: #FFFFFF;
+    line-height: 32px;
+    background-color: rgba(0, 0, 0, 0.45);
+    width: 54px;
+    height: 32px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    color: white;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 300;
+    margin-left: 280px;
+    margin-bottom: 200px;
     }
 `
 

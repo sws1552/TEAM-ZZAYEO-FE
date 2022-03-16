@@ -63,6 +63,7 @@ const ElInput = styled.input`
     width: 75%;
     height: 45px;
     box-sizing: border-box;
+    transform: translate(8%, 100%);
     :focus {
         outline:none;
         }

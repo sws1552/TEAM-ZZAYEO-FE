@@ -262,7 +262,6 @@ const statusDB = (planId, status) => {
 //나의 Plan 삭제(여행리스트삭제)
 const deleteMyPlanDB = (planId) => {
   return function (dispatch, getState, { history }) {
-    console.log(planId);
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
@@ -293,6 +292,7 @@ const deleteMyPostDB = (placeId) => {
   };
 };
 
+//게시물 수정
 export const editMyPostDB = (
   placeId,
   AmPm,
@@ -331,7 +331,7 @@ export const editMyPostDB = (
     });
 
     instance
-      .post(`/api/plans/days/${placeId}`, formData, {})
+      .post(`/api/plans/days/places/${placeId}`, formData, {})
       .then(function (response) {
         const planId = getState().plan.planId;
         instance.get(`/api/plans/${planId}`).then((res) => {

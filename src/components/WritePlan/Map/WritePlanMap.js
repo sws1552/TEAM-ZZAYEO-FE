@@ -56,8 +56,8 @@ const WritePlanMap = (props) => {
 
 
   React.useEffect(() => {
-    handleOnPlacesChanged(Markers, googlemaps)
-  }, [map, googlemaps, Markers]);
+    handleOnPlacesChanged(Markers, googlemaps, apiReady) 
+  }, [map, googlemaps, Markers, apiReady]);
 
 
   //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
@@ -74,7 +74,7 @@ const WritePlanMap = (props) => {
         map.setZoom(17)
       }
     }
-  }, [Markers, googlemaps])
+  }, [Markers, googlemaps, apiReady])
 
   
   return (
