@@ -44,7 +44,7 @@ const Contents = (props) => {
   };
 
   React.useEffect(() => {
-    console.log(state);
+    
   }, [state]);
 
   //어디로
@@ -81,7 +81,6 @@ const Contents = (props) => {
   ];
   const [clickedTripstyle, changeTripstyle] = React.useState(null);
 
-  console.log(typeof state.startDate, state);
   const createPlan = () => {
     if (titleInput === "") {
       window.alert("제목을 입력해주세요!");
