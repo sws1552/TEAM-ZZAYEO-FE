@@ -89,7 +89,7 @@ const UserImg = styled.div`
     width: 70px;
     height: 70px;
     border-radius: 35px;
-    background-image: url(${(props) => (props.profileImg ? props.profileImg : "https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg")});
+    background-image: url(${(props) => (props.profileImg ? props.profileImg : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200")});
     background-position: center;
     background-size: cover;
     object-fit: contain;

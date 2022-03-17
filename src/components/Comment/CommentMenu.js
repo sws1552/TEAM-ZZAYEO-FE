@@ -68,11 +68,11 @@ export default function LongMenu(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
+            width: "10.5ch",
           },
         }}
         style={{
-          left: "-150px",
+          left: "-50px",
         }}
       >
         {options.map((option) => (

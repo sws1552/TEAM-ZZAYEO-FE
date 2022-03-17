@@ -10,7 +10,7 @@ const Myplan = (props) => {
   const { history } = props;
 
   const myplans = useSelector((store) => store.plan.myplans);
-  console.log(myplans);
+
   React.useEffect(() => {
     dispatch(planActions.getMyPlanDB());
   }, []);

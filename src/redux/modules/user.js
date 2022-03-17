@@ -70,8 +70,12 @@ const kakaoLogin = (code) => {
 //유저확인
 const checkUserDB = () => {
   return function (dispatch, getState, { history }) {
-    instance
-      .get(`/api/users/auth/me`)
+    axios
+      .get(`http://3.36.50.53:3000/api/users/auth/me`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      })
       .then((res) => {
         let userId = res.data.userId;
         let nickname = res.data.nickname;
@@ -118,7 +122,8 @@ export default handleActions(
 
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        localStorage.removeItem("token");
+        // localStorage.removeItem("token");
+        localStorage.clear(); 
         draft.user = null;
         draft.is_login = false;
       }),

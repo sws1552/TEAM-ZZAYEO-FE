@@ -95,10 +95,10 @@ const Button = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px auto 0px auto;
-  width: 120px;
+  margin: 20px auto 0px auto;
+  width: 100%;
   height: 45px;
-  background-color: #12c5ed;
+  background-color: #4E49E2;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;

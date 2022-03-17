@@ -6,14 +6,12 @@ import { useSelector, useDispatch } from "react-redux";
 // actions
 
 const LOCATION = "LOCATION"
-const IMAGEURL = "IMAGEURL"
 const ADDTIME = "ADDTIME"
+
 
 // action creators
 const addlocation = createAction(LOCATION, (place) => ({ place }));
-const imageURL = createAction(IMAGEURL, (imageURL) => ({ imageURL }));
 const addhour = createAction(ADDTIME, (hour) => ({ hour }));
-
 
 // initial state
 const initialState = {
@@ -21,7 +19,6 @@ const initialState = {
   lat: 0,
   lng: 0,
   address: "",
-  imageURL: [],
   ampm: "",
   hour: "",
   minute: "",
@@ -50,22 +47,18 @@ export default handleActions(
         draft.geometry = place[0].geometry
 
       }),
-    [IMAGEURL]: (state, action) =>
-      produce(state, (draft) => {
-        draft.imageURL = action.payload.imageURL
-      }),
+   
     [ADDTIME]: (state, action) =>
       produce(state, (draft) => {
         draft.hour = action.payload.hour
       }),
-   
+
   },
   initialState
 );
 
 const actionCreators = {
   addlocation,
-  imageURL,
 };
 
 export { actionCreators };

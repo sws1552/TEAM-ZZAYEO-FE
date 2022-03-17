@@ -4,8 +4,11 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useSelector, useDispatch } from "react-redux";
 
-import { actionCreators as mapActions } from "../../../redux/modules/map"
 import { actionCreators as planActions } from "../../../redux/modules/plan";
+import { actionCreators as imageActions } from "../../../redux/modules/image";
+import { actionCreators as mapActions } from "../../../redux/modules/map"
+import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
+
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import React, { useEffect } from "react";
@@ -20,31 +23,31 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "360px",
+    width: "400px",
     height: "800px",
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: 'none',
+    borderRadius: '10px',
     boxShadow: 24,
-    p: 4,
+
 };
 
 export default function BasicModal(props) {
-    // const dayId = props.dayId
     const { placeId } = props
-    console.log(placeId)
+    
     const dispatch = useDispatch();
     const [Hour, setHour] = React.useState("0");
     const [Minute, setMinute] = React.useState("00");
     const [AmPm, setAmPm] = React.useState("오전");
     const [Memo, setMemo] = React.useState("");
 
-    // const dayId = useSelector((state) => state.map.dayId);
     const placeName = useSelector((state) => state.addPlace.placeName);
     const lat = useSelector((state) => state.addPlace.lat);
     const lng = useSelector((state) => state.addPlace.lng);
     const address = useSelector((state) => state.addPlace.address);
-    const imageURL = useSelector((state) => state.addPlace.imageURL);
-    console.log(placeName, Hour)
+    const imageURL = useSelector((state) => state.image.imageURL);
+    const geometry = useSelector((state) => state.addPlace.geometry);
+
     const memoChange = (e) => {
         setMemo(e.target.value);
     };
@@ -94,10 +97,10 @@ export default function BasicModal(props) {
 
     return (
         <div>
-            <Button onClick={() => {
+            <EditButton onClick={() => {
                 handleOpen()
                 // dispatch(mapActions.sendDayId(dayId))
-            }}>수정하기</Button>
+            }}>수정하기</EditButton>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -107,12 +110,12 @@ export default function BasicModal(props) {
                 <Box sx={style}>
                     <Container>
                         <br />
-                        <div style={{ fontSize: "30px" }}>day1</div>
+                        <div style={{ fontSize: "30px" }}>일정 수정하기</div>
                         <br />
                         <div>시간</div>
                         <br />
                         <Time>
-                            <FormControl sx={{ m: 1, minWidth: 100 }}>
+                            <FormControl sx={{ m: 1, minWidth: 90 }}>
                                 <NativeSelect
                                     defaultValue={AmPm}
                                     onChange={ampmChange}
@@ -131,7 +134,7 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 100 }}>
+                            <FormControl sx={{ m: 1, minWidth: 90 }}>
                                 <NativeSelect
                                     defaultValue={Hour}
                                     onChange={hourChange}
@@ -150,7 +153,7 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 100 }}>
+                            <FormControl sx={{ m: 1, minWidth: 90 }}>
                                 <NativeSelect
                                     defaultValue={Minute}
                                     onChange={minuteChange}
@@ -173,23 +176,8 @@ export default function BasicModal(props) {
                         <div>장소</div>
                         <br />
                         <Location>
-                            {/* {placeName !== "" ? (
-                                <SearchLoaction
-
-                                >
-                                    {placeName}
-                                </SearchLoaction>
-                            ) : (
-                                <SearchLoaction
-                                 
-                                >
-                                    <SearchModal />
-                                </SearchLoaction>
-                            )} */}
-                            <SearchLoaction
-
-                            >
-                            <SearchModal/>
+                            <SearchLoaction>
+                                <SearchModal />
                             </SearchLoaction>
                         </Location>
                         <br />
@@ -205,6 +193,12 @@ export default function BasicModal(props) {
                                 rows="10"
                             />
                         </div>
+                        <br />
+                        <div>사진</div>
+                        <br />
+                        <div>
+                            <Upload />
+                        </div>
                         <AddButton
                             onClick={() => {
                                 dispatch(
@@ -219,18 +213,21 @@ export default function BasicModal(props) {
                                         lng,
                                         address,
                                         imageURL,
+                                        geometry,
                                     )
                                 );
+                                setHour("0");
+                                setMinute("00");
+                                setAmPm("오전");
+                                setMemo("");
+                                dispatch(imageActions.initialPreview([]));
+                                dispatch(imageActions.initialImage([]));
+                                setOpen(false)
                             }}
                         >
-                        장소 수정하기
+                            장소수정하기
                         </AddButton>
-                        <br />
-                        <div>사진</div>
-                        <br />
-                        <div>
-                            <Upload />
-                        </div>
+
                     </Container>
                 </Box>
             </Modal>
@@ -240,7 +237,7 @@ export default function BasicModal(props) {
 
 const Container = styled.div`
   width: 100%;
-  /* padding: 0px 24px; */
+  padding: 0px 24px;
   box-sizing: border-box;
   height: 100%;
   overflow-y: scroll;
@@ -266,18 +263,24 @@ const Location = styled.div`
 `;
 
 const MemoContainer = styled.textarea`
+  padding: 15px;
   width: 100%;
   border: 1px solid gray;
   margin: auto;
   height: 120px;
   border-radius: 6px;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+        display: none;
+    }
   resize: none;
   :focus {
     outline: none;
   }
   ::placeholder {
     text-align: center;
-    line-height: 120px;
+    line-height: 85px;
   }
 `;
 
@@ -286,6 +289,7 @@ const SearchLoaction = styled.div`
   font-size: 13px;
   text-align: center;
   line-height: 40px;
+  width: 100%;
 `;
 
 const AddButton = styled.div`
@@ -293,10 +297,22 @@ const AddButton = styled.div`
   justify-content: center;
   align-items: center;
   margin: 34px auto 0px auto;
-  width: 312px;
+  width: 100%;
   height: 54px;
-  background-color: #12c5ed;
+  background-color: #4E49E2;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
+  cursor: pointer;
 `;
+const ADDPlace = styled.div`
+  color: gray;
+  border: none;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+`
+
+const EditButton = styled.div`
+`

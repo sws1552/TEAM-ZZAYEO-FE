@@ -162,6 +162,9 @@ const CommentItem = (props) => {
     }
   };
 
+  // console.log('props.userId.email !! ',props.userId.email);
+  // console.log('localStorage.getItem("userId") !! ',localStorage.getItem("userId"));
+
   return (
     <ItemCon>
       <UserCon>
@@ -170,7 +173,7 @@ const CommentItem = (props) => {
           <NicText>{props.userId.nickname}</NicText>
           <TimeText>{moment(props.createdAt).format("YYYY-MM-DD")}</TimeText>
         </NickCon>
-        {props.userId.email === props.userInfo.userId ? (
+        {props.userId.email === localStorage.getItem("userId") ? (
           <CommentMenu
             commentId={props.commentId}
             planId={props.planId}

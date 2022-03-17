@@ -28,7 +28,7 @@ export default function LongMenu(props) {
     };
 
     return (
-        <div style={{marginRight:"-16px"}}>
+        <div style={{ marginRight: "-16px" }}>
             <IconButton
                 aria-label="more"
                 id="long-button"
@@ -50,8 +50,11 @@ export default function LongMenu(props) {
                 PaperProps={{
                     style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
-                        width: '20ch',
+                        width: '10.5ch',
                     },
+                }}
+                style={{
+                    left: '-50px',
                 }}
             >
                 {options.map((option) => (
@@ -62,8 +65,7 @@ export default function LongMenu(props) {
                                 dispatch(planActions.deleteMyPostDB(placeId))
                             }
                         }}>
-                          {option === "게시물 삭제"? "삭제하기" : <EditPlanModal placeId={placeId}/>}  
-                         
+                        {option === "게시물 삭제" ? <div>삭제하기</div> : <EditPlanModal placeId={placeId} />}
                     </MenuItem>
                 ))}
             </Menu>

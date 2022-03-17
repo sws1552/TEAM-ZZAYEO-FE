@@ -99,7 +99,7 @@ const Reply = (props) => {
                     <NicText>{props.userId.nickname}</NicText>
                     <TimeText>{moment(props.createdAt).format('YYYY-MM-DD')}</TimeText>
                 </NickCon>
-                {props.userId.email === props.userInfo.userId ? 
+                {props.userId.email === localStorage.getItem("userId") ? 
                     <ReplyMenu planId={props.planId} commentId={props.commentId} replyId={props.replyId} hide={() => setReplyHide(!upReplyhide)}/>
                 :
                     null}

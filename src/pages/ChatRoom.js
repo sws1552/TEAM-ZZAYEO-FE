@@ -35,7 +35,7 @@ const ChatRoom = (props) => {
     // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
     const sendMessage = async () => {
 
-        if(curMsg !== ""){
+        if(curMsg.replace(/\s| /gi, "").length !== 0){
             const msgData = {
                 // roomId: roomData.roomId,
                 fromSnsId: roomData.curUserInfo.snsId, // 메세지보내는사람 snsId,
