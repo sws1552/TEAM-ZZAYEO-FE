@@ -10,7 +10,6 @@ import Auth2RedirectHandler from "./Auth2RedirectHandler";
 import Main from "../pages/Main";
 import Login from "../pages/Login";
 import WritePlan from "../pages/WritePlan";
-import Navigation from "../components/Navigation/Navigation";
 import ChatList from "../pages/ChatList";
 import AddPlan from "../pages/AddPlan";
 import ChatRoom from "../pages/ChatRoom";
@@ -22,6 +21,7 @@ import MypageSetting from "../pages/MypageSetting";
 import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
+import BottomNav from "../components/Navigation/BottomNav";
 
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
             <Route path="/mypageproup" exact component={MypageProUp} />
             <Route path="/mypageset" exact component={MypageSetting} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
-            <Navigation />
+           <BottomNav/>
           </Container>
         </ConnectedRouter>
       </Fullscreen>

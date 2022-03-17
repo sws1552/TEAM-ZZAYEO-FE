@@ -24,17 +24,16 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: "400px",
-    height: "800px",
+    height: "720px",
     bgcolor: 'background.paper',
     border: 'none',
-    borderRadius: '10px',
     boxShadow: 24,
 
 };
 
 export default function BasicModal(props) {
     const { placeId } = props
-    
+
     const dispatch = useDispatch();
     const [Hour, setHour] = React.useState("0");
     const [Minute, setMinute] = React.useState("00");
@@ -97,10 +96,9 @@ export default function BasicModal(props) {
 
     return (
         <div>
-            <EditButton onClick={() => {
+              <div onClick={() => {
                 handleOpen()
-                // dispatch(mapActions.sendDayId(dayId))
-            }}>수정하기</EditButton>
+            }}>수정하기</div>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -109,13 +107,32 @@ export default function BasicModal(props) {
             >
                 <Box sx={style}>
                     <Container>
-                        <br />
-                        <div style={{ fontSize: "30px" }}>일정 수정하기</div>
-                        <br />
-                        <div>시간</div>
-                        <br />
+                        <Addplanbox>
+                            <Addplan>일정수정</Addplan>
+                            <div
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    setHour("0");
+                                    setMinute("00");
+                                    setAmPm("오전");
+                                    setMemo("");
+                                    dispatch(imageActions.initialPreview([]));
+                                    dispatch(imageActions.initialImage([]));
+                                    setOpen(false)
+                                }}>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 0.292893C0.683417 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L15.7071 14.2929C16.0976 14.6834 16.0976 15.3166 15.7071 15.7071C15.3166 16.0976 14.6834 16.0976 14.2929 15.7071L0.292893 1.70711C-0.0976311 1.31658 -0.0976311 0.683417 0.292893 0.292893Z" fill="#212121" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7071 0.292893C16.0976 0.683417 16.0976 1.31658 15.7071 1.70711L1.70711 15.7071C1.31658 16.0976 0.683417 16.0976 0.292893 15.7071C-0.0976311 15.3166 -0.0976311 14.6834 0.292893 14.2929L14.2929 0.292893C14.6834 -0.0976311 15.3166 -0.0976311 15.7071 0.292893Z" fill="#212121" />
+                                </svg>
+
+                            </div>
+                        </Addplanbox>
+
+
+
+                        <TitleText>시간</TitleText>
                         <Time>
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <NativeSelect
                                     defaultValue={AmPm}
                                     onChange={ampmChange}
@@ -134,7 +151,7 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <NativeSelect
                                     defaultValue={Hour}
                                     onChange={hourChange}
@@ -153,7 +170,7 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
 
-                            <FormControl sx={{ m: 1, minWidth: 90 }}>
+                            <FormControl sx={{ m: 1, minWidth: 100 }}>
                                 <NativeSelect
                                     defaultValue={Minute}
                                     onChange={minuteChange}
@@ -172,30 +189,29 @@ export default function BasicModal(props) {
                                 </NativeSelect>
                             </FormControl>
                         </Time>
-                        <br />
-                        <div>장소</div>
-                        <br />
+                        
+                        <TitleText>장소</TitleText>
                         <Location>
                             <SearchLoaction>
                                 <SearchModal />
                             </SearchLoaction>
                         </Location>
-                        <br />
-                        <div>메모</div>
-                        <br />
-                        <div>
+                       
+                      
+                        <TitleText>메모</TitleText>
+                        <div style={{marginBottom:"24px"}}>
                             <MemoContainer
                                 style={{}}
                                 value={Memo}
                                 onChange={memoChange}
-                                placeholder="+메모를 입력해주세요"
+                                placeholder="메모를 작성해주세요"
                                 cols="50"
                                 rows="10"
                             />
                         </div>
-                        <br />
-                        <div>사진</div>
-                        <br />
+                       
+                        <TitleText>사진</TitleText>
+                       
                         <div>
                             <Upload />
                         </div>
@@ -234,7 +250,6 @@ export default function BasicModal(props) {
         </div>
     );
 }
-
 const Container = styled.div`
   width: 100%;
   padding: 0px 24px;
@@ -246,29 +261,60 @@ const Container = styled.div`
   }
 `;
 
+const Addplanbox = styled.div`
+display: flex;
+justify-content: space-between;
+width: 100%;
+height: 42px;
+margin-top: 24px;
+margin-bottom: 11px;
+line-height: 42px;
+`
+
+const Addplan = styled.div`
+font-weight: 700;
+font-size: 18px;
+color: #222B45;
+font-family: "Roboto", sans-serif;
+`
+const TitleText = styled.div`
+font-family: "Roboto", sans-serif;
+font-weight: 600;
+font-size: 16px;
+color: #212121;
+margin-bottom: 14px;
+`
+
 const Time = styled.div`
   width: 100%;
   margin: auto;
   height: 40px;
   border-radius: 6px;
   cursor: pointer;
+  margin-bottom: 24px;
 `;
 const Location = styled.div`
   width: 100%;
-  border: 1px solid gray;
-  margin: auto;
-  height: 40px;
-  border-radius: 6px;
+  border: 1px solid #BDBDBD;
+  height: 41px;
+  border-radius: 4px;
   cursor: pointer;
+  box-sizing: border-box;
+  margin-bottom: 24px;
 `;
 
-const MemoContainer = styled.textarea`
-  padding: 15px;
+const SearchLoaction = styled.div`
   width: 100%;
-  border: 1px solid gray;
+  line-height: 41px;
+  margin-left: 16px;
+`;
+const MemoContainer = styled.textarea`
+  padding: 16px;
+  width: 100%;
+  border: 1px solid #BDBDBD;
   margin: auto;
-  height: 120px;
-  border-radius: 6px;
+  height: 112px;
+  border-radius: 4px;
   box-sizing: border-box;
 
   &::-webkit-scrollbar {
@@ -279,27 +325,23 @@ const MemoContainer = styled.textarea`
     outline: none;
   }
   ::placeholder {
-    text-align: center;
-    line-height: 85px;
+    line-height: 16.41px;
+    color: #BDBDBD;
+    font-size: 14px;
+    font-weight: 500;
   }
 `;
 
-const SearchLoaction = styled.div`
-  color: gray;
-  font-size: 13px;
-  text-align: center;
-  line-height: 40px;
-  width: 100%;
-`;
 
 const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 34px auto 0px auto;
+  margin: 36px auto 36px auto;
   width: 100%;
   height: 54px;
   background-color: #4E49E2;
+  border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
@@ -312,7 +354,4 @@ const ADDPlace = styled.div`
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: 500;
-`
-
-const EditButton = styled.div`
 `
