@@ -9,7 +9,7 @@ const AfterRegister = (props) => {
       <Container>
         <TripCard
           onClick={(e) => {
-            history.push(`/writeplan/${props.planId}`);
+            history.push(`/detail/${props.planId}`);
           }}
         >
           <MyEditPost planId={props.planId} />
@@ -39,6 +39,7 @@ const TripCard = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const CardInfo = styled.div`

@@ -5,7 +5,7 @@ import { history } from "../../redux/ConfigureStore";
 import Bookmark from "./Bookmark";
 
 const MainTravelList = (props) => {
-  const { title, isLike, isBookmark, planId, userId } = props;
+  const { title, isLike, isBookmark, planId, userId, thumbnailImage } = props;
 
   const onProfile = (e) => {
     e.stopPropagation();
@@ -21,7 +21,13 @@ const MainTravelList = (props) => {
     <React.Fragment>
       <Container>
         <TripCard onClick={onPlanInfo}>
-          <CardImg></CardImg>
+          <CardImg
+            src={
+              thumbnailImage
+                ? thumbnailImage
+                : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
+            }
+          ></CardImg>
           <Btn onClick={onProfile}>
             <UserImg src={userId.profile_img} />
           </Btn>
@@ -58,7 +64,7 @@ const TripCard = styled.div`
 const CardImg = styled.div`
   width: 100%;
   height: 160px;
-  background-image: url("https://i.pinimg.com/564x/10/8d/8c/108d8c3d6bfd4b0aeb4c9b1796d1c364.jpg");
+  background-image: url(${(props) => props.src});
   background-position: center;
   background-size: cover;
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.06);
