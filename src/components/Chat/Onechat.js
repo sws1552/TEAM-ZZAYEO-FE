@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import moment from 'moment';
+import Moment from 'react-moment';
 import { socket } from "../../shared/Socket";
 import { history } from "../../redux/ConfigureStore";
 import { actionCreators as chatActions } from "../../redux/modules/chat";
@@ -34,6 +35,24 @@ const Onechat = (props) => {
 
     }
 
+    // 업로드 시간 가공
+    const displayCreatedAt = (createdAt) => {
+        let startTime = new Date(createdAt);
+        let nowTime = Date.now();
+        // 현재시간부터 1분 일때
+        if (parseInt(startTime - nowTime) > -60000) {
+            return <Moment locale="ko" format="방금 전">{startTime}</Moment>;
+        }
+        // 현재시간부터 24시간이 지낫을때
+        if (parseInt(startTime - nowTime) < -86400000) {
+            return <Moment locale="ko" format="MM월 D일">{startTime}</Moment>;
+        }
+        // 현재시간부터 24시간이 지나지 않았을때
+        if (parseInt(startTime - nowTime) > -86400000) {
+            return <Moment locale="ko" fromNow>{startTime}</Moment>;
+        }
+    };
+
     return (
         <Container onClick={joinRoom}>
             <UserImg profileImg={props.userId2.profile_img}/>
@@ -45,7 +64,7 @@ const Onechat = (props) => {
                     null}
                 </Text>
                 <LastChat>{props.lastChat.chatText}</LastChat>
-                <div style={{color: "#757575"}}>{moment(props.updatedAt).format("YYYY. MM. DD")}</div>
+                <div style={{color: "#757575"}}>{displayCreatedAt(props.updatedAt)}</div>
             </NickCon>
         </Container>
     );
