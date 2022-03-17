@@ -57,7 +57,7 @@ const Detailday = (props) => {
       setTimeout(() => {
         console.log('클릭하자아');
         day1BtnRef.current[0].click();
-      }, 500);
+      }, 800);
 
     }
   }, [dayList]);
@@ -74,8 +74,12 @@ const Detailday = (props) => {
                   className={currentTab === i ? "submenu focused" : "submenu"}
                   onClick={() => {
                     selectMenuHandler(i)
-                    polyLinedata.setMap(null);
-                    dispatch(mapActions.addPolyline(polyLinedata));
+                    
+                    if(currentTab !== i){
+                      polyLinedata.setMap(null);
+                      dispatch(mapActions.addPolyline(polyLinedata));
+                    }
+                    
                     dispatch(mapActions.sendDayId(d.dayId))
                   }}
                   style={{
