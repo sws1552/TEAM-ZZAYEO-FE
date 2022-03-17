@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { actionCreators as mapActions } from "../../redux/modules/map"
 import { useDispatch, useSelector } from "react-redux";
@@ -47,6 +47,20 @@ const Detailday = (props) => {
   const selectMenuHandler = (index) => {
     setCurrentTab(index);
   };
+
+  const day1BtnRef = useRef([]);
+
+  useEffect(() => {
+    
+    if(day1BtnRef.current.length !== 0){
+
+      setTimeout(() => {
+        console.log('클릭하자아');
+        day1BtnRef.current[0].click();
+      }, 500);
+
+    }
+  }, [dayList]);
  
   return (
     <>
@@ -55,7 +69,8 @@ const Detailday = (props) => {
           {dayList && dayList.map((d, i) => {
             return (
                 <DayButton
-                  key={i}
+                  ref={(el) => (day1BtnRef.current[i] = el)}
+                  key={`tab-${i}`}
                   className={currentTab === i ? "submenu focused" : "submenu"}
                   onClick={() => {
                     selectMenuHandler(i)
@@ -116,7 +131,7 @@ const Line = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  height: 550px;
+  height: 520px;
   box-sizing: border-box;
   overflow-y: scroll;
   padding: 0px 24px 0px 24px;

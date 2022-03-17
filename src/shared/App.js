@@ -23,6 +23,7 @@ import Myplan from "../pages/Myplan";
 import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
 
+
 function App() {
   return (
     <React.Fragment>

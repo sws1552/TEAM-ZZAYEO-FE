@@ -5,6 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
+import styled from 'styled-components';
+import { style } from "@mui/system";
 
 const options = ["게시물 삭제"];
 
@@ -46,8 +48,11 @@ export default function MyEditPost(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "10.5ch",
+            width: '10.5ch',
           },
+        }}
+        style={{
+          left: '-20px',
         }}
       >
         {options.map((option) => (
@@ -59,10 +64,11 @@ export default function MyEditPost(props) {
               dispatch(planActions.deleteMyPlanDB(planId));
             }}
           >
-            {option}
+            삭제하기
           </MenuItem>
         ))}
       </Menu>
     </div>
   );
 }
+
