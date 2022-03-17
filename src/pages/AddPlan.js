@@ -29,7 +29,7 @@ const AddPlan = (props) => {
               />
             </svg>
           </CancleBtn>
-          <TText>새로운 여행 작성</TText>
+          <TText>새로운 여행기 작성</TText>
         </Top>
         <Bottom>
           <Contents />

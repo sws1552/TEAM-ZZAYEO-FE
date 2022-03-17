@@ -3,27 +3,53 @@ import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
-import { history } from "../../redux/ConfigureStore";
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import { addDays } from "date-fns";
+
+import DateModal from "./DateModal";
 
 const Contents = (props) => {
   const dispatch = useDispatch();
 
   //여행제목 값 가져오기
   const [titleInput, setTitleInput] = useState("");
-  //console.log(titleInput);
 
   //여행 선택일자 가져오기
-  const [dateRange, setDateRange] = React.useState([null, null]);
-  const [startDate, endDate] = dateRange;
-  //console.log(dateRange, startDate, endDate);
+  const [state, setState] = React.useState([
+    {
+      startDate: null,
+      endDate: null,
+      key: "selection",
+    },
+  ]);
+
+  const [msg, setMsg] = React.useState("날짜를 선택해주세요.");
+  const [dateShowModal, setDateShowModal] = React.useState(false);
+
+  //날짜 선택 모달 열기
+  const dateOpenModal = () => {
+    setDateShowModal(true);
+  };
+
+  //날짜 선택 모달 닫기
+  const dateCloseModal = () => {
+    setDateShowModal(false);
+    setState(state);
+    setMsg(
+      moment(state[0].startDate).format("YYYY.MM.DD") +
+        "-" +
+        moment(state[0].endDate).format("MM.DD")
+    );
+  };
+
+  React.useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   //어디로
   const destList = ["국내", "해외"];
-  const [clickedTripDest, changeTripDest] = React.useState(0);
+  const [clickedTripDest, changeTripDest] = React.useState(null);
   //console.log(destList[clickedTripDest]);
 
   const withList = [
@@ -39,7 +65,7 @@ const Contents = (props) => {
     "동행과",
     "기타",
   ];
-  const [clickedWithList, changeWithList] = React.useState(0);
+  const [clickedWithList, changeWithList] = React.useState(null);
 
   const tripStyle = [
     "액티비티 체험",
@@ -53,17 +79,32 @@ const Contents = (props) => {
     "호캉스",
     "자연친화",
   ];
-  const [clickedTripstyle, changeTripstyle] = React.useState(0);
+  const [clickedTripstyle, changeTripstyle] = React.useState(null);
 
-  console.log();
-
+  console.log(typeof state.startDate, state);
   const createPlan = () => {
+    if (titleInput === "") {
+      window.alert("제목을 입력해주세요!");
+      return;
+    }
+    if (clickedTripDest === null) {
+      window.alert("여행지를 선택해주세요!");
+      return;
+    }
+    if (clickedWithList === null) {
+      window.alert("누구랑 여행 했는지 선택해주세요!");
+      return;
+    }
+    if (clickedTripstyle === null) {
+      window.alert("여행 스타일을 선택해주세요!");
+      return;
+    }
     let plan = {
       title: titleInput,
       destination: destList[clickedTripDest],
       withlist: withList[clickedWithList],
-      startDate: moment(startDate).format("YYYY-MM-DD"),
-      endDate: moment(endDate).format("YYYY-MM-DD"),
+      startDate: moment(state[0].startDate).format("YYYY-MM-DD"),
+      endDate: moment(state[0].endDate).format("YYYY-MM-DD"),
       style: tripStyle[clickedTripstyle],
     };
     dispatch(planActions.createPlanDB(plan));
@@ -85,18 +126,15 @@ const Contents = (props) => {
       </TitleBox>
       <DateBox>
         <Text>언제</Text>
-        <MyDatePicker
-          placeholderText="날짜를 선택해주세요."
-          selectsRange={true}
-          startDate={startDate}
-          endDate={endDate}
-          onChange={(update) => {
-            setDateRange(update);
-          }}
-          dateFormat="yyyy-MM-dd"
-          withPortal
-          //isClearable={true} 취소버튼 보이게하기
-        />
+        <Date onClick={dateOpenModal}>
+          <p>{msg}</p>
+        </Date>
+        <DateModal
+          dateShowModal={dateShowModal}
+          dateCloseModal={dateCloseModal}
+          state={state}
+          setState={setState}
+        ></DateModal>
       </DateBox>
       <TripDestBox>
         <Text>어디로</Text>
@@ -110,8 +148,8 @@ const Contents = (props) => {
                 }}
                 style={{
                   backgroundColor:
-                    i === clickedTripDest ? "#12C5ED" : "#EDEDED",
-                  color: i === clickedTripDest ? "#FFFFFF" : "#979797",
+                    i === clickedTripDest ? "#4E49E2" : "#F4F4F4",
+                  color: i === clickedTripDest ? "#FFFFFF" : "#9E9E9E",
                 }}
               >
                 {l}
@@ -132,8 +170,8 @@ const Contents = (props) => {
                 }}
                 style={{
                   backgroundColor:
-                    i === clickedWithList ? "#12C5ED" : "#EDEDED",
-                  color: i === clickedWithList ? "#FFFFFF" : "#979797",
+                    i === clickedWithList ? "#4E49E2" : "#F4F4F4",
+                  color: i === clickedWithList ? "#FFFFFF" : "#9E9E9E",
                 }}
               >
                 {l}
@@ -154,8 +192,8 @@ const Contents = (props) => {
                 }}
                 style={{
                   backgroundColor:
-                    i === clickedTripstyle ? "#12C5ED" : "#EDEDED",
-                  color: i === clickedTripstyle ? "#FFFFFF" : "#979797",
+                    i === clickedTripstyle ? "#4E49E2" : "#F4F4F4",
+                  color: i === clickedTripstyle ? "#FFFFFF" : "#9E9E9E",
                 }}
               >
                 {l}
@@ -164,12 +202,7 @@ const Contents = (props) => {
           })}
         </div>
       </TripstyleBox>
-      <Button
-        onClick={() => {
-          "ㅎㅇ";
-          createPlan();
-        }}
-      >
+      <Button onClick={createPlan}>
         <p>세부일정 작성하기</p>
       </Button>
     </Container>
@@ -182,13 +215,15 @@ const Container = styled.div`
 
 const TitleBox = styled.div`
   width: 100%;
+  margin-bottom: 38px;
 `;
 
 const Text = styled.div`
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
   margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #212121;
 `;
 
 const InputBox = styled.div`
@@ -205,40 +240,54 @@ const InputBox = styled.div`
     border: none;
     background-color: transparent;
     padding: 0;
+
     :focus {
       outline: none;
     }
   }
 `;
 
-const DateBox = styled(TitleBox)``;
+const DateBox = styled.div`
+  width: 100%;
+  margin-bottom: 38px;
+`;
 
-const MyDatePicker = styled(DatePicker)`
-  display: block;
-  width: 312px;
+const Date = styled.div`
+  border: 1px solid #bdbdbd;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 100%;
   height: 41px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
   text-align: center;
+  color: #757575;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const TripDestBox = styled(TitleBox)`
   div {
     width: 100%;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
   }
 
   li {
     display: flex;
     align-items: center;
-    width: fit-content;
     height: 32px;
-    margin: 0px 10px 5px 0px;
-    padding: 15px 12px;
+    margin: 0px 8px 10px 0px;
+    padding: 8px 16px;
     box-sizing: border-box;
     border-radius: 50px;
+    font-weight: 400;
     font-size: 14px;
-    font-weight: 500;
+    line-height: 16px;
+    cursor: pointer;
   }
 `;
 
@@ -251,12 +300,20 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   margin: 34px 0px 70px;
-  width: 312px;
+  width: 100%;
   height: 54px;
-  background-color: #12c5ed;
+  background-color: #bdbdbd;
+  border-radius: 8px;
+  font-weight: 400;
   font-size: 16px;
-  font-weight: 500;
+  line-height: 19px;
   color: #ffffff;
+  cursor: pointer;
+
+  :hover {
+    background-color: #4e49e2;
+    color: #ffffff;
+  }
 `;
 
 export default Contents;

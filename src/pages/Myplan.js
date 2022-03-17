@@ -68,7 +68,7 @@ const Myplan = (props) => {
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 90%;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;
