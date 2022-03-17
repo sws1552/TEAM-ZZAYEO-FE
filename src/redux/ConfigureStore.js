@@ -12,6 +12,7 @@ import addPlace from "./modules/addPlace";
 
 import chat from "./modules/chat";
 import comment from "./modules/comment";
+import mypage from "./modules/mypage";
 
 export const history = createBrowserHistory();
 
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   polyline: polyline,
   chat: chat,
   comment: comment,
+  mypage: mypage,
   router: connectRouter(history),
 });
 
