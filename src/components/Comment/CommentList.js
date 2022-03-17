@@ -79,7 +79,7 @@ const CommentList = (props) => {
 const ListCon = styled.div`
   /* background-color: black; */
   width: 100%;
-  height: 53.5vh;
+  height: 32vh;
   box-sizing: border-box;
   /* padding: 0 24px; */
 

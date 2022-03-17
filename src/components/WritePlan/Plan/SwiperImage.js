@@ -14,10 +14,10 @@ const SwiperImage = (props) => {
     const { image } = props
 
     return (
-        <div style={{ maxWidth: "355px" }}>
+        <div style={{ maxWidth: "100%" }}>
             <SwiperSlider
                 className="banner"
-                spaceBetween={10}
+                // spaceBetween={10}
                 slidesPerView={1}
                 // navigation
                 pagination={{
@@ -25,7 +25,7 @@ const SwiperImage = (props) => {
                 }}
             >
                 {image && image.map((m, i) => (
-                    <SwiperSlide >
+                    <SwiperSlide style={{width:"100%"}}>
                         <Image key={i} src={m}></Image>
                     </SwiperSlide>
                 ))}

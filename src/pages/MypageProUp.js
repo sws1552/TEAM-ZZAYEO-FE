@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Header from '../components/Mypage/Header';
 import {actionCreators as userActions} from '../redux/modules/user';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
+import {actionCreators as mypageActions} from '../redux/modules/mypage';
 
 const MypageProUp = () => {
 
@@ -12,23 +13,66 @@ const MypageProUp = () => {
 
     const checkUser = useSelector(state => state.user.user);
 
+    const myPreview = useSelector((state) => state.mypage.myPreview);
+
     const [upNickName, setNickName] = React.useState("");
 
     React.useEffect(() => {
         dispatch(userActions.checkUserDB());
+
+        return () => {
+            dispatch(mypageActions.setpreview(null));
+        }
+
     }, [dispatch]);
 
     React.useEffect(() => {
         setNickName(checkUser.nickname);
     }, [checkUser])
 
+    const fileRef = useRef(null);
+
+    const selectFile = (e) => {
+
+        let file_kind = e.target.value.lastIndexOf('.');
+        let file_name = e.target.value.substring(file_kind+1, e.target.value.length);
+        let file_type = file_name.toLowerCase();
+
+        let check_file_type = ['jpg','gif','png','jpeg'];
+
+        if(check_file_type.indexOf(file_type) === -1){
+            window.alert('사진만 업로드 가능합니다!');
+            e.target.value = '';
+            return false;
+        }
+
+        const reader = new FileReader();
+        const file = fileRef.current.files[0];
+
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+            // console.log('reader.result !! ', reader.result);
+            dispatch(mypageActions.setpreview(reader.result));
+        }
+
+    }
+
+    const userInfoSave = () => {
+
+        const newImg = fileRef.current.files[0];
+
+        dispatch(mypageActions.updateProfileFB(newImg, upNickName));
+    }
+
     return (
         <MypageCon>
             <Header title="프로필 수정" showBack={true}/>
             <UserCon >
-                <div>
-                    <UserImg userImg={checkUser.userImg} />
-                </div>
+                <Label htmlFor='ex_file'>
+                    {myPreview ? <UserImg userImg={myPreview} /> : <UserImg userImg={checkUser.userImg} /> }
+                </Label>
+                <FileInput id="ex_file" accept="image/jpg, image/png, image/jpeg, image/gif" type="file" onChange={selectFile} ref={fileRef}/>
             </UserCon>
 
             <InputBar>
@@ -40,12 +84,28 @@ const MypageProUp = () => {
             </Text>
             
             <BtnCon>
-                <SaveBtn style={{backgroundColor: upNickName && upNickName.length !== 0 ? "#4E49E2" : null }}>저장하기</SaveBtn>
+                <SaveBtn style={{backgroundColor: upNickName && upNickName.length !== 0 ? "#4E49E2" : null }}
+                onClick={userInfoSave}>저장하기</SaveBtn>
             </BtnCon>
             
         </MypageCon>
     );
 };
+
+const Label = styled.label`
+    cursor: pointer;
+`;
+
+const FileInput = styled.input`
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+`;
 
 const MypageCon = styled.div`
     width: 100%;
