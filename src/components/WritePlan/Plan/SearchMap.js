@@ -46,7 +46,7 @@ const SearchMap = () => {
           addPlace={addPlace}
         />)}
 
-      <div style={{ height: "700px", width: "100%", margin: "auto" }}>
+      <div style={{ height: "650px", width: "100%", margin: "auto" }}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: "AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA",
@@ -87,7 +87,7 @@ export default SearchMap;
 
 const Container = styled.div`
   width: 100%;
-  height: 700px;
+  height: 650px;
   box-sizing: border-box;
   margin: auto;
 `;

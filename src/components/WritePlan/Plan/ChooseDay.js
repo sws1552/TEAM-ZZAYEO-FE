@@ -124,6 +124,7 @@ const Container = styled.div`
   box-sizing: border-box;
   overflow-y: scroll;
   padding: 0px 24px 0px 24px;
+  /* padding: 0% 5%; */
   &::-webkit-scrollbar {
         display: none;
     }

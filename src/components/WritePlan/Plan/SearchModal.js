@@ -14,10 +14,9 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: "350px",
-  height: "800px",
+  height: "720px",
   bgcolor: 'background.paper',
   border: 'none',
-  borderRadius: '10px',
   boxShadow: 24,
   p: 3,
 };
