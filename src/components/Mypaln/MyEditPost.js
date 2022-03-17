@@ -46,7 +46,7 @@ export default function MyEditPost(props) {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: "20ch",
+            width: "10.5ch",
           },
         }}
       >

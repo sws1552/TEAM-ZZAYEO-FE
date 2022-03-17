@@ -7,7 +7,6 @@ import Fitbound from "./Fitbound"
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../../../redux/modules/plan";
 
-
 const WritePlanMap = (props) => {
   const myPlan = props
   console.log(myPlan)
@@ -48,6 +47,8 @@ const WritePlanMap = (props) => {
     }
   }
 
+
+
   // React.useEffect(() => {
   //   console.log("ㅅㅂ?")
   //   console.log(Markers)
@@ -55,9 +56,9 @@ const WritePlanMap = (props) => {
   //   if (Markers.length !== 0) {
   //     handleOnPlacesChanged()
   //   }
-
   // }, [Markers, googlemaps]);
 
+  
   // //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
   // const handleOnPlacesChanged = useCallback(() => {
 
@@ -78,6 +79,7 @@ const WritePlanMap = (props) => {
   //   }
 
   // }, [Markers])
+
 
   return (
     <Container>
@@ -122,7 +124,6 @@ const WritePlanMap = (props) => {
               map={map}
               maps={googlemaps}
             />)}
-
         </GoogleMapReact>
       </div>
     </Container>
