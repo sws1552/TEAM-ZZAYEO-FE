@@ -247,7 +247,7 @@ const statusDB = (planId, status) => {
         instance
           .get(`/api/plans/${planId}`)
           .then((res) => {
-            console.log(res.data.plan)
+            console.log(res.data.plan);
             dispatch(getdayPlan(res.data.plan));
           })
           .catch(function (error) {
@@ -360,6 +360,23 @@ const searchDB = (query) => {
   };
 };
 
+// 썸네일 추가하기
+const addThumbnailDB = (planId, imageURL) => {
+  console.log(planId, imageURL);
+  return function (dispatch, getState, { history }) {
+    let formData = new FormData();
+    formData.append("imageFile", imageURL);
+    instance
+      .post(`/api/plans/${planId}/thumbnail`, formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 //리덕스
 export default handleActions(
   {
@@ -410,6 +427,7 @@ const actionCreators = {
   deleteMyPlanDB,
   searchDB,
   editMyPostDB,
+  addThumbnailDB,
 };
 
 export { actionCreators };

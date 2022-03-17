@@ -5,18 +5,32 @@ import { history } from "../../redux/ConfigureStore";
 import Bookmark from "./Bookmark";
 
 const MainTravelList = (props) => {
-  const { title, isLike, isBookmark, planId, userId } = props;
+  const { title, isLike, isBookmark, planId, userId, thumbnailImage } = props;
+
+  const onProfile = (e) => {
+    e.stopPropagation();
+    history.push(`/otheruser/${userId.userId}`);
+  };
+
+  const onPlanInfo = (e) => {
+    e.stopPropagation();
+    history.push(`/detail/${planId}`);
+  };
 
   return (
     <React.Fragment>
       <Container>
-        <TripCard
-          onClick={() => {
-            history.push(`/detail/${planId}`);
-          }}
-        >
-          <CardImg></CardImg>
-          <UserImg src={userId.profile_img} />
+        <TripCard onClick={onPlanInfo}>
+          <CardImg
+            src={
+              thumbnailImage
+                ? thumbnailImage
+                : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
+            }
+          ></CardImg>
+          <Btn onClick={onProfile}>
+            <UserImg src={userId.profile_img} />
+          </Btn>
           <UserNickName>{userId.nickname}</UserNickName>
           <CardTitle>{title}</CardTitle>
           <Box>
@@ -50,12 +64,14 @@ const TripCard = styled.div`
 const CardImg = styled.div`
   width: 100%;
   height: 160px;
-  background-image: url("https://i.pinimg.com/564x/10/8d/8c/108d8c3d6bfd4b0aeb4c9b1796d1c364.jpg");
+  background-image: url(${(props) => props.src});
   background-position: center;
   background-size: cover;
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.06);
   border-radius: 8px;
 `;
+
+const Btn = styled.div``;
 
 const UserImg = styled.img`
   position: absolute;

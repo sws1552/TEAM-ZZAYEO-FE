@@ -1,39 +1,58 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import WritePlanMap from "../components/WritePlan/Map/WritePlanMap";
 import Header from "../components/WritePlan/Header/Header";
 import Title from "../components/WritePlan/Title/Title";
-import { Collapse } from '@mui/material';
-import { Switch } from '@mui/material';
-import { Paper } from '@mui/material';
+import { Collapse } from "@mui/material";
 
-import FormControlLabel from '@mui/material/FormControlLabel'
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as mapActions } from "../redux/modules/map";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import ChooseDay from "../components/WritePlan/Plan/ChooseDay";
 import ChooseDayHide from "../components/WritePlan/Plan/ChooseDayHide";
-
+import Thumbnail from "../components/WritePlan/Plan/Thumbnail";
 
 const WritePlan = (props) => {
   const dispatch = useDispatch();
 
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
+  const imageURL = useSelector((state) => state.image.imageURL);
 
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
   const toggleMenu = () => {
-    setIsChecked(isChecked => !isChecked);
-  }
+    setIsChecked((isChecked) => !isChecked);
+  };
 
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
 
   const decideShare = ["나만의 일정", "모두에게 공유"];
-  const share = "공개"
-  const unshare = "비공개"
+  const share = "공개";
+  const unshare = "비공개";
+
+  const [shareShowModal, setShareShowModal] = React.useState(false);
+  const [imageSrc, setImageSrc] = React.useState("");
+
+  // 썸네일 설정 모달 열기
+  const shareOpenModal = () => {
+    setShareShowModal(true);
+    setImageSrc("");
+  };
+
+  // 썸네일 설정 모달 유지
+  const keepModal = (e) => {
+    setShareShowModal(true);
+  };
+
+  // 썸네일 설정하고 모달 닫기
+  const shareCloseModal = (e) => {
+    e.stopPropagation();
+    setShareShowModal(false);
+    dispatch(planActions.statusDB(myPlan.planId, share));
+    dispatch(planActions.addThumbnailDB(myPlan.planId, imageURL));
+  };
 
   return (
     <>
@@ -49,10 +68,10 @@ const WritePlan = (props) => {
                   onClick={() => {
                     changeTripDest(i);
                     if (l === "모두에게 공유") {
-                      dispatch(planActions.statusDB(myPlan.planId, share))
+                      shareOpenModal();
                     }
                     if (l === "나만의 일정") {
-                      dispatch(planActions.statusDB(myPlan.planId, unshare))
+                      dispatch(planActions.statusDB(myPlan.planId, unshare));
                     }
                   }}
                   style={{
@@ -66,40 +85,78 @@ const WritePlan = (props) => {
               );
             })}
           </div>
+          <Thumbnail
+            shareShowModal={shareShowModal}
+            keepModal={keepModal}
+            shareCloseModal={shareCloseModal}
+            imageSrc={imageSrc}
+            setImageSrc={setImageSrc}
+          ></Thumbnail>
         </TripDestBox>
 
         <Collapse in={isChecked}>
-          <WritePlanMap {...myPlan}/>
+          <WritePlanMap {...myPlan} />
         </Collapse>
 
-        <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          {isChecked ?
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          {isChecked ? (
             <div onClick={() => toggleMenu()} style={{ cursor: "pointer" }}>
-              <svg width="38" height="8" viewBox="0 0 38 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M37 6.5L19 2L1 6.5" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" />
+              <svg
+                width="38"
+                height="8"
+                viewBox="0 0 38 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M37 6.5L19 2L1 6.5"
+                  stroke="#BDBDBD"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
               </svg>
             </div>
-
-            :
+          ) : (
             <>
               <div>
                 <div>
                   <hr style={{ width: "420px", border: "1px solid #E0E0E0" }} />
                 </div>
-                <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-                  <div onClick={() => toggleMenu()} style={{ cursor: "pointer" }}>
-                    <svg width="38" height="7" viewBox="0 0 38 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L19 5.5L37 1" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" />
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div
+                    onClick={() => toggleMenu()}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <svg
+                      width="38"
+                      height="7"
+                      viewBox="0 0 38 7"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M1 1L19 5.5L37 1"
+                        stroke="#BDBDBD"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
                     </svg>
                   </div>
                 </div>
               </div>
             </>
-          }
+          )}
         </div>
 
         {isChecked ? <ChooseDay {...myPlan} /> : <ChooseDayHide {...myPlan} />}
-    
       </Container>
     </>
   );
@@ -107,25 +164,28 @@ const WritePlan = (props) => {
 
 export default WritePlan;
 
-
 const Container = styled.div`
-  /* padding: 24px 24px; */
   width: 100%;
+  max-width: 420px;
+  height: 93%;
+  bottom: 0;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const TitleBox = styled.div`
   display: block;
   width: 100%;
-  padding: 0px 24px ;
   margin-top: 18px;
- 
 `;
+
 const TripDestBox = styled(TitleBox)`
   div {
     width: 100%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     cursor: pointer;
   }
 
@@ -135,13 +195,11 @@ const TripDestBox = styled(TitleBox)`
     align-items: center;
     width: fit-content;
     height: 32px;
-    margin: 0px 8px 36px 0px;
-    padding: 6px 16px 6px 16px;
+    margin-left: 8px;
+    padding: 6px 16px;
     border-radius: 50px;
     font-size: 14px;
     font-weight: 500;
     line-height: 20;
   }
 `;
-
-

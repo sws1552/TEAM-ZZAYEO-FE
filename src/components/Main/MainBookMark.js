@@ -21,6 +21,11 @@ const MainBookMark = (props) => {
           onClick={() => {
             history.push(`detail/${planId.planId}`);
           }}
+          src={
+            plan.planId.thumbnailImage
+              ? plan.planId.thumbnailImage
+              : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
+          }
         >
           <UserInfo onClick={onProfile}>
             <img src={plan.planId.userId.profile_img} alt="" />
@@ -49,7 +54,7 @@ const BookMarkCard = styled.div`
   height: 192.65px;
   border-radius: 8px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("https://i.pinimg.com/564x/14/cc/f4/14ccf4687851ce8f59889384c8f6018a.jpg");
+    url(${(props) => props.src});
   background-position: center;
   background-size: cover;
   font-family: "Roboto", sans-serif;

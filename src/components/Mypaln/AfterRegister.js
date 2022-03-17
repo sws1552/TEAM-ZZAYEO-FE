@@ -4,7 +4,6 @@ import { history } from "../../redux/ConfigureStore";
 import MyEditPost from "./MyEditPost";
 
 const AfterRegister = (props) => {
-
   return (
     <React.Fragment>
       <Container>
@@ -40,6 +39,7 @@ const TripCard = styled.div`
   background-position: center;
   background-size: cover;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const CardInfo = styled.div`
