@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EditMenu from "../WritePlan/Plan/EditMenu"
 import { display } from '@mui/system';
 import SwiperImage from "../WritePlan/Plan/SwiperImage"
+import CommentList from '../Comment/CommentList';
 
 
 const Detailday = (props) => {
@@ -122,6 +123,7 @@ const Detailday = (props) => {
               </div>
             )
           })}
+        <CommentList planId={props.planId} />
         </Container>
       </div>
 

@@ -132,6 +132,9 @@ const realUpdateCommentFB = (commentId, planId, upComment) => {
 const removeCommentFB = (commentId, planId) => {
     return async function(dispatch, getState, {history}) {
         
+        // console.log('commentId !! ',commentId);
+        // console.log('planId !! ',planId);
+
         await instance.delete(`/api/plans/comments/${commentId}`)
         .then((res) => {
 

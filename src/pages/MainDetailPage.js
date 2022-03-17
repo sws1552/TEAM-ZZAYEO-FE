@@ -112,7 +112,7 @@ const MainDetailPage = (props) => {
             }
           </div>
           {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
-          <CommentList planId={planId} />
+          
         </Container>
       </>
     );
@@ -156,7 +156,7 @@ const MainDetailPage = (props) => {
           }
         </div>
         {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
-        <CommentList planId={planId} />
+        
       </Container>
     </>
   );

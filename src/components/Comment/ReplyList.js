@@ -7,8 +7,12 @@ import ReplyMenu from './ReplyMenu';
 
 import 'moment/locale/ko';
 import moment from 'moment';
+import Moment from 'react-moment';
 import { useDispatch } from 'react-redux';
 import {actionCreators as commentActions} from '../../redux/modules/comment';
+
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const ReplyList = (props) => {
 
@@ -91,13 +95,31 @@ const Reply = (props) => {
         }
     }
 
+    // 업로드 시간 가공
+    const displayCreatedAt = (createdAt) => {
+    let startTime = new Date(createdAt);
+    let nowTime = Date.now();
+    // 현재시간부터 1분 일때
+    if (parseInt(startTime - nowTime) > -60000) {
+        return <Moment locale="ko" format="방금 전">{startTime}</Moment>;
+    }
+    // 현재시간부터 24시간이 지낫을때
+    if (parseInt(startTime - nowTime) < -86400000) {
+        return <Moment locale="ko" format="MM월 D일">{startTime}</Moment>;
+    }
+    // 현재시간부터 24시간이 지나지 않았을때
+    if (parseInt(startTime - nowTime) > -86400000) {
+        return <Moment locale="ko" fromNow>{startTime}</Moment>;
+    }
+    };
+
     return (
         <ReplyCon>
             <UserCon>
                 <UserImg profile_img={props.userId.profile_img}/>
                 <NickCon>
                     <NicText>{props.userId.nickname}</NicText>
-                    <TimeText>{moment(props.createdAt).format('YYYY-MM-DD')}</TimeText>
+                    <TimeText>{displayCreatedAt(props.createdAt)}</TimeText>
                 </NickCon>
                 {props.userId.email === localStorage.getItem("userId") ? 
                     <ReplyMenu planId={props.planId} commentId={props.commentId} replyId={props.replyId} hide={() => setReplyHide(!upReplyhide)}/>
@@ -121,7 +143,10 @@ const Reply = (props) => {
 
                 <BtnCon>
                     <LikeBtn className={props.isLike ? 'likeTrue' : null}
-                    onClick={replyLike}>좋아요 {props.likeCount}</LikeBtn>
+                    onClick={replyLike}>
+                        {props.isLike ? <FavoriteIcon style={{fontSize: "13px", marginRight: "2px"}}/> : <FavoriteBorderIcon style={{fontSize: "13px", marginRight: "2px"}}/> }
+                        좋아요 {props.likeCount}
+                    </LikeBtn>
                 </BtnCon>
 
             </Context>
@@ -132,11 +157,12 @@ const Reply = (props) => {
 
 const ReplyCon = styled.div`
     
-    /* background-color: red; */
+    background-color: #f3f3f3;
     margin-bottom: 10px;
-
+    border-radius: 10px;
+    padding: 5px;
     .likeTrue {
-        color: #12C5ED;
+        color: #757575;
         font-weight: bold;
     }
 
@@ -168,7 +194,7 @@ const NicText = styled.div`
 
 const TimeText = styled.div`
     font-size: 10px;
-    color: #BFBFBF;
+    color: #757575;
 `;
 
 const Context = styled.div`
@@ -190,7 +216,9 @@ const BtnCon = styled.div`
 
 const LikeBtn = styled.div`
     font-size: 12px;
-    color: #BFBFBF;
+    display: flex;
+    align-items: center;
+    color: #757575;
     cursor: pointer;
 `;
 
