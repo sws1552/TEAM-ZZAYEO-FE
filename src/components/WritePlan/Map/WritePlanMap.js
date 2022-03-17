@@ -3,21 +3,24 @@ import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import Polyline from "./Polyline";
+import Fitbound from "./Fitbound"
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../../../redux/modules/plan";
+
 
 const WritePlanMap = (props) => {
   const myPlan = props
   console.log(myPlan)
+
   const dispatch = useDispatch();
-  
+
   const [apiReady, setApiReady] = useState(false);
   const [map, setMap] = useState(null);
   const [googlemaps, setGooglemaps] = useState(null);
 
   let zoom = 10;
   // const myPlan = useSelector((state) => state.plan.myPlan);
- 
+
   const dayId = useSelector((state) => state.map.dayId);// dayId를 넘겨서 같은 dayI인지 비교하려고!
   const [center, setCenter] = useState({ lat: 37.5, lng: 127 });
 
@@ -44,27 +47,37 @@ const WritePlanMap = (props) => {
       setGooglemaps(maps);
     }
   }
-  
-  React.useEffect(() => {
-    handleOnPlacesChanged(Markers, googlemaps, apiReady)
-  }, [map, googlemaps, Markers, apiReady]);
 
+  // React.useEffect(() => {
+  //   console.log("ㅅㅂ?")
+  //   console.log(Markers)
+  //   console.log(googlemaps)
+  //   if (Markers.length !== 0) {
+  //     handleOnPlacesChanged()
+  //   }
 
-  //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
-  const handleOnPlacesChanged = useCallback(() => {
-    if (Markers.length !== 0 && apiReady) {
-      const bounds = new googlemaps.LatLngBounds();
-      Markers.map(item => {
-        bounds.extend(item);
-      });
-      if (bounds) {
-        map.fitBounds(bounds);
-      } else {
-        map.setCenter(new googlemaps.LatLng(Markers[Markers.length - 1].lat, Markers[Markers.length - 1].lng))
-        map.setZoom(17)
-      }
-    }
-  }, [Markers, googlemaps, apiReady])
+  // }, [Markers, googlemaps]);
+
+  // //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
+  // const handleOnPlacesChanged = useCallback(() => {
+
+  //   const bounds = new googlemaps.LatLngBounds();
+
+  //   Markers.map(item => {
+  //     bounds.extend(item);
+  //   });
+
+  //   if (bounds) {
+  //     map.fitBounds(bounds);
+  //     if (bounds.Sa.h === bounds.Sa.j) {
+  //       map.setZoom(17)
+  //     }
+  //   } else {
+  //     map.setCenter(new googlemaps.LatLng(Markers[Markers.length - 1].lat, Markers[Markers.length - 1].lng))
+  //     map.setZoom(17)
+  //   }
+
+  // }, [Markers])
 
   return (
     <Container>
@@ -98,6 +111,13 @@ const WritePlanMap = (props) => {
 
           {apiReady && googlemaps && (
             <Polyline
+              markers={Markers}
+              map={map}
+              maps={googlemaps}
+            />)}
+
+          {apiReady && googlemaps && (
+            <Fitbound
               markers={Markers}
               map={map}
               maps={googlemaps}
