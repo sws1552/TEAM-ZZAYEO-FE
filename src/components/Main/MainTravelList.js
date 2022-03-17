@@ -7,16 +7,24 @@ import Bookmark from "./Bookmark";
 const MainTravelList = (props) => {
   const { title, isLike, isBookmark, planId, userId } = props;
 
+  const onProfile = (e) => {
+    e.stopPropagation();
+    history.push(`/otheruser/${userId.userId}`);
+  };
+
+  const onPlanInfo = (e) => {
+    e.stopPropagation();
+    history.push(`/detail/${planId}`);
+  };
+
   return (
     <React.Fragment>
       <Container>
-        <TripCard
-          onClick={() => {
-            history.push(`/detail/${planId}`);
-          }}
-        >
+        <TripCard onClick={onPlanInfo}>
           <CardImg></CardImg>
-          <UserImg src={userId.profile_img} />
+          <Btn onClick={onProfile}>
+            <UserImg src={userId.profile_img} />
+          </Btn>
           <UserNickName>{userId.nickname}</UserNickName>
           <CardTitle>{title}</CardTitle>
           <Box>
@@ -56,6 +64,8 @@ const CardImg = styled.div`
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.06);
   border-radius: 8px;
 `;
+
+const Btn = styled.div``;
 
 const UserImg = styled.img`
   position: absolute;

@@ -4,13 +4,12 @@ import { history } from "../../redux/ConfigureStore";
 import MyEditPost from "./MyEditPost";
 
 const AfterRegister = (props) => {
-
   return (
     <React.Fragment>
       <Container>
         <TripCard
           onClick={(e) => {
-            history.push(`/detail/${props.planId}`);
+            history.push(`/writeplan/${props.planId}`);
           }}
         >
           <MyEditPost planId={props.planId} />
