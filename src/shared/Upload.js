@@ -12,11 +12,7 @@ const Upload = (props) => {
     const preview = useSelector((state) => state.image.preview);
     const imageURL = useSelector((state) => state.image.imageURL);
 
-    console.log(preview)
-    console.log(imageURL)
-
     const fileInput = React.useRef();
-
 
     // 여러개 업로드
     const handleImageUpload = (e) => {

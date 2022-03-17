@@ -116,7 +116,7 @@ const Line = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  height: 510px;
+  height: 550px;
   box-sizing: border-box;
   overflow-y: scroll;
   padding: 0px 24px 0px 24px;

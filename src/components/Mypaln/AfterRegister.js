@@ -4,6 +4,7 @@ import { history } from "../../redux/ConfigureStore";
 import MyEditPost from "./MyEditPost";
 
 const AfterRegister = (props) => {
+
   return (
     <React.Fragment>
       <Container>

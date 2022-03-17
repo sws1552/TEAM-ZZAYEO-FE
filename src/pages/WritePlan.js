@@ -27,7 +27,6 @@ const WritePlan = (props) => {
     setIsChecked(isChecked => !isChecked);
   }
 
-
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
@@ -70,7 +69,7 @@ const WritePlan = (props) => {
         </TripDestBox>
 
         <Collapse in={isChecked}>
-          <WritePlanMap />
+          <WritePlanMap {...myPlan}/>
         </Collapse>
 
         <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -98,7 +97,6 @@ const WritePlan = (props) => {
             </>
           }
         </div>
-
 
         {isChecked ? <ChooseDay {...myPlan} /> : <ChooseDayHide {...myPlan} />}
     

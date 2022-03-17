@@ -13,7 +13,6 @@ import { history } from '../redux/ConfigureStore';
 const MyPage = (props) => {
 
     const dispatch = useDispatch();
-
     const checkUser = useSelector(state => state.user.user);
 
     // console.log('checkUser !! ',checkUser);

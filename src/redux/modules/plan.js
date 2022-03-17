@@ -245,9 +245,10 @@ const statusDB = (planId, status) => {
       .then((res) => {
         console.log(res);
         instance
-          .get("/api/plans")
+          .get(`/api/plans/${planId}`)
           .then((res) => {
-            dispatch(getPlan(res.data.plans));
+            console.log(res.data.plan)
+            dispatch(getdayPlan(res.data.plan));
           })
           .catch(function (error) {
             console.log(error);

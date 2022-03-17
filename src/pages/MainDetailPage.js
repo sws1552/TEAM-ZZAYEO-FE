@@ -20,7 +20,6 @@ const MainDetailPage = (props) => {
 
   const planId = props.match.params.planId;
   const plans = useSelector((state) => state.plan.myPlan);
-  console.log(plans.status)
 
   const userId = localStorage.getItem("userId");
   const toggleMenu = () => {
@@ -62,7 +61,7 @@ const MainDetailPage = (props) => {
                         dispatch(planActions.statusDB(plans.planId, share))
                       }
                       if (l === "나만의 일정") {
-                        dispatch(planActions.statusDB(plans.planId, unshare))
+                        dispatch(planActions.statusDB(plans.planId, unshare))   
                       }
                     }}
 
@@ -85,7 +84,7 @@ const MainDetailPage = (props) => {
             </div>
           </TripDestBox>
           <Collapse in={isChecked}>
-            <WritePlanMap />
+            <WritePlanMap {...plans} />
           </Collapse>
           <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
             {isChecked ?
@@ -129,7 +128,7 @@ const MainDetailPage = (props) => {
           <BookMark {...plans} />
         </BtnBox>
         <Collapse in={isChecked}>
-          <WritePlanMap />
+          <WritePlanMap {...plans}/>
         </Collapse>
         <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
           {isChecked ?
