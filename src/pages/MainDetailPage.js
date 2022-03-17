@@ -57,13 +57,13 @@ const MainDetailPage = (props) => {
                   <li
                     key={i}
                     onClick={() => {
-                      changeTripDest(i);
-                      if (l === "모두에게 공유") {
-                        dispatch(planActions.statusDB(plans.planId, share))
-                      }
-                      if (l === "나만의 일정") {
-                        dispatch(planActions.statusDB(plans.planId, unshare))
-                      }
+                      // changeTripDest(i);
+                      // if (l === "모두에게 공유") {
+                      //   dispatch(planActions.statusDB(plans.planId, share))
+                      // }
+                      // if (l === "나만의 일정") {
+                      //   dispatch(planActions.statusDB(plans.planId, unshare))
+                      // }
                     }}
 
                     style={plans.status === "공개" ? {
