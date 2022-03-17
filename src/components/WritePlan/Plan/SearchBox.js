@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { positions } from "@mui/system";
 // import { history } from "../../../redux/ConfigureStore";
 import "./SearchBox.css"
+import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
 
 const SearchBox = ({ mapApi, map, addPlace }) => {
    
@@ -21,7 +22,8 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
         const { 0: place } = selected
         console.log(selected)
         addPlace(selected)
-    
+        dispatch(addPlaceActions.addlocation(selected))
+
         if (!place.geometry) return;
         if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport)

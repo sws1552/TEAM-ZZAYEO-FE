@@ -22,8 +22,25 @@ const style = {
   p: 3,
 };
 
+const AddButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto 0px auto;
+  width: 100%;
+  height: 45px;
+  background-color: #4E49E2;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 8px;
+`
+
 const ADDPlace = styled.div`
-  color: gray;
+  color: #BDBDBD;
+  font-size: 14px;
+  font-weight: 500;
   border: none;
   cursor: pointer;
 `
@@ -38,7 +55,7 @@ export default function SearhModal() {
 
   return (
     <div>
-      {placeName === "" ? <ADDPlace onClick={handleOpen}>+장소를 검색해주세요</ADDPlace> :
+      {placeName === "" ? <ADDPlace onClick={handleOpen}>+ 장소를 검색해주세요</ADDPlace> :
         <ADDPlace onClick={handleOpen}>최근 검색: {placeName}</ADDPlace>}
 
       <Modal
@@ -50,9 +67,15 @@ export default function SearhModal() {
         <Box sx={style}>
           <div>
             <SearchMap />
+            <AddButton
+              onClick={() => {
+                setOpen(false)
+              }}
+            >장소추가</AddButton>
           </div>
         </Box>
       </Modal>
     </div>
   );
 }
+

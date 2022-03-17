@@ -13,6 +13,7 @@ const SearchMap = () => {
   const [map, setMap] = useState(null);
   const [googlemaps, setGooglemaps] = useState(null);
   const [center, setCenter] = useState({ lat: 37.5, lng: 127 });
+  const [open, setOpen] = React.useState(false);
   let zoom = 10;
 
   const [places, setPlaces] = useState([]);
@@ -73,11 +74,11 @@ const SearchMap = () => {
             ))}
         </GoogleMapReact>
       </div>
-      <Button
+      {/* <Button
       onClick={()=>{
         dispatch(addPlaceActions.addlocation(places))
       }}
-      >장소추가</Button>
+      >장소추가</Button> */}
     </Container>
   );
 };
@@ -86,7 +87,7 @@ export default SearchMap;
 
 const Container = styled.div`
   width: 100%;
-  height: 800px;
+  height: 700px;
   box-sizing: border-box;
   margin: auto;
 `;
@@ -102,5 +103,6 @@ const Button = styled.div`
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
+  cursor: pointer;
   
 `;
