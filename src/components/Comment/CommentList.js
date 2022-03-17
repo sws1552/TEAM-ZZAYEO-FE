@@ -76,6 +76,7 @@ const ListCon = styled.div`
   width: 100%;
   height: 53.5vh;
   box-sizing: border-box;
+  padding: 0 24px;
 
   & .seleted {
     opacity: 0.3;
