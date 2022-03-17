@@ -31,7 +31,7 @@ export default function ReplyMenu(props) {
     }else {
 
       if(window.confirm("정말로 삭제하시겠습니까?")){
-        
+        console.log('답글 삭제 ㄱㄱㄱ');
         dispatch(commentActions.deleteReplyFB(planId, replyId));
 
       }else {

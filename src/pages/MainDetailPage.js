@@ -15,6 +15,7 @@ import plan, { actionCreators as planActions } from "../redux/modules/plan";
 import Like from "../components/MainDetailPage/Like";
 import BookMark from "../components/MainDetailPage/BookMark";
 
+
 const MainDetailPage = (props) => {
   const dispatch = useDispatch();
 
@@ -61,7 +62,7 @@ const MainDetailPage = (props) => {
                         dispatch(planActions.statusDB(plans.planId, share))
                       }
                       if (l === "나만의 일정") {
-                        dispatch(planActions.statusDB(plans.planId, unshare))   
+                        dispatch(planActions.statusDB(plans.planId, unshare))
                       }
                     }}
 
@@ -83,7 +84,9 @@ const MainDetailPage = (props) => {
               })}
             </div>
           </TripDestBox>
+
           <Collapse in={isChecked}>
+           
             <WritePlanMap {...plans} />
           </Collapse>
           <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
@@ -112,7 +115,7 @@ const MainDetailPage = (props) => {
             }
           </div>
           {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
-          <CommentList planId={planId} />
+          
         </Container>
       </>
     );
@@ -128,7 +131,7 @@ const MainDetailPage = (props) => {
           <BookMark {...plans} />
         </BtnBox>
         <Collapse in={isChecked}>
-          <WritePlanMap {...plans}/>
+          <WritePlanMap {...plans} />
         </Collapse>
         <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
           {isChecked ?
@@ -156,7 +159,7 @@ const MainDetailPage = (props) => {
           }
         </div>
         {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
-        <CommentList planId={planId} />
+        
       </Container>
     </>
   );

@@ -25,7 +25,7 @@ const CommentWrite = (props) => {
         <WriteCon>
             <Input placeholder='댓글을 입력해주세요.' value={comment} onChange={(e) => setComment(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && commentAdd() }/>
-            <SendIconRe onClick={commentAdd}/>
+            <SendIconRe onClick={commentAdd} style={{color: comment.length !== 0 ? "#4E49E2" : null }}>등록</SendIconRe>
         </WriteCon>
     );
 };
@@ -54,11 +54,12 @@ const Input = styled.input`
 
 `;
 
-const SendIconRe = styled(SendIcon)`
+const SendIconRe = styled.div`
     margin-left: 10px;
     color: #c4c4c4;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 14px;
+    width: 30px;
 `;
 
 export default CommentWrite;

@@ -8,9 +8,14 @@ import ReplyList from "./ReplyList";
 import "moment/locale/ko";
 import moment from "moment";
 
+import Moment from 'react-moment';
+
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../../redux/modules/comment";
 import { actionCreators as userActions } from "../../redux/modules/user";
+
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const CommentList = (props) => {
   const planId = props.planId;
@@ -76,7 +81,7 @@ const ListCon = styled.div`
   width: 100%;
   height: 53.5vh;
   box-sizing: border-box;
-  padding: 0 24px;
+  /* padding: 0 24px; */
 
   & .seleted {
     opacity: 0.3;
@@ -163,6 +168,21 @@ const CommentItem = (props) => {
     }
   };
 
+  // 업로드 시간 가공
+  const displayCreatedAt = (createdAt) => {
+    let startTime = new Date(createdAt);
+    let nowTime = Date.now();
+    if (parseInt(startTime - nowTime) > -60000) {
+      return <Moment locale="ko" format="방금 전">{startTime}</Moment>;
+    }
+    if (parseInt(startTime - nowTime) < -86400000) {
+      return <Moment locale="ko" format="MM월 D일">{startTime}</Moment>;
+    }
+    if (parseInt(startTime - nowTime) > -86400000) {
+      return <Moment locale="ko" fromNow>{startTime}</Moment>;
+    }
+  };
+
   // console.log('props.userId.email !! ',props.userId.email);
   // console.log('localStorage.getItem("userId") !! ',localStorage.getItem("userId"));
 
@@ -172,7 +192,7 @@ const CommentItem = (props) => {
         <UserImg profile_img={props.userId.profile_img} />
         <NickCon>
           <NicText>{props.userId.nickname}</NicText>
-          <TimeText>{moment(props.createdAt).format("YYYY-MM-DD")}</TimeText>
+          <TimeText>{displayCreatedAt(props.createdAt)}</TimeText>
         </NickCon>
         {props.userId.email === localStorage.getItem("userId") ? (
           <CommentMenu
@@ -206,6 +226,7 @@ const CommentItem = (props) => {
             className={props.isLike ? "likeTrue" : null}
             onClick={commentLikeFunc}
           >
+            {props.isLike ? <FavoriteIcon style={{fontSize: "13px", marginRight: "2px"}}/> : <FavoriteBorderIcon style={{fontSize: "13px", marginRight: "2px"}}/> }
             좋아요 {props.likeCount}
           </LikeBtn>
           <ReplyBtn onClick={() => setReplyHide(!replyHide)}>
@@ -240,7 +261,7 @@ const ItemCon = styled.div`
   padding-top: 10px;
 
   .likeTrue {
-    color: #12c5ed;
+    color: #757575;
     font-weight: bold;
   }
 `;
@@ -271,7 +292,7 @@ const NicText = styled.div`
 
 const TimeText = styled.div`
   font-size: 10px;
-  color: #bfbfbf;
+  color: #757575;
 `;
 
 const Context = styled.div`
@@ -322,14 +343,16 @@ const LikeandreplyCon = styled.div`
 `;
 
 const LikeBtn = styled.div`
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  color: #bfbfbf;
+  color: #757575;
 `;
 
 const ReplyBtn = styled.div`
   cursor: pointer;
   margin-left: 10px;
-  color: #bfbfbf;
+  color: #757575;
 `;
 
 export default CommentList;

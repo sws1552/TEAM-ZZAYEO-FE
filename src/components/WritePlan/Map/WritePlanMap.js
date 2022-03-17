@@ -3,13 +3,14 @@ import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import Polyline from "./Polyline";
+import Fitbound from "./Fitbound"
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../../../redux/modules/plan";
-import Fitbound from "./Fitbound"
 
 const WritePlanMap = (props) => {
   const myPlan = props
   console.log(myPlan)
+
   const dispatch = useDispatch();
 
   const [apiReady, setApiReady] = useState(false);
@@ -46,26 +47,39 @@ const WritePlanMap = (props) => {
     }
   }
 
+
+
   // React.useEffect(() => {
-  //   handleOnPlacesChanged(Markers, googlemaps, apiReady)
-  // }, [map, googlemaps, Markers, apiReady]);
+  //   console.log("ㅅㅂ?")
+  //   console.log(Markers)
+  //   console.log(googlemaps)
+  //   if (Markers.length !== 0) {
+  //     handleOnPlacesChanged()
+  //   }
+  // }, [Markers, googlemaps]);
 
-
+  
   // //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
   // const handleOnPlacesChanged = useCallback(() => {
-  //   if (Markers.length !== 0 && apiReady) {
-  //     const bounds = new googlemaps.LatLngBounds();
-  //     Markers.map(item => {
-  //       bounds.extend(item);
-  //     });
-  //     if (bounds) {
-  //       map.fitBounds(bounds);
-  //     } else {
-  //       map.setCenter(new googlemaps.LatLng(Markers[Markers.length - 1].lat, Markers[Markers.length - 1].lng))
+
+  //   const bounds = new googlemaps.LatLngBounds();
+
+  //   Markers.map(item => {
+  //     bounds.extend(item);
+  //   });
+
+  //   if (bounds) {
+  //     map.fitBounds(bounds);
+  //     if (bounds.Sa.h === bounds.Sa.j) {
   //       map.setZoom(17)
   //     }
+  //   } else {
+  //     map.setCenter(new googlemaps.LatLng(Markers[Markers.length - 1].lat, Markers[Markers.length - 1].lng))
+  //     map.setZoom(17)
   //   }
-  // }, [Markers, googlemaps, apiReady])
+
+  // }, [Markers])
+
 
   return (
     <Container>
