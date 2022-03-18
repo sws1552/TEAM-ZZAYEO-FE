@@ -20,6 +20,7 @@ const SwiperImage = (props) => {
           return <Image src={m}></Image>;
         })}
     </div>
+  );
 };
 
 const Image = styled.div`
