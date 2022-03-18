@@ -52,19 +52,10 @@ const MainDetailPage = (props) => {
                       dispatch(planActions.statusDB(plans.planId, unshare));
                     }
                   }}
-                  style={
-                    plans.status === "공개"
-                      ? {
-                          backgroundColor:
-                            i === clickedTripDest ? "#EDEDED" : "#4E49E2",
-                          color: i === clickedTripDest ? "#979797" : "#FFFFFF",
-                        }
-                      : {
-                          backgroundColor:
-                            i === clickedTripDest ? " #4E49E2" : "#EDEDED",
-                          color: i === clickedTripDest ? "#FFFFFF" : "#979797",
-                        }
-                  }
+                  style={{
+                    background: i === 1 && plans.status ==="공개" ? "#4E49E2" : i === 0 && plans.status ==="비공개" ? "#4E49E2": "#EDEDED",
+                    color : i === 1 && plans.status ==="공개" ? "#FFFFFF" : i === 0 && plans.status ==="비공개" ? "#FFFFFF": "#979797",
+                  }}
                 >
                   {l}
                 </li>
