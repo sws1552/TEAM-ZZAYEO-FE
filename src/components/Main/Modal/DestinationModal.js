@@ -28,11 +28,11 @@ const DestinationModal = (props) => {
                       style={{
                         backgroundColor:
                           i === clickedDestination ? "#4E49E2" : "#F5F5F5",
-                        color: i === clickedDestination ? "#FFFFFF" : "#757575",
+                        // color: i === clickedDestination ? "#FFFFFF" : "#757575",
                       }}
                       key={i}
                     >
-                      {l}
+                      <p>{l}</p>
                     </Category>
                   );
                 })}
@@ -83,7 +83,7 @@ const Modal = styled.div`
   bottom: 0;
   max-width: 420px;
   width: 100%;
-  height: 586px;
+  height: 418px;
   background-color: #ffffff;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;
@@ -141,19 +141,29 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  padding: 0px 24px;
 `;
 
 const Category = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 10px 16px;
+  justify-content: center;
+  width: 112px;
+  height: 112px;
   margin-right: 8px;
-  margin-bottom: 12px;
-  border-radius: 20px;
+  margin: 0px 18px;
+  border-radius: 50%;
   cursor: pointer;
+
+  p {
+    position: absolute;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    color: #424242;
+    margin-top: 120px;
+  }
 `;
 
 export default DestinationModal;
