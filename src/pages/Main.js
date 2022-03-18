@@ -23,7 +23,7 @@ const Main = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [itemLists, setItemLists] = useState([]);
   const [page, setPage] = useState(1);
-  const [endPage, setEndPage] = useState(1);
+  const [endPage, setEndPage] = useState(0);
 
   useEffect(() => {
     console.log(itemLists);
@@ -45,7 +45,7 @@ const Main = (props) => {
       if (entry.isIntersecting && !isLoaded) {
         observer.unobserve(entry.target);
         await getMoreItem(page);
-        if (page === 1 || page === endPage) {
+        if (page === endPage) {
           return page;
         } else {
           setPage((num) => num + 1);
