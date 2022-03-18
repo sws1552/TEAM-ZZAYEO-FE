@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import WritePlanMap from "../components/WritePlan/Map/WritePlanMap";
-import Header from "../components/WritePlan/Header/Header";
+import HeaderWritePlan from "../components/WritePlan/Header/HeaderWriteplan";
 import Title from "../components/WritePlan/Title/Title";
 import { Collapse } from "@mui/material";
 
@@ -57,7 +57,7 @@ const WritePlan = (props) => {
   return (
     <>
       <Container>
-        <Header />
+        <HeaderWritePlan {...myPlan} />
         <Title {...myPlan} />
         <TripDestBox>
           <div>
@@ -121,9 +121,6 @@ const WritePlan = (props) => {
           ) : (
             <>
               <div>
-                <div>
-                  <hr style={{ width: "100%", border: "1px solid #E0E0E0" }} />
-                </div>
                 <div
                   style={{
                     width: "100%",
@@ -156,7 +153,8 @@ const WritePlan = (props) => {
           )}
         </div>
 
-        {isChecked ? <ChooseDay {...myPlan} /> : <ChooseDayHide {...myPlan} />}
+        {/* {isChecked ? <ChooseDay {...myPlan} /> : <ChooseDayHide {...myPlan} />} */}
+        <ChooseDay {...myPlan} />
       </Container>
     </>
   );
@@ -188,6 +186,7 @@ const TripDestBox = styled(TitleBox)`
     display: flex;
     flex-direction: row;
     cursor: pointer;
+    margin-bottom: 32px;
   }
 
   li {

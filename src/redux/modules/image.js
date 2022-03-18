@@ -64,7 +64,6 @@ export default handleActions(
       }),
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
-        
         const new_preview = state.preview.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
         });

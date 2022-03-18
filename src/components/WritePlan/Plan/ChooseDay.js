@@ -6,7 +6,7 @@ import EditMenu from "./EditMenu"
 import WritePlanModal from "./WritePlanModal"
 import { display } from '@mui/system';
 import SwiperImage from "./SwiperImage"
-
+import { history } from "../../../redux/ConfigureStore";
 
 const ChooseDay = (props) => {
   const dayList = props.days
@@ -107,12 +107,31 @@ const ChooseDay = (props) => {
           <AddPlaceBox>
             <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} dayNumber={dayList && dayList[currentTab]?.dayNumber}/>
           </AddPlaceBox>
+          <AddButton
+          onClick={()=>{
+            history.push('/myplan')
+          }}>일정 작성완료</AddButton>
         </Container>
+        
       </div>
 
     </>
   );
 };
+const AddButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 36px auto 36px auto;
+  width: 100%;
+  height: 54px;
+  background-color: #4E49E2;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+`;
 
 const Line = styled.div`
  border-left: 1px solid #E0E0E0;
@@ -121,7 +140,6 @@ const Line = styled.div`
 `
 const Container = styled.div`
   width: 100%;
-  height: 300px;
   box-sizing: border-box;
   overflow-y: scroll;
   overflow-x: hidden;

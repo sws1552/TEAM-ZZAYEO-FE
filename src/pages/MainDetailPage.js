@@ -74,7 +74,8 @@ const MainDetailPage = (props) => {
             </ToggleBox>
           )}
         </ToggleBox>
-        {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
+        <DetailDay {...plans} />
+        {/* {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />} */}
         <CommentList planId={planId} />
       </Container>
     );
@@ -125,7 +126,8 @@ const MainDetailPage = (props) => {
           </ToggleBox>
         )}
       </ToggleBox>
-      {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
+      <DetailDay {...plans} />
+      {/* {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />} */}
       <CommentList planId={planId} />
     </Container>
   );
