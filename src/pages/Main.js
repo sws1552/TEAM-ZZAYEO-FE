@@ -85,11 +85,11 @@ const Main = (props) => {
         <Div>
           <Content>
             <BookMarkListBox>
-              <p>내가 찜한 여행기 📚😆</p>
+              <P>내가 찜한 여행기 📚😆</P>
               <MainBookMarkList />
             </BookMarkListBox>
             <TravelListBox>
-              <p>여행기 모아보기 🌄📝</p>
+              <P>여행기 모아보기 🌄📝</P>
               <Filter />
               {query ? (
                 <>
@@ -121,7 +121,7 @@ const Main = (props) => {
       <Div>
         <Content>
           <TravelListBox>
-            <p>여행기 모아보기 🌄📝</p>
+            <P>여행기 모아보기 🌄📝</P>
             <Filter />
             {itemLists.map((l, i) => {
               return <MainTravelList key={i} {...l} />;
@@ -159,16 +159,16 @@ const Div = styled.div`
   background-color: #cfcfff;
 `;
 
-const TravelListBox = styled.div`
-  p {
-    margin: 0;
-    margin-bottom: 12px;
-    padding: 0px 24px;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 25px;
-    color: #1a1a1a;
-  }
+const TravelListBox = styled.div``;
+
+const P = styled.p`
+  margin: 0;
+  margin-bottom: 12px;
+  padding: 0px 24px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 25px;
+  color: #1a1a1a;
 `;
 
 const BookMarkListBox = styled(TravelListBox)`

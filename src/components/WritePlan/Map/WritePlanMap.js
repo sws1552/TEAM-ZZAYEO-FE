@@ -3,13 +3,13 @@ import styled from "styled-components";
 import GoogleMapReact from "google-map-react";
 import Marker from "./Marker";
 import Polyline from "./Polyline";
-import Fitbound from "./Fitbound"
+import Fitbound from "./Fitbound";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../../../redux/modules/plan";
 
 const WritePlanMap = (props) => {
-  const myPlan = props
-  console.log(myPlan)
+  const myPlan = props;
+  console.log(myPlan);
 
   const dispatch = useDispatch();
 
@@ -20,24 +20,22 @@ const WritePlanMap = (props) => {
   let zoom = 10;
   // const myPlan = useSelector((state) => state.plan.myPlan);
 
-  const dayId = useSelector((state) => state.map.dayId);// dayId를 넘겨서 같은 dayI인지 비교하려고!
+  const dayId = useSelector((state) => state.map.dayId); // dayId를 넘겨서 같은 dayI인지 비교하려고!
   const [center, setCenter] = useState({ lat: 37.5, lng: 127 });
 
-  const dayPlace_list = [] //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
+  const dayPlace_list = []; //각 day를 배열로 묶어서 places를 전달, day별로 place값을 뿌려주기만하면됨
   myPlan?.days?.forEach((doc) => {
     dayPlace_list.push(doc);
   });
 
-  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId)
+  const EachDayPlaces = dayPlace_list.filter((v) => v.dayId === dayId);
 
   //Markers
-  const Markers = []
+  const Markers = [];
 
   EachDayPlaces[0]?.places?.filter((v, i) => {
-    return (
-      Markers.push({ lat: v.lat, lng: v.lng })
-    )
-  })
+    return Markers.push({ lat: v.lat, lng: v.lng });
+  });
 
   const handleApiloaded = (map, maps) => {
     if (map && maps) {
@@ -45,9 +43,7 @@ const WritePlanMap = (props) => {
       setMap(map);
       setGooglemaps(maps);
     }
-  }
-
-
+  };
 
   // React.useEffect(() => {
   //   console.log("ㅅㅂ?")
@@ -58,7 +54,6 @@ const WritePlanMap = (props) => {
   //   }
   // }, [Markers, googlemaps]);
 
-  
   // //gemotry가 바뀔때 useCallback 실행시키기 deps 값이 변할때만 실행됨!
   // const handleOnPlacesChanged = useCallback(() => {
 
@@ -80,7 +75,6 @@ const WritePlanMap = (props) => {
 
   // }, [Markers])
 
-
   return (
     <Container>
       <div style={{ height: "220px", width: "100%" }}>
@@ -95,10 +89,12 @@ const WritePlanMap = (props) => {
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
-          onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
+          onGoogleApiLoaded={({ map, maps }) => {
+            handleApiloaded(map, maps);
+          }}
         >
-
-          {EachDayPlaces && EachDayPlaces[0]?.places?.length !== 0 &&
+          {EachDayPlaces &&
+            EachDayPlaces[0]?.places?.length !== 0 &&
             EachDayPlaces[0]?.places?.map((place, index) => {
               return (
                 <Marker
@@ -108,22 +104,16 @@ const WritePlanMap = (props) => {
                   lat={place.lat}
                   lng={place.lng}
                 />
-              )
+              );
             })}
 
           {apiReady && googlemaps && (
-            <Polyline
-              markers={Markers}
-              map={map}
-              maps={googlemaps}
-            />)}
+            <Polyline markers={Markers} map={map} maps={googlemaps} />
+          )}
 
           {apiReady && googlemaps && (
-            <Fitbound
-              markers={Markers}
-              map={map}
-              maps={googlemaps}
-            />)}
+            <Fitbound markers={Markers} map={map} maps={googlemaps} />
+          )}
         </GoogleMapReact>
       </div>
     </Container>
@@ -136,5 +126,4 @@ const Container = styled.div`
   width: 100%;
   height: 220px;
   box-sizing: border-box;
-  margin-top: 10px;
 `;
