@@ -165,7 +165,7 @@ export default WritePlan;
 const Container = styled.div`
   width: 100%;
   max-width: 420px;
-  height: 100%;
+  height: 93%;
   bottom: 0;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -183,6 +183,7 @@ const TitleBox = styled.div`
 const TripDestBox = styled(TitleBox)`
   div {
     width: 100%;
+    margin-bottom: 5px;
     display: flex;
     flex-direction: row;
     cursor: pointer;

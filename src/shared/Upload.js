@@ -18,7 +18,7 @@ const Upload = (props) => {
     const fileArr = e.target.files;
     const filesArr = Array.from(e.target.files);
     let fileURLs = [];
-
+    console.log(filesArr)
     let file;
     let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
 
@@ -174,6 +174,7 @@ const ImageBox = styled.div`
 const Image = styled.div`
   padding-top: 100%;
   background-image: url("${(props) => props.src}");
+  background-position: center;
   background-size: cover;
   border-radius: 8px;
   width: 100%;
