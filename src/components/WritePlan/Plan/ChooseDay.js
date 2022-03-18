@@ -88,7 +88,7 @@ const ChooseDay = (props) => {
                     <CirclePurPle> {i + 1} </CirclePurPle> :
                     <CircleGreen> {i + 1} </CircleGreen>}
                 </Line>
-                <div style={{ width: "100%", display: "table-cell" }}>
+              <div style={{width:"100%", display: "table-cell" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Text>{v.time}</Text>
                     <EditMenu placeId={v.placeId} />
@@ -98,8 +98,8 @@ const ChooseDay = (props) => {
                   <MemoBox>
                     <Memo>{v.memoText}</Memo>
                   </MemoBox>
-                  <SwiperImage image = {v.memoImage} />
-                </div>
+                  <SwiperImage image = {v.memoImage} /> 
+                </div> 
 
               </div>
             )
@@ -117,12 +117,14 @@ const ChooseDay = (props) => {
 const Line = styled.div`
  border-left: 1px solid #E0E0E0;
  display: table-cell;
+ box-sizing: border-box;
 `
 const Container = styled.div`
   width: 100%;
   height: 300px;
   box-sizing: border-box;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding: 0px 24px 0px 24px;
   /* padding: 0% 5%; */
   &::-webkit-scrollbar {

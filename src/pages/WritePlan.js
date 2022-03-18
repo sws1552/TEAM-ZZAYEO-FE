@@ -122,7 +122,7 @@ const WritePlan = (props) => {
             <>
               <div>
                 <div>
-                  <hr style={{ width: "420px", border: "1px solid #E0E0E0" }} />
+                  <hr style={{ width: "100%", border: "1px solid #E0E0E0" }} />
                 </div>
                 <div
                   style={{
@@ -169,7 +169,8 @@ const Container = styled.div`
   max-width: 420px;
   height: 93%;
   bottom: 0;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   ::-webkit-scrollbar {
     display: none;
   }

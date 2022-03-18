@@ -14,21 +14,25 @@ const SwiperImage = (props) => {
     const { image } = props
 
     return (
-        <div style={{ maxWidth: "100%" }}>
+        <div style={{maxWidth:"324px", margin:"auto"}}>
             <SwiperSlider
                 className="banner"
-                // spaceBetween={10}
+                spaceBetween={1}
                 slidesPerView={1}
                 // navigation
                 pagination={{
                     type: "fraction",
                 }}
             >
-                {image && image.map((m, i) => (
-                    <SwiperSlide style={{width:"100%"}}>
-                        <Image key={i} src={m}></Image>
-                    </SwiperSlide>
-                ))}
+                <div>
+                    {image && image.map((m, i) => {
+                        return (
+                            <SwiperSlide style={{width:"100%"}}>
+                                <Image key={i} src={m}></Image>
+                            </SwiperSlide>
+                        )
+                    })}
+                </div>
             </SwiperSlider>
         </div>
     );
@@ -58,8 +62,8 @@ const SwiperSlider = styled(Swiper)`
     color: white;
     font-size: 14px;
     font-weight: 300;
-    margin-left: 280px;
-    margin-bottom: 200px;
+    margin-left: 270px;
+    margin-bottom: 190px;
     }
 `
 
