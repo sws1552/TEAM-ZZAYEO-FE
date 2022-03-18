@@ -68,7 +68,7 @@ const Main = (props) => {
   }, [target, page]);
 
   const plans = useSelector((store) => store.plan.list);
-
+  const bookmark_list = useSelector((store) => store.plan.bookmark_list);
   const query = location.search;
 
   React.useEffect(() => {
@@ -85,8 +85,14 @@ const Main = (props) => {
         <Div>
           <Content>
             <BookMarkListBox>
-              <P>내가 찜한 여행기 📚😆</P>
-              <MainBookMarkList />
+              {bookmark_list.length > 0 ? (
+                <>
+                  <P>내가 찜한 여행기 📚😆</P>
+                  <MainBookMarkList />
+                </>
+              ) : (
+                ""
+              )}
             </BookMarkListBox>
             <TravelListBox>
               <P>여행기 모아보기 🌄📝</P>

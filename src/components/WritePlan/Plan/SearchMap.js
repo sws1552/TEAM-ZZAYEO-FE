@@ -17,7 +17,7 @@ const SearchMap = () => {
   let zoom = 10;
 
   const [places, setPlaces] = useState([]);
-  
+
   if (window.screen.width >= 768) {
     zoom = 15;
   }
@@ -28,7 +28,7 @@ const SearchMap = () => {
       setMap(map);
       setGooglemaps(maps);
     }
-  }
+  };
   //장소찾기
   const addPlace = (places) => {
     if (places) {
@@ -40,11 +40,8 @@ const SearchMap = () => {
     <Container>
       {/* SearchBox 구현을 위해서는 지도객체인 map, api요소가 있는 maps를 프로퍼티로 보내야한다. */}
       {apiReady && googlemaps && (
-        <SearchBar
-          map={map}
-          mapApi={googlemaps}
-          addPlace={addPlace}
-        />)}
+        <SearchBar map={map} mapApi={googlemaps} addPlace={addPlace} />
+      )}
 
       <div style={{ height: "650px", width: "100%", margin: "auto" }}>
         <GoogleMapReact
@@ -58,10 +55,11 @@ const SearchMap = () => {
           // 맵의 줌 레벨을 제어하는 버튼인 "+/-" 슬라이더
           yesIWantToUseGoogleMapApiInternals
           // 구글맵 api의 internals(내부)를 사용한다.
-          onGoogleApiLoaded={({ map, maps }) => { handleApiloaded(map, maps) }}
+          onGoogleApiLoaded={({ map, maps }) => {
+            handleApiloaded(map, maps);
+          }}
 
-        // 위치를 렌더해주는 함수
-
+          // 위치를 렌더해주는 함수
         >
           {places?.length !== 0 &&
             places?.map((place, index) => (
@@ -99,10 +97,9 @@ const Button = styled.div`
   margin: 20px auto 0px auto;
   width: 100%;
   height: 45px;
-  background-color: #4E49E2;
+  background-color: #4e49e2;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
   cursor: pointer;
-  
 `;

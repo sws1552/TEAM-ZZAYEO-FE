@@ -23,15 +23,55 @@ const MainDetailPage = (props) => {
   };
 
   const [isChecked, setIsChecked] = React.useState(true);
+  const [clickedTripDest, changeTripDest] = React.useState(0);
 
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
-  }, [planId]);
+  }, []);
+
+  const decideShare = ["나만의 일정", "모두에게 공유"];
+  const share = "공개";
+  const unshare = "비공개";
 
   if (plans?.userId?.email === userId) {
     return (
       <Container>
         <Header {...plans} />
+        <TripDestBox>
+          <div>
+            {decideShare.map((l, i) => {
+              return (
+                <li
+                  key={i}
+                  onClick={() => {
+                    changeTripDest(i);
+                    if (l === "모두에게 공유") {
+                      dispatch(planActions.statusDB(plans.planId, share));
+                    }
+                    if (l === "나만의 일정") {
+                      dispatch(planActions.statusDB(plans.planId, unshare));
+                    }
+                  }}
+                  style={
+                    plans.status === "공개"
+                      ? {
+                          backgroundColor:
+                            i === clickedTripDest ? "#EDEDED" : "#4E49E2",
+                          color: i === clickedTripDest ? "#979797" : "#FFFFFF",
+                        }
+                      : {
+                          backgroundColor:
+                            i === clickedTripDest ? " #4E49E2" : "#EDEDED",
+                          color: i === clickedTripDest ? "#FFFFFF" : "#979797",
+                        }
+                  }
+                >
+                  {l}
+                </li>
+              );
+            })}
+          </div>
+        </TripDestBox>
         <Collapse in={isChecked}>
           <WritePlanMap {...plans} />
         </Collapse>
@@ -118,8 +158,8 @@ const MainDetailPage = (props) => {
                 <path
                   d="M1 1L19 5.5L37 1"
                   stroke="#BDBDBD"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
             </ToogleBtn>
@@ -152,4 +192,32 @@ const ToggleBox = styled.div`
 
 const ToogleBtn = styled.div`
   cursor: pointer;
+`;
+
+const TitleBox = styled.div`
+  width: 100%;
+  padding: 0px 24px;
+`;
+
+const TripDestBox = styled(TitleBox)`
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    cursor: pointer;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 32px;
+    margin: 0px 10px 24px 0px;
+    padding: 15px 12px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;

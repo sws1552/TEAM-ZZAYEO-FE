@@ -216,8 +216,7 @@ const MsgBtn = styled.div`
 
 const PlanInfo = styled.div`
   width: 100%;
-  padding: 24px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 24px 24px 12px 24px;
 `;
 
 const Title = styled.div`
