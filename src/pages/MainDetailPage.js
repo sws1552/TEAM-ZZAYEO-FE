@@ -53,30 +53,25 @@ const MainDetailPage = (props) => {
           <TripDestBox>
             <div>
               {decideShare.map((l, i) => {
-                return (
+             return (
                   <li
                     key={i}
                     onClick={() => {
-                      // changeTripDest(i);
-                      // if (l === "모두에게 공유") {
-                      //   dispatch(planActions.statusDB(plans.planId, share))
-                      // }
-                      // if (l === "나만의 일정") {
-                      //   dispatch(planActions.statusDB(plans.planId, unshare))
-                      // }
+                      changeTripDest(i);
+                      if (l === "모두에게 공유") {
+                        dispatch(planActions.statusDB(plans.planId, share))
+                      }
+                      if (l === "나만의 일정") {
+                        dispatch(planActions.statusDB(plans.planId, unshare))
+                      }
                     }}
 
-                    style={plans.status === "공개" ? {
+                    style= {{
                       backgroundColor:
-                        i === clickedTripDest ? "#EDEDED" : "#4E49E2",
-                      color: i === clickedTripDest ? "#979797" : "#FFFFFF",
-                    } :
-                      {
-                        backgroundColor:
-                          i === clickedTripDest ? " #4E49E2" : "#EDEDED",
-                        color: i === clickedTripDest ? "#FFFFFF" : "#979797",
-                      }
-                    }
+                      i === 1 && plans.status ==="공개" ? "#4E49E2" : i === 0 && plans.status ==="비공개" ? "#4E49E2": "#EDEDED" ,
+                      color: 
+                      i === 1 && plans.status ==="공개" ? "#FFFFFF" : i === 0 && plans.status ==="비공개" ? "#FFFFFF": "#979797"
+                    }} 
                   >
                     {l}
                   </li>
@@ -171,7 +166,8 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   height: 90%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   ::-webkit-scrollbar {
     display: none;
   }
