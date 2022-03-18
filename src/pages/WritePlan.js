@@ -16,7 +16,7 @@ const WritePlan = (props) => {
 
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
-  const imageURL = useSelector((state) => state.image.imageURL);
+  const imageURL = useSelector((state) => state.image.thumbnailURL);
 
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
@@ -165,7 +165,7 @@ export default WritePlan;
 const Container = styled.div`
   width: 100%;
   max-width: 420px;
-  height: 93%;
+  height: 100%;
   bottom: 0;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -186,7 +186,6 @@ const TripDestBox = styled(TitleBox)`
     display: flex;
     flex-direction: row;
     cursor: pointer;
-    margin-bottom: 32px;
   }
 
   li {

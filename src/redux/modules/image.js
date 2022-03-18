@@ -9,6 +9,7 @@ const INITIAL_PREVIEW = "INITIAL_PREVIEW";
 const IMAGE_URL = "IMAGEURL";
 const DELETE_IMAGE = "DELETEIMAGE";
 const INITIAL_IMAGE = "INITIALIMAGE";
+const THUMBNAIL_URL = "THUMBNAIL_URL";
 
 // action creators
 const uploading = createAction(UPLOADING, (uploading) => ({ uploading }));
@@ -19,6 +20,9 @@ const initialPreview = createAction(INITIAL_PREVIEW, (initial) => ({
 }));
 
 const imageURL = createAction(IMAGE_URL, (imageURL) => ({ imageURL }));
+const thumbnailURL = createAction(THUMBNAIL_URL, (thumbnailURL) => ({
+  thumbnailURL,
+}));
 const deleteImage = createAction(DELETE_IMAGE, (index) => ({ index }));
 const initialImage = createAction(INITIAL_IMAGE, (initial) => ({ initial }));
 
@@ -28,6 +32,7 @@ const initialState = {
   uploading: false,
   preview: [],
   imageURL: [],
+  thumbnailURL: [],
 };
 
 // reducer
@@ -41,7 +46,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.preview = [...state.preview, action.payload.preview];
         //기존 배열에 새롭게 추가
-        
+
         // console.log(action.payload.preview)
         // draft.preview = action.payload.preview
       }),
@@ -50,7 +55,6 @@ export default handleActions(
         draft.preview = state.preview.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
         });
-
       }),
     [INITIAL_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
@@ -58,9 +62,13 @@ export default handleActions(
       }),
     [IMAGE_URL]: (state, action) =>
       produce(state, (draft) => {
-        action.payload.imageURL.map((image,)=>(
-          draft.imageURL = [...state.imageURL, image]
-        ))
+        action.payload.imageURL.map(
+          (image) => (draft.imageURL = [...state.imageURL, image])
+        );
+      }),
+    [THUMBNAIL_URL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.thumbnailURL = action.payload.thumbnailURL;
       }),
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
@@ -90,6 +98,7 @@ const actionCreators = {
   imageURL,
   deleteImage,
   initialImage,
+  thumbnailURL,
 };
 
 export { actionCreators };

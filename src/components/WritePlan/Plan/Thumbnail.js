@@ -10,7 +10,7 @@ const Thumbnail = (props) => {
   const fileInput = React.useRef();
 
   const onLoadFile = (fileBlob) => {
-    dispatch(imageActions.imageURL(fileBlob));
+    dispatch(imageActions.thumbnailURL(fileBlob));
     let reader = new FileReader();
     reader.readAsDataURL(fileBlob);
 
