@@ -8,6 +8,7 @@ import { Collapse } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
+import CommentList from "../components/Comment/CommentList";
 
 const MainDetailPage = (props) => {
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ const MainDetailPage = (props) => {
           )}
         </ToggleBox>
         {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
+        <CommentList planId={planId} />
       </Container>
     );
   }
@@ -124,6 +126,7 @@ const MainDetailPage = (props) => {
         )}
       </ToggleBox>
       {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />}
+      <CommentList planId={planId} />
     </Container>
   );
 };
@@ -132,7 +135,7 @@ export default MainDetailPage;
 
 const Container = styled.div`
   width: 100%;
-  height: 90%;
+  height: 93%;
   overflow: scroll;
   ::-webkit-scrollbar {
     display: none;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -26,9 +26,6 @@ const OtherUserPage = (props) => {
         console.log(err);
       });
 
-    // console.log('user !! ',user);
-    // console.log('curUserInfo !! ',curUserInfo);
-
     const roomUserInfo = {
       user: user,
       curUserInfo: curUserInfo,
@@ -38,8 +35,6 @@ const OtherUserPage = (props) => {
       fromSnsId: curUserInfo.snsId,
       toSnsId: user.snsId,
     };
-
-    // console.log('roomData !! ',roomData);
 
     dispatch(chatActions.getRoom(roomUserInfo));
 

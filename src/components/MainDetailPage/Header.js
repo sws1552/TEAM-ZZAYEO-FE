@@ -1,18 +1,57 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { history } from "../../redux/ConfigureStore";
 import Like from "../MainDetailPage/Like";
 import BookMark from "../MainDetailPage/BookMark";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../../redux/modules/user";
+import { actionCreators as chatActions } from "../../redux/modules/chat";
+import instance from "../../shared/Request";
+import { socket } from "../../shared/Socket";
+import { history } from "../../redux/ConfigureStore";
 
 const Header = (props) => {
+  const dispatch = useDispatch();
+
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
 
-  console.log(props.userId);
   const onProfile = (e) => {
     e.stopPropagation();
     history.push(`/otheruser/${props.userId.userId}`);
+  };
+
+  const myInfo = useSelector((store) => store.user.user);
+  const user = useSelector((store) => store.user.userInfo);
+
+  React.useEffect(() => {
+    dispatch(userActions.checkUserDB());
+    dispatch(userActions.userProfileDB(props?.userId?.userId));
+  }, []);
+
+  const joinRoom = async () => {
+    const curUserInfo = await instance
+      .get(`/api/users/${myInfo.userId}`)
+      .then((res) => {
+        return res.data.userInfo;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const roomUserInfo = {
+      user: user,
+      curUserInfo: curUserInfo,
+    };
+
+    const roomData = {
+      fromSnsId: curUserInfo.snsId,
+      toSnsId: user.snsId,
+    };
+
+    dispatch(chatActions.getRoom(roomUserInfo));
+    socket.emit("joinRoom", roomData);
+    history.push("/chatroom");
   };
 
   return (
@@ -53,7 +92,7 @@ const Header = (props) => {
       </Btn>
       <UserNickname>{props?.userId?.nickname}</UserNickname>
       <MsgDiv>
-        <MsgBtn>
+        <MsgBtn onClick={joinRoom}>
           <svg
             width="16"
             height="16"
