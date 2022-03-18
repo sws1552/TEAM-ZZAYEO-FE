@@ -55,16 +55,16 @@ const Onechat = (props) => {
 
     return (
         <Container onClick={joinRoom}>
-            <UserImg profileImg={props.userId2.profile_img}/>
+            <UserImg profileImg={props?.userId2?.profile_img}/>
             <NickCon>
-                <Text>{props.userId2.nickname} 
-                    {props.notReadCount !== 0 ? 
+                <Text>{props?.userId2?.nickname} 
+                    {props?.notReadCount !== 0 ? 
                     <NotReadCount>안 읽은 메세지: {props.notReadCount}개</NotReadCount>
                     :
                     null}
                 </Text>
                 <LastChat>{props.lastChat.chatText}</LastChat>
-                <div style={{color: "#757575"}}>{displayCreatedAt(props.updatedAt)}</div>
+                <div style={{color: "#757575"}}>{displayCreatedAt(props?.updatedAt)}</div>
             </NickCon>
         </Container>
     );
