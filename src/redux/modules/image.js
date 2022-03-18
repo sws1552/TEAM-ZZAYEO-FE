@@ -39,18 +39,18 @@ export default handleActions(
       }),
     [SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        const new_list = [...state.preview, action.payload.preview];
+        draft.preview = [...state.preview, action.payload.preview];
         //기존 배열에 새롭게 추가
-        return { preview: new_list };
+        
         // console.log(action.payload.preview)
         // draft.preview = action.payload.preview
       }),
     [DELETE_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        const new_list = state.preview.filter((l, idx) => {
+        draft.preview = state.preview.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
         });
-        return { preview: new_list };
+
       }),
     [INITIAL_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
@@ -58,10 +58,13 @@ export default handleActions(
       }),
     [IMAGE_URL]: (state, action) =>
       produce(state, (draft) => {
-        draft.imageURL = action.payload.imageURL;
+        action.payload.imageURL.map((image,)=>(
+          draft.imageURL = [...state.imageURL, image]
+        ))
       }),
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
+        
         const new_preview = state.preview.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
         });

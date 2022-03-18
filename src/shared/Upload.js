@@ -10,7 +10,7 @@ const Upload = (props) => {
   const uploading = useSelector((state) => state.image.uploading);
   const preview = useSelector((state) => state.image.preview);
   const imageURL = useSelector((state) => state.image.imageURL);
-
+  console.log(imageURL)
   const fileInput = React.useRef();
 
   // 여러개 업로드
@@ -112,14 +112,14 @@ const Upload = (props) => {
                       <path
                         d="M14.8477 7L6.84914 15"
                         stroke="white"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M6.85156 7L14.8501 15"
                         stroke="white"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   </Button>
@@ -161,7 +161,7 @@ const TotalBox = styled.div`
   flex-direction: row;
 `;
 const ImageBox = styled.div`
-  width: 100px;
+  min-width: 100px;
   min-height: 100px;
   margin-right: 15px;
   border-radius: 8px;

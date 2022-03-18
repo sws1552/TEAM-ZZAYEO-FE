@@ -20,25 +20,6 @@ const SwiperImage = (props) => {
           return <Image src={m}></Image>;
         })}
     </div>
-    // <div style={{ maxWidth: "350px" }}>
-    //   <SwiperSlider
-    //     className="banner"
-    //     // spaceBetween={10}
-    //     slidesPerView={1}
-    //     // navigation
-    //     pagination={{
-    //       type: "fraction",
-    //     }}
-    //   >
-    //     {image &&
-    //       image.map((m, i) => (
-    //         <SwiperSlide key={i}>
-    //           <Image src={m}></Image>
-    //         </SwiperSlide>
-    //       ))}
-    //   </SwiperSlider>
-    // </div>
-  );
 };
 
 const Image = styled.div`
