@@ -122,7 +122,7 @@ const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 36px auto 36px auto;
+  margin: 36px auto 0px auto;
   width: 100%;
   height: 54px;
   background-color: #4E49E2;
