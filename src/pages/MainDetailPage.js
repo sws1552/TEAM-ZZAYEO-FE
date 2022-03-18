@@ -140,7 +140,7 @@ const MainDetailPage = (props) => {
             <>
               <div>
                 <div>
-                  <hr style={{ width: "420px", border: "1px solid #E0E0E0" }} />
+                  <hr style={{ width: "100%", border: "1px solid #E0E0E0", right:"0", left:"0"}} />
                 </div>
                 <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
                   <div onClick={() => toggleMenu()} style={{ cursor: "pointer" }}>

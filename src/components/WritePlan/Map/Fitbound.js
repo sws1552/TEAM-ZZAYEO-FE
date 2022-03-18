@@ -3,8 +3,7 @@ import React, { useState, useCallback } from "react";
 const Fitbound = ({markers, map, maps}) => {
   
     React.useEffect(() => {
-        console.log(markers)
-        console.log(maps)
+    
         if (markers.length !== 0) {
           handleOnPlacesChanged()
         }

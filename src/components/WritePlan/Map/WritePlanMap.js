@@ -9,8 +9,7 @@ import { actionCreators as planActions } from "../../../redux/modules/plan";
 
 const WritePlanMap = (props) => {
   const myPlan = props
-  console.log(myPlan)
-
+  
   const dispatch = useDispatch();
 
   const [apiReady, setApiReady] = useState(false);
