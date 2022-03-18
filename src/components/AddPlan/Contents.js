@@ -43,9 +43,7 @@ const Contents = (props) => {
     );
   };
 
-  React.useEffect(() => {
-    
-  }, [state]);
+  React.useEffect(() => {}, [state]);
 
   //어디로
   const destList = ["국내", "해외"];

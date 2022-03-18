@@ -3,7 +3,6 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import styled from "styled-components";
 import { actionCreators as commentActions } from "../../redux/modules/comment";
 import { useDispatch } from "react-redux";
 
@@ -27,10 +26,10 @@ export default function LongMenu(props) {
       // dispatch(commentActions.updateComment(commentId, planId));
     } else {
       if (window.confirm("정말로 삭제하시겠습니까?")) {
-        console.log('삭제 ㄱㄱ');
+        console.log("삭제 ㄱㄱ");
         dispatch(commentActions.removeCommentFB(commentId, planId));
       } else {
-        console.log('return');
+        console.log("return");
         return;
       }
     }

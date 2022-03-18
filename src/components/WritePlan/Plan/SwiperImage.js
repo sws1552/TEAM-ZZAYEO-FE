@@ -1,57 +1,42 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 //swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 import "swiper/components/pagination/pagination.scss";
 
-SwiperCore.use([Navigation, Pagination])
+SwiperCore.use([Navigation, Pagination]);
 
 const SwiperImage = (props) => {
-    const { image } = props
+  const { image } = props;
 
-    return (
-        <div style={{maxWidth:"324px", margin:"auto"}}>
-            <SwiperSlider
-                className="banner"
-                spaceBetween={1}
-                slidesPerView={1}
-                // navigation
-                pagination={{
-                    type: "fraction",
-                }}
-            >
-                <div>
-                    {image && image.map((m, i) => {
-                        return (
-                            <SwiperSlide style={{width:"100%"}}>
-                                <Image key={i} src={m}></Image>
-                            </SwiperSlide>
-                        )
-                    })}
-                </div>
-            </SwiperSlider>
-        </div>
-    );
+  return (
+    <div>
+      {image &&
+        image.map((m, i) => {
+          return <Image src={m}></Image>;
+        })}
+    </div>
+  );
 };
 
 const Image = styled.div`
-    padding-top: 75%;
-    background-image: url("${(props) => props.src}");
-    background-size: cover;
-    display: block;
-    margin-top: 16px;
-    border-radius: 8px;
-    width: 100%;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
-`
+  padding-top: 75%;
+  background-image: url("${(props) => props.src}");
+  background-position: center;
+  background-size: cover;
+  display: block;
+  margin-top: 16px;
+  border-radius: 8px;
+  width: 100%;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
+`;
 
 const SwiperSlider = styled(Swiper)`
-
-.swiper-pagination {
+  .swiper-pagination {
     line-height: 32px;
     background-color: rgba(0, 0, 0, 0.45);
     width: 54px;
@@ -62,9 +47,9 @@ const SwiperSlider = styled(Swiper)`
     color: white;
     font-size: 14px;
     font-weight: 300;
-    margin-left: 270px;
-    margin-bottom: 190px;
-    }
-`
+    margin-left: 280px;
+    margin-bottom: 200px;
+  }
+`;
 
 export default SwiperImage;

@@ -8,14 +8,14 @@ import ReplyList from "./ReplyList";
 import "moment/locale/ko";
 import moment from "moment";
 
-import Moment from 'react-moment';
+import Moment from "react-moment";
 
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../../redux/modules/comment";
 import { actionCreators as userActions } from "../../redux/modules/user";
 
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const CommentList = (props) => {
   const planId = props.planId;
@@ -32,36 +32,12 @@ const CommentList = (props) => {
     }
   }, []);
 
-  // console.log('userInfo !! ',userInfo);
-  // console.log('comment_list !! ',comment_list);
-
-  // const [select, setSelect] = useState(false);
-
-  // const registClick = () => {
-  //     setSelect(false);
-  // }
-
-  // const sympathyClick = () => {
-  //     setSelect(true);
-  // }
-
   if (!comment_list[planId] || !planId) {
     return null;
   } else {
     return (
       <ListCon>
         <Text>댓글 {comment_list[planId].length}</Text>
-        {/* <OrderCon>
-                    <RegistBtn className={select ? "seleted" : null } onClick={registClick}>
-                        <Circle></Circle>
-                        등록순
-                    </RegistBtn>
-                    <Sympathy className={select ? null : "seleted" } onClick={sympathyClick}>
-                        <Circle></Circle>
-                        공감순
-                    </Sympathy>
-                </OrderCon> */}
-
         <CommentCon>
           {comment_list[planId].map((item, i) => {
             return (
@@ -77,15 +53,9 @@ const CommentList = (props) => {
 };
 
 const ListCon = styled.div`
-  /* background-color: black; */
   width: 100%;
-  height: 32vh;
   box-sizing: border-box;
-  /* padding: 0 24px; */
-
-  & .seleted {
-    opacity: 0.3;
-  }
+  padding: 0 24px;
 `;
 
 const Text = styled.div`
@@ -93,60 +63,15 @@ const Text = styled.div`
   margin: 10px 0;
 `;
 
-const OrderCon = styled.div`
-  /* background-color: orange; */
-  width: 100%;
-  height: 30px;
-  display: flex;
-  align-items: center;
-`;
-
-const Circle = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #12c5ed;
-`;
-
-const RegistBtn = styled.div`
-  cursor: pointer;
-  min-width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Sympathy = styled.div`
-  cursor: pointer;
-  margin-left: 20px;
-  min-width: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 const CommentCon = styled.div`
-  /* background-color: orange; */
   width: 100%;
-  height: 77%;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const CommentItem = (props) => {
-  // console.log(props);
-
-  // console.log('updateState !! ',props.updateState);
-
   const dispatch = useDispatch();
 
   const [upComment, setUpComment] = useState(props.content);
-
   const [replyHide, setReplyHide] = useState(false);
-
   const [updateHide, setHide] = useState(false);
 
   const updateComment = () => {
@@ -173,23 +98,38 @@ const CommentItem = (props) => {
     let startTime = new Date(createdAt);
     let nowTime = Date.now();
     if (parseInt(startTime - nowTime) > -60000) {
-      return <Moment locale="ko" format="방금 전">{startTime}</Moment>;
+      return (
+        <Moment locale="ko" format="방금 전">
+          {startTime}
+        </Moment>
+      );
     }
     if (parseInt(startTime - nowTime) < -86400000) {
-      return <Moment locale="ko" format="MM월 D일">{startTime}</Moment>;
+      return (
+        <Moment locale="ko" format="MM월 D일">
+          {startTime}
+        </Moment>
+      );
     }
     if (parseInt(startTime - nowTime) > -86400000) {
-      return <Moment locale="ko" fromNow>{startTime}</Moment>;
+      return (
+        <Moment locale="ko" fromNow>
+          {startTime}
+        </Moment>
+      );
     }
   };
-
-  // console.log('props.userId.email !! ',props.userId.email);
-  // console.log('localStorage.getItem("userId") !! ',localStorage.getItem("userId"));
 
   return (
     <ItemCon>
       <UserCon>
-        <UserImg profile_img={props.userId.profile_img} />
+        <UserImg
+          src={
+            props.userId.profile_img
+              ? props.userId.profile_img
+              : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200"
+          }
+        />
         <NickCon>
           <NicText>{props.userId.nickname}</NicText>
           <TimeText>{displayCreatedAt(props.createdAt)}</TimeText>
@@ -226,7 +166,13 @@ const CommentItem = (props) => {
             className={props.isLike ? "likeTrue" : null}
             onClick={commentLikeFunc}
           >
-            {props.isLike ? <FavoriteIcon style={{fontSize: "13px", marginRight: "2px"}}/> : <FavoriteBorderIcon style={{fontSize: "13px", marginRight: "2px"}}/> }
+            {props.isLike ? (
+              <FavoriteIcon style={{ fontSize: "13px", marginRight: "2px" }} />
+            ) : (
+              <FavoriteBorderIcon
+                style={{ fontSize: "13px", marginRight: "2px" }}
+              />
+            )}
             좋아요 {props.likeCount}
           </LikeBtn>
           <ReplyBtn onClick={() => setReplyHide(!replyHide)}>
@@ -234,10 +180,6 @@ const CommentItem = (props) => {
           </ReplyBtn>
         </LikeandreplyCon>
       </Context>
-
-      {/* {props.replies.map((item, i) => {
-                return <Reply />
-            })} */}
 
       {replyHide ? (
         <ReplyList
@@ -250,12 +192,6 @@ const CommentItem = (props) => {
     </ItemCon>
   );
 };
-
-// CommentItem.defaultProps = {
-//     userId: {
-//         profile_img: "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200",
-//     }
-// }
 
 const ItemCon = styled.div`
   padding-top: 10px;
@@ -273,7 +209,7 @@ const UserCon = styled.div`
 `;
 
 const UserImg = styled.div`
-  background-image: url("${(props) => props.profile_img ? props.profile_img : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200"}");
+  background-image: url(${(props) => props.src});
   background-position: center;
   background-size: cover;
   box-shadow: 0 5px 5px 0 #bfbfbf;
