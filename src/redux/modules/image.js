@@ -62,14 +62,18 @@ export default handleActions(
       }),
     [IMAGE_URL]: (state, action) =>
       produce(state, (draft) => {
-        action.payload.imageURL.map(
-          (image) => (draft.imageURL = [...state.imageURL, image])
-        );
+        // console.log(action.payload.imageURL)
+        // action.payload.imageURL.map((image,) => (
+        //   draft.imageURL = [...state.imageURL, image]
+        // ))
+        draft.imageURL = action.payload.imageURL
       }),
+      
     [THUMBNAIL_URL]: (state, action) =>
       produce(state, (draft) => {
         draft.thumbnailURL = action.payload.thumbnailURL;
       }),
+
     [DELETE_IMAGE]: (state, action) =>
       produce(state, (draft) => {
         const new_preview = state.preview.filter((l, idx) => {
