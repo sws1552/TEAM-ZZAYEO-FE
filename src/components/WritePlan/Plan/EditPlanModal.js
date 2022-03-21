@@ -28,14 +28,12 @@ const style = {
     bgcolor: 'background.paper',
     border: 'none',
     boxShadow: 24,
-
 };
 
 export default function BasicModal(props) {
     const { placeId, placesData } = props;
-
-    console.log('placesData !! ',placesData);
-
+    const planId = placesData.planId
+    
     const timeSpl = placesData?.time?.split(" ");
 
     React.useEffect(() => {
@@ -58,7 +56,7 @@ export default function BasicModal(props) {
     const lng = useSelector((state) => state.addPlace.lng);
     const address = useSelector((state) => state.addPlace.address);
     const imageURL = useSelector((state) => state.image.imageURL);
-    const geometry = useSelector((state) => state.addPlace.geometry);
+   
 
     const memoChange = (e) => {
         setMemo(e.target.value);
@@ -242,7 +240,7 @@ export default function BasicModal(props) {
                                         lng,
                                         address,
                                         imageURL,
-                                        geometry,
+                                        planId
                                     )
                                 );
                                 setHour("0");

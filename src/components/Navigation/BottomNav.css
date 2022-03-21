@@ -1,7 +1,8 @@
 .wrapper {
     width: 100%;
     height: 56px;
-    border: 1px solid #EEEEEE;
+    box-sizing: border-box;
+    border-top: 1px solid #EEEEEE;
     position: absolute;
     bottom: 0;
     background-color: white;

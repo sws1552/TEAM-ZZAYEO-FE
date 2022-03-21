@@ -57,7 +57,8 @@ export default handleActions(
       }),
     [PRE_SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-        draft.pre_preview = [...state.pre_preview, action.payload.pre_preview];
+    
+        draft.pre_preview = action.payload.pre_preview
       }),
     [DELETE_PREVIEW]: (state, action) =>
       produce(state, (draft) => {

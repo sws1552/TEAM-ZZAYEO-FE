@@ -115,6 +115,7 @@ const Detailday = (props) => {
                   >
                     <Text>{v.time}</Text>
                     {myPlan?.userId?.email === userId ? (
+                      
                       <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]}/>
                     ) : null}
                   </div>
