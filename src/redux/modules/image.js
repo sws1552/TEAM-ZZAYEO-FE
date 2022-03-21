@@ -62,11 +62,7 @@ export default handleActions(
       }),
     [IMAGE_URL]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.imageURL)
-        // action.payload.imageURL.map((image,) => (
-        //   draft.imageURL = [...state.imageURL, image]
-        // ))
-        draft.imageURL = action.payload.imageURL
+        draft.imageURL = [...state.imageURL, action.payload.imageURL];
       }),
       
     [THUMBNAIL_URL]: (state, action) =>
