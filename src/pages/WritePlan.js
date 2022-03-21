@@ -183,7 +183,6 @@ const TitleBox = styled.div`
 const TripDestBox = styled(TitleBox)`
   div {
     width: 100%;
-    margin-bottom: 5px;
     display: flex;
     flex-direction: row;
     cursor: pointer;

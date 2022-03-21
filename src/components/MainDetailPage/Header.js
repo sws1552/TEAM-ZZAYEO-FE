@@ -216,10 +216,11 @@ const MsgBtn = styled.div`
 
 const PlanInfo = styled.div`
   width: 100%;
-  padding: 24px 24px 12px 24px;
+  padding: 24px 0px 12px 0px;
 `;
 
 const Title = styled.div`
+  padding-left: 24px;
   font-weight: 600;
   font-size: 24px;
   line-height: 28px;
@@ -227,6 +228,7 @@ const Title = styled.div`
 `;
 
 const Day = styled.div`
+  padding-left: 24px;
   margin-top: 4px;
   font-weight: 400;
   font-size: 14px;
@@ -235,6 +237,7 @@ const Day = styled.div`
 `;
 
 const Info = styled.div`
+  padding-left: 24px;
   margin-top: 2px;
   font-weight: 500;
   font-size: 14px;
