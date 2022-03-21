@@ -32,21 +32,19 @@ const style = {
 };
 
 export default function BasicModal(props) {
-    const { placeId } = props;
-
-    const { placesData } = props;
+    const { placeId, placesData } = props;
 
     console.log('placesData !! ',placesData);
 
-    const timeSpl = placesData.time.split(" ");
-
-    console.log('timeSpl[1] !! ',timeSpl[1]);
+    const timeSpl = placesData?.time?.split(" ");
 
     React.useEffect(() => {
-        setAmPm(timeSpl[0]);
-        setHour(timeSpl[1]);
-        setMinute(timeSpl[2]);
-        setMemo(placesData.memoText);
+        if(placesData){
+            setAmPm(timeSpl[0]);
+            setHour(timeSpl[1]);
+            setMinute(timeSpl[2]);
+            setMemo(placesData?.memoText);
+        }
     }, [])
 
     const dispatch = useDispatch();
@@ -228,7 +226,7 @@ export default function BasicModal(props) {
                         <TitleText>사진</TitleText>
                        
                         <div>
-                            <Upload />
+                            <Upload preImgUrl={placesData?.memoImage} placeId={placesData?.placeId}/>
                         </div>
                         <AddButton
                             onClick={() => {

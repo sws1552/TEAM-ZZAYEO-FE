@@ -4,6 +4,7 @@ import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternate
 import styled from "styled-components";
 import { actionCreators as imageActions } from "../redux/modules/image";
 import { actionCreators as addPlaceActions } from "../redux/modules/addPlace";
+import { actionCreators as planActions } from "../redux/modules/plan";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
@@ -12,6 +13,19 @@ const Upload = (props) => {
   const imageURL = useSelector((state) => state.image.imageURL);
   console.log(imageURL)
   const fileInput = React.useRef();
+
+  const {preImgUrl, placeId} = props;
+
+  console.log('preImgUrl !! ',preImgUrl);
+  console.log('placeId !! ',placeId);
+
+  React.useEffect(() => {
+    if(preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined"){
+      preImgUrl.forEach((item, i) => {
+        dispatch(imageActions.setPreview(item));
+      });
+    }
+  }, [])
 
   // 여러개 업로드
   const handleImageUpload = (e) => {
@@ -25,6 +39,8 @@ const Upload = (props) => {
     for (let i = 0; i < filesLength; i++) {
       file = fileArr[i];
       let reader = new FileReader();
+
+      console.log('fileArr !! ',fileArr);
 
       reader.onload = () => {
         fileURLs[i] = reader.result;
@@ -96,6 +112,11 @@ const Upload = (props) => {
                   <Button
                     onClick={() => {
                       dispatch(imageActions.deleteImage(idx));
+                      
+                      if(preImgUrl.includes(v)) {
+                        dispatch(planActions.deleteMyPostImageDB(placeId, idx));
+                      }
+
                     }}
                   >
                     <svg

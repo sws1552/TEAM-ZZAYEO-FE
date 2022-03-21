@@ -311,6 +311,22 @@ const deleteMyPostDB = (placeId) => {
   };
 };
 
+// 특정 여행 사진 삭제하기
+const deleteMyPostImageDB = (placeId, imageIndex) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .delete(`/api/plans/days/places/${placeId}/${imageIndex}`)
+      .then((res) => {
+        
+        console.log('특정 여행 사진 삭제 !! ', res);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 //게시물 수정
 export const editMyPostDB = (
   placeId,
@@ -343,7 +359,7 @@ export const editMyPostDB = (
     formData.append("lat", lat);
     formData.append("lng", lng);
     formData.append("address", address);
-    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
+    formData.append("time", `${AmPm} ${Hour} ${Minute}`);
     formData.append("memoText", Memo);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
@@ -450,7 +466,8 @@ const actionCreators = {
   searchDB,
   editMyPostDB,
   addThumbnailDB,
-  EditPlanDB
+  EditPlanDB,
+  deleteMyPostImageDB,
 };
 
 export { actionCreators };
