@@ -28,7 +28,7 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://3.36.50.53:3000/api/auth/kakao/callback?code=${code}`)
+      .get(`http://stgon.shop/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
@@ -71,7 +71,7 @@ const kakaoLogin = (code) => {
 const checkUserDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://3.36.50.53:3000/api/users/auth/me`, {
+      .get(`http://stgon.shop/api/users/auth/me`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         }
