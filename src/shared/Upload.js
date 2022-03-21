@@ -18,9 +18,9 @@ const Upload = (props) => {
     const fileArr = e.target.files;
     const filesArr = Array.from(e.target.files);
     let fileURLs = [];
-    console.log(filesArr)
+ 
     let file;
-    let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
+    let filesLength = fileArr.length > 5 ? 5 : fileArr.length;
 
     for (let i = 0; i < filesLength; i++) {
       file = fileArr[i];
@@ -29,10 +29,11 @@ const Upload = (props) => {
       reader.onload = () => {
         fileURLs[i] = reader.result;
         dispatch(imageActions.setPreview(reader.result));
-        dispatch(imageActions.imageURL(filesArr));
+        dispatch(imageActions.imageURL(filesArr[i]));
       };
       reader.readAsDataURL(file);
     }
+    
   };
 
   return (
@@ -82,9 +83,8 @@ const Upload = (props) => {
           {preview &&
             preview.map((v, idx) => {
               return (
-                <ImageBox>
+                <ImageBox key={v}>
                   <Image
-                    key={v}
                     width="100%"
                     src={
                       preview[idx]
