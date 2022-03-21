@@ -10,22 +10,23 @@ const Upload = (props) => {
   const dispatch = useDispatch();
   const uploading = useSelector((state) => state.image.uploading);
   const preview = useSelector((state) => state.image.preview);
+  const pre_preview = useSelector((state) => state.image.pre_preview);
   const imageURL = useSelector((state) => state.image.imageURL);
   console.log(imageURL)
   const fileInput = React.useRef();
 
   const {preImgUrl, placeId} = props;
 
-  console.log('preImgUrl !! ',preImgUrl);
+  console.log('pre_preview !! ',pre_preview);
   console.log('placeId !! ',placeId);
 
   React.useEffect(() => {
     if(preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined"){
       preImgUrl.forEach((item, i) => {
-        dispatch(imageActions.setPreview(item));
+        dispatch(imageActions.preSetPreview(item));
       });
     }
-  }, [])
+  }, [preImgUrl])
 
   // 여러개 업로드
   const handleImageUpload = (e) => {
@@ -40,7 +41,7 @@ const Upload = (props) => {
       file = fileArr[i];
       let reader = new FileReader();
 
-      console.log('fileArr !! ',fileArr);
+      // console.log('fileArr !! ',fileArr);
 
       reader.onload = () => {
         fileURLs[i] = reader.result;
@@ -96,6 +97,53 @@ const Upload = (props) => {
         />
 
         <TotalBox>
+          {pre_preview &&
+            pre_preview.map((v, idx) => {
+              return (
+                <ImageBox key={v}>
+                  <Image
+                    width="100%"
+                    src={
+                      pre_preview[idx]
+                        ? pre_preview[idx]
+                        : "http://via.placeholder.com/400x300"
+                    }
+                  ></Image>
+
+                  <Button
+                    onClick={() => {
+                      dispatch(imageActions.deletePrePreview(idx));
+                      dispatch(planActions.deleteMyPostImageDB(placeId, idx));
+                    }}
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3.42499 18.2739C7.52549 22.3744 14.1737 22.3744 18.2742 18.2739C22.3747 14.1734 22.3747 7.52513 18.2742 3.42462C14.1737 -0.675884 7.52549 -0.675884 3.42499 3.42462C-0.675517 7.52513 -0.675517 14.1734 3.42499 18.2739Z"
+                        fill="#212121"
+                      />
+                      <path
+                        d="M14.8477 7L6.84914 15"
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M6.85156 7L14.8501 15"
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Button>
+                </ImageBox>
+              );
+            })}
           {preview &&
             preview.map((v, idx) => {
               return (
@@ -112,10 +160,6 @@ const Upload = (props) => {
                   <Button
                     onClick={() => {
                       dispatch(imageActions.deleteImage(idx));
-                      
-                      if(preImgUrl.includes(v)) {
-                        dispatch(planActions.deleteMyPostImageDB(placeId, idx));
-                      }
 
                     }}
                   >
