@@ -74,6 +74,20 @@ const getNewChatFB = () => {
   };
 };
 
+const deleteChatRoomFB = (chatRoomId) => {
+  return async function (dispatch, getState, { history }) {
+    await instance
+      .delete(`/api/chat/${chatRoomId}`)
+      .then((res) => {
+        console.log("채팅방 삭제 res !! ", res);
+        dispatch(getChatListFB());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [GET_CHAT]: (state, action) =>
@@ -99,6 +113,7 @@ const actionCreators = {
   getChatRoomListFB,
   getChatListFB,
   getNewChatFB,
+  deleteChatRoomFB,
 };
 
 export { actionCreators };

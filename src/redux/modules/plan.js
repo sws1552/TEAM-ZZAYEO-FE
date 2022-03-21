@@ -369,6 +369,9 @@ export const editMyPostDB = (
       .post(`/api/plans/days/places/${placeId}`, formData, {})
       .then(function (response) {
         const planId = getState().plan.planId;
+
+        console.log('planId !! ',planId);
+
         instance.get(`/api/plans/${planId}`).then((res) => {
           console.log(res);
           dispatch(getdayPlan(res.data.plan));
