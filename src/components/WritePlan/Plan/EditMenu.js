@@ -15,7 +15,7 @@ const options = [
 const ITEM_HEIGHT = 48;
 
 export default function LongMenu(props) {
-    const { placeId } = props
+    const { placeId } = props;
 
     const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -65,7 +65,7 @@ export default function LongMenu(props) {
                                 dispatch(planActions.deleteMyPostDB(placeId))
                             }
                         }}>
-                        {option === "게시물 삭제" ? <div>삭제하기</div> : <EditPlanModal placeId={placeId} />}
+                        {option === "게시물 삭제" ? <div>삭제하기</div> : <EditPlanModal placeId={placeId} placesData={props.placesData}/>}
                     </MenuItem>
                 ))}
             </Menu>

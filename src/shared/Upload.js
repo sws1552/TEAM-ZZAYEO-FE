@@ -4,6 +4,7 @@ import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternate
 import styled from "styled-components";
 import { actionCreators as imageActions } from "../redux/modules/image";
 import { actionCreators as addPlaceActions } from "../redux/modules/addPlace";
+import { actionCreators as planActions } from "../redux/modules/plan";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
@@ -13,26 +14,42 @@ const Upload = (props) => {
   console.log(imageURL)
   const fileInput = React.useRef();
 
+  const {preImgUrl, placeId} = props;
+
+  console.log('preImgUrl !! ',preImgUrl);
+  console.log('placeId !! ',placeId);
+
+  React.useEffect(() => {
+    if(preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined"){
+      preImgUrl.forEach((item, i) => {
+        dispatch(imageActions.setPreview(item));
+      });
+    }
+  }, [])
+
   // 여러개 업로드
   const handleImageUpload = (e) => {
     const fileArr = e.target.files;
     const filesArr = Array.from(e.target.files);
     let fileURLs = [];
-    console.log(filesArr)
+ 
     let file;
-    let filesLength = fileArr.length > 10 ? 10 : fileArr.length;
+    let filesLength = fileArr.length > 5 ? 5 : fileArr.length;
 
     for (let i = 0; i < filesLength; i++) {
       file = fileArr[i];
       let reader = new FileReader();
 
+      console.log('fileArr !! ',fileArr);
+
       reader.onload = () => {
         fileURLs[i] = reader.result;
         dispatch(imageActions.setPreview(reader.result));
-        dispatch(imageActions.imageURL(filesArr));
+        dispatch(imageActions.imageURL(filesArr[i]));
       };
       reader.readAsDataURL(file);
     }
+    
   };
 
   return (
@@ -82,9 +99,8 @@ const Upload = (props) => {
           {preview &&
             preview.map((v, idx) => {
               return (
-                <ImageBox>
+                <ImageBox key={v}>
                   <Image
-                    key={v}
                     width="100%"
                     src={
                       preview[idx]
@@ -96,6 +112,11 @@ const Upload = (props) => {
                   <Button
                     onClick={() => {
                       dispatch(imageActions.deleteImage(idx));
+                      
+                      if(preImgUrl.includes(v)) {
+                        dispatch(planActions.deleteMyPostImageDB(placeId, idx));
+                      }
+
                     }}
                   >
                     <svg

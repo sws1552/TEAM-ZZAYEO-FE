@@ -63,7 +63,7 @@ const Onechat = (props) => {
                     :
                     null}
                 </Text>
-                <LastChat>{props.lastChat.chatText}</LastChat>
+                <LastChat>{props?.lastChat?.chatText}</LastChat>
                 <div style={{color: "#757575"}}>{displayCreatedAt(props?.updatedAt)}</div>
             </NickCon>
         </Container>

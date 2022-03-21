@@ -4,7 +4,6 @@ const token = localStorage.getItem("token");
 
 const instance = axios.create({
   baseURL: "http://stgon.shop",
-  // baseURL: "http://3.36.50.53:3000",
   // baseURL: "https://2a3fd3af-9615-47e1-be4a-4e899ee6da64.mock.pstmn.io"
   headers: {
     Authorization: `Bearer ${token}`,

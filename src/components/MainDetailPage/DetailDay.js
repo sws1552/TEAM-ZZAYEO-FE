@@ -10,6 +10,8 @@ const Detailday = (props) => {
   const dayList = props.days;
   const [currentTab, setCurrentTab] = useState(0);
 
+  console.log('dayList !! ',dayList);
+
   const polyLinedata = useSelector((state) => state.map.polyline);
   const myPlan = useSelector((state) => state.plan.myPlan);
   const userId = localStorage.getItem("userId");
@@ -113,7 +115,7 @@ const Detailday = (props) => {
                   >
                     <Text>{v.time}</Text>
                     {myPlan?.userId?.email === userId ? (
-                      <EditMenu placeId={v.placeId} />
+                      <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]}/>
                     ) : null}
                   </div>
                   <PlaceName>{v.placeName}</PlaceName>

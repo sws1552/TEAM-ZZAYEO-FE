@@ -6,9 +6,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
 import styled from 'styled-components';
-import { style } from "@mui/system";
+import { history } from "../../redux/ConfigureStore";
+import EditContents from "../AddPlan/EditContents";
 
-const options = ["게시물 삭제"];
+const options = [
+  '삭제하기',
+  '수정하기'
+];
 
 const ITEM_HEIGHT = 48;
 
@@ -58,13 +62,19 @@ export default function MyEditPost(props) {
         {options.map((option) => (
           <MenuItem
             key={option}
-            selected={option === "Pyxis"}
-            onClick={() => {
+            onClick={(e) => {
               handleClose();
-              dispatch(planActions.deleteMyPlanDB(planId));
+              if (option === "삭제하기") {
+                dispatch(planActions.deleteMyPlanDB(planId));
+              } 
+              if(option === "수정하기") {
+                e.stopPropagation();
+                dispatch(planActions.createPlan(planId));
+                history.push("/editplan");
+              }
             }}
           >
-            삭제하기
+           <div>{option}</div>
           </MenuItem>
         ))}
       </Menu>

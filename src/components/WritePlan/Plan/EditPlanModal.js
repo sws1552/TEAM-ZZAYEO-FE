@@ -32,13 +32,26 @@ const style = {
 };
 
 export default function BasicModal(props) {
-    const { placeId } = props
+    const { placeId, placesData } = props;
+
+    console.log('placesData !! ',placesData);
+
+    const timeSpl = placesData?.time?.split(" ");
+
+    React.useEffect(() => {
+        if(placesData){
+            setAmPm(timeSpl[0]);
+            setHour(timeSpl[1]);
+            setMinute(timeSpl[2]);
+            setMemo(placesData?.memoText);
+        }
+    }, [])
 
     const dispatch = useDispatch();
-    const [Hour, setHour] = React.useState("0");
-    const [Minute, setMinute] = React.useState("00");
-    const [AmPm, setAmPm] = React.useState("오전");
-    const [Memo, setMemo] = React.useState("");
+    const [Hour, setHour] = React.useState('');
+    const [Minute, setMinute] = React.useState('');
+    const [AmPm, setAmPm] = React.useState('');
+    const [Memo, setMemo] = React.useState('');
 
     const placeName = useSelector((state) => state.addPlace.placeName);
     const lat = useSelector((state) => state.addPlace.lat);
@@ -61,32 +74,32 @@ export default function BasicModal(props) {
     };
 
     const HOUR_SELECT = [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "10",
-        "11",
-        "12",
+        "0시",
+        "1시",
+        "2시",
+        "3시",
+        "4시",
+        "5시",
+        "6시",
+        "7시",
+        "8시",
+        "9시",
+        "10시",
+        "11시",
+        "12시",
     ];
     const MINUTE_SELECT = [
-        "00",
-        "10",
-        "15",
-        "20",
-        "25",
-        "30",
-        "35",
-        "40",
-        "45",
-        "50",
-        "55",
+        "00분",
+        "10분",
+        "15분",
+        "20분",
+        "25분",
+        "30분",
+        "35분",
+        "40분",
+        "45분",
+        "50분",
+        "55분",
     ];
     const AMPM = ["오전", "오후"];
 
@@ -112,10 +125,10 @@ export default function BasicModal(props) {
                             <div
                                 style={{ cursor: "pointer" }}
                                 onClick={() => {
-                                    setHour("0");
-                                    setMinute("00");
-                                    setAmPm("오전");
-                                    setMemo("");
+                                    // setHour("0");
+                                    // setMinute("00");
+                                    // setAmPm("오전");
+                                    // setMemo("");
                                     dispatch(imageActions.initialPreview([]));
                                     dispatch(imageActions.initialImage([]));
                                     setOpen(false)
@@ -138,7 +151,7 @@ export default function BasicModal(props) {
                                     onChange={ampmChange}
                                     inputProps={{
                                         name: "time",
-                                        id: "uncontrolled-native",
+                                        id: "uncontrolled-native1",
                                     }}
                                 >
                                     {AMPM.map((ampm, idx) => {
@@ -156,14 +169,14 @@ export default function BasicModal(props) {
                                     defaultValue={Hour}
                                     onChange={hourChange}
                                     inputProps={{
-                                        name: "age",
-                                        id: "uncontrolled-native",
+                                        name: "time1",
+                                        id: "uncontrolled-native2",
                                     }}
                                 >
                                     {HOUR_SELECT.map((hour, idx) => {
                                         return (
                                             <option key={idx} value={hour}>
-                                                {hour}시
+                                                {hour}
                                             </option>
                                         );
                                     })}
@@ -175,14 +188,14 @@ export default function BasicModal(props) {
                                     defaultValue={Minute}
                                     onChange={minuteChange}
                                     inputProps={{
-                                        name: "age",
-                                        id: "uncontrolled-native",
+                                        name: "time2",
+                                        id: "uncontrolled-native3",
                                     }}
                                 >
                                     {MINUTE_SELECT.map((minute, idx) => {
                                         return (
                                             <option key={idx} value={minute}>
-                                                {minute}분
+                                                {minute}
                                             </option>
                                         );
                                     })}
@@ -213,7 +226,7 @@ export default function BasicModal(props) {
                         <TitleText>사진</TitleText>
                        
                         <div>
-                            <Upload />
+                            <Upload preImgUrl={placesData?.memoImage} placeId={placesData?.placeId}/>
                         </div>
                         <AddButton
                             onClick={() => {

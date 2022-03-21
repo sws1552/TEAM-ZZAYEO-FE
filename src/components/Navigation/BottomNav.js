@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const BottomNav = () => {
   // 현재 선택된 아이콘을 관리하는 state
   const [activeNav, setActiveNav] = useState(1);
-  console.log(activeNav);
+
   return (
     <nav className="wrapper">
       {/* 하단 네비게이션 최상위 태그 */}
