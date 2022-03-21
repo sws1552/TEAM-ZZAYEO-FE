@@ -80,6 +80,24 @@ const createPlanDB = (plan) => {
   };
 };
 
+//일정수정하기
+const EditPlanDB = (plan, planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .patch(`/api/plans/${planId}`, plan)
+      .then((res) => {
+        console.log(res)
+        // const planId = res.data.planId;
+        // dispatch(createPlan(planId));
+        history.push(`/writeplan/${planId}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+};
+
+
 //특정 여행 받아오기
 const getdayPlanDB = (planId) => {
   return function (dispatch, getState, { history }) {
@@ -377,6 +395,9 @@ const addThumbnailDB = (planId, imageURL) => {
   };
 };
 
+
+
+
 //리덕스
 export default handleActions(
   {
@@ -413,6 +434,7 @@ export default handleActions(
 const actionCreators = {
   getPlanDB,
   createPlanDB,
+  createPlan,
   getdayPlanDB,
   saveLocationDB,
   getBookMark,
@@ -428,6 +450,7 @@ const actionCreators = {
   searchDB,
   editMyPostDB,
   addThumbnailDB,
+  EditPlanDB
 };
 
 export { actionCreators };
