@@ -19,6 +19,7 @@ import MyPage from "../pages/MyPage";
 import MypageProUp from "../pages/MypageProUp";
 import MypageSetting from "../pages/MypageSetting";
 import Myplan from "../pages/Myplan";
+import EditPlan from "../pages/EditPlan";
 import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
 import BottomNav from "../components/Navigation/BottomNav";
@@ -35,6 +36,7 @@ function App() {
             <Route path="/login" exact component={Login} />
             <Route path="/myplan" exact component={Myplan} />
             <Route path="/addplan" exact component={AddPlan} />
+            <Route path="/editplan" exact component={EditPlan} />
             <Route path="/writeplan/:planId" exact component={WritePlan} />
             <Route path="/search" exact component={Search}></Route>
             <Route

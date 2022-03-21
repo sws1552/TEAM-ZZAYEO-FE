@@ -13,12 +13,12 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: "350px",
+  width: "400px",
+  boxSizing: "border-box",
   height: "720px",
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 24,
-  p: 3,
 };
 
 const AddButton = styled.div`
@@ -43,6 +43,17 @@ const ADDPlace = styled.div`
   border: none;
   cursor: pointer;
 `
+const Header = styled.div`
+height: 56px;
+line-height: 56px;
+padding: 0px 24px;
+display: flex;
+justify-content: space-between;
+box-sizing: border-box;
+font-size: 18px;
+font-weight: 700;
+align-items: center;
+`
 
 export default function SearhModal() {
   const placeName = useSelector((state) => state.addPlace.placeName);
@@ -65,6 +76,22 @@ export default function SearhModal() {
       >
         <Box sx={style}>
           <div>
+            <Header>
+              <div>장소선택</div>
+              <div>
+                <svg style={{ cursor: "pointer", display: "block" }}
+                  width="24" height="24"
+                  viewBox="0 0 24 24" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
+                    fill="black"
+                    fillOpacity="0.87" />
+                </svg>
+              </div>
+            </Header>
             <SearchMap />
             <AddButton
               onClick={() => {
