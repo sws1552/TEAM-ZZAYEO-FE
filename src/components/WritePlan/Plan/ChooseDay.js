@@ -91,7 +91,7 @@ const ChooseDay = (props) => {
               <div style={{width:"100%", display: "table-cell" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Text>{v.time}</Text>
-                    <EditMenu placeId={v.placeId} />
+                    <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]} />
                   </div>
                   <PlaceName>{v.placeName}</PlaceName>
                   <Address>주소:{v.address}</Address>
