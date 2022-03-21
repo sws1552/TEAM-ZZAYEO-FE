@@ -74,7 +74,7 @@ const checkUserDB = () => {
       .get(`http://stgon.shop/api/users/auth/me`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
-        }
+        },
       })
       .then((res) => {
         let userId = res.data.userId;
@@ -123,7 +123,7 @@ export default handleActions(
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         // localStorage.removeItem("token");
-        localStorage.clear(); 
+        localStorage.clear();
         draft.user = null;
         draft.is_login = false;
       }),

@@ -95,7 +95,7 @@ const Modal = styled.div`
   bottom: 0;
   max-width: 420px;
   width: 100%;
-  height: 586px;
+  height: 418px;
   background-color: #ffffff;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;

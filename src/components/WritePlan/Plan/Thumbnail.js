@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as imageActions } from "../../../redux/modules/image";
 const Thumbnail = (props) => {
   const dispatch = useDispatch();
