@@ -45,7 +45,6 @@ export default handleActions(
         draft.lng = lng
         draft.address = address
         draft.geometry = place[0].geometry
-
       }),
    
     [ADDTIME]: (state, action) =>
