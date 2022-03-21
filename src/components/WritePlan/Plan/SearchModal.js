@@ -13,10 +13,10 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  maxWidth: "400px",
+  maxWidth: "420px",
   width: "100%",
   boxSizing: "border-box",
-  height: "720px",
+  height: "100%",
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 24

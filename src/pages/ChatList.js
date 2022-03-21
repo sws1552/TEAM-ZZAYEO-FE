@@ -79,7 +79,7 @@ const ChatList = (props) => {
 
 const ListContainer = styled.div`
   width: 100%;
-  height: 90%;
+  height: 93.7%;
   /* background-color: orange; */
   padding: 25px 0;
   box-sizing: border-box;

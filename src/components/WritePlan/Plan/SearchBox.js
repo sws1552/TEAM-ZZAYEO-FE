@@ -53,9 +53,9 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
   }, [map, mapApi, handleOnPlacesChanged]);
 
   return (
-    <>
+    <div>
       <ElInput ref={input} className="pac-container" placeholder="장소를 검색해주세요" type="text" />
-    </>
+    </div>
   )
 };
 
@@ -70,14 +70,14 @@ const ElInput = styled.input`
     border-radius: 22px;
     margin-top: 60px;
     padding: 0px 19px;
-
+    display: flex;
+    align-items: center;
     :focus {
         outline:none;
         caret-color: gray;
         }
    
     ::placeholder {
-      line-height: 40px;
       font-size: 14px;
       font-weight: 400;
     }
