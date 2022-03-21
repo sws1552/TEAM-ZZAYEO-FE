@@ -1,6 +1,7 @@
 .wrapper {
     width: 100%;
     height: 56px;
+    border: 1px solid #EEEEEE;
     position: absolute;
     bottom: 0;
     background-color: white;
@@ -19,7 +20,9 @@
   
     /* 세로길이 설정 */
     height: 56px;
-    line-height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   /* 하단 네비바의 메뉴를 눌렀을 때 색상 변경*/
