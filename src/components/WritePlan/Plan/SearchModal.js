@@ -13,27 +13,28 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: "400px",
+  maxWidth: "400px",
+  width: "100%",
   boxSizing: "border-box",
   height: "720px",
   bgcolor: 'background.paper',
   border: 'none',
-  boxShadow: 24,
+  boxShadow: 24
 };
 
 const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px auto 0px auto;
   width: 100%;
-  height: 45px;
+  height: 54px;
   background-color: #4E49E2;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
   cursor: pointer;
-  border-radius: 8px;
+  position: absolute;
+  bottom: 0
 `
 
 const ADDPlace = styled.div`
@@ -53,6 +54,7 @@ box-sizing: border-box;
 font-size: 18px;
 font-weight: 700;
 align-items: center;
+font-family: "Roboto", sans-serif;
 `
 
 export default function SearhModal() {
@@ -78,7 +80,9 @@ export default function SearhModal() {
           <div>
             <Header>
               <div>장소선택</div>
-              <div>
+              <div onClick={()=>{
+                setOpen(false)
+              }}>
                 <svg style={{ cursor: "pointer", display: "block" }}
                   width="24" height="24"
                   viewBox="0 0 24 24" fill="none"
