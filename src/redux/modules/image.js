@@ -4,7 +4,9 @@ import produce from "immer";
 // actions
 const UPLOADING = "UPLOADING";
 const SET_PREVIEW = "SET_PREVIEW";
+const PRE_SET_PREVIEW = "PRE_SET_PREVIEW";
 const DELETE_PREVIEW = "DELETE_PREVIEW";
+const DELETE_PRE_PREVIEW = "DELETE_PRE_PREVIEW";
 const INITIAL_PREVIEW = "INITIAL_PREVIEW";
 const IMAGE_URL = "IMAGEURL";
 const DELETE_IMAGE = "DELETEIMAGE";
@@ -14,7 +16,9 @@ const THUMBNAIL_URL = "THUMBNAIL_URL";
 // action creators
 const uploading = createAction(UPLOADING, (uploading) => ({ uploading }));
 const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
+const preSetPreview = createAction(PRE_SET_PREVIEW, (pre_preview) => ({ pre_preview }));
 const deletePreview = createAction(DELETE_PREVIEW, (index) => ({ index }));
+const deletePrePreview = createAction(DELETE_PRE_PREVIEW, (i) => ({ i }));
 const initialPreview = createAction(INITIAL_PREVIEW, (initial) => ({
   initial,
 }));
@@ -31,6 +35,7 @@ const initialState = {
   image_url: "",
   uploading: false,
   preview: [],
+  pre_preview: [],
   imageURL: [],
   thumbnailURL: [],
 };
@@ -50,10 +55,21 @@ export default handleActions(
         // console.log(action.payload.preview)
         // draft.preview = action.payload.preview
       }),
+    [PRE_SET_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+    
+        draft.pre_preview = action.payload.pre_preview
+      }),
     [DELETE_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
         draft.preview = state.preview.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
+        });
+      }),
+    [DELETE_PRE_PREVIEW]: (state, action) =>
+      produce(state, (draft) => {
+        draft.pre_preview = state.pre_preview.filter((l, idx) => {
+          return parseInt(action.payload.i) !== idx;
         });
       }),
     [INITIAL_PREVIEW]: (state, action) =>
@@ -78,7 +94,9 @@ export default handleActions(
         const new_Image = state.imageURL.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
         });
-        return { imageURL: new_Image, preview: new_preview };
+        
+        draft.imageURL = new_Image;
+        draft.preview = new_preview;
       }),
     [INITIAL_IMAGE]: (state, action) =>
       produce(state, (draft) => {
@@ -99,6 +117,8 @@ const actionCreators = {
   deleteImage,
   initialImage,
   thumbnailURL,
+  preSetPreview,
+  deletePrePreview,
 };
 
 export { actionCreators };

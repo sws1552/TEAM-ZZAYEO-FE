@@ -123,7 +123,6 @@ export const saveLocationDB = (
   lng,
   address,
   imageURL,
-  geometry
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -137,7 +136,6 @@ export const saveLocationDB = (
       lng,
       address,
       imageURL,
-      geometry.viewport
     );
 
     let formData = new FormData();
@@ -147,7 +145,6 @@ export const saveLocationDB = (
     formData.append("address", address);
     formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
-    formData.append("geometry_viewport", geometry.viewport);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });
@@ -317,9 +314,7 @@ const deleteMyPostImageDB = (placeId, imageIndex) => {
     instance
       .delete(`/api/plans/days/places/${placeId}/${imageIndex}`)
       .then((res) => {
-        
         console.log('특정 여행 사진 삭제 !! ', res);
-        
       })
       .catch((error) => {
         console.log(error);
@@ -338,7 +333,8 @@ export const editMyPostDB = (
   lat,
   lng,
   address,
-  imageURL
+  imageURL,
+  planId
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -351,7 +347,8 @@ export const editMyPostDB = (
       lat,
       lng,
       address,
-      imageURL
+      imageURL,
+      planId
     );
 
     let formData = new FormData();
@@ -364,11 +361,9 @@ export const editMyPostDB = (
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
     });
-
     instance
       .post(`/api/plans/days/places/${placeId}`, formData, {})
       .then(function (response) {
-        const planId = getState().plan.planId;
         instance.get(`/api/plans/${planId}`).then((res) => {
           console.log(res);
           dispatch(getdayPlan(res.data.plan));
@@ -379,6 +374,7 @@ export const editMyPostDB = (
       });
   };
 };
+
 // 검색하기
 const searchDB = (query) => {
   return function (dispatch, getState, { history }) {
@@ -410,8 +406,6 @@ const addThumbnailDB = (planId, imageURL) => {
       });
   };
 };
-
-
 
 
 //리덕스

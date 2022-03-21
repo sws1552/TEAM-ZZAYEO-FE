@@ -47,7 +47,7 @@ export default function BasicModal(props) {
   const lng = useSelector((state) => state.addPlace.lng);
   const address = useSelector((state) => state.addPlace.address);
   const imageURL = useSelector((state) => state.image.imageURL);
-  const geometry = useSelector((state) => state.addPlace.geometry);
+
 
   const memoChange = (e) => {
     setMemo(e.target.value);
@@ -187,7 +187,6 @@ export default function BasicModal(props) {
                     lng,
                     address,
                     imageURL,
-                    geometry
                   )
                 );
                 setMemo("");
