@@ -11,13 +11,10 @@ const Upload = (props) => {
   const uploading = useSelector((state) => state.image.uploading);
   const preview = useSelector((state) => state.image.preview);
   const imageURL = useSelector((state) => state.image.imageURL);
-  console.log(imageURL)
+  console.log(preview)
   const fileInput = React.useRef();
 
   const {preImgUrl, placeId} = props;
-
-  console.log('preImgUrl !! ',preImgUrl);
-  console.log('placeId !! ',placeId);
 
   React.useEffect(() => {
     if(preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined"){
@@ -98,6 +95,7 @@ const Upload = (props) => {
         <TotalBox>
           {preview &&
             preview.map((v, idx) => {
+              console.log(v)
               return (
                 <ImageBox key={v}>
                   <Image
