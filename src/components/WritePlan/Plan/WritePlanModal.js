@@ -2,17 +2,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 import { actionCreators as planActions } from "../../../redux/modules/plan";
 import { actionCreators as imageActions } from "../../../redux/modules/image";
 import { actionCreators as mapActions } from "../../../redux/modules/map";
-import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
-
-import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
 
 import styled from "styled-components";
 import Upload from "../../../shared/Upload";
@@ -37,9 +31,7 @@ export default function BasicModal(props) {
   const dayNumber = props.dayNumber;
 
   const dispatch = useDispatch();
-  const [Hour, setHour] = React.useState("0");
-  const [Minute, setMinute] = React.useState("00");
-  const [AmPm, setAmPm] = React.useState("오전");
+
   const [Memo, setMemo] = React.useState("");
 
   const placeName = useSelector((state) => state.addPlace.placeName);
@@ -47,7 +39,6 @@ export default function BasicModal(props) {
   const lng = useSelector((state) => state.addPlace.lng);
   const address = useSelector((state) => state.addPlace.address);
   const imageURL = useSelector((state) => state.image.imageURL);
-
 
   const memoChange = (e) => {
     setMemo(e.target.value);
@@ -58,6 +49,10 @@ export default function BasicModal(props) {
   const handleClose = () => setOpen(false);
 
   //시간추가하기
+  const [AmPm, setAmPm] = React.useState("오전");
+  const [Hour, setHour] = React.useState("0");
+  const [Minute, setMinute] = React.useState("00");
+
   const [msg, setMsg] = React.useState("+ 시간을 추가해주세요.");
   const [timeModal, setTimeModal] = React.useState(false);
 
@@ -125,7 +120,7 @@ export default function BasicModal(props) {
               </div>
             </Addplanbox>
             <TitleText>시간</TitleText>
-            <Date onClick={timeOpenModal}>
+            <Time onClick={timeOpenModal}>
               <p>{msg}</p>
               <svg
                 width="24"
@@ -141,7 +136,7 @@ export default function BasicModal(props) {
                   strokeLinecap="round"
                 />
               </svg>
-            </Date>
+            </Time>
             <TimeModal
               timeModal={timeModal}
               timeCloseModal={timeCloseModal}
@@ -186,7 +181,7 @@ export default function BasicModal(props) {
                     lat,
                     lng,
                     address,
-                    imageURL,
+                    imageURL
                   )
                 );
                 setMemo("");
@@ -301,7 +296,7 @@ const ADDPlace = styled.div`
   font-weight: 500;
 `;
 
-const Date = styled.div`
+const Time = styled.div`
   border: 1px solid #bdbdbd;
   box-sizing: border-box;
   border-radius: 4px;

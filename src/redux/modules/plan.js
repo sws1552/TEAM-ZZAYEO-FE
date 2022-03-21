@@ -86,7 +86,7 @@ const EditPlanDB = (plan, planId) => {
     instance
       .patch(`/api/plans/${planId}`, plan)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         // const planId = res.data.planId;
         // dispatch(createPlan(planId));
         history.push(`/writeplan/${planId}`);
@@ -96,7 +96,6 @@ const EditPlanDB = (plan, planId) => {
       });
   };
 };
-
 
 //특정 여행 받아오기
 const getdayPlanDB = (planId) => {
@@ -122,7 +121,7 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL,
+  imageURL
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -135,7 +134,7 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL,
+      imageURL
     );
 
     let formData = new FormData();
@@ -314,7 +313,7 @@ const deleteMyPostImageDB = (placeId, imageIndex) => {
     instance
       .delete(`/api/plans/days/places/${placeId}/${imageIndex}`)
       .then((res) => {
-        console.log('특정 여행 사진 삭제 !! ', res);
+        console.log("특정 여행 사진 삭제 !! ", res);
       })
       .catch((error) => {
         console.log(error);
@@ -356,7 +355,7 @@ export const editMyPostDB = (
     formData.append("lat", lat);
     formData.append("lng", lng);
     formData.append("address", address);
-    formData.append("time", `${AmPm} ${Hour} ${Minute}`);
+    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
@@ -406,7 +405,6 @@ const addThumbnailDB = (planId, imageURL) => {
       });
   };
 };
-
 
 //리덕스
 export default handleActions(

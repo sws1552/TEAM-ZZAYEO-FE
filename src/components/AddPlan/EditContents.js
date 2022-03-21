@@ -10,7 +10,6 @@ import { addDays } from "date-fns";
 import DateModal from "./DateModal";
 
 const EditContents = (props) => {
- 
   const dispatch = useDispatch();
 
   const planId = useSelector((store) => store.plan.planId);
@@ -202,9 +201,11 @@ const EditContents = (props) => {
           })}
         </div>
       </TripstyleBox>
-      <Button onClick={()=>{
-          editPlan()
-      }}>
+      <Button
+        onClick={() => {
+          editPlan();
+        }}
+      >
         <p>세부일정 수정하기</p>
       </Button>
     </Container>
