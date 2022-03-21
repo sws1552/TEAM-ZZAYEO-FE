@@ -9,11 +9,20 @@ const Myplan = (props) => {
   const dispatch = useDispatch();
   const { history } = props;
 
+  const is_token = localStorage.getItem("token") ? true : false;
   const myplans = useSelector((store) => store.plan.myplans);
 
   React.useEffect(() => {
     dispatch(planActions.getMyPlanDB());
   }, []);
+
+  const onAddPlan = () => {
+    if (is_token) {
+      return history.push("/addplan");
+    }
+    window.alert("로그인 후 이용가능합니다.");
+    history.push("/login");
+  };
 
   return (
     <React.Fragment>
@@ -22,11 +31,7 @@ const Myplan = (props) => {
           <TText>나의 여행</TText>
         </Top>
         <Bottom>
-          <AddPlanBtn
-            onClick={() => {
-              history.push("/addplan");
-            }}
-          >
+          <AddPlanBtn onClick={onAddPlan}>
             <svg
               width="32"
               height="32"

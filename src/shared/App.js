@@ -24,7 +24,6 @@ import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
 import BottomNav from "../components/Navigation/BottomNav";
 
-
 function App() {
   return (
     <React.Fragment>
@@ -53,7 +52,7 @@ function App() {
             <Route path="/mypageproup" exact component={MypageProUp} />
             <Route path="/mypageset" exact component={MypageSetting} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
-           <BottomNav/>
+            <BottomNav />
           </Container>
         </ConnectedRouter>
       </Fullscreen>
