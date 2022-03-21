@@ -1,10 +1,5 @@
 .pac-container {
-    background-color: #FFF;
-    z-index: 2001;
-    /* position: fixed;
-    display: inline-block; */
-    float: left;
-    
-    margin: 10px auto;
+    z-index: 2000;
+    ;
 }
 
