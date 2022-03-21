@@ -205,7 +205,7 @@ const EditContents = (props) => {
       <Button onClick={()=>{
           editPlan()
       }}>
-        <p>세부일정 작성하기</p>
+        <p>세부일정 수정하기</p>
       </Button>
     </Container>
   );

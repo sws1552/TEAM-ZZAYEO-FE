@@ -43,7 +43,7 @@ const SearchMap = () => {
         <SearchBar map={map} mapApi={googlemaps} addPlace={addPlace} />
       )}
 
-      <div style={{ height: "650px", width: "100%", margin: "auto" }}>
+      <div style={{ height: "610px", width: "100%"}}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: "AIzaSyD688QW0Av06YgBIC_XFCTwxAbiNDMsMQA",
@@ -72,11 +72,6 @@ const SearchMap = () => {
             ))}
         </GoogleMapReact>
       </div>
-      {/* <Button
-      onClick={()=>{
-        dispatch(addPlaceActions.addlocation(places))
-      }}
-      >장소추가</Button> */}
     </Container>
   );
 };
@@ -85,21 +80,8 @@ export default SearchMap;
 
 const Container = styled.div`
   width: 100%;
-  height: 650px;
+  height: 610px;
   box-sizing: border-box;
-  margin: auto;
+  position: relative;
 `;
 
-const Button = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto 0px auto;
-  width: 100%;
-  height: 45px;
-  background-color: #4e49e2;
-  font-size: 16px;
-  font-weight: 500;
-  color: #ffffff;
-  cursor: pointer;
-`;

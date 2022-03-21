@@ -12,7 +12,7 @@ SwiperCore.use([Navigation, Pagination]);
 
 const SwiperImage = (props) => {
   const { image } = props;
-
+  
   return (
     <div>
       {image &&
