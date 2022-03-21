@@ -37,9 +37,9 @@ export default function BasicModal(props) {
   const dayNumber = props.dayNumber;
 
   const dispatch = useDispatch();
-  // const [Hour, setHour] = React.useState("0");
-  // const [Minute, setMinute] = React.useState("00");
-  // const [AmPm, setAmPm] = React.useState("오전");
+  const [Hour, setHour] = React.useState("0");
+  const [Minute, setMinute] = React.useState("00");
+  const [AmPm, setAmPm] = React.useState("오전");
   const [Memo, setMemo] = React.useState("");
 
   const placeName = useSelector((state) => state.addPlace.placeName);
@@ -53,46 +53,6 @@ export default function BasicModal(props) {
     setMemo(e.target.value);
   };
 
-  //   const ampmChange = (e) => {
-  //     setAmPm(e.target.value);
-  // };
-  // const hourChange = (e) => {
-  //     setHour(e.target.value);
-  // };
-  // const minuteChange = (e) => {
-  //     setMinute(e.target.value);
-  // };
-
-  // const HOUR_SELECT = [
-  //     "0",
-  //     "1",
-  //     "2",
-  //     "3",
-  //     "4",
-  //     "5",
-  //     "6",
-  //     "7",
-  //     "8",
-  //     "9",
-  //     "10",
-  //     "11",
-  //     "12",
-  // ];
-  // const MINUTE_SELECT = [
-  //     "00",
-  //     "10",
-  //     "15",
-  //     "20",
-  //     "25",
-  //     "30",
-  //     "35",
-  //     "40",
-  //     "45",
-  //     "50",
-  //     "55",
-  // ];
-  // const AMPM = ["오전", "오후"];
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -101,19 +61,16 @@ export default function BasicModal(props) {
   const [msg, setMsg] = React.useState("+ 시간을 추가해주세요.");
   const [timeModal, setTimeModal] = React.useState(false);
 
-  const [valueGroups, setValueGroups] = React.useState({
-    ampm: "오전",
-    hour: "0",
-    minute: "00",
-  });
-
   const timeOpenModal = () => {
     setTimeModal(true);
   };
 
-  const timeCloseModal = () => {
+  const timeCloseModal = (e) => {
     setTimeModal(false);
-    setMsg("");
+    setAmPm(AmPm);
+    setHour(Hour);
+    setMinute(Minute);
+    setMsg(AmPm + " " + Hour + "시 " + Minute + "분");
   };
 
   return (
@@ -124,7 +81,7 @@ export default function BasicModal(props) {
           dispatch(mapActions.sendDayId(dayId));
         }}
       >
-        +장소를 추가해주세요
+        + 장소를 추가해주세요
       </ADDPlace>
       <Modal
         open={open}
@@ -167,7 +124,6 @@ export default function BasicModal(props) {
                 </svg>
               </div>
             </Addplanbox>
-
             <TitleText>시간</TitleText>
             <Date onClick={timeOpenModal}>
               <p>{msg}</p>
@@ -189,68 +145,13 @@ export default function BasicModal(props) {
             <TimeModal
               timeModal={timeModal}
               timeCloseModal={timeCloseModal}
-              valueGroups={valueGroups}
-              setValueGroups={setValueGroups}
+              Hour={Hour}
+              setHour={setHour}
+              Minute={Minute}
+              setMinute={setMinute}
+              AmPm={AmPm}
+              setAmPm={setAmPm}
             ></TimeModal>
-            {/* <Time>
-              <FormControl sx={{ m: 1, minWidth: 100 }}>
-                <NativeSelect
-                  defaultValue={AmPm}
-                  onChange={ampmChange}
-                  inputProps={{
-                    name: "time",
-                    id: "uncontrolled-native",
-                  }}
-                >
-                  {AMPM.map((ampm, idx) => {
-                    return (
-                      <option key={idx} value={ampm}>
-                        {ampm}
-                      </option>
-                    );
-                  })}
-                </NativeSelect>
-              </FormControl>
-
-              <FormControl sx={{ m: 1, minWidth: 100 }}>
-                <NativeSelect
-                  defaultValue={Hour}
-                  onChange={hourChange}
-                  inputProps={{
-                    name: "age",
-                    id: "uncontrolled-native",
-                  }}
-                >
-                  {HOUR_SELECT.map((hour, idx) => {
-                    return (
-                      <option key={idx} value={hour}>
-                        {hour}시
-                      </option>
-                    );
-                  })}
-                </NativeSelect>
-              </FormControl>
-
-              <FormControl sx={{ m: 1, minWidth: 100 }}>
-                <NativeSelect
-                  defaultValue={Minute}
-                  onChange={minuteChange}
-                  inputProps={{
-                    name: "age",
-                    id: "uncontrolled-native",
-                  }}
-                >
-                  {MINUTE_SELECT.map((minute, idx) => {
-                    return (
-                      <option key={idx} value={minute}>
-                        {minute}분
-                      </option>
-                    );
-                  })}
-                </NativeSelect>
-              </FormControl>
-            </Time> */}
-
             <TitleText>장소</TitleText>
             <Location>
               <SearchLoaction>
@@ -268,9 +169,7 @@ export default function BasicModal(props) {
                 rows="10"
               />
             </div>
-
             <TitleText>사진</TitleText>
-
             <div>
               <Upload />
             </div>
@@ -279,12 +178,9 @@ export default function BasicModal(props) {
                 dispatch(
                   planActions.saveLocationDB(
                     dayId,
-                    // AmPm,
-                    // Hour,
-                    // Minute,
-                    // valueGroups.ampm,
-                    // valueGroups.hour,
-                    // valueGroups.minute,
+                    AmPm,
+                    Hour,
+                    Minute,
                     Memo,
                     placeName,
                     lat,
@@ -294,9 +190,6 @@ export default function BasicModal(props) {
                     geometry
                   )
                 );
-                // setHour("0");
-                // setMinute("00");
-                // setAmPm("오전");
                 setMemo("");
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));

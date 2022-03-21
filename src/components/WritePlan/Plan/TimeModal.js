@@ -1,62 +1,60 @@
 import React from "react";
 import styled from "styled-components";
-import WheelPicker from "react-simple-wheel-picker";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
+// import WheelPicker from "react-simple-wheel-picker";
 
 const TimeModal = (props) => {
-  const { timeModal, timeCloseModal, valueGroups, setValueGroups } = props;
+  const {
+    timeModal,
+    timeCloseModal,
+    Hour,
+    setHour,
+    Minute,
+    setMinute,
+    AmPm,
+    setAmPm,
+  } = props;
 
-  const setKeyValue = (arr) => {
-    return arr.map((item) => {
-      const dataSet = {
-        id: item,
-        value: item,
-      };
-      return dataSet;
-    });
+  const HOUR_SELECT = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+  ];
+  const MINUTE_SELECT = [
+    "00",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "55",
+  ];
+  const AMPM = ["오전", "오후"];
+
+  const ampmChange = (e) => {
+    setAmPm(e.target.value);
   };
-
-  const newOptionGroups = (optionGroups) => {
-    let groups = {};
-    for (const group in optionGroups) {
-      groups[group] = setKeyValue(optionGroups[group]);
-    }
-    return groups;
+  const hourChange = (e) => {
+    setHour(e.target.value);
   };
-
-  const optionGroups = {
-    hour: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-    minute: ["00", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"],
-    ampm: ["AM", "PM"],
+  const minuteChange = (e) => {
+    setMinute(e.target.value);
   };
-
-  const opGroups = newOptionGroups(optionGroups);
-
-  let pickerColumn = [];
-
-  const handleOnChange = (target) => {
-    console.log(target.value);
-  };
-
-  console.log(opGroups);
-  for (const group in opGroups) {
-    const data = opGroups[group];
-
-    pickerColumn.push(
-      <StyledWheelPicker
-        data={data}
-        onChange={handleOnChange}
-        height={249}
-        width={100}
-        itemHeight={37}
-        selectedID={data[0].id}
-        color="#bdbdbd"
-        activeColor="#212121"
-        backgroundColor="#ffffff"
-        shadowColor="none"
-        fontSize={16}
-      />
-    );
-  }
 
   if (timeModal) {
     return (
@@ -88,7 +86,64 @@ const TimeModal = (props) => {
               </CancelBtn>
               <Text>시간추가</Text>
             </Header>
-            <PickerContainer>{pickerColumn}</PickerContainer>
+            <Time>
+              <FormControl sx={{ m: 1, minWidth: 100 }}>
+                <NativeSelect
+                  defaultValue={AmPm}
+                  onChange={ampmChange}
+                  inputProps={{
+                    name: "time",
+                    id: "uncontrolled-native",
+                  }}
+                >
+                  {AMPM.map((ampm, idx) => {
+                    return (
+                      <option key={idx} value={ampm}>
+                        {ampm}
+                      </option>
+                    );
+                  })}
+                </NativeSelect>
+              </FormControl>
+
+              <FormControl sx={{ m: 1, minWidth: 100 }}>
+                <NativeSelect
+                  defaultValue={Hour}
+                  onChange={hourChange}
+                  inputProps={{
+                    name: "age",
+                    id: "uncontrolled-native",
+                  }}
+                >
+                  {HOUR_SELECT.map((hour, idx) => {
+                    return (
+                      <option key={idx} value={hour}>
+                        {hour}시
+                      </option>
+                    );
+                  })}
+                </NativeSelect>
+              </FormControl>
+
+              <FormControl sx={{ m: 1, minWidth: 100 }}>
+                <NativeSelect
+                  defaultValue={Minute}
+                  onChange={minuteChange}
+                  inputProps={{
+                    name: "age",
+                    id: "uncontrolled-native",
+                  }}
+                >
+                  {MINUTE_SELECT.map((minute, idx) => {
+                    return (
+                      <option key={idx} value={minute}>
+                        {minute}분
+                      </option>
+                    );
+                  })}
+                </NativeSelect>
+              </FormControl>
+            </Time>
             <Div>
               <Button onClick={timeCloseModal}>완료</Button>
             </Div>
@@ -126,7 +181,7 @@ const Modal = styled.div`
   bottom: 0;
   max-width: 420px;
   width: 100%;
-  height: 418px;
+  height: 368px;
   background-color: #ffffff;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;
@@ -182,14 +237,15 @@ const Button = styled.div`
   }
 `;
 
-const PickerContainer = styled.div`
+const Time = styled.div`
   display: flex;
   justify-content: center;
-  padding: 0px 24px;
-`;
-
-const StyledWheelPicker = styled(WheelPicker)`
-  box-shadow: none;
+  width: 100%;
+  margin: auto;
+  height: 40px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 24px;
 `;
 
 export default TimeModal;
