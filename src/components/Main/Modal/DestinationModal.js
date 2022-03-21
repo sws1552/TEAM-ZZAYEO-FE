@@ -334,7 +334,7 @@ const Modal = styled.div`
 
 const Taps = styled.div`
   box-sizing: border-box;
-  margin: 32px 0px 24px 24px;
+  margin: 32px 0px 40px 24px;
   display: inline-flex;
   font-family: "Roboto", sans-serif;
   font-size: 16px;

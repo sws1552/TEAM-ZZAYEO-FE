@@ -32,7 +32,9 @@ const MainTravelList = (props) => {
             <UserImg src={userId.profile_img} />
           </Btn>
           <UserNickName>{userId.nickname}</UserNickName>
-          <CardTitle>{title}</CardTitle>
+          <CardTitle>
+            {title.length > 25 ? title.substring(0, 25) + "..." : title}
+          </CardTitle>
           <Box>
             <Like isLike={isLike} />
             <Bookmark isBookmark={isBookmark} />
