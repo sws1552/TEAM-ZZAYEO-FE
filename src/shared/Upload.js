@@ -12,17 +12,15 @@ const Upload = (props) => {
   const preview = useSelector((state) => state.image.preview);
   const pre_preview = useSelector((state) => state.image.pre_preview);
   const imageURL = useSelector((state) => state.image.imageURL);
-  console.log(preview)
+
   const fileInput = React.useRef();
 
-  const {preImgUrl, placeId} = props;
+  const { preImgUrl, placeId } = props;
 
-
+  console.log(preImgUrl)
   React.useEffect(() => {
-    if(preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined"){
-      preImgUrl.forEach((item, i) => {
-        dispatch(imageActions.preSetPreview(item));
-      });
+    if (preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined") {
+      dispatch(imageActions.preSetPreview(preImgUrl));
     }
   }, [preImgUrl])
 
@@ -31,7 +29,7 @@ const Upload = (props) => {
     const fileArr = e.target.files;
     const filesArr = Array.from(e.target.files);
     let fileURLs = [];
- 
+
     let file;
     let filesLength = fileArr.length > 5 ? 5 : fileArr.length;
 
@@ -48,7 +46,7 @@ const Upload = (props) => {
       };
       reader.readAsDataURL(file);
     }
-    
+
   };
 
   return (
@@ -144,7 +142,6 @@ const Upload = (props) => {
             })}
           {preview &&
             preview.map((v, idx) => {
-              console.log(v)
               return (
                 <ImageBox key={v}>
                   <Image
