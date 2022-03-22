@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import "./BottomNav.css";
 import { Link } from "react-router-dom";
-import { history } from "../../redux/ConfigureStore";
+import { useLocation } from "react-router";
+
+
+
 // 사용할 아이콘 import
 
 const BottomNav = () => {
+  const location = useLocation();
+  console.log(location)
   // 현재 선택된 아이콘을 관리하는 state
   const [activeNav, setActiveNav] = useState(1);
-
-  console.log('history !! ',history);
 
   return (
     <nav className="wrapper">
