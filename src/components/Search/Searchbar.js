@@ -8,7 +8,7 @@ import { useLocation } from "react-router";
 const Searchbar = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const [search, setSearch] = React.useState(null);
+  const [search, setSearch] = React.useState("도시를 검색해보세요.");
 
   const query = location.search;
 
@@ -22,6 +22,11 @@ const Searchbar = (props) => {
       dispatch(planActions.searchDB(query));
     }
   };
+  const handleReset = () => {
+    history.push("/search");
+    setSearch("");
+  };
+
   return (
     <Container>
       <BackCon
@@ -48,12 +53,39 @@ const Searchbar = (props) => {
       <SearchInput>
         <input
           type="search"
+          value={search}
           placeholder="도시를 검색해보세요."
           onKeyPress={onKeyPress}
           onChange={(e) => {
             setSearch(e.target.value);
           }}
         />
+        {search ? (
+          <ResetCon onClick={handleReset}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M17.4948 6.50483C17.7681 6.7782 17.7681 7.22141 17.4948 7.49478L7.49478 17.4948C7.22141 17.7681 6.7782 17.7681 6.50483 17.4948C6.23146 17.2214 6.23146 16.7782 6.50483 16.5048L16.5048 6.50483C16.7782 6.23146 17.2214 6.23146 17.4948 6.50483Z"
+                fill="#212121"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6.50483 6.50483C6.7782 6.23146 7.22141 6.23146 7.49478 6.50483L17.4948 16.5048C17.7681 16.7782 17.7681 17.2214 17.4948 17.4948C17.2214 17.7681 16.7782 17.7681 16.5048 17.4948L6.50483 7.49478C6.23146 7.22141 6.23146 6.7782 6.50483 6.50483Z"
+                fill="#212121"
+              />
+            </svg>
+          </ResetCon>
+        ) : (
+          ""
+        )}
         <SearchCon
           onClick={() => {
             history.push({
@@ -124,9 +156,18 @@ const SearchInput = styled.div`
   }
 `;
 
+const ResetCon = styled.div`
+  position: absolute;
+  right: 64px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
 const SearchCon = styled.div`
   position: absolute;
   right: 32px;
+  cursor: pointer;
 `;
 
 export default Searchbar;
