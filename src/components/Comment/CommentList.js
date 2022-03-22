@@ -16,6 +16,7 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import DropDownMenu from "./DropDownMenu";
 
 const CommentList = (props) => {
   const planId = props.planId;
@@ -56,10 +57,12 @@ const ListCon = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 0 24px;
+  border-top: 1px solid #E0E0E0;
+  margin-top: 24px;
 `;
 
 const Text = styled.div`
-  color: #bfbfbf;
+  color: #616161;
   margin: 10px 0;
 `;
 
@@ -135,12 +138,13 @@ const CommentItem = (props) => {
           <TimeText>{displayCreatedAt(props.createdAt)}</TimeText>
         </NickCon>
         {props.userId.email === localStorage.getItem("userId") ? (
-          <CommentMenu
+          <DropDownMenu
             commentId={props.commentId}
             planId={props.planId}
             hide={() => setHide(!updateHide)}
           />
         ) : null}
+        
       </UserCon>
 
       <Context>
@@ -194,8 +198,8 @@ const CommentItem = (props) => {
 };
 
 const ItemCon = styled.div`
-  padding-top: 10px;
-
+  padding: 10px 0;
+  box-sizing: border-box;
   .likeTrue {
     color: #757575;
     font-weight: bold;

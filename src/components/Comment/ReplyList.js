@@ -13,6 +13,7 @@ import {actionCreators as commentActions} from '../../redux/modules/comment';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ReplyDrop from './ReplyDrop';
 
 const ReplyList = (props) => {
 
@@ -122,7 +123,7 @@ const Reply = (props) => {
                     <TimeText>{displayCreatedAt(props.createdAt)}</TimeText>
                 </NickCon>
                 {props.userId.email === localStorage.getItem("userId") ? 
-                    <ReplyMenu planId={props.planId} commentId={props.commentId} replyId={props.replyId} hide={() => setReplyHide(!upReplyhide)}/>
+                    <ReplyDrop planId={props.planId} commentId={props.commentId} replyId={props.replyId} hide={() => setReplyHide(!upReplyhide)}/>
                 :
                     null}
                 

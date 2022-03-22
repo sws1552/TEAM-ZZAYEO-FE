@@ -83,13 +83,14 @@ const UserName = styled.div`
 
 const CardTitle = styled.div`
   position: absolute;
-  display: flex;
+  /* display: flex; */
   bottom: 0;
   padding: 0px 16.27px 15.41px;
   font-weight: 600;
   font-size: 22px;
   line-height: 28px;
   color: #ffffff;
+  
 `;
 
 export default MainBookMark;

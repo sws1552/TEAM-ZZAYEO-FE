@@ -44,6 +44,8 @@ const WriteCon = styled.div`
   display: flex;
   align-items: center;
   border-top: 1px solid #ededed;
+  padding: 10px 0;
+  box-sizing: border-box;
 `;
 
 const Input = styled.input`

@@ -8,13 +8,11 @@ import { actionCreators as chatActions } from "../../redux/modules/chat";
 import { actionCreators as userActions } from "../../redux/modules/user";
 import instance from "../../shared/Request";
 import { useSelector, useDispatch } from "react-redux";
-import OneChatMenu from './OneChatMenu';
+import OneChatDrop from './OneChatDrop';
 
 const Onechat = (props) => {
 
     const dispatch = useDispatch();
-
-    console.log('props !! ',props);
 
     const joinRoom = () => {
         
@@ -69,7 +67,7 @@ const Onechat = (props) => {
                     <div style={{color: "#757575"}}>{displayCreatedAt(props?.updatedAt)}</div>
                 </NickCon>
             </Container>
-            <OneChatMenu chatRoomId={props.chatRoomId}/>
+            <OneChatDrop chatRoomId={props.chatRoomId}/>
         </div>
     );
 };
