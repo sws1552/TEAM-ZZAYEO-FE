@@ -33,12 +33,12 @@ const MyPage = (props) => {
                     <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_370_494)">
                         <circle cx="45" cy="41" r="41" fill="#F4F4F4"/>
-                        <path d="M62.8211 59.8359C61.77 56.7846 59.4536 54.0884 56.2315 52.1653C53.0093 50.2423 49.0613 49.2 44.9998 49.2C40.9383 49.2 36.9903 50.2423 33.7682 52.1653C30.546 54.0884 28.2297 56.7846 27.1785 59.8359" stroke="#BFBFBF" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="45" cy="28.7" r="10.25" stroke="#BFBFBF" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M62.8211 59.8359C61.77 56.7846 59.4536 54.0884 56.2315 52.1653C53.0093 50.2423 49.0613 49.2 44.9998 49.2C40.9383 49.2 36.9903 50.2423 33.7682 52.1653C30.546 54.0884 28.2297 56.7846 27.1785 59.8359" stroke="#BFBFBF" strokeWidth="2" strokeLinecap="round"/>
+                        <circle cx="45" cy="28.7" r="10.25" stroke="#BFBFBF" strokeWidth="2" strokeLinecap="round"/>
                         </g>
                         <defs>
-                        <filter id="filter0_d_370_494" x="0" y="0" width="90" height="90" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <filter id="filter0_d_370_494" x="0" y="0" width="90" height="90" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                         <feOffset dy="4"/>
                         <feGaussianBlur stdDeviation="2"/>

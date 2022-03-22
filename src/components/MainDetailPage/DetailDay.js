@@ -52,9 +52,9 @@ const Detailday = (props) => {
   const day1BtnRef = useRef([]);
 
   useEffect(() => {
-    if (day1BtnRef.current.length !== 0) {
+    if (day1BtnRef?.current?.length !== 0) {
       setTimeout(() => {
-        day1BtnRef.current[0].click();
+        day1BtnRef?.current[0]?.click();
       }, 800);
     }
   }, [dayList]);
