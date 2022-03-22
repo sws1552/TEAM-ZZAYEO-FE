@@ -13,16 +13,17 @@ const Filter = (props) => {
 
   let data = { key1: dest, key2: style };
 
-  // 국내,해외 모달 열기
+  // 지역 모달 열기
   const destOpenModal = () => {
     setDestShowModal(true);
   };
-  // 국내,해외 모달 닫기
+
+  // 지역 모달 닫기
   const destCloseModal = (e) => {
     e.stopPropagation();
     setDestShowModal(false);
     history.push({
-      pathname: "/",
+      pathname: "/allplan",
       search: `?destination=${data.key1}`,
       data: data,
     });
@@ -38,11 +39,12 @@ const Filter = (props) => {
     e.stopPropagation();
     setStyleShowModal(false);
     history.push({
-      pathname: "/",
+      pathname: "/allplan",
       search: `?destination=${data.key1}&style=${data.key2}`,
       data: data,
     });
   };
+
   return (
     <Container>
       <SelectBox>

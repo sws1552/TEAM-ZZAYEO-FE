@@ -28,8 +28,8 @@ const TravelList = (props) => {
                 : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
             }
           ></CardImg>
-          <Btn onClick={onProfile}>
-            <UserImg src={userId.profile_img} />
+          <Btn>
+            <UserImg onClick={onProfile} src={userId.profile_img} />
           </Btn>
           <UserNickName>{userId.nickname}</UserNickName>
           <CardTitle>

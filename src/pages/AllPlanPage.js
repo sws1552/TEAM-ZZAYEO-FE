@@ -4,11 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
-import instance from "../shared/Request";
 import TravelList from "../components/AllPlanPage/TravelList";
-import Loader from "../components/Main/Loader";
 import Filter from "../components/AllPlanPage/Filter";
-import { positions } from "@mui/system";
 
 const AllPlanPage = (props) => {
   const dispatch = useDispatch();
@@ -20,6 +17,7 @@ const AllPlanPage = (props) => {
   const plans = useSelector((store) => store.plan.list);
 
   React.useEffect(() => {
+    dispatch(userActions.checkUserDB());
     dispatch(planActions.getPlanDB(query));
   }, [query]);
 
