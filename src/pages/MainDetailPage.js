@@ -202,6 +202,8 @@ const TitleBox = styled.div`
   width: 100%;
   padding: 0px 24px;
   box-sizing: border-box;
+  margin-bottom: 32px;
+  margin-top: 20px;
 `;
 
 const TripDestBox = styled(TitleBox)`
@@ -218,7 +220,7 @@ const TripDestBox = styled(TitleBox)`
     align-items: center;
     width: fit-content;
     height: 32px;
-    margin: 0px 10px 24px 0px;
+    margin-right: 8px;
     padding: 15px 12px;
     box-sizing: border-box;
     border-radius: 50px;

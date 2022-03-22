@@ -114,10 +114,10 @@ const Detailday = (props) => {
                     }}
                   >
                     <Text>{v.time}</Text>
-                    {myPlan?.userId?.email === userId ? (
+                    {/* {myPlan?.userId?.email === userId ? (
                       
                       <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]}/>
-                    ) : null}
+                    ) : null} */}
                   </div>
                   <PlaceName>{v.placeName}</PlaceName>
                   <Address>주소:{v.address}</Address>
