@@ -201,6 +201,7 @@ const ToogleBtn = styled.div`
 const TitleBox = styled.div`
   width: 100%;
   padding: 0px 24px;
+  box-sizing: border-box;
 `;
 
 const TripDestBox = styled(TitleBox)`

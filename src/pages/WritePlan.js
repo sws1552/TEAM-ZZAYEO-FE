@@ -175,9 +175,11 @@ const Container = styled.div`
 `;
 
 const TitleBox = styled.div`
-  display: block;
   width: 100%;
-  margin-top: 18px;
+  padding: 0px 24px;
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  margin-top: 20px;
 `;
 
 const TripDestBox = styled(TitleBox)`
@@ -194,7 +196,7 @@ const TripDestBox = styled(TitleBox)`
     align-items: center;
     width: fit-content;
     height: 32px;
-    margin-left: 8px;
+    margin-right: 8px;
     padding: 6px 16px;
     border-radius: 50px;
     font-size: 14px;
