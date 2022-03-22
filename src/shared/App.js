@@ -23,6 +23,7 @@ import EditPlan from "../pages/EditPlan";
 import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
 import BottomNav from "../components/Navigation/BottomNav";
+import AllPlanPage from "../pages/AllPlanPage";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="/mypageproup" exact component={MypageProUp} />
             <Route path="/mypageset" exact component={MypageSetting} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
+            <Route path="/allplan" exact component={AllPlanPage} />
             <BottomNav />
           </Container>
         </ConnectedRouter>
@@ -73,7 +75,8 @@ const Container = styled.div`
   justify-content: center;
   background-color: white;
   height: 100%;
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
   box-sizing: border-box;
   position: relative;
   bottom: 0;
