@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch } from 'react-redux';
-import { actionCreators as commentActions } from "../../redux/modules/comment";
+import { actionCreators as chatActions } from "../../redux/modules/chat";
 
 const OneChatDrop = (props) => {
 
-  const { commentId, planId, hide } = props;
+  const { chatRoomId } = props;
 
   const dispatch = useDispatch();
 
@@ -14,21 +14,11 @@ const OneChatDrop = (props) => {
 
     // console.log('e.target.id !! ',e.target.id);
 
-    if (e.target.id === "수정하기") {
+    if (e.target.id === "방 나가기") {
 
-      hide();
+        dispatch(chatActions.deleteChatRoomFB(chatRoomId));
 
-    } else {
-
-      if (window.confirm("정말로 삭제하시겠습니까?")) {
-        console.log("삭제 ㄱㄱ");
-        dispatch(commentActions.removeCommentFB(commentId, planId));
-      } else {
-        console.log("return");
-        return;
-      }
-
-    }
+    } 
 
     showHide();
 
@@ -64,7 +54,7 @@ const OneChatDrop = (props) => {
 
   }, [isActive]);
 
-  const options = ["수정하기", "삭제하기"];
+  const options = ["방 나가기"];
       
   return (
     <Container>
@@ -89,7 +79,8 @@ const OneChatDrop = (props) => {
 const Container = styled.div`
 
   position: absolute;
-  right: 0;
+  right: 10px;
+  margin: 20px 0;
 
   .menu {
     background: #ffffff;
