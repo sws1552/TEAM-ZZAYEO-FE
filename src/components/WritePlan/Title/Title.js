@@ -9,7 +9,6 @@ const Title = (props) => {
     return (
         <Container>
             <TitleText>{props.title} <OptionText onClick={(e) => {
-                console.log("ㅎㅇ")
                 e.stopPropagation();
                 dispatch(planActions.createPlan(props.planId));
                 history.push("/editplan");
@@ -53,7 +52,8 @@ margin-top: 1px;
 const OptionText = styled.span`
 font-size: 14px;
 font-weight: 500;
-color: #9E9E9E
+color: #9E9E9E;
+cursor: pointer;
 `
 
 export default Title;

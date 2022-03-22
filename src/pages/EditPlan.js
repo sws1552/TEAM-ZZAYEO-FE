@@ -4,14 +4,15 @@ import EditContents from "../components/AddPlan/EditContents";
 
 const EditPlan = (props) => {
   const { history } = props;
-
+  
+  
   return (
     <React.Fragment>
       <Container>
         <Top>
           <CancleBtn
             onClick={() => {
-              history.replace("/myplan");
+              history.goback();
             }}
           >
             <svg
