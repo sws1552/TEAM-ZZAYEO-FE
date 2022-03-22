@@ -52,9 +52,9 @@ const Detailday = (props) => {
   const day1BtnRef = useRef([]);
 
   useEffect(() => {
-    if (day1BtnRef.current.length !== 0) {
+    if (day1BtnRef?.current?.length !== 0) {
       setTimeout(() => {
-        day1BtnRef.current[0].click();
+        day1BtnRef?.current[0]?.click();
       }, 800);
     }
   }, [dayList]);
@@ -114,10 +114,10 @@ const Detailday = (props) => {
                     }}
                   >
                     <Text>{v.time}</Text>
-                    {myPlan?.userId?.email === userId ? (
+                    {/* {myPlan?.userId?.email === userId ? (
                       
                       <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]}/>
-                    ) : null}
+                    ) : null} */}
                   </div>
                   <PlaceName>{v.placeName}</PlaceName>
                   <Address>주소:{v.address}</Address>

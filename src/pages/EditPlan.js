@@ -1,18 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import EditContents from "../components/AddPlan/EditContents";
+import { useDispatch, useSelector } from "react-redux";
 
 const EditPlan = (props) => {
   const { history } = props;
   
-  
+  const myPlan = useSelector((state) => state.plan.myPlan);
+  console.log(myPlan)
   return (
     <React.Fragment>
       <Container>
         <Top>
           <CancleBtn
             onClick={() => {
-              history.goback();
+              history.push(`/writeplan/${myPlan.planId}`);
             }}
           >
             <svg
