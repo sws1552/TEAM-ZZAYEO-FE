@@ -126,7 +126,7 @@ const Main = (props) => {
       <Banner />
       <Div>
         <Content>
-          <TravelListBox>
+          {/* <TravelListBox>
             <P>여행기 모아보기 🌄📝</P>
             <Filter />
             {itemLists.map((l, i) => {
@@ -135,7 +135,7 @@ const Main = (props) => {
             <div ref={setTarget} className="Target-Element">
               {isLoaded && <Loader />}
             </div>
-          </TravelListBox>
+          </TravelListBox> */}
         </Content>
       </Div>
     </Container>
