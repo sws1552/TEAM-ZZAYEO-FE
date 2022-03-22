@@ -28,11 +28,10 @@ const DestinationModal = (props) => {
                       style={{
                         backgroundColor:
                           i === clickedDestination ? "#4E49E2" : "#F5F5F5",
-                        // color: i === clickedDestination ? "#FFFFFF" : "#757575",
                       }}
                       key={i}
                     >
-                      <p>{l}</p>
+                      <p>{l} 여행</p>
                       <Icon>
                         {l === "국내" ? (
                           i === clickedDestination ? (
@@ -369,7 +368,7 @@ const Button = styled.div`
     color: #ffffff;
     font-size: 16px;
     line-height: 19px;
-    font-weight: 500;
+    font-weight: 400;
     justify-content: center;
     align-items: center;
   }
@@ -400,7 +399,7 @@ const Category = styled.div`
 
   p {
     position: absolute;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 18px;
     line-height: 20px;
     text-align: center;

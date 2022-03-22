@@ -111,7 +111,6 @@ const getdayPlanDB = (planId) => {
   };
 };
 
-
 export const saveLocationDB = (
   dayId,
   AmPm,
@@ -412,7 +411,7 @@ const getyourPostDB = (planId) => {
     instance
       .post(`/api/plans/${planId}/copy`)
       .then((res) => {
-        const copyplanId = res.data.planId
+        const copyplanId = res.data.planId;
         instance.get(`/api/plans/${copyplanId}`).then((res) => {
           console.log(res);
           dispatch(getdayPlan(res.data.plan));
@@ -479,7 +478,7 @@ const actionCreators = {
   addThumbnailDB,
   EditPlanDB,
   deleteMyPostImageDB,
-  getyourPostDB
+  getyourPostDB,
 };
 
 export { actionCreators };
