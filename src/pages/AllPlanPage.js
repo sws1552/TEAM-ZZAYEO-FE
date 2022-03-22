@@ -4,8 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { useInView } from "react-intersection-observer";
+import Loader from "../components/Main/Loader";
 import TravelList from "../components/AllPlanPage/TravelList";
 import Filter from "../components/AllPlanPage/Filter";
+import instance from "../shared/Request";
 
 const AllPlanPage = (props) => {
   const dispatch = useDispatch();
@@ -28,6 +31,55 @@ const AllPlanPage = (props) => {
       inline: "nearest",
     });
 
+  //무한 스크롤
+  const [target, setTarget] = React.useState(null);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [itemLists, setItemLists] = React.useState([]);
+  const [page, setPage] = React.useState(1);
+  const [endPage, setEndPage] = React.useState(0);
+
+  React.useEffect(() => {
+    console.log(itemLists);
+  }, [itemLists]);
+
+  const getMoreItem = async (page) => {
+    setIsLoaded(true);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    await instance.get(`/api/plans?page=${page}`).then((res) => {
+      let Items = res.data.plans;
+      setItemLists((itemLists) => itemLists.concat(Items));
+      setEndPage(res.data.endPage);
+    });
+    setIsLoaded(false);
+  };
+
+  const onIntersect = React.useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoaded) {
+        observer.unobserve(entry.target);
+        await getMoreItem(page);
+        if (page === endPage) {
+          return page;
+        } else {
+          setPage((num) => num + 1);
+        }
+        observer.observe(entry.target);
+      }
+    },
+    [target, page]
+  );
+
+  React.useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target, page]);
+
   return (
     <React.Fragment>
       <Container>
@@ -36,9 +88,22 @@ const AllPlanPage = (props) => {
         </Header>
         <Contents>
           <Filter />
-          {plans.map((l, i) => {
-            return <TravelList key={i} {...l} />;
-          })}
+          {query ? (
+            <>
+              {plans.map((l, i) => {
+                return <TravelList key={i} {...l} />;
+              })}
+            </>
+          ) : (
+            <>
+              {itemLists.map((l, i) => {
+                return <TravelList key={i} {...l} />;
+              })}
+              <div ref={setTarget} className="Target-Element">
+                {isLoaded && <Loader />}
+              </div>
+            </>
+          )}
         </Contents>
         <ScrollBtn onClick={executeScroll}>
           <svg
@@ -89,7 +154,7 @@ const Contents = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: 19px;
+  padding-top: 16px;
 `;
 
 const ScrollBtn = styled.div`
