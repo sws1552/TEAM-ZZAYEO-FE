@@ -391,7 +391,6 @@ const searchDB = (query) => {
 
 // 썸네일 추가하기
 const addThumbnailDB = (planId, imageURL) => {
-  console.log(planId, imageURL);
   return function (dispatch, getState, { history }) {
     let formData = new FormData();
     formData.append("imageFile", imageURL);
@@ -399,6 +398,25 @@ const addThumbnailDB = (planId, imageURL) => {
       .post(`/api/plans/${planId}/thumbnail`, formData)
       .then((res) => {
         console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+//여행 일정가져오기
+const getyourPostDB = (planId) => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .post(`/api/plans/${planId}/copy`)
+      .then((res) => {
+        const copyplanId = res.data.planId
+        instance.get(`/api/plans/${copyplanId}`).then((res) => {
+          console.log(res);
+          dispatch(getdayPlan(res.data.plan));
+          history.push(`/writeplan/${copyplanId}`);
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -460,6 +478,7 @@ const actionCreators = {
   addThumbnailDB,
   EditPlanDB,
   deleteMyPostImageDB,
+  getyourPostDB
 };
 
 export { actionCreators };

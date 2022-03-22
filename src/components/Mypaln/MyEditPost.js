@@ -69,8 +69,9 @@ export default function MyEditPost(props) {
               } 
               if(option === "수정하기") {
                 e.stopPropagation();
-                dispatch(planActions.createPlan(planId));
-                history.push("/editplan");
+                history.push(`/writeplan/${planId}`);
+                // dispatch(planActions.createPlan(planId));
+                // history.push("/editplan");
               }
             }}
           >

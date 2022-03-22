@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -8,11 +8,17 @@ import moment from "moment";
 import { addDays } from "date-fns";
 
 import DateModal from "./DateModal";
+import { Co2Sharp } from "@mui/icons-material";
 
 const EditContents = (props) => {
   const dispatch = useDispatch();
 
   const planId = useSelector((store) => store.plan.planId);
+  const myPlan = useSelector((state) => state.plan.myPlan);
+
+  React.useEffect(() => {
+    dispatch(planActions.getdayPlanDB(planId));
+  }, []);
 
   //여행제목 값 가져오기
   const [titleInput, setTitleInput] = useState("");
@@ -40,12 +46,12 @@ const EditContents = (props) => {
     setState(state);
     setMsg(
       moment(state[0].startDate).format("YYYY.MM.DD") +
-        "-" +
-        moment(state[0].endDate).format("MM.DD")
+      "-" +
+      moment(state[0].endDate).format("MM.DD")
     );
   };
 
-  React.useEffect(() => {}, [state]);
+  React.useEffect(() => { }, [state]);
 
   //어디로
   const destList = ["국내", "해외"];
@@ -109,6 +115,30 @@ const EditContents = (props) => {
     dispatch(planActions.EditPlanDB(plan, planId));
   };
 
+
+  //자동 클릭
+  const whereRef = React.useRef([]);
+  const withwhoRef = React.useRef([]);
+  const styleRef = React.useRef([]);
+
+  useEffect(() => {
+    whereRef.current.forEach((v, i) => {
+      if (v.id === myPlan.destination) {
+        v.click()
+      }
+    })
+    withwhoRef.current.forEach((v, i) => {
+      if (v.id === myPlan.withlist[0]) {
+        v.click()
+      }
+    })
+    styleRef.current.forEach((v, i) => {
+      if (v.id === myPlan.style[0]) {
+        v.click()
+      }
+    })
+  }, []);
+
   return (
     <Container>
       <TitleBox>
@@ -116,7 +146,7 @@ const EditContents = (props) => {
         <InputBox>
           <input
             type="text"
-            placeholder="제목을 입력해주세요"
+            placeholder="제목을 수정해주세요"
             onChange={(e) => {
               setTitleInput(e.target.value);
             }}
@@ -141,6 +171,8 @@ const EditContents = (props) => {
           {destList.map((l, i) => {
             return (
               <li
+                ref={(el) => (whereRef.current[i] = el)}
+                id={l}
                 key={i}
                 onClick={() => {
                   changeTripDest(i);
@@ -163,6 +195,8 @@ const EditContents = (props) => {
           {withList.map((l, i) => {
             return (
               <li
+                ref={(el) => (withwhoRef.current[i] = el)}
+                id={l}
                 key={i}
                 onClick={() => {
                   changeWithList(i);
@@ -185,6 +219,8 @@ const EditContents = (props) => {
           {tripStyle.map((l, i) => {
             return (
               <li
+                ref={(el) => (styleRef.current[i] = el)}
+                id={l}
                 key={i}
                 onClick={() => {
                   changeTripstyle(i);

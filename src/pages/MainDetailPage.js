@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import WritePlanMap from "../components/WritePlan/Map/WritePlanMap";
 import DetailDay from "../components/MainDetailPage/DetailDay";
@@ -29,9 +29,19 @@ const MainDetailPage = (props) => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
 
-  const decideShare = ["나만의 일정", "모두에게 공유"];
-  const share = "공개";
-  const unshare = "비공개";
+  const decideShare = ["비공개", "공개"];
+  const shareRef = React.useRef([]);
+
+  useEffect(() => {
+   
+      shareRef.current.forEach((v, i) => {
+        console.log(v.id, plans.status)
+        if (v.id === plans.status) {
+          v.click()
+        }
+      })
+  
+  }, []);
 
   if (plans?.userId?.email === userId) {
     return (
@@ -42,22 +52,25 @@ const MainDetailPage = (props) => {
             {decideShare.map((l, i) => {
               return (
                 <li
+                  ref={(el) => (shareRef.current[i] = el)}
+                  id={l}
                   key={i}
                   onClick={() => {
                     changeTripDest(i);
-                    if (l === "모두에게 공유") {
-                      dispatch(planActions.statusDB(plans.planId, share));
+                    if (l === "공개") {
+                      dispatch(planActions.statusDB(plans.planId, l));
                     }
-                    if (l === "나만의 일정") {
-                      dispatch(planActions.statusDB(plans.planId, unshare));
+                    if (l === "비공개") {
+                      dispatch(planActions.statusDB(plans.planId, l));
                     }
                   }}
                   style={{
-                    background: i === 1 && plans.status ==="공개" ? "#4E49E2" : i === 0 && plans.status ==="비공개" ? "#4E49E2": "#EDEDED",
-                    color : i === 1 && plans.status ==="공개" ? "#FFFFFF" : i === 0 && plans.status ==="비공개" ? "#FFFFFF": "#979797",
+                    backgroundColor:
+                      i === clickedTripDest ? "#4E49E2" : "#F4F4F4",
+                    color: i === clickedTripDest ? "#FFFFFF" : "#9E9E9E",
                   }}
                 >
-                  {l}
+                  {l==="공개" ? "모두에게 공유" : "나만의 일정"}
                 </li>
               );
             })}

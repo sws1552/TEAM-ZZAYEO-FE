@@ -1,10 +1,19 @@
 import React from 'react';
 import styled from 'styled-components'
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as planActions } from "../../../redux/modules/plan";
+import { history } from "../../../redux/ConfigureStore";
 
 const Title = (props) => {
+    const dispatch = useDispatch();
     return (
         <Container>
-            <TitleText>{props.title}</TitleText>
+            <TitleText>{props.title} <OptionText onClick={(e) => {
+                console.log("ㅎㅇ")
+                e.stopPropagation();
+                dispatch(planActions.createPlan(props.planId));
+                history.push("/editplan");
+            }}>설정</OptionText></TitleText>
             <DateText>{props.startDate}~{props.endDate}</DateText>
             <DetailText> {props.destination} | {props && props?.withlist} | {props && props?.style}</DetailText>
         </Container>
@@ -40,6 +49,11 @@ font-size: 14px;
 font-weight: 500;
 line-height: 22px;
 margin-top: 1px;
+`
+const OptionText = styled.span`
+font-size: 14px;
+font-weight: 500;
+color: #9E9E9E
 `
 
 export default Title;
