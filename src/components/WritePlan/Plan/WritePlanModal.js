@@ -157,7 +157,7 @@ export default function BasicModal(props) {
             </Location>
 
             <TitleText>메모</TitleText>
-            <div style={{ marginBottom: "24px" }}>
+            <div style={{ marginBottom: "24px"}}>
               <MemoContainer
                 value={Memo}
                 onChange={memoChange}

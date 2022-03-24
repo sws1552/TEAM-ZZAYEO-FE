@@ -205,6 +205,7 @@ box-sizing: border-box;
 margin-top: 16px;
 padding: 16px 17px;
 box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
+
 `
 
 const Memo = styled.div`
@@ -213,6 +214,7 @@ font-weight: 500;
 color: #757575;
 font-size: 12px;
 line-height: 16px;
+white-space: pre-wrap;
 `
 
 const TabMenu = styled.div`
