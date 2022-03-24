@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import BeforeRegister from "../components/Mypaln/BeforeRegister";
 import AfterRegister from "../components/Mypaln/AfterRegister";
+import Filter from "../components/Mypaln/Filter";
 
 const Myplan = (props) => {
   const dispatch = useDispatch();
@@ -11,11 +12,11 @@ const Myplan = (props) => {
 
   const is_token = localStorage.getItem("token") ? true : false;
   const myplans = useSelector((store) => store.plan.myplans);
-  console.log(myplans)
-  
+  console.log(myplans);
+
   React.useEffect(() => {
     dispatch(planActions.getMyPlanDB());
-  }, []);
+  }, [dispatch]);
 
   const onAddPlan = () => {
     if (is_token) {
@@ -59,12 +60,15 @@ const Myplan = (props) => {
           {myplans?.length === 0 ? (
             <BeforeRegister />
           ) : (
-            <Div>
-              <p>여행 리스트</p>
+            <ListContainer>
+              <Title>
+                <p>여행 리스트</p>
+                <Filter />
+              </Title>
               {myplans?.map((l, i) => {
                 return <AfterRegister key={i} {...l} />;
               })}
-            </Div>
+            </ListContainer>
           )}
         </Bottom>
       </Container>
@@ -126,13 +130,21 @@ const P = styled.p`
   margin: 0;
 `;
 
-const Div = styled.div`
+const ListContainer = styled.div`
+  margin-top: 40px;
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   p {
+    margin: 0;
     margin-left: 24px;
-    margin-top: 35px;
     font-weight: 600;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 20px;
     color: #000000;
   }
 `;
