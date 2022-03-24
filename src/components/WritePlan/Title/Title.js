@@ -9,7 +9,7 @@ const Title = (props) => {
     return (
         <Container>
             <TitleText>{props.title} <OptionText onClick={(e) => {
-                e.stopPropagation();
+    
                 dispatch(planActions.createPlan(props.planId));
                 history.push("/editplan");
             }}>설정</OptionText></TitleText>
@@ -22,9 +22,8 @@ const Title = (props) => {
 const Container = styled.div`
 width: 100%;
 box-sizing: border-box;
-margin: auto;
-overflow: hidden;
 padding: 0px 24px;
+
 `
 
 const TitleText = styled.div`
@@ -32,6 +31,7 @@ margin-top: 22px;
 font-size: 22px;
 font-weight: 600;
 line-height: 25px;
+
 `
 
 const DateText = styled.div`

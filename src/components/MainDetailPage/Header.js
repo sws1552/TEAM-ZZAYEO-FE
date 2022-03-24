@@ -120,8 +120,6 @@ const Header = (props) => {
           <p>메세지</p>
         </MsgBtn>
         <MsgBtn onClick={()=>{
-          console.log("하이")
-          console.log(props.planId)
           dispatch(planActions.getyourPostDB(props.planId))
         }}>
           <svg

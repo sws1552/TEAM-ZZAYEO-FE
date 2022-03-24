@@ -11,7 +11,8 @@ const Myplan = (props) => {
 
   const is_token = localStorage.getItem("token") ? true : false;
   const myplans = useSelector((store) => store.plan.myplans);
-
+  console.log(myplans)
+  
   React.useEffect(() => {
     dispatch(planActions.getMyPlanDB());
   }, []);

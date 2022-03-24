@@ -48,6 +48,15 @@ const ChooseDay = (props) => {
     setCurrentTab(index);
   };
 
+  const day1BtnRef = React.useRef([]);
+
+  React.useEffect(() => {
+    if (day1BtnRef?.current?.length !== 0) {
+      setTimeout(() => {
+        day1BtnRef?.current[0]?.click();
+      }, 800);
+    }
+  }, [dayList]);
 
   return (
     <>
@@ -56,12 +65,15 @@ const ChooseDay = (props) => {
           {dayList && dayList.map((d, i) => {
             return (
                 <DayButton
+                  ref={(el) => (day1BtnRef.current[i] = el)}
                   key={i}
                   className={currentTab === i ? "submenu focused" : "submenu"}
                   onClick={() => {
                     selectMenuHandler(i)
-                    polyLinedata.setMap(null);
-                    dispatch(mapActions.addPolyline(polyLinedata));
+                    if (currentTab !== i) {
+                      polyLinedata.setMap(null);
+                      dispatch(mapActions.addPolyline(polyLinedata));
+                    }
                     dispatch(mapActions.sendDayId(d.dayId))
                   }}
                   style={{
@@ -105,7 +117,7 @@ const ChooseDay = (props) => {
             )
           })}
           <AddPlaceBox>
-            <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} dayNumber={dayList && dayList[currentTab]?.dayNumber}/>
+            <WritePlanModal planId={dayList && dayList[currentTab]?.planId} dayId={dayList && dayList[currentTab]?.dayId} dayNumber={dayList && dayList[currentTab]?.dayNumber}/>
           </AddPlaceBox>
           <AddButton
           onClick={()=>{

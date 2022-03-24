@@ -3,8 +3,11 @@ import styled from "styled-components";
 import DestinationModal from "./Modal/DestinationModal";
 import StyleModal from "./Modal/StyleModal";
 import { history } from "../../redux/ConfigureStore";
+import { actionCreators as polyActions } from "../../redux/modules/polyline";
+import { useSelector, useDispatch } from "react-redux";
 
 const Filter = (props) => {
+  const dispatch = useDispatch()
   const [destShowModal, setDestShowModal] = React.useState(false);
   const [styleShowModal, setStyleShowModal] = React.useState(false);
 
@@ -21,11 +24,13 @@ const Filter = (props) => {
   const destCloseModal = (e) => {
     e.stopPropagation();
     setDestShowModal(false);
+
     history.push({
       pathname: "/",
       search: `?destination=${data.key1}`,
       data: data,
     });
+    window.location.reload()
   };
 
   // 여행스타일 모달 열기
@@ -42,6 +47,7 @@ const Filter = (props) => {
       search: `?destination=${data.key1}&style=${data.key2}`,
       data: data,
     });
+    window.location.reload()
   };
   return (
     <Container>
