@@ -200,6 +200,7 @@ export default MainDetailPage;
 
 const Container = styled.div`
   width: 100%;
+  max-width: 420px;
   height: 93%;
   overflow: scroll;
   ::-webkit-scrollbar {
