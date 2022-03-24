@@ -1,7 +1,7 @@
 //Auth.js
 
 //카카오 로그인
-const CLIENT_ID = "05c11329e6009d884a248b7893b16fe4";
+const CLIENT_ID = "23324eaedd93d9c426b092598d43e29a";
 //REDIRECT_URI 주소 백엔드랑 주소일치시키기
 const REDIRECT_URI =
   // "http://jjayeo.s3-website.ap-northeast-2.amazonaws.com/api/auth/kakao/callback";
