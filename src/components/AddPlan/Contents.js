@@ -118,6 +118,7 @@ const Contents = (props) => {
             onChange={(e) => {
               setTitleInput(e.target.value);
             }}
+            maxLength="25"
           />
         </InputBox>
       </TitleBox>

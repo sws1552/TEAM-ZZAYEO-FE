@@ -1,46 +1,34 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyleModal = (props) => {
-  const { styleShowModal, styleCloseModal, setStyle } = props;
+const LineUpModal = (props) => {
+  const { lineupModal, lineupCloseModal, setLineup } = props;
 
-  const travelStyle = [
-    "액티비티 체험",
-    "문화 예술 역사 체험",
-    "명소 관광지 방문필수",
-    "페스티벌 참여",
-    "먹방투어",
-    "쇼핑 좋아",
-    "편하게 쉬는 휴양",
-    "SNS 핫플 투어",
-    "호캉스",
-    "자연친화",
-  ];
+  const lineup = ["최신순", "인기순"];
+  const [clickedLineup, changeLineup] = React.useState(0);
 
-  const [clickedStyle, changeStyle] = React.useState(0);
-
-  if (styleShowModal) {
+  if (lineupModal) {
     return (
       <React.Fragment>
         <OpenModal>
-          <Overlay onClick={styleCloseModal}>
+          <Overlay onClick={lineupCloseModal}>
             <Modal>
               <Taps>
-                <Ul>여행 스타일</Ul>
+                <Ul>정렬</Ul>
               </Taps>
               <Container>
-                {travelStyle.map((l, i) => {
+                {lineup.map((l, i) => {
                   return (
                     <Category
                       onClick={(e) => {
                         e.stopPropagation();
-                        changeStyle(i);
-                        setStyle(travelStyle[i]);
+                        changeLineup(i);
+                        setLineup(lineup[i]);
                       }}
                       style={{
                         backgroundColor:
-                          i === clickedStyle ? "#4E49E2" : "#F5F5F5",
-                        color: i === clickedStyle ? "#FFFFFF" : "#212121",
+                          i === clickedLineup ? "#4E49E2" : "#F5F5F5",
+                        color: i === clickedLineup ? "#FFFFFF" : "#212121",
                       }}
                       key={i}
                     >
@@ -50,7 +38,7 @@ const StyleModal = (props) => {
                 })}
               </Container>
               <Div>
-                <Button onClick={styleCloseModal}>
+                <Button onClick={lineupCloseModal}>
                   <p>여행 확인하기</p>
                 </Button>
               </Div>
@@ -118,7 +106,7 @@ const Ul = styled.div`
 const Div = styled.div`
   position: absolute;
   width: 100%;
-  bottom: 56px;
+  bottom: 36px;
   font-family: "Roboto", sans-serif;
 `;
 
@@ -162,7 +150,6 @@ const Category = styled.div`
   align-items: flex-start;
   padding: 10px 16px;
   margin-right: 8px;
-  margin-bottom: 12px;
   border-radius: 20px;
   font-weight: 400;
   font-size: 14px;
@@ -170,4 +157,4 @@ const Category = styled.div`
   cursor: pointer;
 `;
 
-export default StyleModal;
+export default LineUpModal;

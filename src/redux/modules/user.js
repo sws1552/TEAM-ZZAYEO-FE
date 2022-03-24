@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 import axios from "axios";
-import { ContentCutOutlined } from "@mui/icons-material";
 
 //actions
 const SET_USER = "SET_USER";
