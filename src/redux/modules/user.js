@@ -71,7 +71,7 @@ const kakaoLogin = (code) => {
 const checkUserDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://stgon.shop/api/users/auth/me`, {
+      .get(`https://stgon.shop/api/users/auth/me`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
