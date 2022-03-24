@@ -122,7 +122,8 @@ export const saveLocationDB = (
   lat,
   lng,
   address,
-  imageURL
+  imageURL,
+  planId
 ) => {
   return (dispatch, getState, { history }) => {
     console.log(
@@ -135,7 +136,8 @@ export const saveLocationDB = (
       lat,
       lng,
       address,
-      imageURL
+      imageURL,
+      planId
     );
 
     let formData = new FormData();
@@ -152,7 +154,8 @@ export const saveLocationDB = (
     instance
       .post(`/api/plans/days/${dayId}`, formData, {})
       .then(function (response) {
-        const planId = getState().plan.planId;
+        // const planId = getState().plan.planId;
+        console.log(planId)
         instance.get(`/api/plans/${planId}`).then((res) => {
           console.log(res);
           dispatch(getdayPlan(res.data.plan));
@@ -291,12 +294,12 @@ const deleteMyPlanDB = (planId) => {
 };
 
 //나의 DayPost(특정장소삭제) 삭제
-const deleteMyPostDB = (placeId) => {
+const deleteMyPostDB = (placeId, planId) => {
   return function (dispatch, getState, { history }) {
     instance
       .delete(`/api/plans/days/places/${placeId}`)
       .then((res) => {
-        const planId = getState().plan.planId;
+        // const planId = getState().plan.planId;
         instance.get(`/api/plans/${planId}`).then((res) => {
           console.log(res);
           dispatch(getdayPlan(res.data.plan));
@@ -412,12 +415,7 @@ const getyourPostDB = (planId) => {
     instance
       .post(`/api/plans/${planId}/copy`)
       .then((res) => {
-        const copyplanId = res.data.planId
-        instance.get(`/api/plans/${copyplanId}`).then((res) => {
-          console.log(res);
-          dispatch(getdayPlan(res.data.plan));
-          history.push(`/writeplan/${copyplanId}`);
-        });
+        alert("여행기 작성에 등록 되었습니다.")
       })
       .catch((error) => {
         console.log(error);

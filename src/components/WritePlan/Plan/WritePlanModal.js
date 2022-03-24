@@ -27,7 +27,9 @@ const style = {
 };
 
 export default function BasicModal(props) {
+  console.log(props)
   const dayId = props.dayId;
+  const planId = props.planId;
   const dayNumber = props.dayNumber;
 
   const dispatch = useDispatch();
@@ -181,7 +183,8 @@ export default function BasicModal(props) {
                     lat,
                     lng,
                     address,
-                    imageURL
+                    imageURL,
+                    planId
                   )
                 );
                 setMemo("");

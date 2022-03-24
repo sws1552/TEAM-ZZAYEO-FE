@@ -13,10 +13,11 @@ import HeaderBar from "../components/Main/HeaderBar";
 import Banner from "../components/Main/Banner";
 
 const Main = (props) => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-
   const is_token = localStorage.getItem("token") ? true : false;
+  const dispatch = useDispatch();
+
+  const location = useLocation();
+  const query = location.search;
 
   //무한 스크롤
   const [target, setTarget] = useState(null);
@@ -25,26 +26,38 @@ const Main = (props) => {
   const [page, setPage] = useState(1);
   const [endPage, setEndPage] = useState(0);
 
+
   useEffect(() => {
     console.log(itemLists);
   }, [itemLists]);
 
-  const getMoreItem = async (page) => {
+  const getMoreItem = async (page, query) => {
     setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    await instance.get(`/api/plans?page=${page}`).then((res) => {
-      let Items = res.data.plans;
-      setItemLists((itemLists) => itemLists.concat(Items));
-      setEndPage(res.data.endPage);
-    });
+    // await new Promise((resolve) => setTimeout(resolve, 500));
+    if (query) {
+      await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
+        let Items = res.data.plans;
+        setItemLists((itemLists) => itemLists.concat(Items));
+        setEndPage(res.data.endPage);
+      });
+    } else {
+      await instance.get(`/api/plans?page=${page}`).then((res) => {
+        let Items = res.data.plans;
+        setItemLists((itemLists) => itemLists.concat(Items));
+        setEndPage(res.data.endPage);
+      });
+    }
     setIsLoaded(false);
   };
 
   const onIntersect = useCallback(
     async ([entry], observer) => {
+
       if (entry.isIntersecting && !isLoaded) {
+      
         observer.unobserve(entry.target);
-        await getMoreItem(page);
+        await getMoreItem(page, query);
+  
         if (page === endPage) {
           return page;
         } else {
@@ -53,29 +66,28 @@ const Main = (props) => {
         observer.observe(entry.target);
       }
     },
-    [target, page]
+    [target, page, query]
   );
 
   useEffect(() => {
     let observer;
-    if (target) {
+    if (target && endPage !== 1) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 1,
       });
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target, page]);
+  }, [target, page, query]);
 
-  const plans = useSelector((store) => store.plan.list);
-  const bookmark_list = useSelector((store) => store.plan.bookmark_list);
-  const query = location.search;
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
-    dispatch(planActions.getPlanDB(query));
     dispatch(planActions.getBookMarkDB());
-  }, [query]);
+  }, []);
+
+  const plans = useSelector((store) => store.plan.list);
+  const bookmark_list = useSelector((store) => store.plan.bookmark_list);
 
   if (is_token) {
     return (
@@ -99,9 +111,12 @@ const Main = (props) => {
               <Filter />
               {query ? (
                 <>
-                  {plans.map((l, i) => {
+                  {itemLists.map((l, i) => {
                     return <MainTravelList key={i} {...l} />;
                   })}
+                  <div ref={setTarget} className="Target-Element">
+                    {isLoaded && <Loader />}
+                  </div>
                 </>
               ) : (
                 <>

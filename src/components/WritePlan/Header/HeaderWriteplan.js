@@ -6,13 +6,13 @@ import { actionCreators as planActions } from "../../../redux/modules/plan";
 import { useDispatch, useSelector } from "react-redux";
 
 const HeaderWritePlan = (props) => {
-    console.log(props.planId)
+   
     const dispatch = useDispatch();
     return (
         <Container>
             <HeaderBox>
                 <div onClick={() => {
-                    dispatch(planActions.deleteMyPlanDB(props.planId));
+                    history.push('/myplan')
                 }}>
                     <svg style={{ cursor: "pointer", display: "block" }}
                         width="24" height="24"

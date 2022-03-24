@@ -10,6 +10,7 @@ import { actionCreators as planActions } from "../redux/modules/plan";
 import ChooseDay from "../components/WritePlan/Plan/ChooseDay";
 import ChooseDayHide from "../components/WritePlan/Plan/ChooseDayHide";
 import Thumbnail from "../components/WritePlan/Plan/Thumbnail";
+import { style } from "@mui/system";
 
 const WritePlan = (props) => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const WritePlan = (props) => {
   const planId = props.match.params.planId;
   const myPlan = useSelector((state) => state.plan.myPlan);
   const imageURL = useSelector((state) => state.image.thumbnailURL);
-
+  console.log(myPlan)
   const [clickedTripDest, changeTripDest] = React.useState(0);
   const [isChecked, setIsChecked] = React.useState(true);
   const toggleMenu = () => {
@@ -55,36 +56,32 @@ const WritePlan = (props) => {
   };
 
   return (
-    <>
       <Container>
         <HeaderWritePlan {...myPlan} />
         <Title {...myPlan} />
-        <TripDestBox>
-          <div>
+        <div style={{display:"flex", padding:"0px 24px", margin:"20px 0px 32px 0px"}}>
             {decideShare.map((l, i) => {
               return (
-                <li
-                  key={i}
-                  onClick={() => {
-                    changeTripDest(i);
-                    if (l === "모두에게 공유") {
-                      shareOpenModal();
-                    }
-                    if (l === "나만의 일정") {
-                      dispatch(planActions.statusDB(myPlan.planId, unshare));
-                    }
-                  }}
-                  style={{
-                    backgroundColor:
-                      i === clickedTripDest ? " #4E49E2" : "#EDEDED",
-                    color: i === clickedTripDest ? "#FFFFFF" : "#979797",
-                  }}
-                >
+                <PlanBox
+                key={i}
+                onClick={() => {
+                      changeTripDest(i);
+                      if (l === "모두에게 공유") {
+                        shareOpenModal();
+                      }
+                      if (l === "나만의 일정") {
+                        dispatch(planActions.statusDB(myPlan.planId, unshare));
+                      }
+                    }}
+                    style={{
+                      backgroundColor:
+                        i === clickedTripDest ? " #4E49E2" : "#EDEDED",
+                      color: i === clickedTripDest ? "#FFFFFF" : "#979797",
+                    }}>
                   {l}
-                </li>
+                </PlanBox>
               );
             })}
-          </div>
           <Thumbnail
             shareShowModal={shareShowModal}
             keepModal={keepModal}
@@ -92,7 +89,7 @@ const WritePlan = (props) => {
             imageSrc={imageSrc}
             setImageSrc={setImageSrc}
           ></Thumbnail>
-        </TripDestBox>
+        </div>
 
         <Collapse in={isChecked}>
           <WritePlanMap {...myPlan} />
@@ -113,8 +110,8 @@ const WritePlan = (props) => {
                 <path
                   d="M37 6.5L19 2L1 6.5"
                   stroke="#BDBDBD"
-                  stroke-width="2"
-                  stroke-linecap="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
                 />
               </svg>
             </div>
@@ -156,7 +153,6 @@ const WritePlan = (props) => {
         {/* {isChecked ? <ChooseDay {...myPlan} /> : <ChooseDayHide {...myPlan} />} */}
         <ChooseDay {...myPlan} />
       </Container>
-    </>
   );
 };
 
@@ -174,33 +170,15 @@ const Container = styled.div`
   }
 `;
 
-const TitleBox = styled.div`
-  width: 100%;
-  padding: 0px 24px;
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  margin-top: 20px;
-`;
-
-const TripDestBox = styled(TitleBox)`
-  div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-  }
-
-  li {
+const PlanBox = styled.div`
     display: flex;
     box-sizing: border-box;
     align-items: center;
     width: fit-content;
-    height: 32px;
     margin-right: 8px;
     padding: 6px 16px;
     border-radius: 50px;
     font-size: 14px;
     font-weight: 500;
-    line-height: 20;
-  }
-`;
+    cursor: pointer;
+`

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { actionCreators as imageActions } from "../../../redux/modules/image";
+import { actionCreators as imageActions } from "../../redux/modules/image";
 
 const Thumbnail = (props) => {
   const dispatch = useDispatch();
@@ -141,7 +141,7 @@ const ModalBox = styled.div`
 const OpenModal = styled(ModalBox)`
   display: flex;
   justify-content: center;
-  align-items: center;
+  // align-items: center;
 `;
 
 const Overlay = styled.div`
@@ -162,24 +162,19 @@ const Modal = styled.div`
 `;
 
 const Taps = styled.div`
-  box-sizing: border-box;
   margin: 24px 0px 0px 24px;
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
   font-weight: 700;
+  font-size: 16px;
   line-height: 24px;
 `;
 
-const Ul = styled.div``;
-
-// const CancelBtn = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   margin-right: 24px;
-// `;
+const Ul = styled.div`
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+`;
 
 const Div = styled.div`
-  position: absolute;
   width: 100%;
   max-width: 420px;
   bottom: 36px;
@@ -188,7 +183,7 @@ const Div = styled.div`
 
 const Button = styled.div`
   height: 48px;
-  margin: 0px 24px;
+  margin: 0px 24px 37px;
   background-color: #bdbdbd;
   border-radius: 8px;
   display: flex;
@@ -226,7 +221,7 @@ const Info = styled.div`
   width: 100%;
   max-width: 420px;
   box-sizing: border-box;
-  margin: 6px 0px 24px 0px;
+  margin: 0px 0px 24px 0px;
   font-weight: 400;
   font-size: 14px;
   line-height: 25px;
@@ -235,6 +230,7 @@ const Info = styled.div`
 const AddImg = styled.div`
   width: 100%;
   height: 160px;
+  margin-bottom: 20px;
   border: 1px solid #bdbdbd;
   box-sizing: border-box;
   border-radius: 8px;
