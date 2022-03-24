@@ -30,12 +30,13 @@ const HeaderCon = styled.div`
 
 const Text = styled.div`
     /* padding: 0 0 20px; */
-    margin: 20px 0;
-    font-weight: bold;
-    font-size: 16px;
+    /* margin: 20px 0; */
+    font-weight: 700;
+    font-size: 18px;
     display: flex;
+    height: 56px;
     align-items: center;
-    margin-left: 15px;
+    padding-left: 24px;
 
     & .backIcon {
         padding: 0;
