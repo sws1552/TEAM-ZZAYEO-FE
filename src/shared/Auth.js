@@ -8,7 +8,9 @@ const REDIRECT_URI =
   // "http://localhost:3000/api/auth/kakao/callback"; 
   "https://remarkable-paprenjak-257271.netlify.app/api/auth/kakao/callback";
 
-export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+export const KAKAO_AUTH_URL = 
+`https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
 
 //네이버 로그인
 const N_CLIENT_ID = "UAbzCreu51zu7lMTLLzS";

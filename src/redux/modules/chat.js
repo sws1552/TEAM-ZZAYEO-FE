@@ -28,7 +28,7 @@ const getChatRoomListFB = (toUserId) => {
   return async function (dispatch, getState, { history }) {
     // console.log('toUserId !! ',toUserId);
     await axios
-      .get(`http://stgon.shop/api/chat/${toUserId}`, {
+      .get(`https://stgon.shop/api/chat/${toUserId}`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -46,7 +46,7 @@ const getChatRoomListFB = (toUserId) => {
 const getChatListFB = () => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`http://stgon.shop/api/chat/list`, {
+      .get(`https://stgon.shop/api/chat/list`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
