@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 import axios from "axios";
-import { ContentCutOutlined } from "@mui/icons-material";
 
 //actions
 const SET_USER = "SET_USER";
@@ -28,7 +27,7 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://stgon.shop/api/auth/kakao/callback?code=${code}`)
+      .get(`https://stgon.shop/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
@@ -71,7 +70,7 @@ const kakaoLogin = (code) => {
 const checkUserDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://stgon.shop/api/users/auth/me`, {
+      .get(`https://stgon.shop/api/users/auth/me`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },

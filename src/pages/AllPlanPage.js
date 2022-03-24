@@ -30,7 +30,8 @@ const AllPlanPage = (props) => {
 
   // async, await를 이용해서 비동기적으로 데이터 통신
   const fetchFeeds = async (pageNumber) => {
-    const res = await fetch(`http://stgon.shop/api/plans?page=${pageNumber}`);
+    const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
+    console.log(res);
     const data = await res.json();
     setFeed((prev) => [...prev, ...data.plans]);
     setLoading(true);
