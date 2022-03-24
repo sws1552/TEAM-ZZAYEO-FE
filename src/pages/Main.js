@@ -36,13 +36,13 @@ const Main = (props) => {
     setIsLoaded(true);
     // await new Promise((resolve) => setTimeout(resolve, 500));
     if (query) {
-      await axios.get(`/api/plans${query}&page=${page}`).then((res) => {
+      await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
         let Items = res.data.plans;
         setItemLists((itemLists) => itemLists.concat(Items));
         setEndPage(res.data.endPage);
       });
     } else {
-      await axios.get(`/api/plans?page=${page}`).then((res) => {
+      await instance.get(`/api/plans?page=${page}`).then((res) => {
         let Items = res.data.plans;
         setItemLists((itemLists) => itemLists.concat(Items));
         setEndPage(res.data.endPage);
