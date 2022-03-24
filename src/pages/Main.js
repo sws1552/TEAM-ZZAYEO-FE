@@ -138,6 +138,7 @@ const Main = (props) => {
   return (
     <Container>
       <HeaderBar />
+      <div>zzzzzzzz</div>
       <Banner />
       <Div>
         <Content>
