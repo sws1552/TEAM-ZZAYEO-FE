@@ -71,7 +71,7 @@ const DropDownMenu = (props) => {
       
       <MoreVertIcon onClick={showHide} className="menu-trigger"/>
       
-      <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
+      <nav className={`menu ${isActive ? 'active' : 'inactive'}`}>
         <ul>
           {options.map((option) => {
             return (

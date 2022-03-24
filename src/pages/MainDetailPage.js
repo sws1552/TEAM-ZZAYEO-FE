@@ -9,6 +9,7 @@ import { Collapse } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import CommentList from "../components/Comment/CommentList";
+import Thumbnail from "../components/MainDetailPage/Thumbnail";
 
 const MainDetailPage = (props) => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const MainDetailPage = (props) => {
   const planId = props.match.params.planId;
   const plans = useSelector((state) => state.plan.myPlan);
 
+  const imageURL = useSelector((state) => state.image.thumbnailURL);
   const userId = localStorage.getItem("userId");
 
   const toggleMenu = () => {
@@ -30,18 +32,30 @@ const MainDetailPage = (props) => {
   }, []);
 
   const decideShare = ["비공개", "공개"];
-  const shareRef = React.useRef([]);
+  const share = "공개"
 
-  useEffect(() => {
-   
-      shareRef.current.forEach((v, i) => {
-        console.log(v.id, plans.status)
-        if (v.id === plans.status) {
-          v.click()
-        }
-      })
-  
-  }, []);
+  const [shareShowModal, setShareShowModal] = React.useState(false);
+  const [imageSrc, setImageSrc] = React.useState("");
+
+  // 썸네일 설정 모달 열기
+  const shareOpenModal = () => {
+    setShareShowModal(true);
+    setImageSrc("");
+  };
+
+  // 썸네일 설정 모달 유지
+  const keepModal = (e) => {
+    setShareShowModal(true);
+  };
+
+  // 썸네일 설정하고 모달 닫기
+  const shareCloseModal = (e) => {
+    e.stopPropagation();
+    setShareShowModal(false);
+    dispatch(planActions.statusDB(plans.planId, share));
+    dispatch(planActions.addThumbnailDB(plans.planId, imageURL));
+  };
+
 
   if (plans?.userId?.email === userId) {
     return (
@@ -52,28 +66,33 @@ const MainDetailPage = (props) => {
             {decideShare.map((l, i) => {
               return (
                 <li
-                  ref={(el) => (shareRef.current[i] = el)}
                   id={l}
                   key={i}
                   onClick={() => {
                     changeTripDest(i);
                     if (l === "공개") {
-                      dispatch(planActions.statusDB(plans.planId, l));
+                      shareOpenModal()
                     }
                     if (l === "비공개") {
                       dispatch(planActions.statusDB(plans.planId, l));
                     }
                   }}
                   style={{
-                    backgroundColor:
-                      i === clickedTripDest ? "#4E49E2" : "#F4F4F4",
-                    color: i === clickedTripDest ? "#FFFFFF" : "#9E9E9E",
+                    background: i === 1 && plans.status ==="공개" ? "#4E49E2" : i === 0 && plans.status ==="비공개" ? "#4E49E2": "#EDEDED",
+                    color : i === 1 && plans.status ==="공개" ? "#FFFFFF" : i === 0 && plans.status ==="비공개" ? "#FFFFFF": "#979797",
                   }}
                 >
                   {l==="공개" ? "모두에게 공유" : "나만의 일정"}
                 </li>
               );
             })}
+            <Thumbnail
+            shareShowModal={shareShowModal}
+            keepModal={keepModal}
+            shareCloseModal={shareCloseModal}
+            imageSrc={imageSrc}
+            setImageSrc={setImageSrc}
+          ></Thumbnail>
           </div>
         </TripDestBox>
         <Collapse in={isChecked}>
@@ -181,8 +200,10 @@ export default MainDetailPage;
 
 const Container = styled.div`
   width: 100%;
+  max-width: 420px;
   height: 93%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -203,7 +224,6 @@ const TitleBox = styled.div`
   padding: 0px 24px;
   box-sizing: border-box;
   margin-bottom: 32px;
-  margin-top: 20px;
 `;
 
 const TripDestBox = styled(TitleBox)`
@@ -221,7 +241,7 @@ const TripDestBox = styled(TitleBox)`
     width: fit-content;
     height: 32px;
     margin-right: 8px;
-    padding: 15px 12px;
+    padding: 8px 16px;
     box-sizing: border-box;
     border-radius: 50px;
     font-size: 14px;

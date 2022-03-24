@@ -48,6 +48,21 @@ const ChooseDay = (props) => {
     setCurrentTab(index);
   };
 
+  const day1BtnRef = React.useRef([]);
+
+  React.useEffect(() => {
+    if (day1BtnRef?.current?.length !== 0) {
+      // setTimeout(() => {
+      //   day1BtnRef?.current[0]?.click();
+      // }, 800);
+      
+      day1BtnRef?.current?.forEach((v, i) => {
+        if (parseInt(v?.id)+1 === dayList[currentTab].dayNumber) {
+            day1BtnRef?.current[i]?.click();
+        }
+      })
+    }
+  }, [dayList]);
 
   return (
     <>
@@ -55,23 +70,27 @@ const ChooseDay = (props) => {
         <TabMenu>
           {dayList && dayList.map((d, i) => {
             return (
-                <DayButton
-                  key={i}
-                  className={currentTab === i ? "submenu focused" : "submenu"}
-                  onClick={() => {
-                    selectMenuHandler(i)
+              <DayButton
+                ref={(el) => (day1BtnRef.current[i] = el)}
+                id={i}
+                key={i}
+                className={currentTab === i ? "submenu focused" : "submenu"}
+                onClick={() => {
+                  selectMenuHandler(i)
+                  if (currentTab !== i) {
                     polyLinedata.setMap(null);
                     dispatch(mapActions.addPolyline(polyLinedata));
-                    dispatch(mapActions.sendDayId(d.dayId))
-                  }}
-                  style={{
-                    backgroundColor:
-                      i === currentTab ? "#4E49E2" : "#F4F4F4",
-                    color: i === currentTab ? "#FFFFFF" : "#9E9E9E",
-                  }}
-                >
-                  day{i + 1}
-                </DayButton>
+                  }
+                  dispatch(mapActions.sendDayId(d.dayId))
+                }}
+                style={{
+                  backgroundColor:
+                    i === currentTab ? "#4E49E2" : "#F4F4F4",
+                  color: i === currentTab ? "#FFFFFF" : "#9E9E9E",
+                }}
+              >
+                day{i + 1}
+              </DayButton>
             )
           })}
         </TabMenu>
@@ -88,7 +107,7 @@ const ChooseDay = (props) => {
                     <CirclePurPle> {i + 1} </CirclePurPle> :
                     <CircleGreen> {i + 1} </CircleGreen>}
                 </Line>
-              <div style={{width:"100%", display: "table-cell" }}>
+                <div style={{ width: "100%", display: "table-cell" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Text>{v.time}</Text>
                     <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]} />
@@ -98,21 +117,21 @@ const ChooseDay = (props) => {
                   <MemoBox>
                     <Memo>{v.memoText}</Memo>
                   </MemoBox>
-                  <SwiperImage image = {v.memoImage} /> 
-                </div> 
+                  <SwiperImage image={v.memoImage} />
+                </div>
 
               </div>
             )
           })}
           <AddPlaceBox>
-            <WritePlanModal dayId={dayList && dayList[currentTab]?.dayId} dayNumber={dayList && dayList[currentTab]?.dayNumber}/>
+            <WritePlanModal planId={dayList && dayList[currentTab]?.planId} dayId={dayList && dayList[currentTab]?.dayId} dayNumber={dayList && dayList[currentTab]?.dayNumber} />
           </AddPlaceBox>
           <AddButton
-          onClick={()=>{
-            history.push('/myplan')
-          }}>일정 작성완료</AddButton>
+            onClick={() => {
+              history.push('/myplan')
+            }}>일정 작성완료</AddButton>
         </Container>
-        
+
       </div>
 
     </>
@@ -186,6 +205,7 @@ box-sizing: border-box;
 margin-top: 16px;
 padding: 16px 17px;
 box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.14);
+
 `
 
 const Memo = styled.div`
@@ -194,6 +214,7 @@ font-weight: 500;
 color: #757575;
 font-size: 12px;
 line-height: 16px;
+white-space: pre-wrap;
 `
 
 const TabMenu = styled.div`

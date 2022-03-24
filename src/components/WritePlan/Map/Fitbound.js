@@ -21,9 +21,9 @@ const Fitbound = ({markers, map, maps}) => {
     
         if (bounds) {
           map.fitBounds(bounds);
-          if (bounds.Sa.h === bounds.Sa.j) {
-            map.setZoom(17)
-          }
+          // if (bounds?.Sa?.h === bounds?.Sa?.j) {
+          //   map.setZoom(17)
+          // }
         } else {
           map.setCenter(new maps.LatLng(markers[markers.length - 1].lat, markers[markers.length - 1].lng))
           map.setZoom(17)

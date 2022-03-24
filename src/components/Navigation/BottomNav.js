@@ -8,8 +8,6 @@ import { useLocation } from "react-router";
 // 사용할 아이콘 import
 
 const BottomNav = () => {
-  const location = useLocation();
-  console.log(location)
   // 현재 선택된 아이콘을 관리하는 state
   const [activeNav, setActiveNav] = useState(1);
 

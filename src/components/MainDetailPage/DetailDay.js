@@ -191,6 +191,7 @@ const Memo = styled.div`
   color: #757575;
   font-size: 12px;
   line-height: 16px;
+  white-space: pre-wrap;
 `;
 
 const TabMenu = styled.div`

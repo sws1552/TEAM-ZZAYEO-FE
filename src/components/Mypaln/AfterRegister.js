@@ -7,6 +7,7 @@ const AfterRegister = (props) => {
   return (
     <React.Fragment>
       <Container>
+        
         <TripCard
           onClick={(e) => {
             history.push(`/detail/${props.planId}`);
@@ -20,6 +21,7 @@ const AfterRegister = (props) => {
             </CardDays>
           </CardInfo>
         </TripCard>
+        
       </Container>
     </React.Fragment>
   );
