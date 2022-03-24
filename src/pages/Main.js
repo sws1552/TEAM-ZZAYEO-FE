@@ -11,6 +11,7 @@ import Filter from "../components/Main/Filter";
 import { useLocation } from "react-router";
 import HeaderBar from "../components/Main/HeaderBar";
 import Banner from "../components/Main/Banner";
+import axios from "axios";
 
 const Main = (props) => {
   const is_token = localStorage.getItem("token") ? true : false;
@@ -35,13 +36,13 @@ const Main = (props) => {
     setIsLoaded(true);
     // await new Promise((resolve) => setTimeout(resolve, 500));
     if (query) {
-      await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
+      await axios.get(`/api/plans${query}&page=${page}`).then((res) => {
         let Items = res.data.plans;
         setItemLists((itemLists) => itemLists.concat(Items));
         setEndPage(res.data.endPage);
       });
     } else {
-      await instance.get(`/api/plans?page=${page}`).then((res) => {
+      await axios.get(`/api/plans?page=${page}`).then((res) => {
         let Items = res.data.plans;
         setItemLists((itemLists) => itemLists.concat(Items));
         setEndPage(res.data.endPage);
@@ -142,7 +143,7 @@ const Main = (props) => {
       <Banner />
       <Div>
         <Content>
-          {/* <TravelListBox>
+          <TravelListBox>
             <P>여행기 모아보기 🌄📝</P>
             <Filter />
             {itemLists.map((l, i) => {
@@ -151,7 +152,7 @@ const Main = (props) => {
             <div ref={setTarget} className="Target-Element">
               {isLoaded && <Loader />}
             </div>
-          </TravelListBox> */}
+          </TravelListBox>
         </Content>
       </Div>
     </Container>
