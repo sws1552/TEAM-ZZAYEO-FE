@@ -89,7 +89,7 @@ const ChooseDay = (props) => {
                     <CircleGreen> {i + 1} </CircleGreen>}
                 </Line>
               <div style={{width:"100%", display: "table-cell" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", position:'relative' }}>
                     <Text>{v.time}</Text>
                     <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]} />
                   </div>
