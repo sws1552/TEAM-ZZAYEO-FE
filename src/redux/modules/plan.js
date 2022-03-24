@@ -121,7 +121,6 @@ const getdayPlanDB = (planId) => {
   };
 };
 
-
 export const saveLocationDB = (
   dayId,
   AmPm,
@@ -165,7 +164,7 @@ export const saveLocationDB = (
       .post(`/api/plans/days/${dayId}`, formData, {})
       .then(function (response) {
         // const planId = getState().plan.planId;
-        console.log(planId)
+        console.log(planId);
         instance.get(`/api/plans/${planId}`).then((res) => {
           console.log(res);
           dispatch(getdayPlan(res.data.plan));
@@ -456,7 +455,7 @@ const getyourPostDB = (planId) => {
     instance
       .post(`/api/plans/${planId}/copy`)
       .then((res) => {
-        alert("여행기 작성에 등록 되었습니다.")
+        alert("여행기 작성에 등록 되었습니다.");
       })
       .catch((error) => {
         console.log(error);
@@ -527,8 +526,11 @@ const actionCreators = {
   EditPlanDB,
   deleteMyPostImageDB,
   getyourPostDB,
+
   getUserPickDB,
   getTopTravelDB,
+
+
 };
 
 export { actionCreators };

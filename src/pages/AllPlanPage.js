@@ -1,28 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { useInView } from "react-intersection-observer";
 import Loader from "../components/Main/Loader";
 import TravelList from "../components/AllPlanPage/TravelList";
 import Filter from "../components/AllPlanPage/Filter";
-import instance from "../shared/Request";
 
 const AllPlanPage = (props) => {
   const dispatch = useDispatch();
   const scroll = React.useRef(null);
 
+  const [feed, setFeed] = React.useState([]);
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
+  const pageEnd = React.useRef();
+
   const location = useLocation();
   const query = location.search;
-
-  const plans = useSelector((store) => store.plan.list);
-
-  React.useEffect(() => {
-    dispatch(userActions.checkUserDB());
-    dispatch(planActions.getPlanDB(query));
-  }, [query]);
+  // const plans = useSelector((store) => store.plan.list);
 
   const executeScroll = () =>
     scroll.current.scrollIntoView({
@@ -31,54 +28,44 @@ const AllPlanPage = (props) => {
       inline: "nearest",
     });
 
-  //무한 스크롤
-  const [target, setTarget] = React.useState(null);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const [itemLists, setItemLists] = React.useState([]);
-  const [page, setPage] = React.useState(1);
-  const [endPage, setEndPage] = React.useState(0);
-
-  React.useEffect(() => {
-    console.log(itemLists);
-  }, [itemLists]);
-
-  const getMoreItem = async (page) => {
-    setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    await instance.get(`/api/plans?page=${page}`).then((res) => {
-      let Items = res.data.plans;
-      setItemLists((itemLists) => itemLists.concat(Items));
-      setEndPage(res.data.endPage);
-    });
-    setIsLoaded(false);
+  // async, await를 이용해서 비동기적으로 데이터 통신
+  const fetchFeeds = async (pageNumber) => {
+    const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
+    console.log(res);
+    const data = await res.json();
+    setFeed((prev) => [...prev, ...data.plans]);
+    setLoading(true);
   };
 
-  const onIntersect = React.useCallback(
-    async ([entry], observer) => {
-      if (entry.isIntersecting && !isLoaded) {
-        observer.unobserve(entry.target);
-        await getMoreItem(page);
-        if (page === endPage) {
-          return page;
-        } else {
-          setPage((num) => num + 1);
-        }
-        observer.observe(entry.target);
-      }
-    },
-    [target, page]
-  );
+  // pageNumber가 바뀔때마다 실행
+  React.useEffect(() => {
+    fetchFeeds(pageNumber);
+  }, [pageNumber]);
+
+  // loading이 바뀔때마다 실행
+  React.useEffect(() => {
+    // fetchFeed에서 loading이 true면
+    if (loading) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setPageNumber((prevPageNumber) => prevPageNumber + 1);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(pageEnd.current);
+    }
+  }, [loading]);
 
   React.useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 1,
-      });
-      observer.observe(target);
+    dispatch(userActions.checkUserDB());
+    if (query) {
+      dispatch(planActions.getPlanDB(query + "&page=" + pageNumber));
+    } else {
+      return null;
     }
-    return () => observer && observer.disconnect();
-  }, [target, page]);
+  }, [query]);
 
   return (
     <React.Fragment>
@@ -88,22 +75,9 @@ const AllPlanPage = (props) => {
         </Header>
         <Contents>
           <Filter />
-          {query ? (
-            <>
-              {plans.map((l, i) => {
-                return <TravelList key={i} {...l} />;
-              })}
-            </>
-          ) : (
-            <>
-              {itemLists.map((l, i) => {
-                return <TravelList key={i} {...l} />;
-              })}
-              <div ref={setTarget} className="Target-Element">
-                {isLoaded && <Loader />}
-              </div>
-            </>
-          )}
+          {feed.map((l, i) => {
+            return <TravelList key={i} {...l} />;
+          })}
         </Contents>
         <ScrollBtn onClick={executeScroll}>
           <svg
@@ -121,6 +95,9 @@ const AllPlanPage = (props) => {
             />
           </svg>
         </ScrollBtn>
+        <div className="loading" ref={pageEnd}>
+          {loading && <Loader />}
+        </div>
       </Container>
     </React.Fragment>
   );

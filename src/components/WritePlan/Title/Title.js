@@ -54,6 +54,9 @@ font-size: 14px;
 font-weight: 500;
 color: #9E9E9E;
 cursor: pointer;
+:hover {
+    color: gray;
+}
 `
 
 export default Title;

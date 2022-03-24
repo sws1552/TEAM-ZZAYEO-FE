@@ -27,6 +27,10 @@ const Searchbar = (props) => {
     setSearch("");
   };
 
+  React.useEffect(() => {
+    setSearch("");
+  }, []);
+
   return (
     <Container>
       <BackCon
