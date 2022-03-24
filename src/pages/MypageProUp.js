@@ -80,7 +80,7 @@ const MypageProUp = () => {
                 <ClearIconRe onClick={() => setNickName("")}/>
             </InputBar>
             <Text>
-                <ErrorOutlineOutlinedIcon/>닉네임은 한글, 영어, 숫자로 00자까지 입력해주세요.
+                <ErrorOutlineOutlinedIcon/>닉네임은 한글, 영어, 숫자로 10자까지 입력해주세요.
             </Text>
             
             <BtnCon>
@@ -111,7 +111,7 @@ const MypageCon = styled.div`
     width: 100%;
     height: 92%;
     /* background-color: orange; */
-    padding: 25px 0;
+    padding-bottom: 25px;
     box-sizing: border-box;
 `;
 
@@ -176,7 +176,7 @@ const Text = styled.div`
 const BtnCon = styled.div`
     /* background-color: orange; */
     width: 100%;
-    height: 46vh;
+    height: 50vh;
     display: flex;
     align-items: flex-end;
     justify-content: center;

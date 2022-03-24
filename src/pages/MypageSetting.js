@@ -49,7 +49,7 @@ const MypageCon = styled.div`
     width: 100%;
     height: 92%;
     /* background-color: orange; */
-    padding: 25px 0;
+    padding-bottom: 25px;
     box-sizing: border-box;
 `;
 

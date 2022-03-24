@@ -81,7 +81,7 @@ const ListContainer = styled.div`
   width: 100%;
   height: 93.7%;
   /* background-color: orange; */
-  padding: 25px 0;
+  padding-bottom: 25px;
   box-sizing: border-box;
   border-radius: 10px;
 `;

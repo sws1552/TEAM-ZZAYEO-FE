@@ -192,7 +192,7 @@ const RoomContainer = styled.div`
     width: 100%;
     height: 90%;
     box-sizing: border-box;
-    padding: 25px 0;
+    padding-bottom: 25px;
     
 
     & .sendIcon {
