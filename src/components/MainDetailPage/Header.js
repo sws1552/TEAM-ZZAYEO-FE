@@ -56,6 +56,17 @@ const Header = (props) => {
     history.push("/chatroom");
   };
 
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+  
+  let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
+  
   return (
     <Container>
       <BackBtn
@@ -87,7 +98,7 @@ const Header = (props) => {
         src={
           props.thumbnailImage
             ? props.thumbnailImage
-            : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
+            : defaultUrl[imgUrl]
         }
       ></Thumbnail>
       <Btn onClick={onProfile}>
@@ -158,9 +169,10 @@ const BtnBox = styled.div`
 const Thumbnail = styled.div`
   width: 100%;
   height: 224px;
-  background: url(${(props) => props.src});
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%), url(${(props) => props.src}) ;
   background-position: center;
   background-size: cover;
+  
 `;
 
 const Btn = styled.div`
@@ -190,7 +202,7 @@ const UserNickname = styled.div`
 const MsgDiv = styled.div`
   position: absolute;
   top: 240px;
-  right: 16px;
+  right: 24px;
 `;
 
 const MsgBtn = styled.div`
@@ -223,7 +235,7 @@ const PlanInfo = styled.div`
 `;
 
 const Title = styled.div`
-  padding-left: 24px;
+  padding: 0px 16px 0px 24px;
   font-weight: 600;
   font-size: 24px;
   line-height: 28px;

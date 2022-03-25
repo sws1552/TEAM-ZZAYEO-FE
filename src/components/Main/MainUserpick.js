@@ -4,6 +4,18 @@ import { useSelector } from "react-redux";
 import { history } from "../../redux/ConfigureStore";
 
 const MainUserpick = (props) => {
+
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+  
+  let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
+ 
   const planId = props.planId;
 
   const userpick_list = useSelector((store) => store.plan.userpick_list);
@@ -29,7 +41,7 @@ const MainUserpick = (props) => {
           src={
             plan.thumbnailImage
               ? plan.thumbnailImage
-              : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
+              : defaultUrl[imgUrl]
           }
         >
           <UserInfo onClick={onProfile}>
@@ -53,6 +65,7 @@ const Container = styled.div`
 `;
 
 const BookMarkCard = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 152.57px;

@@ -27,7 +27,7 @@ const ReplyList = (props) => {
 
     return (
         <ReplyListCon>
-            <ReplyWrap>
+            <ReplyWrap heightVal={replies.length <= 2 ? "auto" : "20vh"}>
             {replies.map((item, i) => {
                 return <Reply key={item.replyId} {...item} userInfo={userInfo} planId={planId}/>
             })}
@@ -51,7 +51,7 @@ const ReplyListCon = styled.div`
 `;
 
 const ReplyWrap = styled.div`
-    height: 20vh;
+    height: ${(props) => props.heightVal};
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
@@ -63,7 +63,7 @@ const ReplyUserImg = styled.div`
     background-image: url("${(props) => (props.userImg ? props.userImg : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200" )}");
     background-position: center;
     background-size: cover;
-    box-shadow: 0 5px 5px 0 #BFBFBF;
+    /* box-shadow: 0 5px 5px 0 #BFBFBF; */
     width: 40px;
     height: 40px;
     border-radius: 25px;
@@ -148,6 +148,7 @@ const Reply = (props) => {
                         {props.isLike ? <FavoriteIcon style={{fontSize: "13px", marginRight: "2px"}}/> : <FavoriteBorderIcon style={{fontSize: "13px", marginRight: "2px"}}/> }
                         좋아요 {props.likeCount}
                     </LikeBtn>
+
                 </BtnCon>
 
             </Context>
@@ -179,7 +180,7 @@ const UserImg = styled.div`
     background-image: url("${(props) => (props.profile_img ? props.profile_img : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200" )}");
     background-position: center;
     background-size: cover;
-    box-shadow: 0 5px 5px 0 #BFBFBF;
+    /* box-shadow: 0 5px 5px 0 #BFBFBF; */
     width: 40px;
     height: 40px;
     border-radius: 25px;
@@ -250,6 +251,13 @@ const ReplyUpdateBtnCon = styled.div`
 
 const ReplyUpdateBtn = styled.button`
 
+`;
+
+const ReReplyBtnC = styled.div`
+  cursor: pointer;
+  margin-left: 10px;
+  color: #757575;
+  font-size: 12px;
 `;
 
 const ReplyUpdateCancelBtn = styled.button`

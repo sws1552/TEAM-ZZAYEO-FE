@@ -57,10 +57,10 @@ const Main = (props) => {
     async ([entry], observer) => {
 
       if (entry.isIntersecting && !isLoaded) {
-      
+
         observer.unobserve(entry.target);
         await getMoreItem(page, query);
-  
+
         if (page === endPage) {
           return page;
         } else {
@@ -164,22 +164,32 @@ const Main = (props) => {
 
   return (
     <Container>
-      {/* <HeaderBar />
+      <HeaderBar />
       <Banner />
       <Div>
         <Content>
-          <TravelListBox>
-            <P>여행기 모아보기 🌄📝</P>
-            <Filter />
-            {itemLists.map((l, i) => {
-              return <MainTravelList key={i} {...l} />;
-            })}
-            <div ref={setTarget} className="Target-Element">
-              {isLoaded && <Loader />}
-            </div>
-          </TravelListBox>
+          <BookMarkListBox>
+            {userpick_list.length > 0 ? (
+              <>
+                <P>이달의 유저 픽 ✅</P>
+                <MainUserpickList />
+              </>
+            ) : (
+              null
+            )}
+          </BookMarkListBox>
+          <BookMarkListBox>
+            {toptravel_list.length > 0 ? (
+              <>
+                <P>이달의 인기 여행 🏞</P>
+                <MainTopTravelList />
+              </>
+            ) : (
+              null
+            )}
+          </BookMarkListBox>
         </Content>
-      </Div> */}
+      </Div>
     </Container>
   );
 };

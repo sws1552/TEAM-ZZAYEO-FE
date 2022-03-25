@@ -5,39 +5,46 @@ import { history } from "../../redux/ConfigureStore";
 import Bookmark from "../Main/Bookmark";
 
 const TravelList = (props) => {
-  const { title, isLike, isBookmark, planId, userId, thumbnailImage } = props;
+  console.log(props)
 
   const onProfile = (e) => {
     e.stopPropagation();
-    history.push(`/otheruser/${userId.userId}`);
+    history.push(`/otheruser/${props.userId}`);
   };
 
   const onPlanInfo = (e) => {
     e.stopPropagation();
-    history.push(`/detail/${planId}`);
+    history.push(`/detail/${props.planId}`);
   };
+
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+  
+  let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
 
   return (
     <React.Fragment>
       <Container>
         <TripCard onClick={onPlanInfo}>
-          <CardImg
-            src={
-              thumbnailImage
-                ? thumbnailImage
-                : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
-            }
+        <CardImg
+            src={props.thumbnailImage ? props.thumbnailImage: defaultUrl[imgUrl] }
           ></CardImg>
           <Btn>
-            <UserImg onClick={onProfile} src={userId.profile_img} />
+            <UserImg onClick={onProfile} src={props.profile_img} />
           </Btn>
-          <UserNickName>{userId.nickname}</UserNickName>
+          <UserNickName>{props.nickname}</UserNickName>
           <CardTitle>
-            {title.length > 22 ? title.substring(0, 22) + "..." : title}
+            {props.title.length > 22 ? props.title.substring(0, 22) + "..." : props.title}
           </CardTitle>
           <Box>
-            <Like isLike={isLike} />
-            <Bookmark isBookmark={isBookmark} />
+            <Like isLike={props.isLike} />
+            <Bookmark isBookmark={props.isBookmark} />
           </Box>
         </TripCard>
       </Container>

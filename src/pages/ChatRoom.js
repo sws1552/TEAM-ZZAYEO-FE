@@ -63,7 +63,7 @@ const ChatRoom = (props) => {
         // 서버에서 메시지데이터 받아오기
         socket.on("chat", (data) => {
             // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
-            // console.log("메시지 수신~!! ", data);
+            // console.log("메시지 ~!! ", data);
 
             const oneChat = {
                 chatText: data.chatText,

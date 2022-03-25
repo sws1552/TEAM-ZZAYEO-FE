@@ -58,7 +58,7 @@ const MyPage = (props) => {
             <ListCon>
                 <ListItem onClick={() => history.push('/mypageproup')} >프로필 수정<ArrowForwardIosIcon/></ListItem>
                 <ListItem onClick={() => history.push('/mypageset')}>계정 설정<ArrowForwardIosIcon/></ListItem>
-                <ListItem3>알림 설정<Switch _onClick={() => console.log('test')}/></ListItem3>
+                <ListItem3>알림 설정<Switch /></ListItem3>
             </ListCon>
             
             

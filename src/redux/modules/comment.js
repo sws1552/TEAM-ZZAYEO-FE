@@ -17,6 +17,7 @@ const updateComment = createAction(UPDATE_COMMENT, (commentId, planId)=> ({comme
 // 초기 상태값
 const initialState = {
     list: {},
+    opponent: "",
 }
 
 

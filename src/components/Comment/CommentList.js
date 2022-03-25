@@ -180,7 +180,7 @@ const CommentItem = (props) => {
             좋아요 {props.likeCount}
           </LikeBtn>
           <ReplyBtn onClick={() => setReplyHide(!replyHide)}>
-            답글 {props.replies.length}
+            답글달기 {props.replies.length}
           </ReplyBtn>
         </LikeandreplyCon>
       </Context>
@@ -216,7 +216,7 @@ const UserImg = styled.div`
   background-image: url(${(props) => props.src});
   background-position: center;
   background-size: cover;
-  box-shadow: 0 5px 5px 0 #bfbfbf;
+  /* box-shadow: 0 5px 5px 0 #bfbfbf; */
   width: 50px;
   height: 50px;
   border-radius: 25px;

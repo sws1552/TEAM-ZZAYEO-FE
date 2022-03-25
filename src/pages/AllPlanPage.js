@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
@@ -7,6 +7,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import Loader from "../components/Main/Loader";
 import TravelList from "../components/AllPlanPage/TravelList";
 import Filter from "../components/AllPlanPage/Filter";
+import instance from "../shared/Request";
 
 const AllPlanPage = (props) => {
   const dispatch = useDispatch();
@@ -86,6 +87,80 @@ const AllPlanPage = (props) => {
     dispatch(userActions.checkUserDB());
   }, [dispatch]);
 
+  //무한 스크롤
+  // const [target, setTarget] = useState(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [itemLists, setItemLists] = useState([]);
+  // const [page, setPage] = useState(1);
+  // const [endPage, setEndPage] = useState(0);
+
+  // useEffect(() => {
+  //   console.log(itemLists);
+  // }, [itemLists]);
+
+  // const getMoreItem = async (page, query) => {
+  //   setIsLoaded(true);
+  //   // await new Promise((resolve) => setTimeout(resolve, 500));
+  //   if (query) {
+  //     await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
+  //       let Items = res.data.plans;
+  //       setItemLists((itemLists) => itemLists.concat(Items));
+  //       setEndPage(res.data.endPage);
+  //     });
+  //   } else {
+  //     await instance.get(`/api/plans?page=${page}`).then((res) => {
+  //       let Items = res.data.plans;
+  //       setItemLists((itemLists) => itemLists.concat(Items));
+  //       setEndPage(res.data.endPage);
+  //     });
+  //   }
+  //   setIsLoaded(false);
+  // };
+
+  // useEffect(() => {
+  //   instance.get(`/api/plans${query}&page=1`).then((res) => {
+  //     let Items = res.data.plans;
+  //     console.log(Items)
+  //     setEndPage(res.data.endPage)
+  //     setPage(1)
+  //     setItemLists([])
+  //     setItemLists((itemLists) => itemLists.concat(Items));
+  //   });
+  // }, [query]);
+
+  // const onIntersect = useCallback(
+  //   async ([entry], observer) => {
+  //     console.log(page, query)
+  //     console.log(entry.isIntersecting)
+  //     console.log(isLoaded)
+
+  //     if (entry.isIntersecting && !isLoaded) {
+  //       observer.unobserve(entry.target);
+  //       await getMoreItem(page, query);
+  //       console.log(page, endPage)
+  //       console.log(query)
+  //       if (page === endPage) {
+  //         return page;
+  //       } else {
+  //         setPage((num) => num + 1);
+  //       }
+  //       observer.observe(entry.target);
+  //     }
+  //   },
+  //   [target, page, query]
+  // );
+
+  // useEffect(() => {
+  //   let observer;
+  //   if (target && endPage !== 1) {
+  //     observer = new IntersectionObserver(onIntersect, {
+  //       threshold: 1,
+  //     });
+  //     observer.observe(target);
+  //   }
+  //   return () => observer && observer.disconnect();
+  // }, [target, page, query]);
+
   return (
     <React.Fragment>
       <Container>
@@ -124,9 +199,6 @@ const AllPlanPage = (props) => {
             />
           </svg>
         </ScrollBtn>
-        <div className="loading" ref={pageEnd}>
-          {loading && <Loader />}
-        </div>
       </Container>
     </React.Fragment>
   );

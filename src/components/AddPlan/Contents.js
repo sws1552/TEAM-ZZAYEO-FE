@@ -11,6 +11,7 @@ import DateModal from "./DateModal";
 
 const Contents = (props) => {
   const dispatch = useDispatch();
+  const { today } = props
 
   //여행제목 값 가져오기
   const [titleInput, setTitleInput] = useState("");
@@ -18,8 +19,8 @@ const Contents = (props) => {
   //여행 선택일자 가져오기
   const [state, setState] = React.useState([
     {
-      startDate: null,
-      endDate: null,
+      startDate: today,
+      endDate: today,
       key: "selection",
     },
   ]);

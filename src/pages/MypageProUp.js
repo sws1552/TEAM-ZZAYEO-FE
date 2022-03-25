@@ -59,10 +59,17 @@ const MypageProUp = () => {
     }
 
     const userInfoSave = () => {
+        if(upNickName.length <= 10){
+        
+            const newImg = fileRef.current.files[0];
 
-        const newImg = fileRef.current.files[0];
+            dispatch(mypageActions.updateProfileFB(newImg, upNickName));
 
-        dispatch(mypageActions.updateProfileFB(newImg, upNickName));
+        }else{
+            window.alert('닉네임은 10자까지 입니다.');
+            setNickName("");
+            return;
+        }
     }
 
     return (
@@ -122,6 +129,8 @@ const UserCon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 34px;
+    box-sizing: border-box;
 `;
 
 const UserImg = styled.div`
