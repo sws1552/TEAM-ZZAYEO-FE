@@ -190,11 +190,9 @@ const getBookMarkDB = () => {
   };
 };
 
-
 const getUserPickDB = () => {
   return function (dispatch, getState, { history }) {
-
-    console.log('유저픽');
+    console.log("유저픽");
 
     instance
       .get(`/api/plans/hotBookmark`)
@@ -206,7 +204,6 @@ const getUserPickDB = () => {
       });
   };
 };
-
 
 const getTopTravelDB = () => {
   return function (dispatch, getState, { history }) {
@@ -529,8 +526,6 @@ const actionCreators = {
 
   getUserPickDB,
   getTopTravelDB,
-
-
 };
 
 export { actionCreators };

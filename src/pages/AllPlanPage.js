@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -14,10 +14,11 @@ const AllPlanPage = (props) => {
   const scroll = React.useRef(null);
 
   const [feed, setFeed] = React.useState([]);
-  const [pageNumber, setPageNumber] = React.useState(1);
+  const [queryFeed, setQueryFeed] = React.useState([]);
+  const [pageNumber, setPageNumber] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [endPage, setEndPage] = React.useState(0);
   const pageEnd = React.useRef();
-
   const location = useLocation();
   const query = location.search;
   // const plans = useSelector((store) => store.plan.list);
@@ -29,73 +30,92 @@ const AllPlanPage = (props) => {
       inline: "nearest",
     });
 
-  // // async, await를 이용해서 비동기적으로 데이터 통신
-  // const fetchFeeds = async (pageNumber) => {
-  //   const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
-  //   console.log(res);
-  //   const data = await res.json();
-  //   setFeed((prev) => [...prev, ...data.plans]);
-  //   setLoading(true);
-  // };
-
-  // // pageNumber가 바뀔때마다 실행
-  // React.useEffect(() => {
-  //   fetchFeeds(pageNumber);
-  // }, [pageNumber]);
-
-  // // loading이 바뀔때마다 실행
-  // React.useEffect(() => {
-  //   // fetchFeed에서 loading이 true면
-  //   if (loading) {
-  //     const observer = new IntersectionObserver(
-  //       (entries) => {
-  //         if (entries[0].isIntersecting) {
-  //           setPageNumber((prevPageNumber) => prevPageNumber + 1);
-  //         }
-  //       },
-  //       { threshold: 1 }
-  //     );
-  //     observer.observe(pageEnd.current);
-  //   }
-  // }, [loading]);
-
-  // React.useEffect(() => {
-  //   dispatch(userActions.checkUserDB());
-  //   if (query) {
-  //     dispatch(planActions.getPlanDB(query + "&page=" + pageNumber));
-  //   } else {
-  //     return null;
-  //   }
-  // }, [query]);
-  //무한 스크롤
-  const [target, setTarget] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([]);
-  const [page, setPage] = useState(1);
-  const [endPage, setEndPage] = useState(0);
-
-  useEffect(() => {
-    console.log(itemLists);
-  }, [itemLists]);
-
-  const getMoreItem = async (page, query) => {
-    setIsLoaded(true);
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-    if (query) {
-      await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
-        let Items = res.data.plans;
-        setItemLists((itemLists) => itemLists.concat(Items));
-        setEndPage(res.data.endPage);
-      });
-    } else {
-      await instance.get(`/api/plans?page=${page}`).then((res) => {
-        let Items = res.data.plans;
-        setItemLists((itemLists) => itemLists.concat(Items));
-        setEndPage(res.data.endPage);
-      });
-    }
-    setIsLoaded(false);
+  //async, await를 이용해서 비동기적으로 데이터 통신
+  const fetchFeeds = async (pageNumber) => {
+    setLoading(true);
+    const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
+    const data = await res.json();
+    console.log(res);
+    setFeed((prev) => [...prev, ...data.plans]);
+    setEndPage(data.endPage);
+    setLoading(false);
   };
+
+  const queryfetchFeeds = async (pageNumber, query) => {
+    setLoading(true);
+    const res = await fetch(
+      `https://stgon.shop/api/plans${query}&page=${pageNumber}`
+    );
+    const data = await res.json();
+    console.log(data);
+    setQueryFeed((prev) => [...prev, ...data.plans]);
+    setEndPage(data.endPage);
+    setLoading(false);
+  };
+  console.log(feed);
+  console.log(queryFeed);
+
+  // pageNumber가 바뀔때마다 실행
+  React.useEffect(() => {
+    console.log(query);
+    if (query) {
+      queryfetchFeeds(pageNumber, query);
+    } else {
+      fetchFeeds(pageNumber);
+    }
+  }, [pageNumber, query]);
+
+  // loading이 바뀔때마다 실행
+  React.useEffect(() => {
+    // fetchFeed에서 loading이 true면
+    console.log(pageNumber, endPage);
+
+    if (loading) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setPageNumber((prevPageNumber) => prevPageNumber + 1);
+          }
+        },
+        { threshold: 1 }
+      );
+      observer.observe(pageEnd.current);
+    }
+  }, [loading]);
+
+  React.useEffect(() => {
+    dispatch(userActions.checkUserDB());
+  }, [dispatch]);
+
+  //무한 스크롤
+  // const [target, setTarget] = useState(null);
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [itemLists, setItemLists] = useState([]);
+  // const [page, setPage] = useState(1);
+  // const [endPage, setEndPage] = useState(0);
+
+  // useEffect(() => {
+  //   console.log(itemLists);
+  // }, [itemLists]);
+
+  // const getMoreItem = async (page, query) => {
+  //   setIsLoaded(true);
+  //   // await new Promise((resolve) => setTimeout(resolve, 500));
+  //   if (query) {
+  //     await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
+  //       let Items = res.data.plans;
+  //       setItemLists((itemLists) => itemLists.concat(Items));
+  //       setEndPage(res.data.endPage);
+  //     });
+  //   } else {
+  //     await instance.get(`/api/plans?page=${page}`).then((res) => {
+  //       let Items = res.data.plans;
+  //       setItemLists((itemLists) => itemLists.concat(Items));
+  //       setEndPage(res.data.endPage);
+  //     });
+  //   }
+  //   setIsLoaded(false);
+  // };
 
   // useEffect(() => {
   //   instance.get(`/api/plans${query}&page=1`).then((res) => {
@@ -108,39 +128,38 @@ const AllPlanPage = (props) => {
   //   });
   // }, [query]);
 
-  const onIntersect = useCallback(
-    async ([entry], observer) => {
-      console.log(page, query)
-      console.log(entry.isIntersecting)
-      console.log(isLoaded)
-   
+  // const onIntersect = useCallback(
+  //   async ([entry], observer) => {
+  //     console.log(page, query)
+  //     console.log(entry.isIntersecting)
+  //     console.log(isLoaded)
 
-      if (entry.isIntersecting && !isLoaded) {
-        observer.unobserve(entry.target);
-        await getMoreItem(page, query);
-        console.log(page, endPage)
-        console.log(query)
-        if (page === endPage) {
-          return page;
-        } else {
-          setPage((num) => num + 1);
-        }
-        observer.observe(entry.target);
-      }
-    },
-    [target, page, query]
-  );
+  //     if (entry.isIntersecting && !isLoaded) {
+  //       observer.unobserve(entry.target);
+  //       await getMoreItem(page, query);
+  //       console.log(page, endPage)
+  //       console.log(query)
+  //       if (page === endPage) {
+  //         return page;
+  //       } else {
+  //         setPage((num) => num + 1);
+  //       }
+  //       observer.observe(entry.target);
+  //     }
+  //   },
+  //   [target, page, query]
+  // );
 
-  useEffect(() => {
-    let observer;
-    if (target && endPage !== 1) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 1,
-      });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target, page, query]);
+  // useEffect(() => {
+  //   let observer;
+  //   if (target && endPage !== 1) {
+  //     observer = new IntersectionObserver(onIntersect, {
+  //       threshold: 1,
+  //     });
+  //     observer.observe(target);
+  //   }
+  //   return () => observer && observer.disconnect();
+  // }, [target, page, query]);
 
   return (
     <React.Fragment>
@@ -152,34 +171,18 @@ const AllPlanPage = (props) => {
           <Filter />
           {query ? (
             <>
-              {itemLists.map((l, i) => {
+              {queryFeed.map((l, i) => {
                 return <TravelList key={i} {...l} />;
               })}
-              <div ref={setTarget} className="Target-Element">
-                {isLoaded && <Loader />}
-              </div>
             </>
           ) : (
             <>
-              {itemLists.map((l, i) => {
+              {feed.map((l, i) => {
                 return <TravelList key={i} {...l} />;
               })}
-              <div ref={setTarget} className="Target-Element">
-                {isLoaded && <Loader />}
-              </div>
             </>
           )}
-          {/* {itemLists.map((l, i) => {
-            return <TravelList key={i} {...l} />;
-          })} */}
-          {/* <div className="loading" ref={pageEnd}>
-            {loading && <Loader />}
-          </div> */}
-          <div ref={setTarget} className="Target-Element">
-            {isLoaded && <Loader />}
-          </div>
         </Contents>
-
         <ScrollBtn onClick={executeScroll}>
           <svg
             width="16"
@@ -196,7 +199,6 @@ const AllPlanPage = (props) => {
             />
           </svg>
         </ScrollBtn>
-
       </Container>
     </React.Fragment>
   );
