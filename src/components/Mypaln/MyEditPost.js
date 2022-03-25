@@ -159,6 +159,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-end;
+  z-index: 1;
 
   .menu {
     background: #ffffff;

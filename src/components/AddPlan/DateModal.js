@@ -44,7 +44,7 @@ const DateModal = (props) => {
             <DateRangeDiv>
               <MyDateRange
                 locale={ko}
-                onChange={(item) => setState([item.selection])}
+                onChange={(item) => setState([item.selection], console.log(item.selection))}
                 moveRangeOnFirstSelection={false}
                 ranges={state}
                 months={2}

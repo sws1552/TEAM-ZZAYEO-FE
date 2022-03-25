@@ -17,6 +17,18 @@ const MainTopTravel = (props) => {
     e.stopPropagation();
     history.push(`/otheruser/${userId}`);
   };
+
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+  
+  let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
+ 
   return (
     <React.Fragment>
       <Container>
@@ -27,7 +39,7 @@ const MainTopTravel = (props) => {
           src={
             plan.thumbnailImage
               ? plan.thumbnailImage
-              : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
+              : defaultUrl[imgUrl]
           }
         >
           <UserInfo onClick={onProfile}>

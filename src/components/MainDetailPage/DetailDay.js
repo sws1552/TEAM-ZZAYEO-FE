@@ -10,7 +10,6 @@ const Detailday = (props) => {
   const dayList = props.days;
   const [currentTab, setCurrentTab] = useState(0);
 
-  console.log('dayList !! ',dayList);
 
   const polyLinedata = useSelector((state) => state.map.polyline);
   const myPlan = useSelector((state) => state.plan.myPlan);

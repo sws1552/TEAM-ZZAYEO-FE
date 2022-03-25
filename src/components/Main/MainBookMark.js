@@ -25,6 +25,17 @@ const MainBookMark = (props) => {
     history.push(`/detail/${plan.planId.planId}`);
   };
 
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+  
+  let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
+
   return (
     <React.Fragment>
       <Container>
@@ -47,11 +58,11 @@ const MainBookMark = (props) => {
 
         <TripCard onClick={onPlanInfo}>
           <CardImg
-            src={
-              plan.planId.thumbnailImage
-                ? plan.planId.thumbnailImage
-                : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
-            }
+          src={
+            plan.planId.thumbnailImage
+              ? plan.planId.thumbnailImage
+              : defaultUrl[imgUrl]
+          }
           ></CardImg>
           <Btn>
             <UserImg onClick={onProfile} src={plan.planId.userId.profile_img} />
@@ -61,10 +72,9 @@ const MainBookMark = (props) => {
             {plan.planId.title.length > 25 ? plan.planId.title.substring(0, 25) + "..." : plan.planId.title}
           </CardTitle>
           <Box>
-            {/* <Like isLike={isLike} />
-            <Bookmark isBookmark={isBookmark} /> */}
-            <Like />
-            <Bookmark />
+            <Like isLike={plan.planId.isLike} />
+            <Bookmark isBookmark={plan.planId.isBookmark} />
+            
           </Box>
         </TripCard>
       </Container>

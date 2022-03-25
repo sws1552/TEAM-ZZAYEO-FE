@@ -228,9 +228,7 @@ const ImageBox = styled.div`
   border-radius: 8px;
   cursor: pointer;
   position: relative;
-  :hover {
-    box-shadow: 5px 5px 20px #ddd;
-  }
+
 `;
 const Image = styled.div`
   padding-top: 100%;

@@ -73,7 +73,7 @@ const Myplan = (props) => {
                     return p;
                   } else if (filter === "전체") {
                     return p;
-                  } else if (p.status.includes(filter)) {
+                  } else if (p.status === filter) {
                     return p;
                   }
                 })

@@ -16,7 +16,8 @@ const AllPlanPage = (props) => {
   const [pageNumber, setPageNumber] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const pageEnd = React.useRef();
-
+  console.log(pageEnd)
+  console.log(feed)
   const location = useLocation();
   const query = location.search;
   // const plans = useSelector((store) => store.plan.list);
@@ -78,7 +79,11 @@ const AllPlanPage = (props) => {
           {feed.map((l, i) => {
             return <TravelList key={i} {...l} />;
           })}
+          <div className="loading" ref={pageEnd}>
+            {loading && <Loader />}
+          </div>
         </Contents>
+
         <ScrollBtn onClick={executeScroll}>
           <svg
             width="16"
@@ -95,9 +100,7 @@ const AllPlanPage = (props) => {
             />
           </svg>
         </ScrollBtn>
-        <div className="loading" ref={pageEnd}>
-          {loading && <Loader />}
-        </div>
+
       </Container>
     </React.Fragment>
   );

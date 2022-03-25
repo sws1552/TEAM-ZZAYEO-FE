@@ -73,8 +73,14 @@
 .rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge{
     background: #4E49E2;
     position: absolute;
-    top: 5px;
-    left: 0;
-    right: 0;
-    bottom: 5px;
-  }
+}
+
+.rdrSelected, .rdrInRange{
+    background: #CFCFFF
+}
+
+.rdrSelected, .rdrStartEdge, .rdrEndEdg{
+    left: 25%;
+    width: 27px;
+    
+}

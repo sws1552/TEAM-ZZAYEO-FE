@@ -26,7 +26,7 @@ const initialState = {
 // 미들웨어
 const getChatRoomListFB = (toUserId) => {
   return async function (dispatch, getState, { history }) {
-    // console.log('toUserId !! ',toUserId);
+    console.log('toUserId !! ',toUserId);
     await axios
       .get(`https://stgon.shop/api/chat/${toUserId}`, {
         headers: {
@@ -34,7 +34,7 @@ const getChatRoomListFB = (toUserId) => {
         },
       })
       .then((res) => {
-        // console.log('채팅방 글 조회 res !! ', res.data.chatMessages);
+        console.log('채팅방 글 조회 res !! ', res.data.chatMessages);
         dispatch(getChat(res.data.chatMessages));
       })
       .catch((err) => {
