@@ -133,7 +133,7 @@ const Main = (props) => {
                 null
               )}
             </BookMarkListBox>
-            <TravelListBox>
+            {/* <TravelListBox>
               <P>여행기 모아보기 🌄📝</P>
               <Filter />
               {query ? (
@@ -155,7 +155,7 @@ const Main = (props) => {
                   </div>
                 </>
               )}
-            </TravelListBox>
+            </TravelListBox> */}
           </Content>
         </Div>
       </Container>
@@ -164,7 +164,7 @@ const Main = (props) => {
 
   return (
     <Container>
-      <HeaderBar />
+      {/* <HeaderBar />
       <Banner />
       <Div>
         <Content>
@@ -179,7 +179,7 @@ const Main = (props) => {
             </div>
           </TravelListBox>
         </Content>
-      </Div>
+      </Div> */}
     </Container>
   );
 };
