@@ -15,33 +15,33 @@ const MainTopTravelList = (props) => {
   const toptravel_list = useSelector((store) => store.plan.toptravel_list);
 
   return (
-    // <Container>
-    //   {toptravel_list.map((list, idx) => {
-    //     return <MainTopTravel key={idx} {...list} index={idx} />;
-    //   })}
-    // </Container>
-    <SwiperSlider
-    className="banner"
-    // spaceBetween={1}
-    slidesPerView={2.3}
-    scrollbar={{ draggable: true }}
-    // navigation
-    // pagination={{ clickable: true }}
-    // breakpoints={{
-    //   768: {
-    //     slidesPerView: 1,
-    //   },
-    // }}
-  >
-   {toptravel_list.map((list, idx) => {
-     return (
-      <SwiperSlide key={`swiperkey-${idx}`}>
-        <MainTopTravel key={idx} {...list} index={idx} />
-      </SwiperSlide>
-     );
-   })}
+    <Container>
+      {toptravel_list.map((list, idx) => {
+        return <MainTopTravel key={idx} {...list} index={idx} />;
+      })}
+    </Container>
+//     <SwiperSlider
+//     className="banner"
+//     // spaceBetween={1}
+//     slidesPerView={2.3}
+//     scrollbar={{ draggable: true }}
+//     // navigation
+//     // pagination={{ clickable: true }}
+//     // breakpoints={{
+//     //   768: {
+//     //     slidesPerView: 1,
+//     //   },
+//     // }}
+//   >
+//    {toptravel_list.map((list, idx) => {
+//      return (
+//       <SwiperSlide key={`swiperkey-${idx}`}>
+//         <MainTopTravel key={idx} {...list} index={idx} />
+//       </SwiperSlide>
+//      );
+//    })}
     
-</SwiperSlider>
+// </SwiperSlider>
   );
 };
 

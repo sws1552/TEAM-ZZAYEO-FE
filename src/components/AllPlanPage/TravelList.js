@@ -33,7 +33,7 @@ const TravelList = (props) => {
           </Btn>
           <UserNickName>{userId.nickname}</UserNickName>
           <CardTitle>
-            {title.length > 25 ? title.substring(0, 25) + "..." : title}
+            {title.length > 22 ? title.substring(0, 22) + "..." : title}
           </CardTitle>
           <Box>
             <Like isLike={isLike} />

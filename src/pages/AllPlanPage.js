@@ -58,14 +58,14 @@ const AllPlanPage = (props) => {
     }
   }, [loading]);
 
-  React.useEffect(() => {
-    dispatch(userActions.checkUserDB());
-    if (query) {
-      dispatch(planActions.getPlanDB(query + "&page=" + pageNumber));
-    } else {
-      return null;
-    }
-  }, [query]);
+  // React.useEffect(() => {
+  //   dispatch(userActions.checkUserDB());
+  //   if (query) {
+  //     dispatch(planActions.getPlanDB(query + "&page=" + pageNumber));
+  //   } else {
+  //     return null;
+  //   }
+  // }, [query]);
 
   return (
     <React.Fragment>

@@ -190,7 +190,7 @@ const UserNickname = styled.div`
 const MsgDiv = styled.div`
   position: absolute;
   top: 240px;
-  right: 16px;
+  right: 24px;
 `;
 
 const MsgBtn = styled.div`
@@ -223,7 +223,7 @@ const PlanInfo = styled.div`
 `;
 
 const Title = styled.div`
-  padding-left: 24px;
+  padding: 0px 16px 0px 24px;
   font-weight: 600;
   font-size: 24px;
   line-height: 28px;
