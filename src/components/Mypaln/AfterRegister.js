@@ -7,7 +7,6 @@ const AfterRegister = (props) => {
   return (
     <React.Fragment>
       <Container>
-        
         <TripCard
           onClick={(e) => {
             history.push(`/detail/${props.planId}`);
@@ -21,7 +20,6 @@ const AfterRegister = (props) => {
             </CardDays>
           </CardInfo>
         </TripCard>
-        
       </Container>
     </React.Fragment>
   );
@@ -31,7 +29,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin: 8px 24px 0px 24px;
+  margin: 16px 24px 0px 24px;
 `;
 
 const TripCard = styled.div`
