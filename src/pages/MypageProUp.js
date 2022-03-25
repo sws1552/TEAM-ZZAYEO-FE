@@ -129,6 +129,8 @@ const UserCon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 34px;
+    box-sizing: border-box;
 `;
 
 const UserImg = styled.div`
