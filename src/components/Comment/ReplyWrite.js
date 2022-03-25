@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {actionCreators as commentActions} from '../../redux/modules/comment';
 
@@ -10,7 +10,9 @@ const ReplyWrite = (props) => {
 
     const dispatch = useDispatch();
 
+
     const [reply, setReply] = useState("");
+
 
     const ReplyAdd = () => {
         if(reply === ""){window.alert('내용을 입력해주세요.'); return;}
@@ -23,6 +25,7 @@ const ReplyWrite = (props) => {
     return (
         <ReplyCon>
             <Input placeholder='답글을 입력해주세요.'
+            
             value={reply}
             onChange={(e) => setReply(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && ReplyAdd()}/>
@@ -31,7 +34,7 @@ const ReplyWrite = (props) => {
 };
 
 const ReplyCon = styled.div`
-    margin-top: 10px;
+    /* margin-top: 10px; */
     display: flex;
     align-items: center;
     width: 85%;
@@ -45,6 +48,8 @@ const Input = styled.input`
     border-radius: 50px;
     padding: 10px 20px;
     box-sizing: border-box;
+
+    
 
     &:focus {
         outline: none;

@@ -16,7 +16,6 @@ import Banner from "../components/Main/Banner";
 import axios from "axios";
 
 const Main = (props) => {
-
   const is_token = localStorage.getItem("token") ? true : false;
   const dispatch = useDispatch();
 

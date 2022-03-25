@@ -74,13 +74,3 @@
     background: #4E49E2;
     position: absolute;
 }
-
-.rdrSelected, .rdrInRange{
-    background: #CFCFFF
-}
-
-.rdrSelected, .rdrStartEdge, .rdrEndEdg{
-    left: 25%;
-    width: 27px;
-    
-}

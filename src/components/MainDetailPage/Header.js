@@ -66,7 +66,7 @@ const Header = (props) => {
   ];
   
   let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
-  console.log(defaultUrl[imgUrl])
+  
   return (
     <Container>
       <BackBtn
