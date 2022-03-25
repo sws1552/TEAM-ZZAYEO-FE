@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -13,10 +13,11 @@ const AllPlanPage = (props) => {
   const scroll = React.useRef(null);
 
   const [feed, setFeed] = React.useState([]);
-  const [pageNumber, setPageNumber] = React.useState(1);
+  const [queryFeed, setQueryFeed] = React.useState([]);
+  const [pageNumber, setPageNumber] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [endPage, setEndPage] = React.useState(0);
   const pageEnd = React.useRef();
-
   const location = useLocation();
   const query = location.search;
   // const plans = useSelector((store) => store.plan.list);
@@ -28,23 +29,46 @@ const AllPlanPage = (props) => {
       inline: "nearest",
     });
 
-  // async, await를 이용해서 비동기적으로 데이터 통신
+  //async, await를 이용해서 비동기적으로 데이터 통신
   const fetchFeeds = async (pageNumber) => {
-    const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
-    console.log(res);
-    const data = await res.json();
-    setFeed((prev) => [...prev, ...data.plans]);
     setLoading(true);
+    const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
+    const data = await res.json();
+    console.log(res);
+    setFeed((prev) => [...prev, ...data.plans]);
+    setEndPage(data.endPage);
+    setLoading(false);
   };
+
+  const queryfetchFeeds = async (pageNumber, query) => {
+    setLoading(true);
+    const res = await fetch(
+      `https://stgon.shop/api/plans${query}&page=${pageNumber}`
+    );
+    const data = await res.json();
+    console.log(data);
+    setQueryFeed((prev) => [...prev, ...data.plans]);
+    setEndPage(data.endPage);
+    setLoading(false);
+  };
+  console.log(feed);
+  console.log(queryFeed);
 
   // pageNumber가 바뀔때마다 실행
   React.useEffect(() => {
-    fetchFeeds(pageNumber);
-  }, [pageNumber]);
+    console.log(query);
+    if (query) {
+      queryfetchFeeds(pageNumber, query);
+    } else {
+      fetchFeeds(pageNumber);
+    }
+  }, [pageNumber, query]);
 
   // loading이 바뀔때마다 실행
   React.useEffect(() => {
     // fetchFeed에서 loading이 true면
+    console.log(pageNumber, endPage);
+
     if (loading) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -60,12 +84,7 @@ const AllPlanPage = (props) => {
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
-    if (query) {
-      dispatch(planActions.getPlanDB(query + "&page=" + pageNumber));
-    } else {
-      return null;
-    }
-  }, [query]);
+  }, [dispatch]);
 
   return (
     <React.Fragment>
@@ -75,9 +94,19 @@ const AllPlanPage = (props) => {
         </Header>
         <Contents>
           <Filter />
-          {feed.map((l, i) => {
-            return <TravelList key={i} {...l} />;
-          })}
+          {query ? (
+            <>
+              {queryFeed.map((l, i) => {
+                return <TravelList key={i} {...l} />;
+              })}
+            </>
+          ) : (
+            <>
+              {feed.map((l, i) => {
+                return <TravelList key={i} {...l} />;
+              })}
+            </>
+          )}
         </Contents>
         <ScrollBtn onClick={executeScroll}>
           <svg
