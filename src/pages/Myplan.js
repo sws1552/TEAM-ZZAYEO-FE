@@ -5,6 +5,8 @@ import { actionCreators as planActions } from "../redux/modules/plan";
 import BeforeRegister from "../components/Mypaln/BeforeRegister";
 import AfterRegister from "../components/Mypaln/AfterRegister";
 import Filter from "../components/Mypaln/Filter";
+import { useLocation } from "react-router";
+import queryString from "query-string";
 
 const Myplan = (props) => {
   const dispatch = useDispatch();
@@ -12,7 +14,7 @@ const Myplan = (props) => {
 
   const is_token = localStorage.getItem("token") ? true : false;
   const myplans = useSelector((store) => store.plan.myplans);
-  console.log(myplans);
+  const filter = queryString.parse(window.location.search).filter;
 
   React.useEffect(() => {
     dispatch(planActions.getMyPlanDB());
@@ -65,9 +67,17 @@ const Myplan = (props) => {
                 <p>여행 리스트</p>
                 <Filter />
               </Title>
-              {myplans?.map((l, i) => {
-                return <AfterRegister key={i} {...l} />;
-              })}
+              {myplans
+                ?.filter((p) => {
+                  if (filter === "전체") {
+                    return p;
+                  } else if (p.status.includes(filter)) {
+                    return p;
+                  }
+                })
+                ?.map((p, i) => {
+                  return <AfterRegister key={i} {...p} />;
+                })}
             </ListContainer>
           )}
         </Bottom>

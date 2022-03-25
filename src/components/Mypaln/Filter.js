@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import FilterModal from "./FilterModal";
+import { history } from "../../redux/ConfigureStore";
+import { useLocation } from "react-router";
 
 const Filter = (props) => {
   const [showModal, setShowModal] = React.useState(false);
 
   const [filter, setFilter] = React.useState("필터");
+
+  let data = { key1: filter };
 
   // 여행스타일 모달 열기
   const openModal = () => {
@@ -15,11 +19,22 @@ const Filter = (props) => {
   // 여행스타일 모달 닫기
   const closeModal = (e) => {
     setShowModal(false);
+    history.push({
+      pathname: "/myplan",
+      search: `?filter=${data.key1}`,
+      data: data,
+    });
   };
   return (
     <Container>
       <SelectBox>
-        <FilterBtn onClick={openModal}>
+        <FilterBtn
+          onClick={openModal}
+          style={{
+            backgroundColor: filter === "필터" ? "#ffffff" : "#4E49E2",
+            color: filter === "필터" ? "#212121" : "#ffffff",
+          }}
+        >
           {filter}
           <svg
             width="12"
@@ -74,12 +89,18 @@ const FilterBtn = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: #212121;
 
   cursor: pointer;
 
   svg {
     margin-left: 8px;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
   }
 `;
 

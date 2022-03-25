@@ -4,8 +4,11 @@ import styled from "styled-components";
 const DestinationModal = (props) => {
   const { showModal, closeModal, filter, setFilter } = props;
 
-  const Public = ["전체", "공개", "비공개"];
-  // const [clickedDestination, changeDestination] = React.useState(0);
+  const publicState = ["전체", "공개", "비공개"];
+  const importState = ["전체", "가져온 여행"];
+
+  const [clickedPublic, setClickedPublic] = React.useState("");
+  const [clickedImport, setClickedImport] = React.useState("");
 
   if (showModal) {
     return (
@@ -16,7 +19,56 @@ const DestinationModal = (props) => {
               <Taps>
                 <Ul>필터</Ul>
               </Taps>
-              <Container>{Public}</Container>
+              <Container>
+                <PublicContainer>
+                  <p>여행 공개</p>
+                  <PublicSelectBox>
+                    {publicState.map((item, i) => {
+                      return (
+                        <div
+                          key={i}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setClickedPublic(i);
+                            setFilter(publicState[i]);
+                          }}
+                          style={{
+                            backgroundColor:
+                              i === clickedPublic ? "#4E49E2" : "#FFFFFF",
+                            color: i === clickedPublic ? "#FFFFFF" : "#616161",
+                          }}
+                        >
+                          {item}
+                        </div>
+                      );
+                    })}
+                  </PublicSelectBox>
+                </PublicContainer>
+                {/* <PublicContainer>
+                  <p>여행 가져오기</p>
+                  <ImportSelectBox>
+                    {importState.map((item, i) => {
+                      return (
+                        <div
+                          key={i}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setClickedImport(i);
+                            setFilter((prev) => [prev, ", ", importState[i]]);
+                          }}
+                          style={{
+                            backgroundColor:
+                              i === clickedImport ? "#4E49E2" : "#FFFFFF",
+                            color: i === clickedImport ? "#FFFFFF" : "#616161",
+                          }}
+                        >
+                          {item}
+                        </div>
+                      );
+                    })}
+                  </ImportSelectBox>
+                </PublicContainer> */}
+              </Container>
               <Div>
                 <Button onClick={closeModal}>
                   <p>여행 확인하기</p>
@@ -40,7 +92,6 @@ const ModalBox = styled.div`
   left: 0;
   background: rgba(0, 0, 0, 0.72);
   z-index: 9999;
-  overflow-y: auto;
   max-width: 420px;
   width: 100%;
   margin: auto;
@@ -48,8 +99,6 @@ const ModalBox = styled.div`
 
 const OpenModal = styled(ModalBox)`
   display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Overlay = styled.div`
@@ -71,23 +120,18 @@ const Modal = styled.div`
 
 const Taps = styled.div`
   box-sizing: border-box;
-  margin: 32px 0px 40px 24px;
-  display: inline-flex;
-  font-family: "Roboto", sans-serif;
+  margin: 32px 0px 0px 24px;
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
 `;
 
-const Ul = styled.div`
-  list-style-type: none;
-  margin-right: 24px;
-`;
+const Ul = styled.div``;
 
 const Div = styled.div`
   position: absolute;
   width: 100%;
-  bottom: 36px;
+  bottom: 56px;
   font-family: "Roboto", sans-serif;
 `;
 
@@ -119,36 +163,48 @@ const Button = styled.div`
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  width: 100%;
 `;
 
-const Category = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 112px;
-  height: 112px;
-  margin-right: 8px;
-  margin: 0px 18px;
-  border-radius: 50%;
-  cursor: pointer;
+const PublicContainer = styled.div`
+  margin-top: 32px;
+`;
 
-  p {
-    position: absolute;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 20px;
+const PublicSelectBox = styled.div`
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 24px;
+
+  div {
+    width: 30%;
+    padding: 11px 0px;
     text-align: center;
-    color: #424242;
-    margin-top: 120px;
+    border: 1px solid #bdbdbd;
+    box-sizing: border-box;
+    border-radius: 4px;
   }
 `;
 
-const Icon = styled.div`
+const ImportSelectBox = styled(PublicSelectBox)`
+  margin-top: 8px;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  padding: 0px 24px;
+
+  div {
+    width: 47.5%;
+    padding: 11px 0px;
+    text-align: center;
+    border: 1px solid #bdbdbd;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
 `;
 
 export default DestinationModal;
