@@ -53,6 +53,7 @@ const Container = styled.div`
 `;
 
 const BookMarkCard = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 152.57px;
