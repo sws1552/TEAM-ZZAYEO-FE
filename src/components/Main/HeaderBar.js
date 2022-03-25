@@ -54,7 +54,7 @@ const HeaderBar = (props) => {
             />
           </svg>
         </SearchCon>
-        <NoticeCon>
+        <NoticeCon onClick={() => history.push('/noticepage')}>
           <svg
             width="32"
             height="32"

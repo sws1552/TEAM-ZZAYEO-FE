@@ -25,6 +25,8 @@ import OtherUserPage from "../pages/OtherUserPage";
 import BottomNav from "../components/Navigation/BottomNav";
 import AllPlanPage from "../pages/AllPlanPage";
 
+import NoticePage from "../pages/NoticePage";
+
 function App() {
   return (
     <React.Fragment>
@@ -54,6 +56,8 @@ function App() {
             <Route path="/mypageset" exact component={MypageSetting} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
             <Route path="/allplan" exact component={AllPlanPage} />
+
+            <Route path="/noticepage" exact component={NoticePage} />
             <BottomNav />
           </Container>
         </ConnectedRouter>
