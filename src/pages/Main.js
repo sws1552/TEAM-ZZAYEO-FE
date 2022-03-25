@@ -5,6 +5,8 @@ import { actionCreators as planActions } from "../redux/modules/plan";
 import { actionCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
 import MainBookMarkList from "../components/Main/MainBookMarkList";
+import MainUserpickList from "../components/Main/MainUserpickList";
+import MainTopTravelList from "../components/Main/MainTopTravelList";
 import MainTravelList from "../components/Main/MainTravelList";
 import Loader from "../components/Main/Loader";
 import Filter from "../components/Main/Filter";
@@ -85,10 +87,14 @@ const Main = (props) => {
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getBookMarkDB());
+    dispatch(planActions.getUserPickDB());
+    dispatch(planActions.getTopTravelDB());
   }, []);
 
   const plans = useSelector((store) => store.plan.list);
   const bookmark_list = useSelector((store) => store.plan.bookmark_list);
+  const userpick_list = useSelector((store) => store.plan.userpick_list);
+  const toptravel_list = useSelector((store) => store.plan.toptravel_list);
 
   if (is_token) {
     return (
@@ -100,11 +106,31 @@ const Main = (props) => {
             <BookMarkListBox>
               {bookmark_list.length > 0 ? (
                 <>
-                  <P>내가 찜한 여행기 📚😆</P>
+                  <P>내가 담은 짜여 👀</P>
                   <MainBookMarkList />
                 </>
               ) : (
-                ""
+                null
+              )}
+            </BookMarkListBox>
+            <BookMarkListBox>
+              {userpick_list.length > 0 ? (
+                <>
+                  <P>이달의 유저 픽 ✅</P>
+                  <MainUserpickList />
+                </>
+              ) : (
+                null
+              )}
+            </BookMarkListBox>
+            <BookMarkListBox>
+              {toptravel_list.length > 0 ? (
+                <>
+                  <P>이달의 인기 여행 🏞</P>
+                  <MainTopTravelList />
+                </>
+              ) : (
+                null
               )}
             </BookMarkListBox>
             <TravelListBox>

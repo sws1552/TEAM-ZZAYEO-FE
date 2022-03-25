@@ -284,9 +284,9 @@ const MemoContainer = styled.textarea`
   }
   ::placeholder {
     line-height: 16.41px;
-    color: #bdbdbd;
+    color: #757575;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
   }
 `;
 
@@ -294,7 +294,7 @@ const AddButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 36px auto 36px auto;
+  margin: 147px auto 36px auto;
   width: 100%;
   height: 54px;
   background-color: #4e49e2;

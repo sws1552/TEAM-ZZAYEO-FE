@@ -7,6 +7,8 @@ const GET_PLAN = "GET_PLAN";
 const CREATE_PLAN = "CREATE_PLAN";
 const GET_DAYPLAN = "GET_DAYPLAN";
 const GET_BOOKMARK = "GET_BOOKMARK";
+const GET_USERPICK = "GET_USERPICK";
+const GET_TOPTRAVEL = "GET_TOPTRAVEL";
 const GET_MYPLAN = "GET_MYPLAN";
 const STATUS = "STATUS";
 const DELETEMYDAYPOST = "DELETEMYDAYPOST";
@@ -18,6 +20,12 @@ const createPlan = createAction(CREATE_PLAN, (planId) => ({ planId }));
 const getdayPlan = createAction(GET_DAYPLAN, (myPlan) => ({ myPlan }));
 const getBookMark = createAction(GET_BOOKMARK, (bookmark_list) => ({
   bookmark_list,
+}));
+const getUserPick = createAction(GET_USERPICK, (userpick_list) => ({
+  userpick_list,
+}));
+const getTopTravel = createAction(GET_TOPTRAVEL, (toptravel_list) => ({
+  toptravel_list,
 }));
 const getMyPlan = createAction(GET_MYPLAN, (myplans) => ({ myplans }));
 const status = createAction(STATUS, (status) => ({ status }));
@@ -31,6 +39,8 @@ const initialState = {
   is_loaded: false,
   planId: "",
   bookmark_list: [],
+  userpick_list: [],
+  toptravel_list: [],
   myplans: [],
   status: "",
   search_list: [{}],
@@ -173,6 +183,37 @@ const getBookMarkDB = () => {
       .get(`/api/plans/bookmark`)
       .then((res) => {
         dispatch(getBookMark(res.data.plans));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+const getUserPickDB = () => {
+  return function (dispatch, getState, { history }) {
+
+    console.log('유저픽');
+
+    instance
+      .get(`/api/plans/hotBookmark`)
+      .then((res) => {
+        dispatch(getUserPick(res.data.plans));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+const getTopTravelDB = () => {
+  return function (dispatch, getState, { history }) {
+    instance
+      .get(`/api/plans/hotlike`)
+      .then((res) => {
+        dispatch(getTopTravel(res.data.plans));
       })
       .catch((error) => {
         console.log(error);
@@ -442,6 +483,14 @@ export default handleActions(
       produce(state, (draft) => {
         draft.bookmark_list = action.payload.bookmark_list;
       }),
+    [GET_USERPICK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.userpick_list = action.payload.userpick_list;
+      }),
+    [GET_TOPTRAVEL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.toptravel_list = action.payload.toptravel_list;
+      }),
     [GET_MYPLAN]: (state, action) =>
       produce(state, (draft) => {
         draft.myplans = action.payload.myplans;
@@ -477,6 +526,11 @@ const actionCreators = {
   EditPlanDB,
   deleteMyPostImageDB,
   getyourPostDB,
+
+  getUserPickDB,
+  getTopTravelDB,
+
+
 };
 
 export { actionCreators };
