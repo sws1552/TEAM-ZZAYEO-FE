@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
 import instance from "../shared/Request";
+import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as chatActions } from "../redux/modules/chat";
 import { socket } from "../shared/Socket";
 import { history } from "../redux/ConfigureStore";
+import TravelList from "../components/OtherUserPage/TravelList";
 
 const OtherUserPage = (props) => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const OtherUserPage = (props) => {
 
   const myInfo = useSelector((store) => store.user.user);
   const user = useSelector((store) => store.user.userInfo);
+  console.log(user)
 
   const joinRoom = async () => {
     const curUserInfo = await instance
@@ -84,7 +86,12 @@ const OtherUserPage = (props) => {
 </svg>
 <p>메시지</p></MessageBtn>
       </UserInfo>
-      <Contents></Contents>
+      <Contents>
+        <ContentsTitle>여행 <span>{user?.plans?.length}</span></ContentsTitle>
+        {user?.plans?.map((p, i) => {
+          return(<TravelList key={i} {...p} {...user}/>)
+        })}
+      </Contents>
     </Container>
   );
 };
@@ -167,6 +174,18 @@ const MessageBtn = styled.div`
 `;
 
 const Contents = styled.div`
+`;
+
+const ContentsTitle = styled.div`
+  padding: 24px 0px 16px 24px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #212121;
+
+  span {
+    color: #36CD5E;
+  }
 `;
 
 export default OtherUserPage;
