@@ -58,6 +58,7 @@ const Container = styled.div`
 const SwiperSlider = styled(Swiper)`
   padding: 0 24px;
   justify-content: center;
+  z-index: 0;
 
 `;
 

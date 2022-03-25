@@ -52,6 +52,8 @@ const MainBookMarkList = (props) => {
 const SwiperSlider = styled(Swiper)`
   padding: 0 24px;
   justify-content: center;
+  z-index: 0;
+  
   .swiper-pagination {
    display: flex;
    justify-content: center;

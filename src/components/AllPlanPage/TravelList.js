@@ -54,6 +54,7 @@ const Container = styled.div`
 `;
 
 const TripCard = styled.div`
+  position: relative;
   width: 100%;
   height: 242px;
   margin-bottom: 16px;

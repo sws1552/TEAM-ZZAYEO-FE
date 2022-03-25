@@ -73,7 +73,6 @@ const MainBookMark = (props) => {
 };
 
 const Container = styled.div`
-  position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
