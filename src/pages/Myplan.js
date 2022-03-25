@@ -69,7 +69,9 @@ const Myplan = (props) => {
               </Title>
               {myplans
                 ?.filter((p) => {
-                  if (filter === "전체") {
+                  if (!filter) {
+                    return p;
+                  } else if (filter === "전체") {
                     return p;
                   } else if (p.status.includes(filter)) {
                     return p;
