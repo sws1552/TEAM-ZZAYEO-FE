@@ -7,22 +7,13 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import Loader from "../components/Main/Loader";
 import TravelList from "../components/AllPlanPage/TravelList";
 import Filter from "../components/AllPlanPage/Filter";
-import instance from "../shared/Request";
 
 const AllPlanPage = (props) => {
   const dispatch = useDispatch();
+
+  const { history } = props;
+
   const scroll = React.useRef(null);
-
-  const [feed, setFeed] = React.useState([]);
-  const [queryFeed, setQueryFeed] = React.useState([]);
-  const [pageNumber, setPageNumber] = React.useState(0);
-  const [loading, setLoading] = React.useState(false);
-  const [endPage, setEndPage] = React.useState(0);
-  const pageEnd = React.useRef();
-  const location = useLocation();
-  const query = location.search;
-  // const plans = useSelector((store) => store.plan.list);
-
   const executeScroll = () =>
     scroll.current.scrollIntoView({
       behavior: "smooth",
@@ -30,46 +21,51 @@ const AllPlanPage = (props) => {
       inline: "nearest",
     });
 
-  //async, await를 이용해서 비동기적으로 데이터 통신
-  const fetchFeeds = async (pageNumber) => {
-    setLoading(true);
-    const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
-    const data = await res.json();
-    console.log(res);
-    setFeed((prev) => [...prev, ...data.plans]);
-    setEndPage(data.endPage);
-    setLoading(false);
-  };
+  const location = useLocation();
+  const query = location.search;
+  // const plans = useSelector((store) => store.plan.list);
 
-  const queryfetchFeeds = async (pageNumber, query) => {
-    setLoading(true);
-    const res = await fetch(
-      `https://stgon.shop/api/plans${query}&page=${pageNumber}`
-    );
-    const data = await res.json();
-    console.log(data);
-    setQueryFeed((prev) => [...prev, ...data.plans]);
-    setEndPage(data.endPage);
-    setLoading(false);
-  };
-  console.log(feed);
-  console.log(queryFeed);
+  const [feed, setFeed] = React.useState([]);
+  // const [queryFeed, setQueryFeed] = React.useState([]);
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
+  const [endPage, setEndPage] = React.useState(0);
+  const pageEnd = React.useRef();
 
   // pageNumber가 바뀔때마다 실행
   React.useEffect(() => {
-    console.log(query);
-    if (query) {
-      queryfetchFeeds(pageNumber, query);
+    if (endPage !== 0 && pageNumber > endPage) {
+      return;
     } else {
-      fetchFeeds(pageNumber);
+      fetchFeeds(query, pageNumber);
     }
   }, [pageNumber, query]);
 
+  //async, await를 이용해서 비동기적으로 데이터 통신
+  const fetchFeeds = async (query, pageNumber) => {
+    setLoading(true);
+    if (query === undefined || query === "") {
+      const res = await fetch(
+        `https://stgon.shop/api/plans?page=${pageNumber}`
+      );
+      const data = await res.json();
+      console.log(res);
+      setFeed((prev) => [...prev, ...data.plans]);
+      setEndPage(data.endPage);
+    } else {
+      const res = await fetch(
+        `https://stgon.shop/api/plans${query}&page=${pageNumber}`
+      );
+      const data = await res.json();
+      console.log(res);
+      setFeed((prev) => [...prev, ...data.plans]);
+      setEndPage(data.endPage);
+    }
+  };
+
   // loading이 바뀔때마다 실행
   React.useEffect(() => {
-    // fetchFeed에서 loading이 true면
-    console.log(pageNumber, endPage);
-
+    // fetchFeed 함수에서 loading 값이 true로 바뀐다면
     if (loading) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -86,6 +82,63 @@ const AllPlanPage = (props) => {
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
   }, [dispatch]);
+
+  //async, await를 이용해서 비동기적으로 데이터 통신
+  // const fetchFeeds = async (pageNumber) => {
+  //   setLoading(true);
+  //   const res = await fetch(`https://stgon.shop/api/plans?page=${pageNumber}`);
+  //   const data = await res.json();
+  //   console.log(res);
+  //   setFeed((prev) => [...prev, ...data.plans]);
+  //   setEndPage(data.endPage);
+  //   setLoading(false);
+  // };
+
+  // const queryfetchFeeds = async (pageNumber, query) => {
+  //   setLoading(true);
+  //   const res = await fetch(
+  //     `https://stgon.shop/api/plans${query}&page=${pageNumber}`
+  //   );
+  //   const data = await res.json();
+  //   console.log(data);
+  //   setQueryFeed((prev) => [...prev, ...data.plans]);
+  //   setEndPage(data.endPage);
+  //   setLoading(false);
+  // };
+  // console.log(feed);
+  // console.log(queryFeed);
+
+  // pageNumber가 바뀔때마다 실행
+  // React.useEffect(() => {
+  //   console.log(query);
+  //   if (query) {
+  //     queryfetchFeeds(pageNumber, query);
+  //   } else {
+  //     fetchFeeds(pageNumber);
+  //   }
+  // }, [pageNumber, query]);
+
+  // loading이 바뀔때마다 실행
+  // React.useEffect(() => {
+  // fetchFeed에서 loading이 true면
+  //   console.log(pageNumber, endPage);
+
+  //   if (loading) {
+  //     const observer = new IntersectionObserver(
+  //       (entries) => {
+  //         if (entries[0].isIntersecting) {
+  //           setPageNumber((prevPageNumber) => prevPageNumber + 1);
+  //         }
+  //       },
+  //       { threshold: 1 }
+  //     );
+  //     observer.observe(pageEnd.current);
+  //   }
+  // }, [loading]);
+
+  // React.useEffect(() => {
+  //   dispatch(userActions.checkUserDB());
+  // }, [dispatch]);
 
   //무한 스크롤
   // const [target, setTarget] = useState(null);
@@ -168,20 +221,11 @@ const AllPlanPage = (props) => {
           <HeaderTitle>전체 여행</HeaderTitle>
         </Header>
         <Contents>
-          <Filter />
-          {query ? (
-            <>
-              {queryFeed.map((l, i) => {
-                return <TravelList key={i} {...l} />;
-              })}
-            </>
-          ) : (
-            <>
-              {feed.map((l, i) => {
-                return <TravelList key={i} {...l} />;
-              })}
-            </>
-          )}
+          <Filter setFeed={setFeed} setPageNumber={setPageNumber} />
+          {feed.map((l, i) => {
+            return <TravelList key={i} {...l} />;
+          })}
+          <div ref={pageEnd}></div>
         </Contents>
         <ScrollBtn onClick={executeScroll}>
           <svg
