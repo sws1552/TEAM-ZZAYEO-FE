@@ -6,6 +6,7 @@ import LineUpModal from "../Main/Modal/LineUpModal";
 import { history } from "../../redux/ConfigureStore";
 
 const Filter = (props) => {
+  const { setFeed, setPageNumber } = props;
   const [destShowModal, setDestShowModal] = React.useState(false);
   const [styleShowModal, setStyleShowModal] = React.useState(false);
   const [lineupModal, setLineupModal] = React.useState(false);
@@ -24,12 +25,15 @@ const Filter = (props) => {
   // 지역 모달 닫기
   const destCloseModal = (e) => {
     e.stopPropagation();
+    setFeed([]);
     setDestShowModal(false);
     history.push({
       pathname: "/allplan",
       search: `?destination=${data.key1}`,
       data: data,
     });
+    setPageNumber(1);
+    setStyle("여행 스타일");
   };
 
   // 여행스타일 모달 열기
@@ -40,12 +44,14 @@ const Filter = (props) => {
   // 여행스타일 모달 닫기
   const styleCloseModal = (e) => {
     e.stopPropagation();
+    setFeed([]);
     setStyleShowModal(false);
     history.push({
       pathname: "/allplan",
       search: `?destination=${data.key1}&style=${data.key2}`,
       data: data,
     });
+    setPageNumber(1);
   };
 
   // 최신순, 인기순 모달 열기
