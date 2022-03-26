@@ -135,13 +135,16 @@ const FileInput = styled.input`
 const MypageCon = styled.div`
   width: 100%;
   height: 92%;
-  /* background-color: orange; */
   padding-bottom: 25px;
   box-sizing: border-box;
+  max-width: 420px;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const UserCon = styled.div`
-  /* background-color: orange; */
   width: 100%;
   height: 25vh;
   display: flex;
@@ -214,8 +217,9 @@ const BtnCon = styled.div`
 const SaveBtn = styled.div`
   background-color: #bdbdbd;
   color: white;
-  width: 80%;
+  width: 100%;
   text-align: center;
+  margin: 0px 24px;
   padding: 20px;
   border-radius: 10px;
   cursor: pointer;
