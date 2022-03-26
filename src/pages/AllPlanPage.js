@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { actionCreators as userActions } from "../redux/modules/user";
-import Loader from "../components/Main/Loader";
-import TravelList from "../components/AllPlanPage/TravelList";
 import Filter from "../components/AllPlanPage/Filter";
+import TravelList from "../components/AllPlanPage/TravelList";
+import axios from "axios";
 
 const AllPlanPage = (props) => {
   const dispatch = useDispatch();
 
-  const { history } = props;
-
   const scroll = React.useRef(null);
+
   const executeScroll = () =>
     scroll.current.scrollIntoView({
       behavior: "smooth",
@@ -22,10 +21,8 @@ const AllPlanPage = (props) => {
 
   const location = useLocation();
   const query = location.search;
-  // const plans = useSelector((store) => store.plan.list);
 
   const [feed, setFeed] = React.useState([]);
-  // const [queryFeed, setQueryFeed] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const [endPage, setEndPage] = React.useState(0);
@@ -44,21 +41,27 @@ const AllPlanPage = (props) => {
   const fetchFeeds = async (query, pageNumber) => {
     setLoading(true);
     if (query === undefined || query === "") {
-      const res = await fetch(
-        `https://stgon.shop/api/plans?page=${pageNumber}`
-      );
-      const data = await res.json();
-      console.log(res);
-      setFeed((prev) => [...prev, ...data.plans]);
-      setEndPage(data.endPage);
+      await axios
+        .get(`https://stgon.shop/api/plans?page=${pageNumber}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setFeed((prev) => [...prev, ...res.data.plans]);
+          setEndPage(res.data.endPage);
+        });
     } else {
-      const res = await fetch(
-        `https://stgon.shop/api/plans${query}&page=${pageNumber}`
-      );
-      const data = await res.json();
-      console.log(res);
-      setFeed((prev) => [...prev, ...data.plans]);
-      setEndPage(data.endPage);
+      await axios
+        .get(`https://stgon.shop/api/plans${query}&page=${pageNumber}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setFeed((prev) => [...prev, ...res.data.plans]);
+          setEndPage(res.data.endPage);
+        });
     }
   };
 

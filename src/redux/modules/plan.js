@@ -47,7 +47,7 @@ const initialState = {
 };
 
 //카테고리 선택 목록 가져오기
-const getPlanDB = (query) => {
+const getPlanDB = (query, pageNumber) => {
   if (query) {
     return function (dispatch, getState, { history }) {
       instance
@@ -64,7 +64,7 @@ const getPlanDB = (query) => {
   //전체포스트 내용 받아오기
   return function (dispatch, getState, { history }) {
     instance
-      .get("/api/plans")
+      .get(`/api/plans?page=${pageNumber}`)
       .then((res) => {
         dispatch(getPlan(res.data));
       })
@@ -192,8 +192,6 @@ const getBookMarkDB = () => {
 
 const getUserPickDB = () => {
   return function (dispatch, getState, { history }) {
-    console.log("유저픽");
-
     instance
       .get(`/api/plans/hotBookmark`)
       .then((res) => {

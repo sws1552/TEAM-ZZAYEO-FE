@@ -29,10 +29,7 @@ const Main = (props) => {
   const [page, setPage] = useState(1);
   const [endPage, setEndPage] = useState(0);
 
-
-  useEffect(() => {
-    console.log(itemLists);
-  }, [itemLists]);
+  useEffect(() => {}, [itemLists]);
 
   const getMoreItem = async (page, query) => {
     setIsLoaded(true);
@@ -55,9 +52,7 @@ const Main = (props) => {
 
   const onIntersect = useCallback(
     async ([entry], observer) => {
-
       if (entry.isIntersecting && !isLoaded) {
-
         observer.unobserve(entry.target);
         await getMoreItem(page, query);
 
@@ -82,7 +77,6 @@ const Main = (props) => {
     }
     return () => observer && observer.disconnect();
   }, [target, page, query]);
-
 
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
@@ -109,9 +103,7 @@ const Main = (props) => {
                   <P>내가 담은 짜여 👀</P>
                   <MainBookMarkList />
                 </>
-              ) : (
-                null
-              )}
+              ) : null}
             </BookMarkListBox>
             <BookMarkListBox>
               {userpick_list.length > 0 ? (
@@ -119,9 +111,7 @@ const Main = (props) => {
                   <P>이달의 유저 픽 ✅</P>
                   <MainUserpickList />
                 </>
-              ) : (
-                null
-              )}
+              ) : null}
             </BookMarkListBox>
             <BookMarkListBox>
               {toptravel_list.length > 0 ? (
@@ -129,9 +119,7 @@ const Main = (props) => {
                   <P>이달의 인기 여행 🏞</P>
                   <MainTopTravelList />
                 </>
-              ) : (
-                null
-              )}
+              ) : null}
             </BookMarkListBox>
             {/* <TravelListBox>
               <P>여행기 모아보기 🌄📝</P>
@@ -174,9 +162,7 @@ const Main = (props) => {
                 <P>이달의 유저 픽 ✅</P>
                 <MainUserpickList />
               </>
-            ) : (
-              null
-            )}
+            ) : null}
           </BookMarkListBox>
           <BookMarkListBox>
             {toptravel_list.length > 0 ? (
@@ -184,9 +170,7 @@ const Main = (props) => {
                 <P>이달의 인기 여행 🏞</P>
                 <MainTopTravelList />
               </>
-            ) : (
-              null
-            )}
+            ) : null}
           </BookMarkListBox>
         </Content>
       </Div>
