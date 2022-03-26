@@ -5,8 +5,9 @@ import styled from "styled-components";
 import Searchbar from "../components/Search/Searchbar";
 import SearchList from "../components/Search/SearchList";
 import queryString from "query-string";
-import Filter from "../components/Search/Filter";
+// import Filter from "../components/Search/Filter";
 import { useLocation } from "react-router";
+import { ReactComponent as SvgImg } from "../shared/svg/img-none.svg";
 
 const Search = (props) => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Search = (props) => {
       <React.Fragment>
         <Container>
           <Searchbar query={query} />
-          <Filter />
+          {/* <Filter /> */}
           {searchList.length !== 0 ? (
             <>
               <SearchKeword>
@@ -44,21 +45,7 @@ const Search = (props) => {
           ) : (
             <>
               <Div>
-                <svg
-                  width="62"
-                  height="62"
-                  viewBox="0 0 62 62"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M59 59L45.4667 45.4667M52.7778 27.8889C52.7778 41.6346 41.6346 52.7778 27.8889 52.7778C14.1431 52.7778 3 41.6346 3 27.8889C3 14.1431 14.1431 3 27.8889 3C41.6346 3 52.7778 14.1431 52.7778 27.8889Z"
-                    stroke="#BDBDBD"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <SvgImg />
                 <p>검색 결과가 없습니다.</p>
               </Div>
             </>
@@ -72,23 +59,9 @@ const Search = (props) => {
     <React.Fragment>
       <Container>
         <Searchbar query={query} />
-        <Filter />
+        {/* <Filter /> */}
         <Div>
-          <svg
-            width="62"
-            height="62"
-            viewBox="0 0 62 62"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M59 59L45.4667 45.4667M52.7778 27.8889C52.7778 41.6346 41.6346 52.7778 27.8889 52.7778C14.1431 52.7778 3 41.6346 3 27.8889C3 14.1431 14.1431 3 27.8889 3C41.6346 3 52.7778 14.1431 52.7778 27.8889Z"
-              stroke="#BDBDBD"
-              strokeWidth="6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <SvgImg />
           <p>검색 결과가 없습니다.</p>
         </Div>
       </Container>

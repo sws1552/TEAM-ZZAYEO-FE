@@ -30,6 +30,7 @@ const SearchList = (props) => {
 };
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +38,7 @@ const Container = styled.div`
 `;
 
 const TripCard = styled.div`
+  position: relative;
   width: 100%;
   height: 242px;
   margin-bottom: 16px;

@@ -1,13 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import CropSquareIcon from "@mui/icons-material/CropSquare";
+import { ReactComponent as SvgImg } from "../../shared/svg/img_write_none.svg";
 
 const BeforeRegister = (props) => {
   return (
     <React.Fragment>
       <ContainerBox>
-        <CropSquareIcon className="CropSquare" />
-        <P>등록된 여행이 없습니다.</P>
+        <SvgImg />
+        <P>
+          등록된 여행이 없습니다. <br />
+          여행을 작성해보세요.
+        </P>
       </ContainerBox>
     </React.Fragment>
   );
@@ -28,10 +31,11 @@ const ContainerBox = styled.div`
 `;
 
 const P = styled.p`
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 20.27px;
-  margin: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  margin-top: 16px;
 `;
 
 export default BeforeRegister;
