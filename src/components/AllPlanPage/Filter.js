@@ -13,9 +13,13 @@ const Filter = (props) => {
 
   const [dest, setDest] = React.useState("지역");
   const [style, setStyle] = React.useState("여행 스타일");
-  const [lineup, setLineup] = React.useState("최신순");
+  const [lineup, setLineup] = React.useState("정렬");
 
-  let data = { key1: dest, key2: style, key3: lineup };
+  let data = {
+    key1: dest,
+    key2: style,
+    key3: lineup,
+  };
 
   // 지역 모달 열기
   const destOpenModal = () => {
@@ -29,11 +33,12 @@ const Filter = (props) => {
     setDestShowModal(false);
     history.push({
       pathname: "/allplan",
-      search: `?destination=${data.key1}`,
+      search: data.key1 === "지역" ? "" : `?destination=${data.key1}`,
       data: data,
     });
     setPageNumber(1);
     setStyle("여행 스타일");
+    setLineup("정렬");
   };
 
   // 여행스타일 모달 열기
@@ -48,7 +53,12 @@ const Filter = (props) => {
     setStyleShowModal(false);
     history.push({
       pathname: "/allplan",
-      search: `?destination=${data.key1}&style=${data.key2}`,
+      search:
+        data.key2 !== "여행 스타일"
+          ? data.key1 === "지역"
+            ? `?style=${data.key2}`
+            : `?destination=${data.key1}&style=${data.key2}`
+          : "",
       data: data,
     });
     setPageNumber(1);
@@ -62,18 +72,52 @@ const Filter = (props) => {
   // 최신순, 인기순 모달 닫기
   const lineupCloseModal = (e) => {
     e.stopPropagation();
+    setFeed([]);
     setLineupModal(false);
-    history.push({
-      pathname: "/allplan",
-      search: `?destination=${data.key1}&style=${data.key2}&lineup=${data.key3}`,
-      data: data,
-    });
+    if (data.key3 === "인기순") {
+      history.push({
+        pathname: "/allplan",
+        search:
+          data.key2 === "여행 스타일"
+            ? data.key1 === "지역"
+              ? "?sort=hot"
+              : `?destination=${data.key1}&sort=hot`
+            : `?destination=${data.key1}&style=${data.key2}&sort=hot`,
+        data: data,
+      });
+    } else {
+      history.push({
+        pathname: "/allplan",
+        search:
+          data.key2 === "여행 스타일"
+            ? data.key1 === "지역"
+              ? ""
+              : `?destination=${data.key1}`
+            : `?destination=${data.key1}&style=${data.key2}`,
+        data: data,
+      });
+    }
+    // history.push({
+    //   pathname: "/allplan",
+    //   search:
+    //     data.key3 === "인기순"
+    //       ? `?destination=${data.key1}&style=${data.key2}&sort=hot`
+    //       : `?destination=${data.key1}&style=${data.key2}`,
+    //   data: data,
+    // });
+    setPageNumber(1);
   };
 
   return (
     <Container>
       <SelectBox>
-        <Destination onClick={destOpenModal}>
+        <Destination
+          onClick={destOpenModal}
+          style={{
+            backgroundColor: dest === "지역" ? "#f5f5f5" : "#4E49E2",
+            color: dest === "지역" ? "#212121" : "#ffffff",
+          }}
+        >
           {dest}
           <svg
             width="12"
@@ -96,7 +140,13 @@ const Filter = (props) => {
           dest={dest}
           setDest={setDest}
         ></DestinationModal>
-        <Style onClick={styleOpenModal}>
+        <Style
+          onClick={styleOpenModal}
+          style={{
+            backgroundColor: style === "여행 스타일" ? "#f5f5f5" : "#4E49E2",
+            color: style === "여행 스타일" ? "#212121" : "#ffffff",
+          }}
+        >
           {style}
           <svg
             width="12"
@@ -119,7 +169,13 @@ const Filter = (props) => {
           style={style}
           setStyle={setStyle}
         ></StyleModal>
-        <Lineup onClick={lineupOpenModal}>
+        <Lineup
+          onClick={lineupOpenModal}
+          style={{
+            backgroundColor: lineup === "정렬" ? "#f5f5f5" : "#4E49E2",
+            color: lineup === "정렬" ? "#212121" : "#ffffff",
+          }}
+        >
           {lineup}
           <svg
             width="12"
@@ -166,8 +222,6 @@ const Destination = styled.div`
   margin-right: 8px;
   padding: 10px 16px;
   border-radius: 20px;
-  background-color: #f5f5f5;
-  color: #212121;
   cursor: pointer;
 
   svg {

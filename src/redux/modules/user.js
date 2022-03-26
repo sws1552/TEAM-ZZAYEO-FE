@@ -28,7 +28,7 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      .get(`https://stgon.shop/api/auth/kakao/callback?code=${code}`)
+      .get(`http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;

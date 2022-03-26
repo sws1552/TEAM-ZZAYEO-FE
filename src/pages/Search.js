@@ -17,9 +17,8 @@ const Search = (props) => {
   const query = location.search;
   const search = queryString.parse(window.location.search);
   const keyword = search.query;
-  const searchList = useSelector((store) => store.plan.search_list.plans);
 
-  console.log(searchList);
+  const searchList = useSelector((store) => store.plan.search_list);
 
   React.useEffect(() => {
     dispatch(planActions.searchDB(query));

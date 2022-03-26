@@ -11,6 +11,7 @@ const Searchbar = (props) => {
   const [search, setSearch] = React.useState("도시를 검색해보세요.");
 
   const query = location.search;
+  console.log(location.search);
 
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -22,6 +23,7 @@ const Searchbar = (props) => {
       dispatch(planActions.searchDB(query));
     }
   };
+
   const handleReset = () => {
     history.push("/search");
     setSearch("");

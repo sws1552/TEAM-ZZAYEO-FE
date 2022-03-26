@@ -17,16 +17,23 @@ const TravelList = (props) => {
     history.push(`/detail/${planId}`);
   };
 
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+
+  let imgUrl = Math.floor(Math.random() * defaultUrl.length);
+
   return (
     <React.Fragment>
       <Container>
         <TripCard onClick={onPlanInfo}>
           <CardImg
-            src={
-              thumbnailImage
-                ? thumbnailImage
-                : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
-            }
+            src={thumbnailImage ? thumbnailImage : defaultUrl[imgUrl]}
           ></CardImg>
           <Btn>
             <UserImg onClick={onProfile} src={userId.profile_img} />
