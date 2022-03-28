@@ -96,6 +96,7 @@ const TripCard = styled.div`
   height: 242px;
   margin-bottom: 16px;
   border-radius: 8px;
+  position: relative;
   background-color: #ffffff;
   font-family: "Roboto", sans-serif;
   filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
