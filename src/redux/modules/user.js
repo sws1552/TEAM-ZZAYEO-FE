@@ -28,8 +28,8 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`)
-      // .get(`https://stgon.shop/api/auth/kakao/callback?code=${code}`)
+      // .get(`http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`)
+      .get(`https://stgon.shop/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
@@ -39,6 +39,7 @@ const kakaoLogin = (code) => {
         localStorage.setItem("userId", userId);
         dispatch(checkUserDB());
         window.location.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
+        // Socket.emit("login", { fromSnsId: snsId });
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);
