@@ -7,7 +7,7 @@ const instance = axios.create({
   // baseURL: "https://2a3fd3af-9615-47e1-be4a-4e899ee6da64.mock.pstmn.io"
 
   headers: {
-    Authorization: token ? `Bearer ${token}` : ""
+    Authorization: token ? `Bearer ${token}` : "",
   },
 });
 

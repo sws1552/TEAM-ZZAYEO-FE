@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import DestinationModal from "../Main/Modal/DestinationModal";
 import StyleModal from "../Main/Modal/StyleModal";
 import { history } from "../../redux/ConfigureStore";
 import queryString from "query-string";

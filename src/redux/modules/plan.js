@@ -414,13 +414,13 @@ export const editMyPostDB = (
 };
 
 // 검색하기
-const searchDB = (query) => {
+const searchDB = (query, pageNumber) => {
   return function (dispatch, getState, { history }) {
     instance
-      .get(`/api/plans/search${query}`)
+      .get(`/api/plans/search${query}&page=${pageNumber}`)
       .then(function (res) {
         console.log(res);
-        dispatch(search(res.data.plans));
+        dispatch(search(res.data));
       })
       .catch(function (error) {
         console.log(error);

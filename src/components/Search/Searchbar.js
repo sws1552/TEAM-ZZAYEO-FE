@@ -4,14 +4,15 @@ import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
 import { history } from "../../redux/ConfigureStore";
 import { useLocation } from "react-router";
+import { SnippetFolderRounded } from "@mui/icons-material";
 
 const Searchbar = (props) => {
+  const { setFeed, setPageNumber } = props;
   const dispatch = useDispatch();
   const location = useLocation();
   const [search, setSearch] = React.useState("도시를 검색해보세요.");
 
   const query = location.search;
-  console.log(location.search);
 
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -20,13 +21,17 @@ const Searchbar = (props) => {
         search: `?query=${search}`,
         data: search,
       });
-      dispatch(planActions.searchDB(query));
+      setFeed([]);
+      setPageNumber(1);
+      // window.location.reload(`/search?query=${search}`);
     }
   };
 
   const handleReset = () => {
     history.push("/search");
     setSearch("");
+    setFeed([]);
+    setPageNumber(1);
   };
 
   React.useEffect(() => {
@@ -99,7 +104,6 @@ const Searchbar = (props) => {
               search: `?query=${search}`,
               data: search,
             });
-            dispatch(planActions.searchDB(query));
           }}
         >
           <svg
