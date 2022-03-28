@@ -27,16 +27,18 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      // .get(`http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`)
-      .get(`https://stgon.shop/api/auth/kakao/callback?code=${code}`)
+      .get(
+        // `http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`
+        `https://stgon.shop/api/auth/kakao/callback?code=${code}`
+      )
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
         const userId = res.data.userId;
-        const snsId = res.data.snsId;
+        // const snsId = res.data.snsId;
         localStorage.setItem("token", token); //예시로 로컬에 저장
         localStorage.setItem("userId", userId);
-        localStorage.setItem('snsId', snsId);
+        // localStorage.setItem('snsId', snsId);
         localStorage.setItem("newChat", "false");
         localStorage.setItem("mainNotice", "false");
         dispatch(checkUserDB());
@@ -82,7 +84,6 @@ const checkUserDB = () => {
         },
       })
       .then((res) => {
-
         // console.log('res !! ',res);
 
         let userId = res.data.userId;
@@ -90,7 +91,12 @@ const checkUserDB = () => {
         let userImg = res.data.userImg;
         let snsId = res.data.snsId;
         dispatch(
-          setUser({ userId: userId, nickname: nickname, userImg: userImg, snsId: snsId })
+          setUser({
+            userId: userId,
+            nickname: nickname,
+            userImg: userImg,
+            snsId: snsId,
+          })
         );
       })
       .catch((err) => {

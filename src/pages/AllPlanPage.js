@@ -21,6 +21,7 @@ const AllPlanPage = (props) => {
     });
 
   const location = useLocation();
+
   const query = location.search;
 
   const [feed, setFeed] = React.useState([]);
