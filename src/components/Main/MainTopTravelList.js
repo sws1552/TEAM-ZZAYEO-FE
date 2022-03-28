@@ -52,6 +52,7 @@ const Container = styled.div`
   overflow-x: scroll;
   ::-webkit-scrollbar {
     display: none;
+    
   }
 `;
 

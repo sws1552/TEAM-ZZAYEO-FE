@@ -9,7 +9,7 @@ import 'moment/locale/ko';
 import moment from 'moment';
 import Moment from 'react-moment';
 import { useDispatch, useSelector } from 'react-redux';
-import {actionCreators as commentActions} from '../../redux/modules/comment';
+import { actionCreators as commentActions } from '../../redux/modules/comment';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -17,8 +17,8 @@ import ReplyDrop from './ReplyDrop';
 
 const ReplyList = (props) => {
 
-    const {planId, commentId, replies, userInfo, commentSnsId} = props;
-
+    const { planId, commentId, replies, userInfo, commentSnsId } = props;
+    const token = localStorage.getItem("token")
     // console.log('planId !! ', planId);
     // console.log('commentId !! ', commentId);
     // console.log('replies !! ', replies);
@@ -29,21 +29,25 @@ const ReplyList = (props) => {
     return (
         <ReplyListCon>
             <ReplyWrap heightVal={replies.length <= 2 ? "auto" : "20vh"}>
-            {replies.map((item, i) => {
-                return <Reply key={item.replyId} {...item} userInfo={userInfo} planId={planId}/>
-            })}
+                {replies.map((item, i) => {
+                    return <Reply key={item.replyId} {...item} userInfo={userInfo} planId={planId} />
+                })}
             </ReplyWrap>
-            <ReplyWriteCon>
-                <ReplyUserImg userImg={userInfo.userImg}/>
-                <ReplyWrite planId={planId} commentId={commentId} commentSnsId={commentSnsId}/>
-            </ReplyWriteCon>
+
+
+            {token ?
+                <ReplyWriteCon>
+                    <ReplyUserImg userImg={userInfo.userImg} />
+                    <ReplyWrite planId={planId} commentId={commentId} commentSnsId={commentSnsId} />
+                </ReplyWriteCon> : null}
+
         </ReplyListCon>
     )
 
 }
 
 const ReplyListCon = styled.div`
-    padding: 10px 0;
+    padding: 10px 0 0 0;
     width: auto;
     height: auto;
     padding-left: 50px;
@@ -52,16 +56,16 @@ const ReplyListCon = styled.div`
 `;
 
 const ReplyWrap = styled.div`
-    height: ${(props) => props.heightVal};
-    overflow-y: scroll;
+    height: auto;
+    /* overflow-y: scroll;
 
     &::-webkit-scrollbar {
         display: none;
-    }
+    } */
 `;
 
 const ReplyUserImg = styled.div`
-    background-image: url("${(props) => (props.userImg ? props.userImg : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200" )}");
+    background-image: url("${(props) => (props.userImg ? props.userImg : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200")}");
     background-position: center;
     background-size: cover;
     /* box-shadow: 0 5px 5px 0 #BFBFBF; */
@@ -71,6 +75,7 @@ const ReplyUserImg = styled.div`
 `;
 
 const ReplyWriteCon = styled.div`
+    margin-top: 10px;
     display:flex;
     align-items: center;
 `;
@@ -91,9 +96,9 @@ const Reply = (props) => {
     }
 
     const replyLike = () => {
-        if(props.isLike){
+        if (props.isLike) {
             dispatch(commentActions.replyLikeFalse(props.planId, props.replyId));
-        }else {
+        } else {
 
             socket?.emit('notice', {
                 fromSnsId: localStorage.getItem('snsId'),
@@ -108,61 +113,61 @@ const Reply = (props) => {
 
     // 업로드 시간 가공
     const displayCreatedAt = (createdAt) => {
-    let startTime = new Date(createdAt);
-    let nowTime = Date.now();
-    // 현재시간부터 1분 일때
-    if (parseInt(startTime - nowTime) > -60000) {
-        return <Moment locale="ko" format="방금 전">{startTime}</Moment>;
-    }
-    // 현재시간부터 24시간이 지낫을때
-    if (parseInt(startTime - nowTime) < -86400000) {
-        return <Moment locale="ko" format="MM월 D일">{startTime}</Moment>;
-    }
-    // 현재시간부터 24시간이 지나지 않았을때
-    if (parseInt(startTime - nowTime) > -86400000) {
-        return <Moment locale="ko" fromNow>{startTime}</Moment>;
-    }
+        let startTime = new Date(createdAt);
+        let nowTime = Date.now();
+        // 현재시간부터 1분 일때
+        if (parseInt(startTime - nowTime) > -60000) {
+            return <Moment locale="ko" format="방금 전">{startTime}</Moment>;
+        }
+        // 현재시간부터 24시간이 지낫을때
+        if (parseInt(startTime - nowTime) < -86400000) {
+            return <Moment locale="ko" format="MM월 D일">{startTime}</Moment>;
+        }
+        // 현재시간부터 24시간이 지나지 않았을때
+        if (parseInt(startTime - nowTime) > -86400000) {
+            return <Moment locale="ko" fromNow>{startTime}</Moment>;
+        }
     };
 
     return (
         <ReplyCon>
             <UserCon>
-                <UserImg profile_img={props.userId.profile_img}/>
+                <UserImg profile_img={props.userId.profile_img} />
                 <NickCon>
                     <NicText>{props.userId.nickname}</NicText>
                     <TimeText>{displayCreatedAt(props.createdAt)}</TimeText>
                 </NickCon>
-                {props.userId.email === localStorage.getItem("userId") ? 
-                    <ReplyDrop planId={props.planId} commentId={props.commentId} replyId={props.replyId} hide={() => setReplyHide(!upReplyhide)}/>
-                :
+                {props.userId.email === localStorage.getItem("userId") ?
+                    <ReplyDrop planId={props.planId} commentId={props.commentId} replyId={props.replyId} hide={() => setReplyHide(!upReplyhide)} />
+                    :
                     null}
-                
+
             </UserCon>
 
             <Context>
-                {upReplyhide ? 
+                {upReplyhide ?
                     <ReplyUpdateCon>
                         <ReplyUpdateText value={upReplyText}
-                        onChange={(e) => setReplyText(e.target.value)}/>
+                            onChange={(e) => setReplyText(e.target.value)} />
                         <ReplyUpdateBtnCon>
                             <ReplyUpdateBtn onClick={updateReply}>수정</ReplyUpdateBtn>
                             <ReplyUpdateCancelBtn onClick={() => setReplyHide(!upReplyhide)}>취소</ReplyUpdateCancelBtn>
                         </ReplyUpdateBtnCon>
                     </ReplyUpdateCon>
-                :
+                    :
                     props.content}
 
                 <BtnCon>
                     <LikeBtn className={props.isLike ? 'likeTrue' : null}
-                    onClick={replyLike}>
-                        {props.isLike ? <FavoriteIcon style={{fontSize: "13px", marginRight: "2px"}}/> : <FavoriteBorderIcon style={{fontSize: "13px", marginRight: "2px"}}/> }
+                        onClick={replyLike}>
+                        {props.isLike ? <FavoriteIcon style={{ fontSize: "13px", marginRight: "2px" }} /> : <FavoriteBorderIcon style={{ fontSize: "13px", marginRight: "2px" }} />}
                         좋아요 {props.likeCount}
                     </LikeBtn>
 
                 </BtnCon>
 
             </Context>
-            
+
         </ReplyCon>
     );
 };
@@ -187,7 +192,7 @@ const UserCon = styled.div`
 `;
 
 const UserImg = styled.div`
-    background-image: url("${(props) => (props.profile_img ? props.profile_img : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200" )}");
+    background-image: url("${(props) => (props.profile_img ? props.profile_img : "https://opgg-com-image.akamaized.net/attach/images/20200225141203.297146.jpg?image=w_200")}");
     background-position: center;
     background-size: cover;
     /* box-shadow: 0 5px 5px 0 #BFBFBF; */

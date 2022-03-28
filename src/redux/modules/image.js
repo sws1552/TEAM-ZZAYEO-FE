@@ -12,6 +12,8 @@ const IMAGE_URL = "IMAGEURL";
 const DELETE_IMAGE = "DELETEIMAGE";
 const INITIAL_IMAGE = "INITIALIMAGE";
 const THUMBNAIL_URL = "THUMBNAIL_URL";
+const INITIAL_DB_IMAGE = "INITIAL_DB_IMAGE"
+
 
 // action creators
 const uploading = createAction(UPLOADING, (uploading) => ({ uploading }));
@@ -29,7 +31,7 @@ const thumbnailURL = createAction(THUMBNAIL_URL, (thumbnailURL) => ({
 }));
 const deleteImage = createAction(DELETE_IMAGE, (index) => ({ index }));
 const initialImage = createAction(INITIAL_IMAGE, (initial) => ({ initial }));
-
+const initialdbimage = createAction(INITIAL_DB_IMAGE, (initial) => ({ initial }));
 // initial state
 const initialState = {
   image_url: "",
@@ -57,8 +59,11 @@ export default handleActions(
       }),
     [PRE_SET_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
-    
         draft.pre_preview = action.payload.pre_preview
+      }),
+    [INITIAL_DB_IMAGE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.pre_preview = action.payload.initial
       }),
     [DELETE_PREVIEW]: (state, action) =>
       produce(state, (draft) => {
@@ -80,7 +85,7 @@ export default handleActions(
       produce(state, (draft) => {
         draft.imageURL = [...state.imageURL, action.payload.imageURL];
       }),
-      
+
     [THUMBNAIL_URL]: (state, action) =>
       produce(state, (draft) => {
         draft.thumbnailURL = action.payload.thumbnailURL;
@@ -94,7 +99,7 @@ export default handleActions(
         const new_Image = state.imageURL.filter((l, idx) => {
           return parseInt(action.payload.index) !== idx;
         });
-        
+
         draft.imageURL = new_Image;
         draft.preview = new_preview;
       }),
@@ -119,6 +124,7 @@ const actionCreators = {
   thumbnailURL,
   preSetPreview,
   deletePrePreview,
+  initialdbimage,
 };
 
 export { actionCreators };

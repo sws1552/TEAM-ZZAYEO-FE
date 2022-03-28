@@ -17,7 +17,7 @@ const MainUserpick = (props) => {
   let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
  
   const planId = props.planId;
-
+  const token = localStorage.getItem("token")
   const userpick_list = useSelector((store) => store.plan.userpick_list);
 
     // console.log('userpick_list !! ', userpick_list);
@@ -29,7 +29,12 @@ const MainUserpick = (props) => {
 
   const onProfile = (e) => {
     e.stopPropagation();
-    history.push(`/otheruser/${userId}`);
+    if(token) {
+      history.push(`/otheruser/${userId}`);
+    } else {
+      alert("로그인 후 확인 가능합니다.")
+      history.push(`/login`);
+    }
   };
   return (
     <React.Fragment>

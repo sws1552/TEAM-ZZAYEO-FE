@@ -76,7 +76,7 @@ const Main = (props) => {
           <BookMarkListBox>
             {userpick_list.length > 0 ? (
               <>
-                <P>이달의 유저 픽카츄 ✅</P>
+                <P>이달의 유저 픽 ✅</P>
                 <MainUserpickList />
               </>
             ) : null}

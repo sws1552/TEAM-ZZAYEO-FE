@@ -21,6 +21,7 @@ import DropDownMenu from "./DropDownMenu";
 const CommentList = (props) => {
   const planId = props.planId;
   const snsId = props.snsId;
+  const token = localStorage.getItem("token")
 
   const dispatch = useDispatch();
   const comment_list = useSelector((state) => state.comment.list);
@@ -48,7 +49,8 @@ const CommentList = (props) => {
           })}
         </CommentCon>
 
-        <CommentWrite planId={planId} snsId={snsId}/>
+        {token ? <CommentWrite planId={planId} snsId={snsId}/> : null}
+        
       </ListCon>
     );
   }

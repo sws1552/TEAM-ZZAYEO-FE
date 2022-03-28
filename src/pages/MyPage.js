@@ -132,8 +132,8 @@ const MyPage = (props) => {
           </svg>
         </ListItem>
         <ListItem3>
-          알림 설정
-          <Switch />
+          {/* 알림 설정
+          <Switch /> */}
         </ListItem3>
       </ListCon>
     </MypageCon>
@@ -198,7 +198,7 @@ const ListItem = styled.div`
 
 const ListItem3 = styled.div`
   border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
+  /* border-bottom: 1px solid #e5e5e5; */
   padding: 24px 0;
   display: flex;
   justify-content: space-between;

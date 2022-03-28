@@ -12,10 +12,17 @@ const MainTopTravel = (props) => {
      return p.planId === planId;
     });
   const userId = plan.userId.userId;
+  const token = localStorage.getItem("token")
 
   const onProfile = (e) => {
     e.stopPropagation();
-    history.push(`/otheruser/${userId}`);
+    if(token) {
+      history.push(`/otheruser/${userId}`);
+    } else {
+      alert("로그인 후 확인 가능합니다.")
+      history.push(`/login`);
+    }
+    
   };
 
   const defaultUrl = [

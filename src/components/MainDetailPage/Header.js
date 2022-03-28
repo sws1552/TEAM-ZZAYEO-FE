@@ -15,13 +15,18 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const socket = useSelector((state) => state.chat.instance);
-
+  const token = localStorage.getItem("token")
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
 
   const onProfile = (e) => {
     e.stopPropagation();
-    history.push(`/otheruser/${props.userId.userId}`);
+    if(token) {
+      history.push(`/otheruser/${props.userId.userId}`);
+    } else {
+      alert("로그인 후 확인 가능합니다.")
+      history.push(`/login`);
+    }
   };
 
   const myInfo = useSelector((store) => store.user.user);

@@ -102,7 +102,7 @@ const Upload = (props) => {
                     src={
                       pre_preview[idx]
                         ? pre_preview[idx]
-                        : "http://via.placeholder.com/400x300"
+                        : null
                     }
                   ></Image>
 

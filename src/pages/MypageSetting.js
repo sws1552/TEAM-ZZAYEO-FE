@@ -38,7 +38,7 @@ const MypageSetting = () => {
                 dispatch(userActions.logOut());
                 history.push("/");
                 }}>로그아웃</ListItem>
-                <ListItem>탈퇴하기</ListItem>
+                {/* <ListItem>탈퇴하기</ListItem> */}
             </ListCon>
             
         </MypageCon>

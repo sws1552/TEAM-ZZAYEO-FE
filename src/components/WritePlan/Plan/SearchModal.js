@@ -61,15 +61,16 @@ export default function SearhModal() {
   const placeName = useSelector((state) => state.addPlace.placeName);
 
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [place, setPlace] = React.useState("+ 장소를 검색해주세요")
 
 
   return (
     <div>
-      {placeName === "" ? <ADDPlace onClick={handleOpen}>+ 장소를 검색해주세요</ADDPlace> :
-        <ADDPlace onClick={handleOpen}>최근 검색: {placeName}</ADDPlace>}
-
+      <ADDPlace onClick={handleOpen}>{place}</ADDPlace>
       <Modal
         open={open}
         onClose={handleClose}
@@ -100,6 +101,7 @@ export default function SearhModal() {
             <AddButton
               onClick={() => {
                 setOpen(false)
+                setPlace(placeName)
               }}
             >장소추가</AddButton>
           </div>

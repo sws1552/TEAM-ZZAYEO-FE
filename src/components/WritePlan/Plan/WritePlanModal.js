@@ -76,6 +76,7 @@ export default function BasicModal(props) {
         onClick={() => {
           handleOpen();
           dispatch(mapActions.sendDayId(dayId));
+          dispatch(imageActions.initialdbimage([]))
         }}
       >
         + 장소를 추가해주세요
