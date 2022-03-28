@@ -71,6 +71,12 @@ const ListContainer = styled.div`
   padding-bottom: 25px;
   box-sizing: border-box;
   border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NotMsg = styled.div`
@@ -79,7 +85,6 @@ const NotMsg = styled.div`
   align-items: center;
   height: 93.7%;
   flex-direction: column;
-
   p {
     margin-top: 16px;
   }
@@ -89,12 +94,7 @@ const ListWrap = styled.div`
   width: 100%;
   height: 100%;
   /* background-color: white; */
-  overflow-y: scroll;
-  overflow-x: hidden;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 // 컴포넌트에 스타일을 바꾸는방법 괄호안에 컴포넌트를 넣으면된당
