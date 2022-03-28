@@ -54,7 +54,11 @@ const ChatList = (props) => {
           </OneChatWrap>
         </ListWrap>
       ) : (
-        "로그인 후 이용 가능합니다."
+        <NotMsg>
+          <SvgImg />
+          <p>로그인을 해주세요.</p>
+        </NotMsg>
+
       )}
     </ListContainer>
   );
@@ -67,15 +71,20 @@ const ListContainer = styled.div`
   padding-bottom: 25px;
   box-sizing: border-box;
   border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NotMsg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 93.7%;
   flex-direction: column;
-
   p {
     margin-top: 16px;
   }
@@ -85,12 +94,7 @@ const ListWrap = styled.div`
   width: 100%;
   height: 100%;
   /* background-color: white; */
-  overflow-y: scroll;
-  overflow-x: hidden;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 // 컴포넌트에 스타일을 바꾸는방법 괄호안에 컴포넌트를 넣으면된당

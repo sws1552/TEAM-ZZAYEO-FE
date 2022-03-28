@@ -8,13 +8,14 @@ import ScrollToBottom from "react-scroll-to-bottom";
 
 import { history } from '../redux/ConfigureStore';
 import {useDispatch, useSelector} from 'react-redux';
-import {socket} from '../shared/Socket';
 import {actionCreators as chatActions} from '../redux/modules/chat';
 
 
 const ChatRoom = (props) => {
 
     const dispatch = useDispatch();
+
+    const socket = useSelector((state) => state.chat.instance);
 
     const roomData = useSelector((state) => state.chat.one_chat);
 

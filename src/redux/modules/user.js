@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 import axios from "axios";
-import { Socket } from "socket.io-client";
 
 //actions
 const SET_USER = "SET_USER";
@@ -39,14 +38,17 @@ const kakaoLogin = (code) => {
         // const snsId = res.data.snsId;
         localStorage.setItem("token", token); //예시로 로컬에 저장
         localStorage.setItem("userId", userId);
+        // localStorage.setItem('snsId', snsId);
+        localStorage.setItem("newChat", "false");
+        localStorage.setItem("mainNotice", "false");
         dispatch(checkUserDB());
-        // Socket.emit("login", { fromSnsId: snsId });
         window.location.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
+        // Socket.emit("login", { fromSnsId: snsId });
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
-        history.replace("/login"); // 로그인 실패하면 로그인화면으로 보내기
+        window.location.replace("/"); // 로그인 실패하면 로그인화면으로 보내기
       });
   };
 };
@@ -82,11 +84,19 @@ const checkUserDB = () => {
         },
       })
       .then((res) => {
+        // console.log('res !! ',res);
+
         let userId = res.data.userId;
         let nickname = res.data.nickname;
         let userImg = res.data.userImg;
+        let snsId = res.data.snsId;
         dispatch(
-          setUser({ userId: userId, nickname: nickname, userImg: userImg })
+          setUser({
+            userId: userId,
+            nickname: nickname,
+            userImg: userImg,
+            snsId: snsId,
+          })
         );
       })
       .catch((err) => {
@@ -118,6 +128,7 @@ export default handleActions(
         draft.user.userId = action.payload.user.userId;
         draft.user.nickname = action.payload.user.nickname;
         draft.user.userImg = action.payload.user.userImg;
+        draft.user.snsId = action.payload.user.snsId;
         draft.is_login = true;
       }),
     [SET_USERPROFILE]: (state, action) =>

@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { history } from "../../redux/ConfigureStore";
 
 const HeaderBar = (props) => {
+
+  const socket = useSelector((state) => state.chat.instance);
+
+  const [mainNoticeState, setMainNoti] = useState(false);
+
+  const mainNoticeSt = localStorage.getItem("mainNotice");
+  const is_token = localStorage.getItem("token") ? true : false;
+
+  React.useEffect(() => {
+
+    if(mainNoticeSt === "false"){
+      setMainNoti(false);
+    }else {
+      setMainNoti(true);
+    }
+
+  }, [mainNoticeSt])
+
+  React.useEffect(() => {
+
+    socket?.on('noticePage', (data) => {
+      console.log('mainNotice socket data !! ', data);
+      setMainNoti(true);
+      localStorage.setItem("mainNotice", "true");
+    });
+
+  }, [socket]);
+
   return (
     <Container>
       <Logo
@@ -54,7 +83,11 @@ const HeaderBar = (props) => {
             />
           </svg>
         </SearchCon>
-        <NoticeCon onClick={() => history.push('/noticepage')}>
+        <NoticeCon onClick={() => {
+          history.push('/noticepage');
+          setMainNoti(false);
+          localStorage.setItem("mainNotice", "false");
+        }}>
           <svg
             width="32"
             height="32"
@@ -62,6 +95,16 @@ const HeaderBar = (props) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
+          
+          {mainNoticeState && is_token ? 
+          <svg width="32" height="5" viewBox="0 0 60 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="3" r="4" fill="#ED3E44"/>
+          </svg>
+          :
+          null
+          }
+          
+
             <path
               fillRule="evenodd"
               clipRule="evenodd"

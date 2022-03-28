@@ -1,15 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as planActions } from "../../redux/modules/plan";
 
 const Like = (props) => {
+
+  const socket = useSelector((state) => state.chat.instance);
+
+
   const dispatch = useDispatch();
   const planId = props.planId;
   const is_like = props.isLike;
 
   const onLike = () => {
     if (is_like === false) {
+
+      socket?.emit('notice', {
+        fromSnsId: localStorage.getItem('snsId'),
+        toSnsId: props.userId.snsId,
+        noticeType: "Like",
+        whereEvent: "plan"
+      });
+
       dispatch(planActions.addLikeDB(planId));
     } else {
       dispatch(planActions.deleteLikeDB(planId));

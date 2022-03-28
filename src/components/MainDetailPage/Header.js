@@ -9,11 +9,12 @@ import { actionCreators as userActions } from "../../redux/modules/user";
 import { actionCreators as chatActions } from "../../redux/modules/chat";
 import { actionCreators as planActions } from "../../redux/modules/plan";
 import instance from "../../shared/Request";
-import { socket } from "../../shared/Socket";
 import { history } from "../../redux/ConfigureStore";
 
 const Header = (props) => {
   const dispatch = useDispatch();
+
+  const socket = useSelector((state) => state.chat.instance);
 
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
@@ -29,7 +30,7 @@ const Header = (props) => {
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(userActions.userProfileDB(props?.userId?.userId));
-  }, []);
+  }, [props?.userId?.userId]);
 
   const joinRoom = async () => {
     const curUserInfo = await instance

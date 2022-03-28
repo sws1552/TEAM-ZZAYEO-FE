@@ -2,19 +2,25 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import instance from "../../shared/Request";
+import io from "socket.io-client";
 
 // 액션타입
+const SET_SOCKET = "SET_SOCKET";
+const DESTROY_SOCKET = "DESTROY_SOCKET";
 const GET_CHAT = "GET_CHAT";
 const GET_ROOM = "GET_ROOM";
 const GET_CHAT_LIST = "GET_CHAT_LIST";
 
 // 액션 생성 함수
+const setSocket = createAction(SET_SOCKET, (instance) => ({ instance }));
+const destroySocket = createAction(DESTROY_SOCKET, () => ({ }));
 const getChat = createAction(GET_CHAT, (chatRoom_list) => ({ chatRoom_list }));
 const getChatList = createAction(GET_CHAT_LIST, (chat_list) => ({ chat_list }));
 const getRoom = createAction(GET_ROOM, (room_data) => ({ room_data }));
 
 // 초기 상태값
 const initialState = {
+  instance: null,
   list: [],
   one_chat: {
     user: {},
@@ -24,6 +30,42 @@ const initialState = {
 };
 
 // 미들웨어
+const createSocketInstance = () => {
+  return function (dispatch, getState, {history}) {
+    const socket = getState().chat.instance;
+    const userId = localStorage.getItem('userId');
+    const snsId = localStorage.getItem('snsId');
+
+    if(!socket || !socket?.connected){
+      const instance = io.connect("https://stgon.shop");
+
+      if(!userId) {
+        return;
+      }
+
+      instance?.emit('login', {fromSnsId: snsId});
+
+      dispatch(setSocket(instance));
+
+    }
+
+  }
+}
+
+
+const destroySocketInstance = () => {
+  return function (dispatch, getState, {history}){
+    const socket = getState().chat.instance;
+
+    if(socket || socket?.connected){
+      socket?.disconnect();
+      dispatch(destroySocket());
+    }
+
+  }
+}
+
+
 const getChatRoomListFB = (toUserId) => {
   return async function (dispatch, getState, { history }) {
     console.log('toUserId !! ',toUserId);
@@ -90,6 +132,16 @@ const deleteChatRoomFB = (chatRoomId) => {
 
 export default handleActions(
   {
+    [SET_SOCKET]: (state, action) =>
+      produce(state, (draft) => {
+        draft.instance = action.payload.instance;
+      }),
+
+    [DESTROY_SOCKET]: (state, action) =>
+      produce(state, (draft) => {
+        draft.instance = null;
+      }),
+
     [GET_CHAT]: (state, action) =>
       produce(state, (draft) => {
         draft.chatRoom_list = action.payload.chatRoom_list;
@@ -114,6 +166,8 @@ const actionCreators = {
   getChatListFB,
   getNewChatFB,
   deleteChatRoomFB,
+  createSocketInstance,
+  destroySocketInstance,
 };
 
 export { actionCreators };

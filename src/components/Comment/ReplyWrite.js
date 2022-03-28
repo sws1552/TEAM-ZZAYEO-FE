@@ -6,7 +6,10 @@ import {actionCreators as commentActions} from '../../redux/modules/comment';
 
 const ReplyWrite = (props) => {   
 
-    const {planId, commentId} = props;
+    const {planId, commentId, commentSnsId} = props;
+
+    const socket = useSelector((state) => state.chat.instance);
+
 
     const dispatch = useDispatch();
 
@@ -16,6 +19,13 @@ const ReplyWrite = (props) => {
 
     const ReplyAdd = () => {
         if(reply === ""){window.alert('내용을 입력해주세요.'); return;}
+
+        socket?.emit('notice', {
+            fromSnsId: localStorage.getItem('snsId'),
+            toSnsId: commentSnsId,
+            noticeType: "CommentReply",
+            whereEvent: "reply"
+          });
 
         dispatch(commentActions.addReplyFB(planId, commentId, reply));
 

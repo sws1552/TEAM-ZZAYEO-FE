@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../../redux/modules/comment";
 
 const CommentWrite = (props) => {
-  const { planId } = props;
+  const { planId, snsId } = props;
+
+  const socket = useSelector((state) => state.chat.instance);
 
   const [comment, setComment] = useState("");
 
@@ -15,6 +17,14 @@ const CommentWrite = (props) => {
       window.alert("내용을 입력해주세요");
       return;
     }
+
+    socket?.emit('notice', {
+      fromSnsId: localStorage.getItem('snsId'),
+      toSnsId: snsId,
+      noticeType: "CommentReply",
+      whereEvent: "comment"
+    });
+
     dispatch(commentActions.addCommentFB(planId, comment));
     setComment("");
   };

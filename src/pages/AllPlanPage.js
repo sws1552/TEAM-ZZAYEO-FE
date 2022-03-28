@@ -8,6 +8,7 @@ import TravelList from "../components/AllPlanPage/TravelList";
 import axios from "axios";
 
 const AllPlanPage = (props) => {
+  const token = localStorage.getItem("token")
   const dispatch = useDispatch();
 
   const scroll = React.useRef(null);
@@ -28,7 +29,7 @@ const AllPlanPage = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [endPage, setEndPage] = React.useState(0);
   const pageEnd = React.useRef();
-
+  console.log(feed)
   // pageNumber가 바뀔때마다 실행
   React.useEffect(() => {
     if (endPage !== 0 && pageNumber > endPage) {
@@ -45,7 +46,7 @@ const AllPlanPage = (props) => {
       await axios
         .get(`https://stgon.shop/api/plans?page=${pageNumber}`, {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
+            authorization: token ? `Bearer ${token}`: "",
           },
         })
         .then((res) => {
@@ -56,7 +57,7 @@ const AllPlanPage = (props) => {
       await axios
         .get(`https://stgon.shop/api/plans${query}&page=${pageNumber}`, {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
+            authorization: token ? `Bearer ${token}`: "",
           },
         })
         .then((res) => {
