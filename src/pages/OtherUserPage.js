@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import instance from "../shared/Request";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { actionCreators as chatActions } from "../redux/modules/chat";
-import { socket } from "../shared/Socket";
 import { history } from "../redux/ConfigureStore";
 import TravelList from "../components/OtherUserPage/TravelList";
 
@@ -12,6 +11,8 @@ const OtherUserPage = (props) => {
   const dispatch = useDispatch();
 
   const userId = props.match.params.userId;
+
+  const socket = useSelector((state) => state.chat.instance);
 
   const myInfo = useSelector((store) => store.user.user);
   const user = useSelector((store) => store.user.userInfo);

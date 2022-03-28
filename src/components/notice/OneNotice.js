@@ -1,9 +1,12 @@
 import React from 'react';
 import Moment from 'react-moment';
 import styled from 'styled-components';
+import { history } from '../../redux/ConfigureStore';
 
 
 const OneNotice = (props) => {
+
+    // console.log('props !! ',props);
 
     const displayCreatedAt = (createdAt) => {
         let startTime = new Date(createdAt);
@@ -31,11 +34,26 @@ const OneNotice = (props) => {
         }
       };
 
-    const testUrl = "";
+      const moveBtn = () => {
+        switch(props.noticeType) {
+          case "Like": 
+            history.push(`/detail/${props.planId}`);
+            break;
+          case "CommentReply":
+            history.push(`/detail/${props.planId}`);
+            break;
+          case "Chat":
+            history.push(`/chatlist`);
+            break;
+          default:
+            break;
+        }
+      }
+
 
     return (
-        <OneCon>
-            {testUrl === "" ?  
+        <OneCon onClick={moveBtn}>
+            {!props.sentUser.profile_img ?  
             <NoticeImg >
             <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M23.1031 6.04726C24.8398 5.42703 26.6667 6.71448 26.6667 8.55857V23.4412C26.6667 25.2853 24.8398 26.5728 23.1031 25.9525L15.769 23.3332H10.6667C9.19391 23.3332 8 22.1393 8 20.6666V11.3332C8 9.86047 9.19391 8.66656 10.6667 8.66656H14.3833C15.3003 8.66656 16.2105 8.50891 17.074 8.2005L23.1031 6.04726ZM24 8.55857L17.9709 10.7118C16.8195 11.123 15.606 11.3332 14.3833 11.3332H10.6667V20.6666H16.231L24 23.4412V8.55857Z" fill="white"/>
@@ -44,15 +62,15 @@ const OneNotice = (props) => {
             </svg>
             </NoticeImg>
             :
-            <NoticeImg src={testUrl}/>
+            <NoticeImg src={props.sentUser.profile_img}/>
             }
 
             <ContentCon>
                 <Content>
-                    Lukasz Szmigiel 님이 회원님의 여행을 좋아합니다.~~~~~~~~~~~~~~~~~~~!
+                    {props.noticeTitle}
                 </Content>
                 <TimeCon>
-                    {displayCreatedAt("2022.3.25.14:20")}
+                    {displayCreatedAt(props.createdAt)}
                 </TimeCon>
             </ContentCon>
             
@@ -72,6 +90,12 @@ const OneCon = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #F5F5F5;
+    }
+
 `;
 
 const NoticeImg = styled.div`

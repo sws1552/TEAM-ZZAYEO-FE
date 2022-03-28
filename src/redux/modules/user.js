@@ -2,7 +2,6 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import instance from "../../shared/Request";
 import axios from "axios";
-import { Socket } from "socket.io-client";
 
 //actions
 const SET_USER = "SET_USER";
@@ -28,7 +27,7 @@ const kakaoLogin = (code) => {
   console.log(code);
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`)
+      .get(`http://stgon.shop/api/auth/kakao/callback?code=${code}`)
       .then((res) => {
         console.log(res); // 토큰 넘어오는지 확인
         const token = res.data.token;
@@ -36,8 +35,10 @@ const kakaoLogin = (code) => {
         const snsId = res.data.snsId;
         localStorage.setItem("token", token); //예시로 로컬에 저장
         localStorage.setItem("userId", userId);
+        localStorage.setItem('snsId', snsId);
+        localStorage.setItem("newChat", "false");
+        localStorage.setItem("mainNotice", "false");
         dispatch(checkUserDB());
-        Socket.emit("login", { fromSnsId: snsId });
         window.location.replace("/"); // 토큰 받고 로그인되면 화면 전환(메인으로)
       })
       .catch((err) => {
@@ -79,11 +80,15 @@ const checkUserDB = () => {
         },
       })
       .then((res) => {
+
+        // console.log('res !! ',res);
+
         let userId = res.data.userId;
         let nickname = res.data.nickname;
         let userImg = res.data.userImg;
+        let snsId = res.data.snsId;
         dispatch(
-          setUser({ userId: userId, nickname: nickname, userImg: userImg })
+          setUser({ userId: userId, nickname: nickname, userImg: userImg, snsId: snsId })
         );
       })
       .catch((err) => {
@@ -115,6 +120,7 @@ export default handleActions(
         draft.user.userId = action.payload.user.userId;
         draft.user.nickname = action.payload.user.nickname;
         draft.user.userImg = action.payload.user.userImg;
+        draft.user.snsId = action.payload.user.snsId;
         draft.is_login = true;
       }),
     [SET_USERPROFILE]: (state, action) =>

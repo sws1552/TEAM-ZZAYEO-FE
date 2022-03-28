@@ -20,6 +20,7 @@ import DropDownMenu from "./DropDownMenu";
 
 const CommentList = (props) => {
   const planId = props.planId;
+  const snsId = props.snsId;
 
   const dispatch = useDispatch();
   const comment_list = useSelector((state) => state.comment.list);
@@ -47,7 +48,7 @@ const CommentList = (props) => {
           })}
         </CommentCon>
 
-        <CommentWrite planId={planId} />
+        <CommentWrite planId={planId} snsId={snsId}/>
       </ListCon>
     );
   }
@@ -73,6 +74,8 @@ const CommentCon = styled.div`
 const CommentItem = (props) => {
   const dispatch = useDispatch();
 
+  const socket = useSelector((state) => state.chat.instance);
+
   const [upComment, setUpComment] = useState(props.content);
   const [replyHide, setReplyHide] = useState(false);
   const [updateHide, setHide] = useState(false);
@@ -92,6 +95,14 @@ const CommentItem = (props) => {
     if (props.isLike) {
       dispatch(commentActions.commentLikeFalse(props.planId, props.commentId));
     } else {
+
+      socket?.emit('notice', {
+        fromSnsId: localStorage.getItem('snsId'),
+        toSnsId: props.userId.snsId,
+        noticeType: "Like",
+        whereEvent: "comment"
+      });
+
       dispatch(commentActions.commentLikeTrue(props.planId, props.commentId));
     }
   };
@@ -191,6 +202,7 @@ const CommentItem = (props) => {
           planId={props.planId}
           commentId={props.commentId}
           replies={props.replies}
+          commentSnsId={props.userId.snsId}
         />
       ) : null}
     </ItemCon>

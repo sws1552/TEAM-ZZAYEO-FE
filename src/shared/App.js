@@ -27,7 +27,28 @@ import AllPlanPage from "../pages/AllPlanPage";
 
 import NoticePage from "../pages/NoticePage";
 
+import {actionCreators as chatActions} from '../redux/modules/chat';
+import {actionCreators as userActions} from '../redux/modules/user';
+import { useDispatch, useSelector } from "react-redux";
+
 function App() {
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    if(userId){
+      dispatch(chatActions.createSocketInstance());
+    }else {
+      return;
+    }
+
+    return () => {
+      dispatch(chatActions.destroySocketInstance());
+    }
+    
+  }, [dispatch]);
+
   return (
     <React.Fragment>
       <Fullscreen>

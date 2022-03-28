@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import moment from 'moment';
 import Moment from 'react-moment';
-import { socket } from "../../shared/Socket";
 import { history } from "../../redux/ConfigureStore";
 import { actionCreators as chatActions } from "../../redux/modules/chat";
 import { actionCreators as userActions } from "../../redux/modules/user";
@@ -13,6 +12,8 @@ import OneChatDrop from './OneChatDrop';
 const Onechat = (props) => {
 
     const dispatch = useDispatch();
+
+    const socket = useSelector((state) => state.chat.instance);
 
     const joinRoom = () => {
         

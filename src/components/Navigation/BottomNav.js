@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./BottomNav.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import {useSelector} from 'react-redux';
 
 
 
@@ -10,6 +11,34 @@ import { useLocation } from "react-router";
 const BottomNav = () => {
   // 현재 선택된 아이콘을 관리하는 state
   const [activeNav, setActiveNav] = useState(1);
+
+  const socket = useSelector((state) => state.chat.instance);
+
+  const [newChatState, setChatState] = useState(false);
+
+  const newChatSt = localStorage.getItem("newChat");
+  const is_token = localStorage.getItem("token") ? true : false;
+  
+  React.useEffect(() => {
+    
+    if(newChatSt === "false"){
+      setChatState(false);
+    }else {
+      setChatState(true);
+    }
+
+  }, [newChatSt]);
+
+
+  React.useEffect(() => {
+
+    socket?.on('chatNotice', (data) => {
+      console.log('chatNotice socket data !! ', data.newChat);
+      setChatState(data.newChat);
+      localStorage.setItem("newChat", "true");
+    });
+
+  }, [socket]);
 
   return (
     <nav className="wrapper">
@@ -101,7 +130,12 @@ const BottomNav = () => {
           />
         </svg>
       </Link>
-      <Link to="/chatlist" className="nav-link" onClick={() => setActiveNav(4)}>
+      <Link to="/chatlist" className="nav-link" onClick={() => {
+        setActiveNav(4);
+        setChatState(false);
+        localStorage.setItem("newChat", "false");
+      }}>
+        
         <svg
           width="60"
           height="56"
@@ -109,7 +143,18 @@ const BottomNav = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
+
           <rect width="60" height="56" fill="white" />
+
+          {newChatState && is_token ? 
+          <svg width="60" height="10" viewBox="0 0 60 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="45" cy="7" r="3" fill="#ED3E44"/>
+          </svg>
+          : 
+          null
+          }
+          
+
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -138,8 +183,12 @@ const BottomNav = () => {
             d="M19.7012 42.68H17.8212V38.46H19.7012V42.68ZM21.7912 40.15H20.4612V37.81H17.0512V43.33H20.4612V40.83H21.7912V45.29H22.5712V36.97H21.7912V40.15ZM23.5712 36.77V45.73H24.3512V36.77H23.5712ZM28.5904 37.62H27.8004V39.33C27.8004 40.87 27.0604 42.48 25.8304 43.2L26.3404 43.82C27.2304 43.27 27.8804 42.25 28.2004 41.06C28.5204 42.15 29.1204 43.1 29.9704 43.62L30.4404 42.98C29.2604 42.26 28.5904 40.74 28.5904 39.3V37.62ZM30.9504 39.99H29.4704V40.67H30.9504V45.3H31.7204V36.97H30.9504V39.99ZM32.7704 36.77V45.74H33.5504V36.77H32.7704ZM38.3296 38.37H40.4396V37.69H35.4296V38.37H37.5096V39.51C37.5096 41.06 36.4196 42.75 35.1296 43.36L35.6096 44.02C36.6296 43.5 37.5096 42.37 37.9196 41.06C38.3496 42.29 39.2296 43.32 40.2696 43.8L40.7296 43.14C39.4096 42.58 38.3296 41.03 38.3296 39.51V38.37ZM41.6496 36.78V45.74H42.4696V36.78H41.6496Z"
             fill={activeNav === 4 ? "#4E49E2" : "#BDBDBD"}
           />
+
         </svg>
+
+
       </Link>
+      
       <Link to="/login" className="nav-link" onClick={() => setActiveNav(5)}>
         <svg
           width="60"

@@ -8,7 +8,7 @@ import ReplyMenu from './ReplyMenu';
 import 'moment/locale/ko';
 import moment from 'moment';
 import Moment from 'react-moment';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {actionCreators as commentActions} from '../../redux/modules/comment';
 
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -17,11 +17,12 @@ import ReplyDrop from './ReplyDrop';
 
 const ReplyList = (props) => {
 
-    const {planId, commentId, replies, userInfo} = props;
+    const {planId, commentId, replies, userInfo, commentSnsId} = props;
 
     // console.log('planId !! ', planId);
     // console.log('commentId !! ', commentId);
     // console.log('replies !! ', replies);
+    // console.log('commentSnsId !! ',commentSnsId);
 
     // console.log('userInfo !! ',userInfo);
 
@@ -34,7 +35,7 @@ const ReplyList = (props) => {
             </ReplyWrap>
             <ReplyWriteCon>
                 <ReplyUserImg userImg={userInfo.userImg}/>
-                <ReplyWrite planId={planId} commentId={commentId}/>
+                <ReplyWrite planId={planId} commentId={commentId} commentSnsId={commentSnsId}/>
             </ReplyWriteCon>
         </ReplyListCon>
     )
@@ -76,7 +77,8 @@ const ReplyWriteCon = styled.div`
 
 const Reply = (props) => {
 
-    // console.log('props !! ', props);
+    const socket = useSelector((state) => state.chat.instance);
+
     const dispatch = useDispatch();
 
     const [upReplyhide, setReplyHide] = useState(false);
@@ -92,6 +94,14 @@ const Reply = (props) => {
         if(props.isLike){
             dispatch(commentActions.replyLikeFalse(props.planId, props.replyId));
         }else {
+
+            socket?.emit('notice', {
+                fromSnsId: localStorage.getItem('snsId'),
+                toSnsId: props.userId.snsId,
+                noticeType: "Like",
+                whereEvent: "reply"
+            });
+
             dispatch(commentActions.replyLikeTrue(props.planId, props.replyId));
         }
     }
