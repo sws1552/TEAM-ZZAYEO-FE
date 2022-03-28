@@ -19,65 +19,6 @@ const Main = (props) => {
   const is_token = localStorage.getItem("token") ? true : false;
   const dispatch = useDispatch();
 
-  const location = useLocation();
-  const query = location.search;
-
-  //무한 스크롤
-  const [target, setTarget] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([]);
-  const [page, setPage] = useState(1);
-  const [endPage, setEndPage] = useState(0);
-
-  useEffect(() => {}, [itemLists]);
-
-  const getMoreItem = async (page, query) => {
-    setIsLoaded(true);
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-    if (query) {
-      await instance.get(`/api/plans${query}&page=${page}`).then((res) => {
-        let Items = res.data.plans;
-        setItemLists((itemLists) => itemLists.concat(Items));
-        setEndPage(res.data.endPage);
-      });
-    } else {
-      await instance.get(`/api/plans?page=${page}`).then((res) => {
-        let Items = res.data.plans;
-        setItemLists((itemLists) => itemLists.concat(Items));
-        setEndPage(res.data.endPage);
-      });
-    }
-    setIsLoaded(false);
-  };
-
-  const onIntersect = useCallback(
-    async ([entry], observer) => {
-      if (entry.isIntersecting && !isLoaded) {
-        observer.unobserve(entry.target);
-        await getMoreItem(page, query);
-
-        if (page === endPage) {
-          return page;
-        } else {
-          setPage((num) => num + 1);
-        }
-        observer.observe(entry.target);
-      }
-    },
-    [target, page, query]
-  );
-
-  useEffect(() => {
-    let observer;
-    if (target && endPage !== 1) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 1,
-      });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target, page, query]);
-
   React.useEffect(() => {
     dispatch(userActions.checkUserDB());
     dispatch(planActions.getBookMarkDB());
@@ -85,7 +26,6 @@ const Main = (props) => {
     dispatch(planActions.getTopTravelDB());
   }, []);
 
-  const plans = useSelector((store) => store.plan.list);
   const bookmark_list = useSelector((store) => store.plan.bookmark_list);
   const userpick_list = useSelector((store) => store.plan.userpick_list);
   const toptravel_list = useSelector((store) => store.plan.toptravel_list);
@@ -121,29 +61,6 @@ const Main = (props) => {
                 </>
               ) : null}
             </BookMarkListBox>
-            {/* <TravelListBox>
-              <P>여행기 모아보기 🌄📝</P>
-              <Filter />
-              {query ? (
-                <>
-                  {itemLists.map((l, i) => {
-                    return <MainTravelList key={i} {...l} />;
-                  })}
-                  <div ref={setTarget} className="Target-Element">
-                    {isLoaded && <Loader />}
-                  </div>
-                </>
-              ) : (
-                <>
-                  {itemLists.map((l, i) => {
-                    return <MainTravelList key={i} {...l} />;
-                  })}
-                  <div ref={setTarget} className="Target-Element">
-                    {isLoaded && <Loader />}
-                  </div>
-                </>
-              )}
-            </TravelListBox> */}
           </Content>
         </Div>
       </Container>
@@ -159,7 +76,7 @@ const Main = (props) => {
           <BookMarkListBox>
             {userpick_list.length > 0 ? (
               <>
-                <P>이달의 유저 픽 ✅</P>
+                <P>이달의 유저 픽카츄 ✅</P>
                 <MainUserpickList />
               </>
             ) : null}

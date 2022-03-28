@@ -54,7 +54,11 @@ const ChatList = (props) => {
           </OneChatWrap>
         </ListWrap>
       ) : (
-        "로그인 후 이용 가능합니다."
+        <NotMsg>
+          <SvgImg />
+          <p>로그인을 해주세요.</p>
+        </NotMsg>
+
       )}
     </ListContainer>
   );
@@ -73,7 +77,7 @@ const NotMsg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 93.7%;
   flex-direction: column;
 
   p {

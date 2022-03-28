@@ -214,6 +214,7 @@ const SelectBox = styled.div`
   font-size: 14px;
   line-height: 16px;
   margin-bottom: 24px;
+  letter-spacing: -1px;
 `;
 
 const Destination = styled.div`
