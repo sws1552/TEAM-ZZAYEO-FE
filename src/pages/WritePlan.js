@@ -47,7 +47,7 @@ const WritePlan = (props) => {
     setShareShowModal(true);
   };
 
-  // 썸네일 설정하고 모달 닫기
+  // 썸네일 모달 닫기
   const closeModal = (e) => {
     e.stopPropagation();
     setShareShowModal(false);
@@ -192,7 +192,6 @@ const PlanBox = styled.div`
   display: flex;
   box-sizing: border-box;
   align-items: center;
-  width: fit-content;
   margin-right: 8px;
   padding: 6px 16px;
   border-radius: 50px;

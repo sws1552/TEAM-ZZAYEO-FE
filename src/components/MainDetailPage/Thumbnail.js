@@ -5,8 +5,14 @@ import { actionCreators as imageActions } from "../../redux/modules/image";
 
 const Thumbnail = (props) => {
   const dispatch = useDispatch();
-  const { shareShowModal, keepModal, shareCloseModal, imageSrc, setImageSrc } =
-    props;
+  const {
+    shareShowModal,
+    keepModal,
+    shareCloseModal,
+    imageSrc,
+    setImageSrc,
+    closeModal,
+  } = props;
 
   const fileInput = React.useRef();
 
@@ -31,6 +37,23 @@ const Thumbnail = (props) => {
             <Modal>
               <Taps>
                 <Ul>여행공개</Ul>
+                <CloseBtn onClick={closeModal}>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
+                      fill="black"
+                      fillOpacity="0.87"
+                    />
+                  </svg>
+                </CloseBtn>
               </Taps>
               <Container>
                 <Info>여행을 대표할 멋진 커버사진을 올려주세요.</Info>
@@ -132,7 +155,6 @@ const ModalBox = styled.div`
   left: 0;
   background: rgba(0, 0, 0, 0.72);
   z-index: 9999;
-  overflow-y: auto;
   max-width: 420px;
   width: 100%;
   margin: auto;
@@ -141,7 +163,6 @@ const ModalBox = styled.div`
 const OpenModal = styled(ModalBox)`
   display: flex;
   justify-content: center;
-  // align-items: center;
 `;
 
 const Overlay = styled.div`
@@ -153,37 +174,43 @@ const Overlay = styled.div`
 const Modal = styled.div`
   position: absolute;
   bottom: 0;
-  max-width: 420px;
   width: 100%;
+  max-width: 420px;
   height: 368px;
   background-color: #ffffff;
   border-top-left-radius: 21px;
   border-top-right-radius: 21px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 const Taps = styled.div`
-  margin: 24px 0px 0px 24px;
-  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 30px 0px 24px;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
+  font-weight: 700;
   line-height: 24px;
 `;
 
-const Ul = styled.div`
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+const Ul = styled.div``;
+
+const CloseBtn = styled.div`
+  padding-top: 5px;
+  cursor: pointer;
 `;
 
 const Div = styled.div`
-  width: 100%;
-  max-width: 420px;
-  bottom: 36px;
+  padding: 0px 24px;
   font-family: "Roboto", sans-serif;
 `;
 
 const Button = styled.div`
   height: 48px;
-  margin: 0px 24px 37px;
+  margin-top: 20px;
+  margin-bottom: 37px;
   background-color: #bdbdbd;
   border-radius: 8px;
   display: flex;
@@ -230,7 +257,6 @@ const Info = styled.div`
 const AddImg = styled.div`
   width: 100%;
   height: 160px;
-  margin-bottom: 20px;
   border: 1px solid #bdbdbd;
   box-sizing: border-box;
   border-radius: 8px;

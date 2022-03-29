@@ -48,6 +48,12 @@ const MainDetailPage = (props) => {
     setShareShowModal(true);
   };
 
+  // 썸네일 모달 닫기
+  const closeModal = (e) => {
+    e.stopPropagation();
+    setShareShowModal(false);
+  };
+
   // 썸네일 설정하고 모달 닫기
   const shareCloseModal = (e) => {
     e.stopPropagation();
@@ -61,7 +67,7 @@ const MainDetailPage = (props) => {
       <Container>
         <Header {...plans} />
         <TripDestBox>
-          <div>
+          <Div>
             {decideShare.map((l, i) => {
               return (
                 <li
@@ -101,8 +107,9 @@ const MainDetailPage = (props) => {
               shareCloseModal={shareCloseModal}
               imageSrc={imageSrc}
               setImageSrc={setImageSrc}
+              closeModal={closeModal}
             ></Thumbnail>
-          </div>
+          </Div>
         </TripDestBox>
         <Collapse in={isChecked}>
           <WritePlanMap {...plans} />
@@ -211,6 +218,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 420px;
   height: 93%;
+
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -235,15 +243,14 @@ const TitleBox = styled.div`
   margin-bottom: 32px;
 `;
 
-const TripDestBox = styled(TitleBox)`
-  div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    cursor: pointer;
-  }
+const Div = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+`;
 
+const TripDestBox = styled(TitleBox)`
   li {
     display: flex;
     align-items: center;
