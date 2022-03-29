@@ -6,10 +6,9 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import Filter from "../components/AllPlanPage/Filter";
 import TravelList from "../components/AllPlanPage/TravelList";
 import axios from "axios";
-import HeaderBar from "../components/Main/HeaderBar";
 
 const AllPlanPage = (props) => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const dispatch = useDispatch();
 
   const scroll = React.useRef(null);
@@ -30,7 +29,7 @@ const AllPlanPage = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [endPage, setEndPage] = React.useState(0);
   const pageEnd = React.useRef();
-  console.log(feed)
+  console.log(feed);
   // pageNumber가 바뀔때마다 실행
   React.useEffect(() => {
     if (endPage !== 0 && pageNumber > endPage) {
@@ -47,7 +46,7 @@ const AllPlanPage = (props) => {
       await axios
         .get(`https://stgon.shop/api/plans?page=${pageNumber}`, {
           headers: {
-            authorization: token ? `Bearer ${token}`: "",
+            authorization: token ? `Bearer ${token}` : "",
           },
         })
         .then((res) => {
@@ -58,7 +57,7 @@ const AllPlanPage = (props) => {
       await axios
         .get(`https://stgon.shop/api/plans${query}&page=${pageNumber}`, {
           headers: {
-            authorization: token ? `Bearer ${token}`: "",
+            authorization: token ? `Bearer ${token}` : "",
           },
         })
         .then((res) => {
@@ -91,7 +90,6 @@ const AllPlanPage = (props) => {
   return (
     <React.Fragment>
       <Container>
-      <HeaderBar/>
         <Header ref={scroll}>
           <HeaderTitle>전체 여행</HeaderTitle>
         </Header>

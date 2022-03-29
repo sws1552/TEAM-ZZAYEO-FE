@@ -5,8 +5,14 @@ import { actionCreators as imageActions } from "../../../redux/modules/image";
 
 const Thumbnail = (props) => {
   const dispatch = useDispatch();
-  const { shareShowModal, keepModal, shareCloseModal, imageSrc, setImageSrc } =
-    props;
+  const {
+    shareShowModal,
+    keepModal,
+    shareCloseModal,
+    imageSrc,
+    setImageSrc,
+    closeModal,
+  } = props;
 
   const fileInput = React.useRef();
 
@@ -31,6 +37,23 @@ const Thumbnail = (props) => {
             <Modal>
               <Taps>
                 <Ul>여행공개</Ul>
+                <CloseBtn onClick={closeModal}>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
+                      fill="black"
+                      fillOpacity="0.87"
+                    />
+                  </svg>
+                </CloseBtn>
               </Taps>
               <Container>
                 <Info>여행을 대표할 멋진 커버사진을 올려주세요.</Info>
@@ -168,15 +191,17 @@ const Taps = styled.div`
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Ul = styled.div``;
 
-// const CancelBtn = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   margin-right: 24px;
-// `;
+const CloseBtn = styled.div`
+  padding-top: 5px;
+  margin-right: 30px;
+  cursor: pointer;
+`;
 
 const Div = styled.div`
   position: absolute;
