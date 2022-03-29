@@ -83,6 +83,7 @@ export default handleActions(
       }),
     [IMAGE_URL]: (state, action) =>
       produce(state, (draft) => {
+        console.log(action.payload.imageURL)
         draft.imageURL = [...state.imageURL, action.payload.imageURL];
       }),
 
