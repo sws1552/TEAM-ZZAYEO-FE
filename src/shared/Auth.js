@@ -5,8 +5,8 @@ const CLIENT_ID = "05c11329e6009d884a248b7893b16fe4";
 //REDIRECT_URI 주소 백엔드랑 주소일치시키기
 const REDIRECT_URI =
   //   "http://jjayeo.s3-website.ap-northeast-2.amazonaws.com/api/auth/kakao/callback";
-  "http://localhost:3000/api/auth/kakao/callback";
-// "https://zzayeo.com/api/auth/kakao/callback";
+  // "http://localhost:3000/api/auth/kakao/callback";
+"https://zzayeo.com/api/auth/kakao/callback";
 
 export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 

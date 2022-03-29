@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { actionCreators as imageActions } from "../redux/modules/image";
 import { actionCreators as addPlaceActions } from "../redux/modules/addPlace";
 import { actionCreators as planActions } from "../redux/modules/plan";
+import imageCompression from 'browser-image-compression';
+
 
 const Upload = (props) => {
   const dispatch = useDispatch();
@@ -17,16 +19,36 @@ const Upload = (props) => {
 
   const { preImgUrl, placeId } = props;
 
-  console.log(preImgUrl)
+
   React.useEffect(() => {
     if (preImgUrl?.length !== 0 && typeof preImgUrl !== "undefined") {
       dispatch(imageActions.preSetPreview(preImgUrl));
     }
   }, [preImgUrl])
 
+  const actionImgCompress = async (fileSrc) => {
+
+    const options = {
+      maxSizeMB: 0.1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(fileSrc, options);
+
+      const myFile =  new File([compressedFile], 'image.jpeg', {
+        type: compressedFile.type,
+      });
+
+      await dispatch(imageActions.imageURL(myFile));
+    } catch (error) {
+      console.log(error);
+    }
+  }
   // 여러개 업로드
   const handleImageUpload = (e) => {
     const fileArr = e.target.files;
+
     const filesArr = Array.from(e.target.files);
     let fileURLs = [];
 
@@ -42,7 +64,8 @@ const Upload = (props) => {
       reader.onload = () => {
         fileURLs[i] = reader.result;
         dispatch(imageActions.setPreview(reader.result));
-        dispatch(imageActions.imageURL(filesArr[i]));
+        // dispatch(imageActions.imageURL(filesArr[i]));
+        actionImgCompress(filesArr[i])
       };
       reader.readAsDataURL(file);
     }
