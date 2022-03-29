@@ -39,13 +39,17 @@ const Search = (props) => {
 
   const fetchFeeds = async (query, pageNumber) => {
     setLoading(false);
-    await axios
-      .get(`https://stgon.shop/api/plans/search${query}&page=${pageNumber}`)
-      .then((res) => {
-        console.log(res);
-        setFeed((prev) => [...prev, ...res.data.plans]);
-        setEndPage(res.data.endPage);
-      });
+    if (!query) {
+      return;
+    } else {
+      await axios
+        .get(`https://stgon.shop/api/plans/search${query}&page=${pageNumber}`)
+        .then((res) => {
+          console.log(res);
+          setFeed((prev) => [...prev, ...res.data.plans]);
+          setEndPage(res.data.endPage);
+        });
+    }
     setLoading(true);
   };
 

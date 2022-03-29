@@ -8,7 +8,6 @@ import { actionCreators as chatActions } from "../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { ReactComponent as SvgImg } from "../shared/svg/img-none.svg";
-import HeaderBar from "../components/Main/HeaderBar";
 
 // import io from "socket.io-client";
 
@@ -34,7 +33,6 @@ const ChatList = (props) => {
 
   return (
     <ListContainer>
-      <HeaderBar/>
       <Header />
       {is_token ? (
         <ListWrap>
@@ -60,7 +58,6 @@ const ChatList = (props) => {
           <SvgImg />
           <p>로그인을 해주세요.</p>
         </NotMsg>
-
       )}
     </ListContainer>
   );
@@ -96,7 +93,6 @@ const ListWrap = styled.div`
   width: 100%;
   height: 100%;
   /* background-color: white; */
-
 `;
 
 // 컴포넌트에 스타일을 바꾸는방법 괄호안에 컴포넌트를 넣으면된당

@@ -71,7 +71,7 @@ const DestinationModal = (props) => {
               </Container>
               <Div>
                 <Button onClick={closeModal}>
-                  <p>여행 확인하기</p>
+                  <p>확인</p>
                 </Button>
               </Div>
             </Modal>
@@ -169,6 +169,14 @@ const Container = styled.div`
 
 const PublicContainer = styled.div`
   margin-top: 32px;
+  p {
+    margin: 0;
+    margin-left: 24px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #212121;
+  }
 `;
 
 const PublicSelectBox = styled.div`
@@ -186,6 +194,7 @@ const PublicSelectBox = styled.div`
     border: 1px solid #bdbdbd;
     box-sizing: border-box;
     border-radius: 4px;
+    cursor: pointer;
   }
 `;
 

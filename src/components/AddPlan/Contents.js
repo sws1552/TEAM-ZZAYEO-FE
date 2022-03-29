@@ -11,7 +11,7 @@ import DateModal from "./DateModal";
 
 const Contents = (props) => {
   const dispatch = useDispatch();
-  const { today } = props
+  const { today } = props;
 
   //여행제목 값 가져오기
   const [titleInput, setTitleInput] = useState("");
@@ -127,6 +127,19 @@ const Contents = (props) => {
         <Text>언제</Text>
         <Date onClick={dateOpenModal}>
           <p>{msg}</p>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="3" y="6" width="18" height="15" rx="2" stroke="#8F8CF1" />
+            <path d="M3 11L21 11" stroke="#8F8CF1" strokeLinecap="round" />
+            <path d="M9 16H15" stroke="#8F8CF1" strokeLinecap="round" />
+            <path d="M8 3L8 7" stroke="#8F8CF1" strokeLinecap="round" />
+            <path d="M16 3L16 7" stroke="#8F8CF1" strokeLinecap="round" />
+          </svg>
         </Date>
         <DateModal
           dateShowModal={dateShowModal}
@@ -257,6 +270,7 @@ const Date = styled.div`
   border-radius: 4px;
   width: 100%;
   height: 41px;
+  padding: 0px 16px;
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -265,7 +279,7 @@ const Date = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 const TripDestBox = styled(TitleBox)`

@@ -7,7 +7,6 @@ import AfterRegister from "../components/Mypaln/AfterRegister";
 import Filter from "../components/Mypaln/Filter";
 import { useLocation } from "react-router";
 import queryString from "query-string";
-import HeaderBar from "../components/Main/HeaderBar";
 
 const Myplan = (props) => {
   const dispatch = useDispatch();
@@ -32,9 +31,8 @@ const Myplan = (props) => {
   return (
     <React.Fragment>
       <Container>
-        <HeaderBar/>
         <Top>
-          <TText>나의 여행</TText>
+          <TText>여행기 작성</TText>
         </Top>
         <Bottom>
           <AddPlanBtn onClick={onAddPlan}>
@@ -66,7 +64,7 @@ const Myplan = (props) => {
           ) : (
             <ListContainer>
               <Title>
-                <p>여행 리스트</p>
+                <TitleText>여행 리스트</TitleText>
                 <Filter />
               </Title>
               {myplans
@@ -152,15 +150,14 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
 
-  p {
-    margin: 0;
-    margin-left: 24px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    color: #000000;
-  }
+const TitleText = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  margin-left: 24px;
 `;
 
 export default Myplan;

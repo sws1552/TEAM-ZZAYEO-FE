@@ -27,7 +27,7 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  console.log(props)
+  console.log(props);
   const dayId = props.dayId;
   const planId = props.planId;
   const dayNumber = props.dayNumber;
@@ -76,7 +76,7 @@ export default function BasicModal(props) {
         onClick={() => {
           handleOpen();
           dispatch(mapActions.sendDayId(dayId));
-          dispatch(imageActions.initialdbimage([]))
+          dispatch(imageActions.initialdbimage([]));
         }}
       >
         + 장소를 추가해주세요
@@ -95,6 +95,7 @@ export default function BasicModal(props) {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   setMemo("");
+                  setMsg("+ 시간을 추가해주세요.");
                   dispatch(imageActions.initialPreview([]));
                   dispatch(imageActions.initialImage([]));
                   setOpen(false);
@@ -158,7 +159,7 @@ export default function BasicModal(props) {
             </Location>
 
             <TitleText>메모</TitleText>
-            <div style={{ marginBottom: "24px"}}>
+            <div style={{ marginBottom: "24px" }}>
               <MemoContainer
                 value={Memo}
                 onChange={memoChange}
@@ -189,6 +190,7 @@ export default function BasicModal(props) {
                   )
                 );
                 setMemo("");
+                setMsg("+ 시간을 추가해주세요.");
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
                 setOpen(false);
