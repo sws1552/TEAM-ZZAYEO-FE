@@ -42,7 +42,7 @@ const Searchbar = (props) => {
     <Container>
       <BackCon
         onClick={() => {
-          history.push("/");
+          history.goBack();
         }}
       >
         <svg

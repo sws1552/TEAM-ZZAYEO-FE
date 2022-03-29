@@ -24,14 +24,36 @@ import Search from "../pages/Search";
 import OtherUserPage from "../pages/OtherUserPage";
 import BottomNav from "../components/Navigation/BottomNav";
 import AllPlanPage from "../pages/AllPlanPage";
+import StartPage from "../pages/StartPage";
 
 import NoticePage from "../pages/NoticePage";
 
 import {actionCreators as chatActions} from '../redux/modules/chat';
 import {actionCreators as userActions} from '../redux/modules/user';
 import { useDispatch, useSelector } from "react-redux";
+import HeaderBar from "../components/Main/HeaderBar";
+
 
 function App() {
+
+  // 브라우저에서 알림 허용 차단 창
+  const isNotificationSupported = 'Notification' in window;
+  if (isNotificationSupported)
+  {
+      Notification.requestPermission().then(function (result)
+      {
+          if (result === 'granted')
+          {
+              console.log('[Notification] 허용: ', result);
+          }
+          else
+          {
+              console.log('[Notification] 차단: ', result);
+          }
+      });
+  }
+
+
 
   const dispatch = useDispatch();
 
@@ -55,6 +77,7 @@ function App() {
         <ConnectedRouter history={history}>
           <Container>
             <Route path="/" exact component={Main} />
+            <Route path="/main" exact component={StartPage} />
             <Route path="/detail/:planId" exact component={MainDetailPage} />
             <Route path="/login" exact component={Login} />
             <Route path="/myplan" exact component={Myplan} />
@@ -77,7 +100,6 @@ function App() {
             <Route path="/mypageset" exact component={MypageSetting} />
             <Route path="/otheruser/:userId" exact component={OtherUserPage} />
             <Route path="/allplan" exact component={AllPlanPage} />
-
             <Route path="/noticepage" exact component={NoticePage} />
             <BottomNav />
           </Container>

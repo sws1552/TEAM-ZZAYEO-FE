@@ -6,6 +6,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 import Filter from "../components/AllPlanPage/Filter";
 import TravelList from "../components/AllPlanPage/TravelList";
 import axios from "axios";
+import HeaderBar from "../components/Main/HeaderBar";
 
 const AllPlanPage = (props) => {
   const token = localStorage.getItem("token")
@@ -90,6 +91,7 @@ const AllPlanPage = (props) => {
   return (
     <React.Fragment>
       <Container>
+      <HeaderBar/>
         <Header ref={scroll}>
           <HeaderTitle>전체 여행</HeaderTitle>
         </Header>

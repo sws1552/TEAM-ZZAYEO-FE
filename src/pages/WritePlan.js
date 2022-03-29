@@ -29,7 +29,7 @@ const WritePlan = (props) => {
     dispatch(planActions.getdayPlanDB(planId));
   }, []);
 
-  const decideShare = ["나만의 일정", "모두에게 공유"];
+  const decideShare = ["비공개", "공개"];
   const share = "공개";
   const unshare = "비공개";
 
@@ -66,19 +66,19 @@ const WritePlan = (props) => {
                 key={i}
                 onClick={() => {
                       changeTripDest(i);
-                      if (l === "모두에게 공유") {
+                      if (l === "공개") {
                         shareOpenModal();
                       }
-                      if (l === "나만의 일정") {
-                        dispatch(planActions.statusDB(myPlan.planId, unshare));
+                      if (l === "비공개") {
+                        dispatch(planActions.statusDB(myPlan.planId, l));
                       }
                     }}
                     style={{
-                      backgroundColor:
-                        i === clickedTripDest ? " #4E49E2" : "#EDEDED",
-                      color: i === clickedTripDest ? "#FFFFFF" : "#979797",
-                    }}>
-                  {l}
+                      background: i === 1 && myPlan.status ==="공개" ? "#4E49E2" : i === 0 && myPlan.status ==="비공개" ? "#4E49E2": "#EDEDED",
+                      color : i === 1 && myPlan.status ==="공개" ? "#FFFFFF" : i === 0 && myPlan.status ==="비공개" ? "#FFFFFF": "#979797",
+                    }}
+                    >
+                  {l==="공개" ? "모두에게 공유" : "나만의 일정"}
                 </PlanBox>
               );
             })}

@@ -1,0 +1,27 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    height: 56px;
+    background-color: #cfcfff;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 12px 0px;
+    z-index: 51;
+}
+
+.navbar.active {
+    position: sticky;
+    z-index: 51;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    transition: background-color 200ms ease 0s;
+    top: 0;
+    height: 56px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 12px 0px;
+    z-index: 51;
+
+}

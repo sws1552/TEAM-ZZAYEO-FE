@@ -118,8 +118,10 @@ const Search = (props) => {
 const Container = styled.div`
   position: relative;
   width: 100%;
+  max-width: 420px;
   height: 93.7%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   ::-webkit-scrollbar {
     display: none;
   }
