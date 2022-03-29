@@ -35,10 +35,9 @@ const Upload = (props) => {
     };
     try {
       const compressedFile = await imageCompression(fileSrc, options);
-
       const myFile =  new File([compressedFile], 'image.jpeg', {
         type: compressedFile.type,
-      });
+      })
 
       await dispatch(imageActions.imageURL(myFile));
     } catch (error) {
@@ -172,7 +171,7 @@ const Upload = (props) => {
                     src={
                       preview[idx]
                         ? preview[idx]
-                        : "http://via.placeholder.com/400x300"
+                        : null
                     }
                   ></Image>
 

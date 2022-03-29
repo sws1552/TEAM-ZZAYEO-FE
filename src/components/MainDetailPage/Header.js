@@ -15,13 +15,15 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const socket = useSelector((state) => state.chat.instance);
+  const userId = localStorage.getItem("userId")
   const token = localStorage.getItem("token")
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
+  const is_me = props?.userId?.email === userId ? true : false
 
   const onProfile = (e) => {
     e.stopPropagation();
-    if(token) {
+    if (token) {
       history.push(`/otheruser/${props.userId.userId}`);
     } else {
       alert("로그인 후 확인 가능합니다.")
@@ -70,9 +72,9 @@ const Header = (props) => {
     "../../images/5.png",
     "../../images/6.png",
   ];
-  
+
   let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
-  
+
   return (
     <Container>
       <BackBtn
@@ -98,7 +100,7 @@ const Header = (props) => {
       <BtnBox>
         <Like {...props} />
         <BookMark {...props} />
-        <GetPlan {...props}/>
+        {is_me ? null : <GetPlan {...props} />}
       </BtnBox>
       <Thumbnail
         src={
@@ -111,34 +113,35 @@ const Header = (props) => {
         <UserImg src={props?.userId?.profile_img} />
       </Btn>
       <UserNickname>{props?.userId?.nickname}</UserNickname>
-      <MsgDiv>
-      <MsgBtn onClick={joinRoom}>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M2 12.645V4.66699C2 3.56242 2.89543 2.66699 4 2.66699H12C13.1046 2.66699 14 3.56242 14 4.66699V10.0003C14 11.1049 13.1046 12.0003 12 12.0003H5.38024L4.45498 13.3882C4.45497 13.3882 4.45499 13.3882 4.45498 13.3882C3.71954 14.4914 2 13.9708 2 12.645ZM3.34555 12.6487L4.50834 10.9045C4.55035 10.8415 4.60455 10.7891 4.66667 10.7498C4.75082 10.6965 4.84951 10.667 4.9521 10.667H12C12.3682 10.667 12.6667 10.3685 12.6667 10.0003V4.66699C12.6667 4.2988 12.3682 4.00033 12 4.00033H4C3.63181 4.00033 3.33333 4.2988 3.33333 4.66699V12.645C3.33333 12.6516 3.34189 12.6542 3.34555 12.6487Z"
-              fill="#4E49E2"
-            />
-            <circle cx="5.33317" cy="7.33366" r="0.666667" fill="#4E49E2" />
-            <circle cx="8.00016" cy="7.33366" r="0.666667" fill="#4E49E2" />
-            <ellipse
-              cx="10.6667"
-              cy="7.33366"
-              rx="0.666667"
-              ry="0.666667"
-              fill="#4E49E2"
-            />
-          </svg>
-          <p>메세지</p>
-        </MsgBtn>
-      </MsgDiv>
+      {is_me ? null :
+        <MsgDiv>
+          <MsgBtn onClick={joinRoom}>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M2 12.645V4.66699C2 3.56242 2.89543 2.66699 4 2.66699H12C13.1046 2.66699 14 3.56242 14 4.66699V10.0003C14 11.1049 13.1046 12.0003 12 12.0003H5.38024L4.45498 13.3882C4.45497 13.3882 4.45499 13.3882 4.45498 13.3882C3.71954 14.4914 2 13.9708 2 12.645ZM3.34555 12.6487L4.50834 10.9045C4.55035 10.8415 4.60455 10.7891 4.66667 10.7498C4.75082 10.6965 4.84951 10.667 4.9521 10.667H12C12.3682 10.667 12.6667 10.3685 12.6667 10.0003V4.66699C12.6667 4.2988 12.3682 4.00033 12 4.00033H4C3.63181 4.00033 3.33333 4.2988 3.33333 4.66699V12.645C3.33333 12.6516 3.34189 12.6542 3.34555 12.6487Z"
+                fill="#4E49E2"
+              />
+              <circle cx="5.33317" cy="7.33366" r="0.666667" fill="#4E49E2" />
+              <circle cx="8.00016" cy="7.33366" r="0.666667" fill="#4E49E2" />
+              <ellipse
+                cx="10.6667"
+                cy="7.33366"
+                rx="0.666667"
+                ry="0.666667"
+                fill="#4E49E2"
+              />
+            </svg>
+            <p>메세지</p>
+          </MsgBtn>
+        </MsgDiv>}
       <PlanInfo>
         <Title>{props.title}</Title>
         <Day>

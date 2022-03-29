@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { history } from "../../redux/ConfigureStore";
+import './HeaderBar.css'
 
 const HeaderBar = (props) => {
 
@@ -31,6 +32,18 @@ const HeaderBar = (props) => {
     });
 
   }, [socket]);
+
+  const [navbar, setNavbar] = useState(false)
+
+  const changeBackground = () => {
+    console.log(window.scrollY)
+      if(window.scrollY >= 56){
+          setNavbar(false) 
+      } else {
+          setNavbar(true)
+      }
+  }
+  window.addEventListener('scroll', changeBackground)
 
   return (
     <Container>
@@ -134,6 +147,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   height: 56px;
+  width: 100%;
   background-color: #cfcfff;
   box-sizing: border-box;
   display: flex;

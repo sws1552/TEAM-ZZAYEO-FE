@@ -7,6 +7,7 @@ import AfterRegister from "../components/Mypaln/AfterRegister";
 import Filter from "../components/Mypaln/Filter";
 import { useLocation } from "react-router";
 import queryString from "query-string";
+import HeaderBar from "../components/Main/HeaderBar";
 
 const Myplan = (props) => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const Myplan = (props) => {
   return (
     <React.Fragment>
       <Container>
+        <HeaderBar/>
         <Top>
           <TText>나의 여행</TText>
         </Top>

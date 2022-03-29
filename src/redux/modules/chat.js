@@ -76,8 +76,8 @@ const getChatRoomListFB = (toUserId) => {
         },
       })
       .then((res) => {
-        console.log('채팅방 글 조회 res !! ', res.data.chatMessages);
-        dispatch(getChat(res.data.chatMessages));
+        console.log('채팅방 글 조회 res !! ', res.data.ChatMessages);
+        dispatch(getChat(res.data.ChatMessages));
       })
       .catch((err) => {
         console.log(err);
@@ -95,7 +95,7 @@ const getChatListFB = () => {
       })
       .then((res) => {
         // console.log('채팅방 목록 조회 res !! ', res.data.chatRoomList);
-        dispatch(getChatList(res.data.chatRoomList));
+        dispatch(getChatList(typeof res.data.ChatRoomList === "undefined" ? [] : res.data.ChatRoomList));
       })
       .catch((err) => {
         console.log(err);
