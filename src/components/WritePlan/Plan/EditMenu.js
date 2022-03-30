@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch } from 'react-redux';
 import { actionCreators as planActions } from "../../../redux/modules/plan";
-import { actionCreators as imageActions } from "../../../redux/modules/image";
-import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
 import EditPlanModal from "./EditPlanModal";
 
 const EditMenu = (props) => {
@@ -12,8 +10,7 @@ const EditMenu = (props) => {
   const { placeId, planId, placesData } = props;
   
   const dispatch = useDispatch();
-  console.log(placesData)
-  const itemClick = (e) => {
+    const itemClick = (e) => {
     
     if (e.target.id === "게시물 삭제") {
       dispatch(planActions.deleteMyPostDB(placeId, planId));

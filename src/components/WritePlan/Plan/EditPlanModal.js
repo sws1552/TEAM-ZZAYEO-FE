@@ -29,14 +29,14 @@ const style = {
 export default function BasicModal(props) {
   const { placeId, placesData, planId } = props;
   
-  const timeSpl = placesData?.time?.split(" ");
+  // const timeSpl = placesData?.time?.split(" ");
   
-  React.useEffect(() => {
-    setAmPm(timeSpl[0]);
-    setHour(timeSpl[1]);
-    setMinute(timeSpl[2]);
-    setMemo(placesData?.memoText);
-  }, []);
+  // React.useEffect(() => {
+  //   setAmPm(timeSpl[0]);
+  //   setHour(timeSpl[1]);
+  //   setMinute(timeSpl[2]);
+  //   setMemo(placesData?.memoText);
+  // }, []);
 
   const dispatch = useDispatch();
   const [Memo, setMemo] = React.useState("");
@@ -80,6 +80,8 @@ export default function BasicModal(props) {
       <div
         onClick={() => {
           handleOpen();
+          dispatch(addPlaceActions.editplace(placesData));
+          dispatch(imageActions.initialdbimage([]));
         }}
       >
         수정하기
@@ -205,6 +207,7 @@ export default function BasicModal(props) {
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
                 dispatch(imageActions.initialdbimage([]));
+                dispatch(addPlaceActions.initialplace())
                 setOpen(false);
               }}
             >

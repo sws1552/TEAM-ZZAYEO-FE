@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import { actionCreators as planActions } from "../../../redux/modules/plan";
 import { actionCreators as imageActions } from "../../../redux/modules/image";
 import { actionCreators as mapActions } from "../../../redux/modules/map";
+import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
 
 import styled from "styled-components";
 import Upload from "../../../shared/Upload";
@@ -27,7 +28,7 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  console.log(props);
+  
   const dayId = props.dayId;
   const planId = props.planId;
   const dayNumber = props.dayNumber;
@@ -174,26 +175,31 @@ export default function BasicModal(props) {
             </div>
             <AddButton
               onClick={() => {
-                dispatch(
-                  planActions.saveLocationDB(
-                    dayId,
-                    AmPm,
-                    Hour,
-                    Minute,
-                    Memo,
-                    placeName,
-                    lat,
-                    lng,
-                    address,
-                    imageURL,
-                    planId
-                  )
-                );
-                setMemo("");
-                setMsg("+ 시간을 추가해주세요.");
-                dispatch(imageActions.initialPreview([]));
-                dispatch(imageActions.initialImage([]));
-                setOpen(false);
+                if(placeName === "") {
+                  alert("장소를 검색해 주세요")
+                } else {
+                  dispatch(
+                    planActions.saveLocationDB(
+                      dayId,
+                      AmPm,
+                      Hour,
+                      Minute,
+                      Memo,
+                      placeName,
+                      lat,
+                      lng,
+                      address,
+                      imageURL,
+                      planId
+                    )
+                  );
+                  setMemo("");
+                  setMsg("+ 시간을 추가해주세요.");
+                  dispatch(imageActions.initialPreview([]));
+                  dispatch(imageActions.initialImage([]));
+                  dispatch(addPlaceActions.initialplace())
+                  setOpen(false);
+                }
               }}
             >
               장소추가하기

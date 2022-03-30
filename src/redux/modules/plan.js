@@ -451,6 +451,7 @@ const getyourPostDB = (planId) => {
       .post(`/api/plans/${planId}/copy`)
       .then((res) => {
         alert("여행기 작성에 등록 되었습니다.");
+        
       })
       .catch((error) => {
         console.log(error);

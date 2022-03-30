@@ -101,6 +101,7 @@ const ChooseDay = (props) => {
 
           {dayList &&
             dayList[currentTab]?.places.map((v, i) => {
+              console.log()
               return (
                 <div key={i} style={{ marginTop: "16px", display: "table" }}>
                   <Line>
@@ -120,15 +121,18 @@ const ChooseDay = (props) => {
                     >
                       <Text>{v.time}</Text>
                       <EditMenu
+                        planId={dayList && dayList[currentTab]?.planId}
                         placeId={v.placeId}
                         placesData={dayList[currentTab].places[i]}
                       />
                     </div>
                     <PlaceName>{v.placeName}</PlaceName>
                     <Address>주소:{v.address}</Address>
-                    <MemoBox>
-                      <Memo>{v.memoText}</Memo>
-                    </MemoBox>
+                    {v.memoText !== "" ?
+                      <MemoBox>
+                        <Memo>{v.memoText}</Memo>
+                      </MemoBox>
+                      : null}
                     <SwiperImage image={v.memoImage} />
                   </div>
                 </div>

@@ -78,8 +78,8 @@ const WritePlanMap = (props) => {
             <Polyline markers={Markers} map={map} maps={googlemaps} />
           )}
 
-          {apiReady && googlemaps && (
-            <Fitbound markers={Markers} map={map} maps={googlemaps} />
+          {Markers.length !== 0 && apiReady && googlemaps && (
+           <Fitbound markers={Markers} map={map} maps={googlemaps} />
           )}
         </GoogleMapReact>
       </div>

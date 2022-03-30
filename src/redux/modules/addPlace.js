@@ -7,12 +7,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 const LOCATION = "LOCATION"
 const ADDTIME = "ADDTIME"
-
-
+const EDITPLACE = "EDITPLACE"
+const INITIALPLACE = "INITIALPLACE"
 // action creators
 const addlocation = createAction(LOCATION, (place) => ({ place }));
 const addhour = createAction(ADDTIME, (hour) => ({ hour }));
-
+const editplace = createAction(EDITPLACE, (place) => ({ place }));
+const initialplace = createAction(INITIALPLACE, () => ({}));
 // initial state
 const initialState = {
   placeName: "",
@@ -44,12 +45,28 @@ export default handleActions(
         draft.lat = lat
         draft.lng = lng
         draft.address = address
-     
+
       }),
 
     [ADDTIME]: (state, action) =>
       produce(state, (draft) => {
         draft.hour = action.payload.hour
+      }),
+    [EDITPLACE]: (state, action) =>
+      produce(state, (draft) => {
+        const place = action.payload.place
+        draft.placeName = place.placeName
+        draft.lat = place.lat
+        draft.lng = place.lng
+        draft.address = place.address
+      }),
+    [INITIALPLACE]: (state, action) =>
+      produce(state, (draft) => {
+        console.log("바이")
+        draft.placeName = ""
+        draft.lat = 0
+        draft.lng = 0
+        draft.address = ""
       }),
   },
   initialState
@@ -57,6 +74,8 @@ export default handleActions(
 
 const actionCreators = {
   addlocation,
+  editplace,
+  initialplace
 
 };
 
