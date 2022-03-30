@@ -32,7 +32,7 @@ const MainDetailPage = (props) => {
   }, []);
 
   const decideShare = ["비공개", "공개"];
-  const share = "공개"
+  const share = "공개";
 
   const [shareShowModal, setShareShowModal] = React.useState(false);
   const [imageSrc, setImageSrc] = React.useState("");
@@ -48,6 +48,12 @@ const MainDetailPage = (props) => {
     setShareShowModal(true);
   };
 
+  // 썸네일 모달 닫기
+  const closeModal = (e) => {
+    e.stopPropagation();
+    setShareShowModal(false);
+  };
+
   // 썸네일 설정하고 모달 닫기
   const shareCloseModal = (e) => {
     e.stopPropagation();
@@ -56,13 +62,12 @@ const MainDetailPage = (props) => {
     dispatch(planActions.addThumbnailDB(plans.planId, imageURL));
   };
 
-
   if (plans?.userId?.email === userId) {
     return (
       <Container>
         <Header {...plans} />
         <TripDestBox>
-          <div>
+          <Div>
             {decideShare.map((l, i) => {
               return (
                 <li
@@ -71,29 +76,40 @@ const MainDetailPage = (props) => {
                   onClick={() => {
                     changeTripDest(i);
                     if (l === "공개") {
-                      shareOpenModal()
+                      shareOpenModal();
                     }
                     if (l === "비공개") {
                       dispatch(planActions.statusDB(plans.planId, l));
                     }
                   }}
                   style={{
-                    background: i === 1 && plans.status ==="공개" ? "#4E49E2" : i === 0 && plans.status ==="비공개" ? "#4E49E2": "#EDEDED",
-                    color : i === 1 && plans.status ==="공개" ? "#FFFFFF" : i === 0 && plans.status ==="비공개" ? "#FFFFFF": "#979797",
+                    background:
+                      i === 1 && plans.status === "공개"
+                        ? "#4E49E2"
+                        : i === 0 && plans.status === "비공개"
+                        ? "#4E49E2"
+                        : "#EDEDED",
+                    color:
+                      i === 1 && plans.status === "공개"
+                        ? "#FFFFFF"
+                        : i === 0 && plans.status === "비공개"
+                        ? "#FFFFFF"
+                        : "#979797",
                   }}
                 >
-                  {l==="공개" ? "모두에게 공유" : "나만의 일정"}
+                  {l === "공개" ? "모두에게 공유" : "나만의 일정"}
                 </li>
               );
             })}
             <Thumbnail
-            shareShowModal={shareShowModal}
-            keepModal={keepModal}
-            shareCloseModal={shareCloseModal}
-            imageSrc={imageSrc}
-            setImageSrc={setImageSrc}
-          ></Thumbnail>
-          </div>
+              shareShowModal={shareShowModal}
+              keepModal={keepModal}
+              shareCloseModal={shareCloseModal}
+              imageSrc={imageSrc}
+              setImageSrc={setImageSrc}
+              closeModal={closeModal}
+            ></Thumbnail>
+          </Div>
         </TripDestBox>
         <Collapse in={isChecked}>
           <WritePlanMap {...plans} />
@@ -129,8 +145,8 @@ const MainDetailPage = (props) => {
                   <path
                     d="M1 1L19 5.5L37 1"
                     stroke="#BDBDBD"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   />
                 </svg>
               </ToogleBtn>
@@ -139,7 +155,7 @@ const MainDetailPage = (props) => {
         </ToggleBox>
         <DetailDay {...plans} />
         {/* {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />} */}
-        <CommentList planId={planId} snsId={plans.userId.snsId}/>
+        <CommentList planId={planId} snsId={plans.userId.snsId} />
       </Container>
     );
   }
@@ -191,7 +207,7 @@ const MainDetailPage = (props) => {
       </ToggleBox>
       <DetailDay {...plans} />
       {/* {isChecked ? <DetailDay {...plans} /> : <DetailDayhide {...plans} />} */}
-      <CommentList planId={planId} snsId={plans?.userId?.snsId}/>
+      <CommentList planId={planId} snsId={plans?.userId?.snsId} />
     </Container>
   );
 };
@@ -202,6 +218,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 420px;
   height: 93%;
+
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -226,15 +243,14 @@ const TitleBox = styled.div`
   margin-bottom: 32px;
 `;
 
-const TripDestBox = styled(TitleBox)`
-  div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    cursor: pointer;
-  }
+const Div = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+`;
 
+const TripDestBox = styled(TitleBox)`
   li {
     display: flex;
     align-items: center;

@@ -24,11 +24,10 @@ const initialState = {
 
 //카카오로그인
 const kakaoLogin = (code) => {
-  console.log(code);
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        // `http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`
+        //`http://54.180.162.220:3001/api/auth/kakao/callback?code=${code}`
         `https://stgon.shop/api/auth/kakao/callback?code=${code}`
       )
       .then((res) => {

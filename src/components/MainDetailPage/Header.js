@@ -15,18 +15,18 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   const socket = useSelector((state) => state.chat.instance);
-  const userId = localStorage.getItem("userId")
-  const token = localStorage.getItem("token")
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
-  const is_me = props?.userId?.email === userId ? true : false
+  const is_me = props?.userId?.email === userId ? true : false;
 
   const onProfile = (e) => {
     e.stopPropagation();
     if (token) {
       history.push(`/otheruser/${props.userId.userId}`);
     } else {
-      alert("로그인 후 확인 가능합니다.")
+      alert("로그인 후 확인 가능합니다.");
       history.push(`/login`);
     }
   };
@@ -73,13 +73,13 @@ const Header = (props) => {
     "../../images/6.png",
   ];
 
-  let imgUrl = (Math.floor(Math.random() * defaultUrl.length));
+  let imgUrl = Math.floor(Math.random() * defaultUrl.length);
 
   return (
     <Container>
       <BackBtn
         onClick={() => {
-          history.push("/");
+          history.go(-1);
         }}
       >
         <svg
@@ -103,17 +103,13 @@ const Header = (props) => {
         {is_me ? null : <GetPlan {...props} />}
       </BtnBox>
       <Thumbnail
-        src={
-          props.thumbnailImage
-            ? props.thumbnailImage
-            : defaultUrl[imgUrl]
-        }
+        src={props.thumbnailImage ? props.thumbnailImage : defaultUrl[imgUrl]}
       ></Thumbnail>
       <Btn onClick={onProfile}>
         <UserImg src={props?.userId?.profile_img} />
       </Btn>
       <UserNickname>{props?.userId?.nickname}</UserNickname>
-      {is_me ? null :
+      {is_me ? null : (
         <MsgDiv>
           <MsgBtn onClick={joinRoom}>
             <svg
@@ -141,7 +137,8 @@ const Header = (props) => {
             </svg>
             <p>메세지</p>
           </MsgBtn>
-        </MsgDiv>}
+        </MsgDiv>
+      )}
       <PlanInfo>
         <Title>{props.title}</Title>
         <Day>
@@ -178,10 +175,14 @@ const BtnBox = styled.div`
 const Thumbnail = styled.div`
   width: 100%;
   height: 224px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%), url(${(props) => props.src}) ;
+  background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url(${(props) => props.src});
   background-position: center;
   background-size: cover;
-  
 `;
 
 const Btn = styled.div`

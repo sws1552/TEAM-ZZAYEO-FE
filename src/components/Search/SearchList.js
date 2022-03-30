@@ -5,7 +5,18 @@ import { history } from "../../redux/ConfigureStore";
 import Bookmark from "../Main/Bookmark";
 
 const SearchList = (props) => {
-  const { title, isLike, isBookmark, planId, userId } = props;
+  const { title, isLike, isBookmark, planId, userId, thumbnailImage } = props;
+
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
+
+  let imgUrl = Math.floor(Math.random() * defaultUrl.length);
 
   return (
     <React.Fragment>
@@ -15,7 +26,11 @@ const SearchList = (props) => {
             history.push(`/detail/${planId}`);
           }}
         >
-          <CardImg></CardImg>
+          <CardImg
+            src={
+              props.thumbnailImage ? props.thumbnailImage : defaultUrl[imgUrl]
+            }
+          ></CardImg>
           <UserImg src={userId.profile_img} />
           <UserNickName>{userId.nickname}</UserNickName>
           <CardTitle>{title}</CardTitle>
@@ -52,7 +67,7 @@ const TripCard = styled.div`
 const CardImg = styled.div`
   width: 100%;
   height: 160px;
-  background-image: url("https://i.pinimg.com/564x/10/8d/8c/108d8c3d6bfd4b0aeb4c9b1796d1c364.jpg");
+  background-image: url(${(props) => props.src});
   background-position: center;
   background-size: cover;
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.06);

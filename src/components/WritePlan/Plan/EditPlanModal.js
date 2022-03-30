@@ -98,6 +98,7 @@ export default function BasicModal(props) {
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   setMemo("");
+                  setMsg("+ 시간을 추가해주세요.");
                   dispatch(imageActions.initialPreview([]));
                   dispatch(imageActions.initialImage([]));
                   setOpen(false);
@@ -200,6 +201,7 @@ export default function BasicModal(props) {
                   )
                 );
                 setMemo("");
+                setMsg("+ 시간을 추가해주세요.");
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
                 dispatch(imageActions.initialdbimage([]));

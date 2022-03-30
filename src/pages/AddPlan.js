@@ -4,7 +4,7 @@ import Contents from "../components/AddPlan/Contents";
 
 const AddPlan = (props) => {
   const { history } = props;
-  let today = new Date(); 
+  let today = new Date();
 
   return (
     <React.Fragment>
@@ -12,7 +12,7 @@ const AddPlan = (props) => {
         <Top>
           <CancleBtn
             onClick={() => {
-              history.replace("/myplan");
+              history.go(-1);
             }}
           >
             <svg
@@ -33,7 +33,7 @@ const AddPlan = (props) => {
           <TText>새로운 여행기 작성</TText>
         </Top>
         <Bottom>
-          <Contents today={today}/>
+          <Contents today={today} />
         </Bottom>
       </Container>
     </React.Fragment>

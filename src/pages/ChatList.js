@@ -58,7 +58,6 @@ const ChatList = (props) => {
           <SvgImg />
           <p>로그인을 해주세요.</p>
         </NotMsg>
-
       )}
     </ListContainer>
   );
@@ -94,7 +93,6 @@ const ListWrap = styled.div`
   width: 100%;
   height: 100%;
   /* background-color: white; */
-
 `;
 
 // 컴포넌트에 스타일을 바꾸는방법 괄호안에 컴포넌트를 넣으면된당

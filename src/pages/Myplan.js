@@ -64,7 +64,7 @@ const Myplan = (props) => {
           ) : (
             <ListContainer>
               <Title>
-                <p>여행 리스트</p>
+                <TitleText>여행 리스트</TitleText>
                 <Filter />
               </Title>
               {myplans
@@ -150,15 +150,14 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
 
-  p {
-    margin: 0;
-    margin-left: 24px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    color: #000000;
-  }
+const TitleText = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+  margin-left: 24px;
 `;
 
 export default Myplan;
