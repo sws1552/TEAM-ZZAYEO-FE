@@ -394,7 +394,7 @@ export const editMyPostDB = (
     formData.append("lat", lat);
     formData.append("lng", lng);
     formData.append("address", address);
-    formData.append("time", `${AmPm} ${Hour} ${Minute}`);
+    formData.append("time", `${AmPm} ${Hour}시 ${Minute}분`);
     formData.append("memoText", Memo);
     imageURL.map((eachfile) => {
       formData.append("imageFile", eachfile);
