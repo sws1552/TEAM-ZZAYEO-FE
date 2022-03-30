@@ -14,7 +14,7 @@ const ChooseDay = (props) => {
 
   const polyLinedata = useSelector((state) => state.map.polyline);
   const myPlan = useSelector((state) => state.plan.myPlan);
-
+  
   const startDate = myPlan?.startDate
   const endDate = myPlan?.endDate
 
@@ -55,10 +55,10 @@ const ChooseDay = (props) => {
       // setTimeout(() => {
       //   day1BtnRef?.current[0]?.click();
       // }, 800);
-      
+
       day1BtnRef?.current?.forEach((v, i) => {
-        if (parseInt(v?.id)+1 === dayList[currentTab].dayNumber) {
-            day1BtnRef?.current[i]?.click();
+        if (parseInt(v?.id) + 1 === dayList[currentTab].dayNumber) {
+          day1BtnRef?.current[i]?.click();
         }
       })
     }
@@ -100,6 +100,7 @@ const ChooseDay = (props) => {
           </TravelDay>
 
           {dayList && dayList[currentTab]?.places.map((v, i) => {
+           
             return (
               <div key={i} style={{ marginTop: "16px", display: "table" }}>
                 <Line>
@@ -110,13 +111,15 @@ const ChooseDay = (props) => {
                 <div style={{ width: "100%", display: "table-cell" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <Text>{v.time}</Text>
-                    <EditMenu placeId={v.placeId} placesData={dayList[currentTab].places[i]} />
+                    <EditMenu planId={dayList && dayList[currentTab]?.planId} placeId={v.placeId} placesData={v} />
                   </div>
                   <PlaceName>{v.placeName}</PlaceName>
                   <Address>주소:{v.address}</Address>
-                  <MemoBox>
-                    <Memo>{v.memoText}</Memo>
-                  </MemoBox>
+                  {v.memoText !== "" ?
+                    <MemoBox>
+                      <Memo>{v.memoText}</Memo>
+                    </MemoBox> : null
+                  }
                   <SwiperImage image={v.memoImage} />
                 </div>
 

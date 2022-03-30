@@ -44,20 +44,20 @@ export default handleActions(
         draft.lat = lat
         draft.lng = lng
         draft.address = address
-        draft.geometry = place[0].geometry
+     
       }),
-   
+
     [ADDTIME]: (state, action) =>
       produce(state, (draft) => {
         draft.hour = action.payload.hour
       }),
-
   },
   initialState
 );
 
 const actionCreators = {
   addlocation,
+
 };
 
 export { actionCreators };

@@ -27,18 +27,15 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  const { placeId, placesData } = props;
-  const planId = placesData.planId;
-
+  const { placeId, placesData, planId } = props;
+  
   const timeSpl = placesData?.time?.split(" ");
-
+  
   React.useEffect(() => {
-    if (placesData) {
-      setAmPm(timeSpl[0]);
-      setHour(timeSpl[1]);
-      setMinute(timeSpl[2]);
-      setMemo(placesData?.memoText);
-    }
+    setAmPm(timeSpl[0]);
+    setHour(timeSpl[1]);
+    setMinute(timeSpl[2]);
+    setMemo(placesData?.memoText);
   }, []);
 
   const dispatch = useDispatch();
@@ -205,6 +202,7 @@ export default function BasicModal(props) {
                 setMemo("");
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
+                dispatch(imageActions.initialdbimage([]));
                 setOpen(false);
               }}
             >

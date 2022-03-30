@@ -5,7 +5,6 @@ import Switch from "../components/Mypage/Switch";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/ConfigureStore";
-import HeaderBar from "../components/Main/HeaderBar";
 
 const MyPage = (props) => {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ const MyPage = (props) => {
 
   return (
     <MypageCon>
-      <HeaderBar/>
       <Header />
       <UserCon>
         {checkUser.userImg ? (

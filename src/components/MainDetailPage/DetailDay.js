@@ -120,9 +120,11 @@ const Detailday = (props) => {
                   </div>
                   <PlaceName>{v.placeName}</PlaceName>
                   <Address>주소:{v.address}</Address>
-                  <MemoBox>
-                    <Memo>{v.memoText}</Memo>
-                  </MemoBox>
+                  {v.memoText !== "" ?
+                    <MemoBox>
+                      <Memo>{v.memoText}</Memo>
+                    </MemoBox> : null
+                  }
                   <SwiperImage image={v.memoImage} />
                 </div>
               </div>

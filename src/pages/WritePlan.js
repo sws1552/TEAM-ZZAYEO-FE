@@ -16,6 +16,7 @@ const WritePlan = (props) => {
   const dispatch = useDispatch();
 
   const planId = props.match.params.planId;
+  console.log(planId)
   const myPlan = useSelector((state) => state.plan.myPlan);
   const imageURL = useSelector((state) => state.image.thumbnailURL);
   console.log(myPlan)

@@ -40,6 +40,7 @@ const Upload = (props) => {
       })
 
       await dispatch(imageActions.imageURL(myFile));
+ 
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +63,10 @@ const Upload = (props) => {
 
       reader.onload = () => {
         fileURLs[i] = reader.result;
-        dispatch(imageActions.setPreview(reader.result));
+        setTimeout(() =>  {
+          dispatch(imageActions.setPreview(reader.result))
+        }, 1000);
+       
         // dispatch(imageActions.imageURL(filesArr[i]));
         actionImgCompress(filesArr[i])
       };

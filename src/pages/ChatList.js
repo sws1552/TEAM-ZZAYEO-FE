@@ -8,7 +8,6 @@ import { actionCreators as chatActions } from "../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { ReactComponent as SvgImg } from "../shared/svg/img-none.svg";
-import HeaderBar from "../components/Main/HeaderBar";
 
 // import io from "socket.io-client";
 
@@ -34,7 +33,6 @@ const ChatList = (props) => {
 
   return (
     <ListContainer>
-      <HeaderBar/>
       <Header />
       {is_token ? (
         <ListWrap>

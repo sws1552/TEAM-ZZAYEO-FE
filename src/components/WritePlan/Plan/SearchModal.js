@@ -67,7 +67,6 @@ export default function SearhModal() {
 
   const [place, setPlace] = React.useState("+ 장소를 검색해주세요")
 
-
   return (
     <div>
       <ADDPlace onClick={handleOpen}>{place}</ADDPlace>

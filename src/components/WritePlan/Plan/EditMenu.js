@@ -3,22 +3,22 @@ import styled from 'styled-components';
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDispatch } from 'react-redux';
 import { actionCreators as planActions } from "../../../redux/modules/plan";
+import { actionCreators as imageActions } from "../../../redux/modules/image";
+import { actionCreators as addPlaceActions } from "../../../redux/modules/addPlace";
 import EditPlanModal from "./EditPlanModal";
 
 const EditMenu = (props) => {
   
-  const { placeId } = props;
-  const planId = props.placesData.planId
-
+  const { placeId, planId, placesData } = props;
+  
   const dispatch = useDispatch();
-
+  console.log(placesData)
   const itemClick = (e) => {
-
+    
     if (e.target.id === "게시물 삭제") {
       dispatch(planActions.deleteMyPostDB(placeId, planId));
-    }
+    } 
     showHide();
-
   }
 
   const dropdownRef = useRef(null);
@@ -55,7 +55,7 @@ const EditMenu = (props) => {
           {options.map((option) => {
             return (
               <li key={option} id={option} onClick={itemClick}>
-                {option === "게시물 수정" ? <EditPlanModal placeId={placeId} placesData={props.placesData} /> : "삭제하기"}
+                {option === "게시물 수정" ? <EditPlanModal planId={planId} placeId={placeId} placesData={placesData} /> : "삭제하기"}
               </li>
             )
           })}
