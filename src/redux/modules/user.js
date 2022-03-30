@@ -37,7 +37,7 @@ const kakaoLogin = (code) => {
         const snsId = res.data.snsId;
         localStorage.setItem("token", token); //예시로 로컬에 저장
         localStorage.setItem("userId", userId);
-        localStorage.setItem('snsId', snsId);
+        localStorage.setItem("snsId", snsId);
         localStorage.setItem("newChat", "false");
         localStorage.setItem("mainNotice", "false");
         dispatch(checkUserDB());

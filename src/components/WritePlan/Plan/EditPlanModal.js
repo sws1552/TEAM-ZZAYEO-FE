@@ -28,15 +28,15 @@ const style = {
 
 export default function BasicModal(props) {
   const { placeId, placesData, planId } = props;
-  
+
   // const timeSpl = placesData?.time?.split(" ");
-  
+
   // React.useEffect(() => {
   //   setAmPm(timeSpl[0]);
   //   setHour(timeSpl[1]);
   //   setMinute(timeSpl[2]);
   //   setMemo(placesData?.memoText);
-  // }, []);
+  // }, [placesData]);
 
   const dispatch = useDispatch();
   const [Memo, setMemo] = React.useState("");
@@ -207,7 +207,7 @@ export default function BasicModal(props) {
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
                 dispatch(imageActions.initialdbimage([]));
-                dispatch(addPlaceActions.initialplace())
+                dispatch(addPlaceActions.initialplace());
                 setOpen(false);
               }}
             >
