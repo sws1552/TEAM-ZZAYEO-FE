@@ -123,7 +123,6 @@ const TravelListBox = styled.div``;
 const P = styled.p`
   margin: 0;
   margin-bottom: 12px;
-  padding: 0px 24px;
   font-weight: 600;
   font-size: 18px;
   line-height: 25px;
@@ -132,6 +131,8 @@ const P = styled.p`
 
 const BookMarkListBox = styled(TravelListBox)`
   padding-top: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
   p {
     margin: 0;
     margin-bottom: 16px;

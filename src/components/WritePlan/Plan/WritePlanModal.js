@@ -28,7 +28,6 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  
   const dayId = props.dayId;
   const planId = props.planId;
   const dayNumber = props.dayNumber;
@@ -175,8 +174,8 @@ export default function BasicModal(props) {
             </div>
             <AddButton
               onClick={() => {
-                if(placeName === "") {
-                  alert("장소를 검색해 주세요")
+                if (placeName === "") {
+                  alert("장소를 검색해 주세요");
                 } else {
                   dispatch(
                     planActions.saveLocationDB(
@@ -195,9 +194,12 @@ export default function BasicModal(props) {
                   );
                   setMemo("");
                   setMsg("+ 시간을 추가해주세요.");
+                  setAmPm("오전");
+                  setHour("0");
+                  setMinute("00");
                   dispatch(imageActions.initialPreview([]));
                   dispatch(imageActions.initialImage([]));
-                  dispatch(addPlaceActions.initialplace())
+                  dispatch(addPlaceActions.initialplace());
                   setOpen(false);
                 }
               }}
