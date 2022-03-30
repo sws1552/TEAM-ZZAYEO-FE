@@ -1,60 +1,66 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { actionCreators as planActions } from "../../../redux/modules/plan";
 import EditPlanModal from "./EditPlanModal";
 
 const EditMenu = (props) => {
-  
   const { placeId, planId, placesData } = props;
-  
+
   const dispatch = useDispatch();
-    const itemClick = (e) => {
-    
+  const itemClick = (e) => {
     if (e.target.id === "게시물 삭제") {
       dispatch(planActions.deleteMyPostDB(placeId, planId));
-    } 
+    }
     showHide();
-  }
+  };
 
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const showHide = () => setIsActive(!isActive);
 
   useEffect(() => {
-
     const pageClickEvent = (e) => {
-      if (dropdownRef.current !== null && !dropdownRef.current.contains(e.target)) {
+      if (
+        dropdownRef.current !== null &&
+        !dropdownRef.current.contains(e.target)
+      ) {
         setIsActive(!isActive);
       }
     };
 
     if (isActive) {
-      window.addEventListener('click', pageClickEvent);
+      window.addEventListener("click", pageClickEvent);
     }
 
     return () => {
-      window.removeEventListener('click', pageClickEvent);
-    }
-
+      window.removeEventListener("click", pageClickEvent);
+    };
   }, [isActive]);
 
   const options = ["게시물 삭제", "게시물 수정"];
-      
+
   return (
     <Container>
-      
-      <MoreVertIcon onClick={showHide} className="menu-trigger"/>
-      
-      <nav className={`menu ${isActive ? 'active5' : 'inactive'}`}>
+      <MoreVertIcon onClick={showHide} className="menu-trigger" />
+
+      <nav className={`menu ${isActive ? "active5" : "inactive"}`}>
         <ul>
           {options.map((option) => {
             return (
               <li key={option} id={option} onClick={itemClick}>
-                {option === "게시물 수정" ? <EditPlanModal planId={planId} placeId={placeId} placesData={placesData} /> : "삭제하기"}
+                {option === "게시물 수정" ? (
+                  <EditPlanModal
+                    planId={planId}
+                    placeId={placeId}
+                    placesData={placesData}
+                  />
+                ) : (
+                  "삭제하기"
+                )}
               </li>
-            )
+            );
           })}
         </ul>
       </nav>
@@ -103,9 +109,9 @@ const Container = styled.div`
   }
 
   .menu li:hover {
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
   }
-  
+
   .menu-trigger {
     /* border-radius: 90px; */
     cursor: pointer;
@@ -121,9 +127,6 @@ const Container = styled.div`
   .menu-trigger:hover {
     color: black;
   }
-
 `;
-
-
 
 export default EditMenu;

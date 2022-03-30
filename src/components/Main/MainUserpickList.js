@@ -3,8 +3,7 @@ import styled from "styled-components";
 import MainUserpick from "./MainUserpick";
 import { useSelector } from "react-redux";
 
-
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -40,7 +39,7 @@ const MainUserpickList = (props) => {
     //       </SwiperSlide>
     //      );
     //    })}
-        
+
     // </SwiperSlider>
   );
 };
@@ -48,7 +47,6 @@ const MainUserpickList = (props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0px 24px;
   overflow-x: scroll;
   ::-webkit-scrollbar {
     display: none;

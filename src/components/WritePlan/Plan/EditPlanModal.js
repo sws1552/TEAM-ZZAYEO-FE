@@ -28,15 +28,21 @@ const style = {
 
 export default function BasicModal(props) {
   const { placeId, placesData, planId } = props;
-  
-  // const timeSpl = placesData?.time?.split(" ");
-  
-  // React.useEffect(() => {
-  //   setAmPm(timeSpl[0]);
-  //   setHour(timeSpl[1]);
-  //   setMinute(timeSpl[2]);
-  //   setMemo(placesData?.memoText);
-  // }, []);
+
+  const [AmPm, setAmPm] = React.useState("오전");
+  const [Hour, setHour] = React.useState("0");
+  const [Minute, setMinute] = React.useState("00");
+  const [msg, setMsg] = React.useState("+ 시간을 추가해주세요.");
+  const [timeModal, setTimeModal] = React.useState(false);
+
+  React.useEffect(() => {
+    const timeSpl = placesData?.time?.split(" ");
+    setAmPm(timeSpl[0]);
+    setHour(timeSpl[1].split("")[0]);
+    setMinute(timeSpl[2].split("")[0] + timeSpl[2].split("")[1]);
+    setMsg(AmPm + " " + Hour + "시 " + Minute + "분");
+    setMemo(placesData?.memoText);
+  }, [placesData, AmPm, Hour, Minute]);
 
   const dispatch = useDispatch();
   const [Memo, setMemo] = React.useState("");
@@ -56,12 +62,6 @@ export default function BasicModal(props) {
   const handleClose = () => setOpen(false);
 
   //시간추가하기
-  const [AmPm, setAmPm] = React.useState("오전");
-  const [Hour, setHour] = React.useState("0");
-  const [Minute, setMinute] = React.useState("00");
-
-  const [msg, setMsg] = React.useState("+ 시간을 추가해주세요.");
-  const [timeModal, setTimeModal] = React.useState(false);
 
   const timeOpenModal = () => {
     setTimeModal(true);
@@ -99,8 +99,6 @@ export default function BasicModal(props) {
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => {
-                  setMemo("");
-                  setMsg("+ 시간을 추가해주세요.");
                   dispatch(imageActions.initialPreview([]));
                   dispatch(imageActions.initialImage([]));
                   setOpen(false);
@@ -202,12 +200,12 @@ export default function BasicModal(props) {
                     planId
                   )
                 );
-                setMemo("");
-                setMsg("+ 시간을 추가해주세요.");
+                // setMemo("");
+                // setMsg("+ 시간을 추가해주세요.");
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
                 dispatch(imageActions.initialdbimage([]));
-                dispatch(addPlaceActions.initialplace())
+                dispatch(addPlaceActions.initialplace());
                 setOpen(false);
               }}
             >

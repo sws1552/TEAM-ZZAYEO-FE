@@ -28,52 +28,44 @@ import StartPage from "../pages/StartPage";
 
 import NoticePage from "../pages/NoticePage";
 
-import {actionCreators as chatActions} from '../redux/modules/chat';
-import {actionCreators as userActions} from '../redux/modules/user';
+import { actionCreators as chatActions } from "../redux/modules/chat";
+import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import HeaderBar from "../components/Main/HeaderBar";
-
+import ScreenBackground from "../components/ScreenBackground/ScreenBackground";
 
 function App() {
-
   // 브라우저에서 알림 허용 차단 창
-  const isNotificationSupported = 'Notification' in window;
-  if (isNotificationSupported)
-  {
-      Notification.requestPermission().then(function (result)
-      {
-          if (result === 'granted')
-          {
-              console.log('[Notification] 허용: ', result);
-          }
-          else
-          {
-              console.log('[Notification] 차단: ', result);
-          }
-      });
+  const isNotificationSupported = "Notification" in window;
+  if (isNotificationSupported) {
+    Notification.requestPermission().then(function (result) {
+      if (result === "granted") {
+        console.log("[Notification] 허용: ", result);
+      } else {
+        console.log("[Notification] 차단: ", result);
+      }
+    });
   }
-
-
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    if(userId){
+    const userId = localStorage.getItem("userId");
+    if (userId) {
       dispatch(chatActions.createSocketInstance());
-    }else {
+    } else {
       return;
     }
 
     return () => {
       dispatch(chatActions.destroySocketInstance());
-    }
-    
+    };
   }, [dispatch]);
 
   return (
     <React.Fragment>
       <Fullscreen>
+        <ScreenBackground />
         <ConnectedRouter history={history}>
           <Container>
             <Route path="/" exact component={Main} />
@@ -110,11 +102,25 @@ function App() {
 }
 
 const Fullscreen = styled.div`
-  background-color: #e6f4fa;
+  width: 100%;
   height: 100vh;
   margin: 0;
   display: flex;
-  justify-content: center;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 540px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 1579px) and (min-width: 541px) {
+    justify-content: flex-end;
+  }
+
+  @media (min-width: 1580px) {
+  }
 `;
 
 const Container = styled.div`
@@ -125,8 +131,19 @@ const Container = styled.div`
   width: 100%;
   max-width: 420px;
   box-sizing: border-box;
-  position: relative;
+  position: absolute;
   bottom: 0;
+
+  @media (max-width: 540px) {
+  }
+
+  @media (max-width: 1579px) and (min-width: 541px) {
+    right: 100px;
+  }
+
+  @media (min-width: 1580px) {
+    left: 1150px;
+  }
 `;
 
 export default App;

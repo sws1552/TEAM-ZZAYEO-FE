@@ -1,25 +1,24 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import SearchMap from "./SearchMap"
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import SearchMap from "./SearchMap";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   maxWidth: "420px",
   width: "100%",
   boxSizing: "border-box",
   height: "100%",
-  bgcolor: 'background.paper',
-  border: 'none',
-  boxShadow: 24
+  bgcolor: "background.paper",
+  border: "none",
+  boxShadow: 24,
 };
 
 const AddButton = styled.div`
@@ -28,14 +27,14 @@ const AddButton = styled.div`
   align-items: center;
   width: 100%;
   height: 54px;
-  background-color: #4E49E2;
+  background-color: #4e49e2;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
   cursor: pointer;
   position: absolute;
-  bottom: 0
-`
+  bottom: 0;
+`;
 
 const ADDPlace = styled.div`
   color: #757575;
@@ -43,33 +42,35 @@ const ADDPlace = styled.div`
   font-weight: 400;
   border: none;
   cursor: pointer;
-`
+`;
 const Header = styled.div`
-height: 56px;
-line-height: 56px;
-padding: 0px 24px;
-display: flex;
-justify-content: space-between;
-box-sizing: border-box;
-font-size: 18px;
-font-weight: 700;
-align-items: center;
-font-family: "Roboto", sans-serif;
-`
+  height: 56px;
+  line-height: 56px;
+  padding: 0px 24px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-weight: 700;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+`;
 
 export default function SearhModal() {
   const placeName = useSelector((state) => state.addPlace.placeName);
-
+  // console.log(placeName);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [place, setPlace] = React.useState("+ 장소를 검색해주세요")
+  const [place, setPlace] = React.useState("+ 장소를 검색해주세요");
+
+  React.useEffect(() => {}, [placeName]);
 
   return (
     <div>
-      <ADDPlace onClick={handleOpen}>{place}</ADDPlace>
+      <ADDPlace onClick={handleOpen}>{placeName ? placeName : place}</ADDPlace>
       <Modal
         open={open}
         onClose={handleClose}
@@ -80,33 +81,41 @@ export default function SearhModal() {
           <div>
             <Header>
               <div>장소선택</div>
-              <div onClick={()=>{
-                setOpen(false)
-              }}>
-                <svg style={{ cursor: "pointer", display: "block" }}
-                  width="24" height="24"
-                  viewBox="0 0 24 24" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
+              <div
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                <svg
+                  style={{ cursor: "pointer", display: "block" }}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
                     d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z"
                     fill="black"
-                    fillOpacity="0.87" />
+                    fillOpacity="0.87"
+                  />
                 </svg>
               </div>
             </Header>
             <SearchMap />
             <AddButton
               onClick={() => {
-                setOpen(false)
-                setPlace(placeName)
+                setOpen(false);
+                setPlace(placeName);
               }}
-            >장소추가</AddButton>
+            >
+              장소추가
+            </AddButton>
           </div>
         </Box>
       </Modal>
     </div>
   );
 }
-
