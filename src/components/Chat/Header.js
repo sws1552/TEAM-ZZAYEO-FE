@@ -34,7 +34,7 @@ const Header = (props) => {
 };
 
 Header.defaultProps = {
-  title: "메시지",
+  title: "메세지",
   showBack: false,
   _onClick: () => {},
 };
