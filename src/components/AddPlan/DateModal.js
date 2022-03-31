@@ -78,7 +78,6 @@ const ModalBox = styled.div`
     margin: auto;
     left: 0;
     right: 0;
-
 }
 `;
 
@@ -87,7 +86,6 @@ const OpenModal = styled(ModalBox)`
   justify-content: center;
   align-items: center;
    
-
   @media (min-width: 1580px) {
   justify-content: flex-end;
   left: 1150px;

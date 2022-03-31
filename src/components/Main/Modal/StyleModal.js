@@ -67,21 +67,33 @@ const ModalBox = styled.div`
   display: none;
   position: fixed;
   top: 0;
-  right: 0;
+  /* right: 0; */
   bottom: 0;
-  left: 0;
+  /* left: 0; */
   background: rgba(0, 0, 0, 0.72);
   z-index: 9999;
   overflow-y: auto;
   max-width: 420px;
   width: 100%;
-  margin: auto;
+  @media (max-width: 540px) {
+    margin: auto;
+    left: 0;
+    right: 0;
+  }
 `;
 
 const OpenModal = styled(ModalBox)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 1580px) {
+  justify-content: flex-end;
+  left: 1150px;
+  }
+  @media (max-width: 1579px) and (min-width: 541px) {
+  right: 100px;
+  }
 `;
 
 const Overlay = styled.div`
