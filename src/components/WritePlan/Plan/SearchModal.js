@@ -7,19 +7,32 @@ import SearchMap from "./SearchMap";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  maxWidth: "420px",
-  width: "100%",
-  boxSizing: "border-box",
-  height: "100%",
-  bgcolor: "background.paper",
-  border: "none",
-  boxShadow: 24,
-};
+const Modalbox = styled(Box)`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  /* top: 50%;
+  transform: translate(0%, -50%); */
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background-color: white;
+  border: none;
+  box-shadow: 24;
+  @media (max-width: 540px) {
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+  @media (min-width: 1580px) {
+  /* justify-content: flex-end; */
+  left: 1150px;
+  }
+  @media (max-width: 1579px) and (min-width: 541px) {
+  right: 100px;
+  }
+`
 
 const AddButton = styled.div`
   display: flex;
@@ -77,7 +90,7 @@ export default function SearhModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Modalbox>
           <div>
             <Header>
               <div>장소선택</div>
@@ -114,7 +127,7 @@ export default function SearhModal() {
               장소추가
             </AddButton>
           </div>
-        </Box>
+        </Modalbox>
       </Modal>
     </div>
   );
