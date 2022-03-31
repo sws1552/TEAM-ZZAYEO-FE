@@ -21,6 +21,7 @@ const Backscreen = styled.div`
   height: 100%;
   bottom: 0;
   background: #f5f5f5;
+  box-sizing: border-box;
   position: relative;
   overflow: scroll;
   ::-webkit-scrollbar {
@@ -44,17 +45,17 @@ const BackTop = styled.div`
   height: 352px;
   box-sizing: border-box;
   position: absolute;
+  background-image: url("/img/mainbackground.png");
+  background-position: center;
+  background-size: cover;
 
   @media (max-width: 540px) {
-    background: rgba(78, 73, 226, 0.6);
   }
 
   @media (max-width: 1579px) and (min-width: 700px) {
-    background: rgba(78, 73, 226, 0.6);
   }
 
   @media (min-width: 1580px) {
-    background: rgba(78, 73, 226, 0.6);
   }
 `;
 
