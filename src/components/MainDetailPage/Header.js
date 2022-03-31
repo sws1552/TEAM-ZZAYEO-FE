@@ -20,7 +20,6 @@ const Header = (props) => {
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
   const is_me = props?.userId?.email === userId ? true : false;
-  console.log(is_me)
   const onProfile = (e) => {
     e.stopPropagation();
     if (token) {

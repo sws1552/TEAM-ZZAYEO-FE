@@ -26,7 +26,6 @@ const Search = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [endPage, setEndPage] = React.useState(0);
   const pageEnd = React.useRef();
-  console.log(pageNumber, feed, loading);
 
   // pageNumber가 바뀔때마다 실행
   React.useEffect(() => {
@@ -45,7 +44,6 @@ const Search = (props) => {
       await axios
         .get(`https://stgon.shop/api/plans/search${query}&page=${pageNumber}`)
         .then((res) => {
-          console.log(res);
           setFeed((prev) => [...prev, ...res.data.plans]);
           setEndPage(res.data.endPage);
         });
@@ -56,7 +54,6 @@ const Search = (props) => {
   //loading이 바뀔때마다 실행
   React.useEffect(() => {
     // fetchFeed 함수에서 loading 값이 true로 바뀐다면
-    console.log(loading);
     if (loading) {
       const observer = new IntersectionObserver(
         (entries) => {

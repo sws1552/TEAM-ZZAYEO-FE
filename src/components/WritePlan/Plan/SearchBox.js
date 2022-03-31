@@ -19,7 +19,6 @@ const SearchBox = ({ mapApi, map, addPlace }) => {
     const selected = searchBox.current.getPlaces();
 
     const { 0: place } = selected
-    console.log(selected)
     addPlace(selected)
     dispatch(addPlaceActions.addlocation(selected))
 

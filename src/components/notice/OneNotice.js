@@ -6,8 +6,6 @@ import { history } from '../../redux/ConfigureStore';
 
 const OneNotice = (props) => {
 
-    // console.log('props !! ',props);
-
     const displayCreatedAt = (createdAt) => {
         let startTime = new Date(createdAt);
         let nowTime = Date.now();

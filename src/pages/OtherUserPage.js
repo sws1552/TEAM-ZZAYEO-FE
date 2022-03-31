@@ -16,7 +16,6 @@ const OtherUserPage = (props) => {
 
   const myInfo = useSelector((store) => store.user.user);
   const user = useSelector((store) => store.user.userInfo);
-  console.log(user.profile_img);
 
   const joinRoom = async () => {
     const curUserInfo = await instance

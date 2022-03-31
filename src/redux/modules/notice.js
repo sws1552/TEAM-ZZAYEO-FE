@@ -24,7 +24,7 @@ const getNoticeListFB = () => {
         },
       })
       .then((res) => {
-        // console.log('알림 리스트 res !! ', res.data.notices);
+   
         dispatch(getNotice(res.data.notices));
       })
       .catch((err) => {

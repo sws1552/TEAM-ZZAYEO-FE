@@ -20,8 +20,6 @@ const MainUserpick = (props) => {
   const token = localStorage.getItem("token")
   const userpick_list = useSelector((store) => store.plan.userpick_list);
 
-    // console.log('userpick_list !! ', userpick_list);
-
   const plan = userpick_list.find((p) => {
      return p.planId === planId;
     });

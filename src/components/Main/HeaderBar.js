@@ -26,24 +26,14 @@ const HeaderBar = (props) => {
   React.useEffect(() => {
 
     socket?.on('noticePage', (data) => {
-      console.log('mainNotice socket data !! ', data);
+     
       setMainNoti(true);
       localStorage.setItem("mainNotice", "true");
     });
 
   }, [socket]);
 
-  const [navbar, setNavbar] = useState(false)
 
-  const changeBackground = () => {
-    console.log(window.scrollY)
-      if(window.scrollY >= 56){
-          setNavbar(false) 
-      } else {
-          setNavbar(true)
-      }
-  }
-  window.addEventListener('scroll', changeBackground)
 
   return (
     <Container>

@@ -20,7 +20,6 @@ const Fitbound = ({markers, map, maps}) => {
         });
     
         if (bounds) {
-          console.log(bounds.Ua.h === bounds.Ua.j)
           map.fitBounds(bounds);
           if (bounds.Ua.h === bounds.Ua.j) {
             map.setZoom(17)

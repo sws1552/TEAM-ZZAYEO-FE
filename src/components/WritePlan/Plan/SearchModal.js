@@ -71,7 +71,7 @@ const Header = styled.div`
 
 export default function SearhModal() {
   const placeName = useSelector((state) => state.addPlace.placeName);
-  // console.log(placeName);
+  
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);

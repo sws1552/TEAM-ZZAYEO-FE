@@ -13,8 +13,6 @@ const NoticePage = (props) => {
 
     const noticeList = useSelector((state) => state.notice.list);
 
-    // console.log('noticeList !! ',noticeList);
-
     React.useEffect(() => {
         dispatch(noticeActions.getNoticeListFB());
     }, [dispatch]);

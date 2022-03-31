@@ -19,12 +19,6 @@ const ReplyList = (props) => {
 
     const { planId, commentId, replies, userInfo, commentSnsId } = props;
     const token = localStorage.getItem("token")
-    // console.log('planId !! ', planId);
-    // console.log('commentId !! ', commentId);
-    // console.log('replies !! ', replies);
-    // console.log('commentSnsId !! ',commentSnsId);
-
-    // console.log('userInfo !! ',userInfo);
 
     return (
         <ReplyListCon>

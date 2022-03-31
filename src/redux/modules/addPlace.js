@@ -35,7 +35,7 @@ export default handleActions(
     [LOCATION]: (state, action) =>
       produce(state, (draft) => {
         const place = action.payload.place
-        console.log(place)
+
         const placeName = place[0].name
         const lat = place[0].geometry.location.lat()
         const lng = place[0].geometry.location.lng()
@@ -62,7 +62,6 @@ export default handleActions(
       }),
     [INITIALPLACE]: (state, action) =>
       produce(state, (draft) => {
-        console.log("바이")
         draft.placeName = ""
         draft.lat = 0
         draft.lng = 0

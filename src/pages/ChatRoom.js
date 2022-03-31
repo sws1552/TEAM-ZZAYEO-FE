@@ -19,17 +19,15 @@ const ChatRoom = (props) => {
 
   const roomChatData = useSelector((state) => state.chat.chatRoom_list);
 
-  // console.log("roomData !! ",roomData);
 
-  // console.log('roomChatData !! ',roomChatData);
-
+;
   // 보내려는메세지
   const [curMsg, setCurMsg] = useState("");
   // 채팅방메세지리스트
   const [msgList, setMessageList] = useState([]);
   let time = moment().format("LT");
 
-  // console.log('msgList !! ',msgList);
+
 
   // 비동기로 만들어서 메시지가 실제로 업데이트를 할 때까지 기다리도록 한다.
   const sendMessage = async () => {
@@ -48,8 +46,6 @@ const ChatRoom = (props) => {
       // 서버에 메시지 데이터 전송
       await socket.emit("room", msgData);
 
-      // console.log('msgList !! ', msgList);
-      // console.log("roomData !! ",roomData);
     }
 
     setCurMsg("");
@@ -60,7 +56,6 @@ const ChatRoom = (props) => {
     // 서버에서 메시지데이터 받아오기
     socket.on("chat", (data) => {
       // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
-      // console.log("메시지 ~!! ", data);
 
       const oneChat = {
         chatText: data.chatText,
@@ -76,13 +71,11 @@ const ChatRoom = (props) => {
 
       // 상대방 메시지 채팅방 메시지 리스트에 저장
       setMessageList((preState) => {
-        // console.log('preState !! ',preState);
         return [...preState, oneChat];
       });
     });
 
     socket.on("join", (data) => {
-      // console.log('data 상대방이 입장했는지 !! ',data);
 
       if (data === roomData.curUserInfo.snsId) {
         dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
@@ -90,9 +83,6 @@ const ChatRoom = (props) => {
     });
 
     return () => {
-      console.log("채팅방나간다잉");
-      // upCheckChat();
-      // console.log('checkChat 컴포넌트가 사라질때!! ',checkChat);
 
       const room = {
         fromSnsId: roomData.curUserInfo.snsId,

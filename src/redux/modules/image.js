@@ -54,7 +54,7 @@ export default handleActions(
         draft.preview = [...state.preview, action.payload.preview];
         //기존 배열에 새롭게 추가
 
-        // console.log(action.payload.preview)
+      
         // draft.preview = action.payload.preview
       }),
     [PRE_SET_PREVIEW]: (state, action) =>
@@ -83,7 +83,7 @@ export default handleActions(
       }),
     [IMAGE_URL]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.imageURL)
+      
         draft.imageURL = [...state.imageURL, action.payload.imageURL];
       }),
 
@@ -106,7 +106,7 @@ export default handleActions(
       }),
     [INITIAL_IMAGE]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.initial);
+    
         draft.imageURL = action.payload.initial;
       }),
   },

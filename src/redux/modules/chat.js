@@ -68,7 +68,7 @@ const destroySocketInstance = () => {
 
 const getChatRoomListFB = (toUserId) => {
   return async function (dispatch, getState, { history }) {
-    console.log('toUserId !! ',toUserId);
+   
     await axios
       .get(`https://stgon.shop/api/chat/${toUserId}`, {
         headers: {
@@ -76,11 +76,11 @@ const getChatRoomListFB = (toUserId) => {
         },
       })
       .then((res) => {
-        console.log('채팅방 글 조회 res !! ', res.data.ChatMessages);
+ 
         dispatch(getChat(res.data.ChatMessages));
       })
       .catch((err) => {
-        console.log(err);
+      
       });
   };
 };
@@ -94,11 +94,11 @@ const getChatListFB = () => {
         },
       })
       .then((res) => {
-        // console.log('채팅방 목록 조회 res !! ', res.data.chatRoomList);
+        
         dispatch(getChatList(typeof res.data.ChatRoomList === "undefined" ? [] : res.data.ChatRoomList));
       })
       .catch((err) => {
-        console.log(err);
+       
       });
   };
 };
@@ -108,7 +108,6 @@ const getNewChatFB = () => {
     await instance
       .get(`/api/chat/new`)
       .then((res) => {
-        console.log("신규 채팅 확인 res !! ", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -121,7 +120,6 @@ const deleteChatRoomFB = (chatRoomId) => {
     await instance
       .delete(`/api/chat/${chatRoomId}`)
       .then((res) => {
-        console.log("채팅방 삭제 res !! ", res);
         dispatch(getChatListFB());
       })
       .catch((err) => {

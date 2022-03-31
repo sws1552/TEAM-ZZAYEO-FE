@@ -62,8 +62,6 @@ export default function CustomizedSwitches() {
   const [checked, setChecked] = React.useState(false);
 
   const checkHandle = (e) => {
-    console.log(e.target.checked);
-    console.log(e.target);
     setChecked(!checked);
   }
 

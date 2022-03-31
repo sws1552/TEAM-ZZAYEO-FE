@@ -15,21 +15,15 @@ export default function LongMenu(props) {
 
   const dispatch = useDispatch();
 
-  // console.log('commentId !! ',commentId);
-
   const itemClick = (e) => {
-    // console.log('e.target.id !! ',e.target.id);
 
     if (e.target.id === "수정하기") {
       hide();
 
-      // dispatch(commentActions.updateComment(commentId, planId));
     } else {
       if (window.confirm("정말로 삭제하시겠습니까?")) {
-        console.log("삭제 ㄱㄱ");
         dispatch(commentActions.removeCommentFB(commentId, planId));
       } else {
-        console.log("return");
         return;
       }
     }

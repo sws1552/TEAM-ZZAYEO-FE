@@ -33,7 +33,6 @@ const BottomNav = () => {
   React.useEffect(() => {
 
     socket?.on('chatNotice', (data) => {
-      console.log('chatNotice socket data !! ', data.newChat);
       setChatState(data.newChat);
       localStorage.setItem("newChat", "true");
     });

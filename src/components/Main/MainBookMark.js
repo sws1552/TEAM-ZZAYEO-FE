@@ -13,7 +13,6 @@ const MainBookMark = (props) => {
   const plan = bookmark_list.find((p) => p.planId === planId);
   const userId = plan.planId.userId.userId;
 
-  // console.log('plan !! ',plan);
 
   const onProfile = (e) => {
     e.stopPropagation();
@@ -39,23 +38,6 @@ const MainBookMark = (props) => {
   return (
     <React.Fragment>
       <Container>
-        {/* <BookMarkCard
-          onClick={() => {
-            history.push(`detail/${planId.planId}`);
-          }}
-          src={
-            plan.planId.thumbnailImage
-              ? plan.planId.thumbnailImage
-              : "https://i.pinimg.com/564x/5d/4c/d7/5d4cd703e53186f7f7e2c2d8963f1244.jpg"
-          }
-        >
-          <UserInfo onClick={onProfile}>
-            <img src={plan.planId.userId.profile_img} alt="" />
-            <UserName>{plan.planId.userId.nickname}</UserName>
-          </UserInfo>
-          <CardTitle>{plan.planId.title}</CardTitle>
-        </BookMarkCard> */}
-
         <TripCard onClick={onPlanInfo}>
           <CardImg
           src={
@@ -152,54 +134,6 @@ const Box = styled.div`
   margin-top: 4px;
   right: 12px;
 `;
-
-
-// const BookMarkCard = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   width: 152.57px;
-//   height: 192.65px;
-//   border-radius: 8px;
-//   background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-//     url(${(props) => props.src});
-//   background-position: center;
-//   background-size: cover;
-//   font-family: "Roboto", sans-serif;
-//   cursor: pointer;
-// `;
-
-// const UserInfo = styled.div`
-//   margin: 10px 0px 0px 10px;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   img {
-//     width: 25px;
-//     height: 25px;
-//     border-radius: 34px;
-//   }
-// `;
-
-// const UserName = styled.div`
-//   margin-left: 4.07px;
-//   font-weight: 700;
-//   font-size: 14px;
-//   line-height: 16px;
-//   color: #ffffff;
-// `;
-
-// const CardTitle = styled.div`
-//   position: absolute;
-//   /* display: flex; */
-//   bottom: 0;
-//   padding: 0px 16.27px 15.41px;
-//   font-weight: 600;
-//   font-size: 22px;
-//   line-height: 28px;
-//   color: #ffffff;
-  
-// `;
-
 
 
 export default MainBookMark;

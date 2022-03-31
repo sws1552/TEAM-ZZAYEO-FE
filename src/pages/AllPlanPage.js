@@ -29,7 +29,7 @@ const AllPlanPage = (props) => {
   const [loading, setLoading] = React.useState(false);
   const [endPage, setEndPage] = React.useState(0);
   const pageEnd = React.useRef();
-  console.log(feed);
+ ;
   // pageNumber가 바뀔때마다 실행
   React.useEffect(() => {
     if (endPage !== 0 && pageNumber > endPage) {

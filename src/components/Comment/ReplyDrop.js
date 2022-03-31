@@ -12,8 +12,6 @@ const ReplyDrop = (props) => {
 
   const itemClick = (e) => {
 
-    // console.log('e.target.id !! ',e.target.id);
-
     if (e.target.id === "수정하기") {
 
       hide();
@@ -21,10 +19,8 @@ const ReplyDrop = (props) => {
     } else {
 
       if (window.confirm("정말로 삭제하시겠습니까?")) {
-        console.log("답글삭제 ㄱㄱ");
         dispatch(commentActions.deleteReplyFB(planId, replyId));
       } else {
-        console.log("return");
         return;
       }
 
@@ -33,12 +29,6 @@ const ReplyDrop = (props) => {
     showHide();
 
   }
-
-
-
-
-
-
 
   const dropdownRef = useRef(null);
 

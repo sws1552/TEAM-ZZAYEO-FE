@@ -101,7 +101,7 @@ const ChooseDay = (props) => {
 
           {dayList &&
             dayList[currentTab]?.places.map((v, i) => {
-              console.log(v.time)
+             
               return (
                 <div key={i} style={{ marginTop: "16px", display: "table" }}>
                   <Line>

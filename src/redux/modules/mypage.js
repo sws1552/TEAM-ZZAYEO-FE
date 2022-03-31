@@ -17,8 +17,6 @@ const initialState = {
 const updateProfileFB = (newImg, newNick) => {
     return async function (dispatch, getState, { history }) {
         
-        console.log('newImg !! ', newImg);
-        console.log('newNick !! ', newNick);
 
         const form = new FormData();
         form.append('imageFile', newImg);
@@ -27,11 +25,7 @@ const updateProfileFB = (newImg, newNick) => {
         await instance
         .post(`/api/users/auth/me`, form)
         .then((res) => {
-            
-            console.log('res !! ',res);
-
             history.push('/login');
-
         })
         .catch((err) => {
           console.log(err);

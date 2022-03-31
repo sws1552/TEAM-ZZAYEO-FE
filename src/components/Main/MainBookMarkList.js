@@ -14,18 +14,11 @@ const MainBookMarkList = (props) => {
   const bookmark_list = useSelector((store) => store.plan.bookmark_list);
 
   return (
-    // <Container>
-    //   {bookmark_list.map((list, idx) => {
-    //     return <MainBookMark key={idx} {...list} index={idx} />;
-    //   })}
-    // </Container>
-
     <SwiperSlider
       className="banner"
       spaceBetween={50}
       slidesPerView={1}
       scrollbar={{ draggable: true }}
-      // navigation
       pagination={{ clickable: true }}
       breakpoints={{
         768: {
@@ -45,7 +38,6 @@ const MainBookMarkList = (props) => {
 };
 
 const SwiperSlider = styled(Swiper)`
-  /* padding: 0 24px; */
   justify-content: center;
   z-index: 0;
 

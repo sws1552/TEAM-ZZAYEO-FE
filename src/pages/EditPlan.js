@@ -7,7 +7,7 @@ const EditPlan = (props) => {
   const { history } = props;
   
   const myPlan = useSelector((state) => state.plan.myPlan);
-  console.log(myPlan)
+  
   return (
     <React.Fragment>
       <Container>

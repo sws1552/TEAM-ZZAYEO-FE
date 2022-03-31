@@ -20,8 +20,6 @@ const ChatList = (props) => {
 
   const chat_list = useSelector((state) => state.chat.list);
 
-  // console.log('chat_list !! ',chat_list);
-
   const is_token = localStorage.getItem("token") ? true : false;
 
   React.useEffect(() => {

@@ -59,8 +59,6 @@ const Upload = (props) => {
       file = fileArr[i];
       let reader = new FileReader();
 
-      // console.log('fileArr !! ',fileArr);
-
       reader.onload = () => {
         fileURLs[i] = reader.result;
         setTimeout(() => {

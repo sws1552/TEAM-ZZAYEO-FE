@@ -5,8 +5,7 @@ import { history } from "../../redux/ConfigureStore";
 import Bookmark from "../Main/Bookmark";
 
 const TravelList = (props) => {
-  console.log(props)
-
+  
   const onProfile = (e) => {
     e.stopPropagation();
     history.push(`/otheruser/${props.userId}`);
