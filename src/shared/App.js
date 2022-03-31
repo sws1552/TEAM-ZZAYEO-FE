@@ -36,16 +36,16 @@ import ScreenBackground from "../components/ScreenBackground/ScreenBackground";
 
 function App() {
   // 브라우저에서 알림 허용 차단 창
-  const isNotificationSupported = "Notification" in window;
-  if (isNotificationSupported) {
-    Notification.requestPermission().then(function (result) {
-      if (result === "granted") {
-        console.log("[Notification] 허용: ", result);
-      } else {
-        console.log("[Notification] 차단: ", result);
-      }
-    });
-  }
+  // const isNotificationSupported = "Notification" in window;
+  // if (isNotificationSupported) {
+  //   Notification.requestPermission().then(function (result) {
+  //     if (result === "granted") {
+  //       console.log("[Notification] 허용: ", result);
+  //     } else {
+  //       console.log("[Notification] 차단: ", result);
+  //     }
+  //   });
+  // }
 
   const dispatch = useDispatch();
 

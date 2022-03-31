@@ -20,21 +20,28 @@ const BottomContents = (props) => {
       text: "아래 구글 폼으로 들어가 이벤트 참여 내용을 작성하면 끝!",
     },
   ];
-
+  const defaultUrl = [
+    "../../images/1.png",
+    "../../images/2.png",
+    "../../images/3.png",
+    "../../images/4.png",
+    "../../images/5.png",
+    "../../images/6.png",
+  ];
   const prise = [
     {
       priseName: "짜여상",
-      image: <Prise1Img />,
+      image: "../../images/gift01.png",
       text: "스타벅스 아이스아메리카노(30명)",
     },
     {
       priseName: "베스트 여행상",
-      image: <Prise2Img />,
-      text: "BBQ 황금올리브 +콜라 세트 (5명)",
+      image: "../../images/gift02.png",
+      text: "BBQ 황금올리브 + 콜라 세트 (5명)",
     },
     {
       priseName: "베스트 피드백상",
-      image: <Prise3Img />,
+      image: "../../images/gift03.png",
       text: "베스킨라빈스 파인트 (5명)",
     },
   ];
@@ -88,7 +95,7 @@ const BottomContents = (props) => {
                 return (
                   <Box1>
                     <Step>{s.priseName}</Step>
-                    <Image>{s.image}</Image>
+                    <Image src={s.image}></Image>
                     <Text1>{s.text}</Text1>
                   </Box1>
                 );
@@ -244,6 +251,7 @@ const Text1 = styled.div`
   color: #212121;
   padding: 0px 19px;
   word-break: keep-all;
+  margin-top: 12px;
 `;
 
 const Btn = styled.div`
@@ -267,9 +275,11 @@ const Box1 = styled(Box)`
   height: 180px;
 `;
 
-const Image = styled.div`
+const Image = styled.img`
   text-align: center;
   margin-top: 12px;
+  display: block;
+  margin: auto;
 `;
 
 const BottomImg = styled.div`
