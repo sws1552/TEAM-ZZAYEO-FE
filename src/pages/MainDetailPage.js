@@ -230,6 +230,7 @@ const ToggleBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  border-top: 1px solid #E0E0E0;
 `;
 
 const ToogleBtn = styled.div`

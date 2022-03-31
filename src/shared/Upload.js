@@ -35,12 +35,12 @@ const Upload = (props) => {
     };
     try {
       const compressedFile = await imageCompression(fileSrc, options);
-      const myFile =  new File([compressedFile], 'image.jpeg', {
+      const myFile = new File([compressedFile], 'image.jpeg', {
         type: compressedFile.type,
       })
 
       await dispatch(imageActions.imageURL(myFile));
- 
+
     } catch (error) {
       console.log(error);
     }
@@ -63,10 +63,10 @@ const Upload = (props) => {
 
       reader.onload = () => {
         fileURLs[i] = reader.result;
-        setTimeout(() =>  {
+        setTimeout(() => {
           dispatch(imageActions.setPreview(reader.result))
         }, 1000);
-       
+
         // dispatch(imageActions.imageURL(filesArr[i]));
         actionImgCompress(filesArr[i])
       };
@@ -83,14 +83,7 @@ const Upload = (props) => {
             fileInput.current.click();
           }}
         >
-          <div
-            style={{
-              marginRight: "auto",
-              marginLeft: "auto",
-              lineHeight: "100px",
-              display: "block",
-            }}
-          >
+          <div>
             <svg
               width="24"
               height="24"
@@ -105,6 +98,9 @@ const Upload = (props) => {
                 fill="#8F8CF1"
               />
             </svg>
+          </div>
+          <div style={{fontSize:"14px", fontWeight:"400", color:"#757575"}}>
+            {preview.length + pre_preview.length !== 0 ? `${preview.length + pre_preview.length}/5` : "0/5"}
           </div>
         </SelectBox>
 
@@ -233,13 +229,16 @@ const Input = styled.input`
   border: 0;
 `;
 const SelectBox = styled.div`
-  min-width: 100px;
-  height: 100px;
+  min-width: 72px;
+  height: 72px;
   border: 1px solid #bdbdbd;
   border-radius: 8px;
   cursor: pointer;
   margin-right: 15px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TotalBox = styled.div`
@@ -248,8 +247,8 @@ const TotalBox = styled.div`
   flex-direction: row;
 `;
 const ImageBox = styled.div`
-  min-width: 100px;
-  min-height: 100px;
+  min-width: 72px;
+  min-height: 72px;
   margin-right: 15px;
   border-radius: 8px;
   cursor: pointer;

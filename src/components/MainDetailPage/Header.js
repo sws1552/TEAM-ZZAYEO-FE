@@ -20,7 +20,7 @@ const Header = (props) => {
   const startDate = moment(props.startDate).format("YYYY.MM.DD");
   const endDate = moment(props.endDate).format("MM.DD");
   const is_me = props?.userId?.email === userId ? true : false;
-
+  console.log(is_me)
   const onProfile = (e) => {
     e.stopPropagation();
     if (token) {
@@ -76,7 +76,7 @@ const Header = (props) => {
   let imgUrl = Math.floor(Math.random() * defaultUrl.length);
 
   return (
-    <Container>
+    <Container is_me>
       <BackBtn
         onClick={() => {
           history.go(-1);
@@ -151,6 +151,8 @@ const Header = (props) => {
     </Container>
   );
 };
+
+
 
 const Container = styled.div`
   position: relative;
