@@ -79,8 +79,8 @@ const OneChatDrop = (props) => {
 const Container = styled.div`
 
   position: absolute;
-  right: 10px;
   margin: 20px 0;
+  right: 0;
 
   .menu {
     background: #ffffff;

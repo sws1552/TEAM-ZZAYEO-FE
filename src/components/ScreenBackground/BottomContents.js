@@ -9,25 +9,18 @@ const BottomContents = (props) => {
   const step = [
     {
       num: "Step 1",
-      text: '"여행기 작성"에서 새로운 여행을 만들고 세부 여행을 작성한 후 모두에게 공개 클릭!',
+      text: '"여행기 작성"에서 새로운 여행을 만들고 세부 여행을 작성합니다.',
     },
     {
       num: "Step 2",
-      text: "작성한 여행 페이지를 캡쳐해주세요.",
+      text: '작성한 여행에서 "모두에게 공유" 클릭',
     },
     {
       num: "Step 3",
       text: "아래 구글 폼으로 들어가 이벤트 참여 내용을 작성하면 끝!",
     },
   ];
-  const defaultUrl = [
-    "../../images/1.png",
-    "../../images/2.png",
-    "../../images/3.png",
-    "../../images/4.png",
-    "../../images/5.png",
-    "../../images/6.png",
-  ];
+
   const prise = [
     {
       priseName: "짜여상",
@@ -219,6 +212,8 @@ const Box = styled.div`
   background: #fafafa;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 4px 6px rgba(0, 0, 0, 0.05);
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Step = styled.div`
@@ -238,8 +233,10 @@ const Text = styled.div`
   text-align: center;
   letter-spacing: -0.02em;
   color: #212121;
-  padding: 0px 30px;
+  padding: 0px 22px;
   word-break: keep-all;
+  display: flex;
+  justify-content: center;
 `;
 
 const Text1 = styled.div`

@@ -63,7 +63,9 @@ const Onechat = (props) => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+
+    <div style={{ display: "flex", justifyContent: "space-between", position:"relative" }}>
+
       <Container style={{ cursor: "pointer" }} onClick={joinRoom}>
         <UserImg profileImg={props?.userId2?.profile_img} />
         <NickCon>
@@ -85,10 +87,11 @@ const Onechat = (props) => {
           </div>
         </NickCon>
       </Container>
-      <div style={{ marginTop: "-12px" }}>
+      <div style={{marginTop:"-12px"}}>
         <OneChatDrop chatRoomId={props.chatRoomId} />
       </div>
     </div>
+
   );
 };
 
@@ -97,7 +100,7 @@ Onechat.defaultProps = {
     "https://i.pinimg.com/736x/b8/5e/08/b85e089d8b68bb06d7f691acce480adb--big-cats-cute-cats.jpg",
   userNick: "wonseok",
   pretime: "2022-03-03",
-  _onClick: () => {},
+  _onClick: () => { },
 };
 
 const LastChat = styled.div`
@@ -110,6 +113,7 @@ const LastChat = styled.div`
 `;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   height: 80px;

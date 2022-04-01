@@ -7,7 +7,8 @@ const EditPlan = (props) => {
   const { history } = props;
   
   const myPlan = useSelector((state) => state.plan.myPlan);
-  
+  let today = new Date();
+
   return (
     <React.Fragment>
       <Container>
@@ -35,7 +36,7 @@ const EditPlan = (props) => {
           <TText>새로운 여행기 작성</TText>
         </Top>
         <Bottom>
-          <EditContents />
+          <EditContents today={today} />
         </Bottom>
       </Container>
     </React.Fragment>

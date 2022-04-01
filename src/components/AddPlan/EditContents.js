@@ -16,9 +16,14 @@ const EditContents = (props) => {
   const planId = useSelector((store) => store.plan.planId);
   const myPlan = useSelector((state) => state.plan.myPlan);
 
+  const { today } = props;
+  
   React.useEffect(() => {
     dispatch(planActions.getdayPlanDB(planId));
+
+    setTitleInput(myPlan?.title);
   }, []);
+
 
   //여행제목 값 가져오기
   const [titleInput, setTitleInput] = useState("");
@@ -26,11 +31,12 @@ const EditContents = (props) => {
   //여행 선택일자 가져오기
   const [state, setState] = React.useState([
     {
-      startDate: null,
-      endDate: null,
+      startDate: moment(myPlan?.startDate)._d,
+      endDate: moment(myPlan?.endDate)._d,
       key: "selection",
     },
   ]);
+
 
   const [msg, setMsg] = React.useState("날짜를 선택해주세요.");
   const [dateShowModal, setDateShowModal] = React.useState(false);
@@ -51,7 +57,14 @@ const EditContents = (props) => {
     );
   };
 
-  React.useEffect(() => { }, [state]);
+  React.useEffect(() => { 
+    setMsg(
+      moment(state[0].startDate).format("YYYY.MM.DD") +
+      "-" +
+      moment(state[0].endDate).format("MM.DD")
+    );
+
+  }, [state]);
 
   //어디로
   const destList = ["국내", "해외"];
@@ -146,6 +159,7 @@ const EditContents = (props) => {
         <InputBox>
           <input
             type="text"
+            value={titleInput}
             placeholder="제목을 수정해주세요"
             onChange={(e) => {
               setTitleInput(e.target.value);

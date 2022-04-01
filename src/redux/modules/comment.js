@@ -31,7 +31,7 @@ const addCommentFB = (planId, contents) => {
             }
         ).then((res) => {
 
-            // console.log('addComment res !! ',res.data.newComment);
+          
 
             dispatch(getCommentFB(planId));
 
@@ -46,7 +46,7 @@ const addCommentFB = (planId, contents) => {
 
 const getCommentFB = (planId = null) => {
     return async function (dispatch, getState, {history}) {
-        // console.log('planId !! ',planId);
+
 
         if(!planId){
             return;
@@ -54,8 +54,7 @@ const getCommentFB = (planId = null) => {
 
         await instance.get(`/api/plans/${planId}/comments`)
         .then((res) => {
-            console.log('댓글조회 res !! ', res);
-
+       
             const commentList = res.data.comments.reduce((acc, cur, i) => {
 
                 acc.push({
@@ -75,7 +74,6 @@ const getCommentFB = (planId = null) => {
 
             }, []);
             
-            // console.log('commentList !! ',commentList);
 
             dispatch(getComment(planId, commentList));
 
@@ -97,7 +95,6 @@ const realUpdateCommentFB = (commentId, planId, upComment) => {
             }   
         )
         .then((res) => {
-            console.log('updatecomment res !! ', res);
 
             const preList = getState().comment.list[planId];
 
@@ -112,10 +109,6 @@ const realUpdateCommentFB = (commentId, planId, upComment) => {
                 return acc;
 
             }, []);
-
-            // console.log('preList !! ',preList);
-
-            // console.log('updateList !! ', upDateList);
 
             dispatch(getComment(planId, upDateList));
 
@@ -132,14 +125,10 @@ const realUpdateCommentFB = (commentId, planId, upComment) => {
 
 const removeCommentFB = (commentId, planId) => {
     return async function(dispatch, getState, {history}) {
-        
-        // console.log('commentId !! ',commentId);
-        // console.log('planId !! ',planId);
 
         await instance.delete(`/api/plans/comments/${commentId}`)
         .then((res) => {
 
-            console.log('삭제 res !! ',res);
             if(res.data.result === 'false'){
                 window.alert(res.data.message);
                 return;
@@ -147,11 +136,7 @@ const removeCommentFB = (commentId, planId) => {
 
                 const preList = getState().comment.list[planId];
 
-                // console.log('preList !! ', preList);
-
                 const deleteList = preList.filter((item, i) => commentId !== item.commentId);
-
-                // console.log('deleteList !! ',deleteList);
 
                 dispatch(getComment(planId, deleteList));
 
@@ -175,8 +160,6 @@ const addReplyFB = (planId, commentId, reply) => {
             }
         ).then((res) => {
 
-            console.log('addReply res !! ',res.data);
-
             dispatch(getCommentFB(planId));
 
         }).catch((err) => {
@@ -197,8 +180,6 @@ const updateReplyFB = (planId, replyId, upReply) => {
         )
         .then((res) => {
 
-            console.log('답글 업뎃 res !! ', res);
-
             dispatch(getCommentFB(planId));
 
         })
@@ -214,8 +195,6 @@ const deleteReplyFB = (planId, replyId) => {
  
         await instance.delete(`/api/plans/comments/replies/${replyId}`)
         .then((res) => {
-            console.log('답글 삭제 res !! ',res);
-
             dispatch(getCommentFB(planId));
         })
         .catch((err) => {
@@ -230,8 +209,6 @@ const commentLikeTrue = (planId, commentId) => {
  
         await instance.post(`/api/plans/comments/${commentId}/like`)
         .then((res) => {
-            console.log('댓글 좋아요 res !! ', res);
-
             dispatch(getCommentFB(planId));
         })
         .catch((err) => {
@@ -247,7 +224,6 @@ const commentLikeFalse = (planId, commentId) => {
 
         await instance.delete(`/api/plans/comments/${commentId}/like`)
         .then((res) => {
-            console.log('댓글 좋아요 취소 !! ',res);
             dispatch(getCommentFB(planId));
         })
         .catch((err) => {
@@ -263,7 +239,6 @@ const replyLikeTrue = (planId, replyId) => {
 
         await instance.post(`/api/plans/comments/replies/${replyId}/like`)
         .then((res) => {
-            console.log('답글 좋아요 res !! ', res);
 
             dispatch(getCommentFB(planId));
         })
@@ -280,7 +255,6 @@ const replyLikeFalse = (planId, replyId) => {
 
         await instance.delete(`/api/plans/comments/replies/${replyId}/like`)
         .then((res) => {
-            console.log('답글 좋아요 취소 res !! ', res);
 
             dispatch(getCommentFB(planId));
         })
@@ -302,8 +276,6 @@ export default handleActions (
         }),
 
         [UPDATE_COMMENT]: (state, action) => produce(state, (draft)=> {
-            // console.log('commentId !! ', action.payload.commentId);
-            // console.log('commentList !! ', state.list[action.payload.planId]);
 
             const upList = state.list[action.payload.planId].reduce((acc, cur) => {
 

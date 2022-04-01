@@ -42,21 +42,23 @@ const Modalbox = styled(Box)`
 
 export default function BasicModal(props) {
   const { placeId, placesData, planId } = props;
-
+  console.log(placesData)
   const [AmPm, setAmPm] = React.useState("오전");
   const [Hour, setHour] = React.useState("0");
   const [Minute, setMinute] = React.useState("00");
   const [msg, setMsg] = React.useState("+ 시간을 추가해주세요.");
   const [timeModal, setTimeModal] = React.useState(false);
-
+  
+  const timeSpl = placesData?.time?.split(" ");
   React.useEffect(() => {
-    const timeSpl = placesData?.time?.split(" ");
     setAmPm(timeSpl[0]);
     setHour(timeSpl[1].split("")[0]);
     setMinute(timeSpl[2].split("")[0] + timeSpl[2].split("")[1]);
-    setMsg(AmPm + " " + Hour + "시 " + Minute + "분");
+    setMsg(placesData?.time)
     setMemo(placesData?.memoText);
-  }, [placesData, AmPm, Hour, Minute]);
+  }, [placesData]);
+
+ 
 
   const dispatch = useDispatch();
   const [Memo, setMemo] = React.useState("");
@@ -215,7 +217,7 @@ export default function BasicModal(props) {
                   )
                 );
                 // setMemo("");
-                // setMsg("+ 시간을 추가해주세요.");
+                // setMsg("+ 시간을 수정해주세요.");
                 dispatch(imageActions.initialPreview([]));
                 dispatch(imageActions.initialImage([]));
                 dispatch(imageActions.initialdbimage([]));

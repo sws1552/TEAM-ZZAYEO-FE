@@ -41,7 +41,7 @@ const AllPlanPage = (props) => {
 
   //async, await를 이용해서 비동기적으로 데이터 통신
   const fetchFeeds = async (query, pageNumber) => {
-    setLoading(true);
+    setLoading(false);
     if (query === undefined || query === "") {
       await axios
         .get(`https://stgon.shop/api/plans?page=${pageNumber}`, {
@@ -64,7 +64,7 @@ const AllPlanPage = (props) => {
           setFeed((prev) => [...prev, ...res.data.plans]);
           setEndPage(res.data.endPage);
         });
-    }
+    }setLoading(true);
   };
 
   // loading이 바뀔때마다 실행

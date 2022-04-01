@@ -13,7 +13,8 @@ const SearchMap = () => {
   const [map, setMap] = useState(null);
   const [googlemaps, setGooglemaps] = useState(null);
   const [center, setCenter] = useState({ lat: 37.5, lng: 127 });
-  const [open, setOpen] = React.useState(false);
+  
+
   let zoom = 10;
 
   const [places, setPlaces] = useState([]);
@@ -35,6 +36,8 @@ const SearchMap = () => {
       setPlaces(places);
     }
   };
+
+
 
   return (
     <Container>
@@ -59,17 +62,19 @@ const SearchMap = () => {
             handleApiloaded(map, maps);
           }}
 
+         
           // 위치를 렌더해주는 함수
         >
           {places?.length !== 0 &&
-            places?.map((place, index) => (
-              <Marker
+            places?.map((place, index) => {         
+              return(<Marker
                 key={index}
                 text={place.name}
                 lat={place.lat}
                 lng={place.lng}
-              />
-            ))}
+              />)
+            })}
+
         </GoogleMapReact>
       </div>
     </Container>

@@ -129,15 +129,37 @@ const MyPage = (props) => {
             />
           </svg>
         </ListItem>
-        <ListItem3>
-          {/* 알림 설정
-          <Switch /> */}
-        </ListItem3>
+        <UseMethod
+        onClick={()=>{
+          window.open("https://spectacled-socks-6a6.notion.site/064665c9cbd04512b444aaaa8ee48691")
+        }}
+        >
+          짜여 사용 방법 보러가기 >
+        </UseMethod>
+        {/* <ListItem3>
+          알림 설정
+          <Switch />
+        </ListItem3> */}
+    
       </ListCon>
     </MypageCon>
   );
 };
-
+const UseMethod = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 24px;
+  margin-top: 16px;
+  color: #4E49E2;
+  width: 100%;
+  height: 54px;
+  border: 1px solid #4E49E2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+` 
 const MypageCon = styled.div`
   width: 100%;
   height: 92%;
@@ -179,6 +201,7 @@ const ListCon = styled.div`
 
 const ListItem = styled.div`
   border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
   padding: 24px 0;
   display: flex;
   justify-content: space-between;

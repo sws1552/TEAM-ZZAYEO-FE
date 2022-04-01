@@ -135,19 +135,6 @@ export const saveLocationDB = (
   planId
 ) => {
   return (dispatch, getState, { history }) => {
-    console.log(
-      dayId,
-      AmPm,
-      Hour,
-      Minute,
-      Memo,
-      placeName,
-      lat,
-      lng,
-      address,
-      imageURL,
-      planId
-    );
 
     let formData = new FormData();
     formData.append("placeName", placeName);
@@ -290,17 +277,14 @@ const getMyPlanDB = () => {
 //공개, 비공개 설정하기
 const statusDB = (planId, status) => {
   return function (dispatch, getState, { history }) {
-    console.log(planId, status);
     instance
       .post(`api/plans/${planId}/public`, {
         status: status,
       })
       .then((res) => {
-        console.log(res);
         instance
           .get(`/api/plans/${planId}`)
           .then((res) => {
-            console.log(res.data.plan);
             dispatch(getdayPlan(res.data.plan));
           })
           .catch(function (error) {
@@ -319,7 +303,6 @@ const deleteMyPlanDB = (planId) => {
     instance
       .delete(`/api/plans/${planId}`)
       .then((res) => {
-        console.log(res);
         history.push("/myplan");
       })
       .catch((error) => {
@@ -336,7 +319,7 @@ const deleteMyPostDB = (placeId, planId) => {
       .then((res) => {
         // const planId = getState().plan.planId;
         instance.get(`/api/plans/${planId}`).then((res) => {
-          console.log(res);
+
           dispatch(getdayPlan(res.data.plan));
         });
       })
@@ -352,7 +335,6 @@ const deleteMyPostImageDB = (placeId, imageIndex) => {
     instance
       .delete(`/api/plans/days/places/${placeId}/${imageIndex}`)
       .then((res) => {
-        console.log("특정 여행 사진 삭제 !! ", res);
       })
       .catch((error) => {
         console.log(error);
@@ -375,19 +357,6 @@ export const editMyPostDB = (
   planId
 ) => {
   return (dispatch, getState, { history }) => {
-    console.log(
-      placeId,
-      AmPm,
-      Hour,
-      Minute,
-      Memo,
-      placeName,
-      lat,
-      lng,
-      address,
-      imageURL,
-      planId
-    );
 
     let formData = new FormData();
     formData.append("placeName", placeName);
@@ -403,7 +372,7 @@ export const editMyPostDB = (
       .post(`/api/plans/days/places/${placeId}`, formData, {})
       .then(function (response) {
         instance.get(`/api/plans/${planId}`).then((res) => {
-          console.log(res);
+
           dispatch(getdayPlan(res.data.plan));
         });
       })
@@ -419,7 +388,6 @@ const searchDB = (query, pageNumber) => {
     instance
       .get(`/api/plans/search${query}&page=${pageNumber}`)
       .then(function (res) {
-        console.log(res);
         dispatch(search(res.data));
       })
       .catch(function (error) {
@@ -436,7 +404,7 @@ const addThumbnailDB = (planId, imageURL) => {
     instance
       .post(`/api/plans/${planId}/thumbnail`, formData)
       .then((res) => {
-        console.log(res);
+
       })
       .catch((error) => {
         console.log(error);
