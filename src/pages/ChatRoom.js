@@ -46,7 +46,7 @@ const ChatRoom = (props) => {
       };
 
       // 서버에 메시지 데이터 전송
-      await socket.emit("room", msgData);
+      await socket?.emit("room", msgData);
 
       // console.log('msgList !! ', msgList);
       // console.log("roomData !! ",roomData);
@@ -58,7 +58,7 @@ const ChatRoom = (props) => {
   // 소켓서버에 변경사항이 있을때마다 내부함수 실행
   React.useEffect(() => {
     // 서버에서 메시지데이터 받아오기
-    socket.on("chat", (data) => {
+    socket?.on("chat", (data) => {
       // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
       // console.log("메시지 ~!! ", data);
 
@@ -81,7 +81,7 @@ const ChatRoom = (props) => {
       });
     });
 
-    socket.on("join", (data) => {
+    socket?.on("join", (data) => {
       // console.log('data 상대방이 입장했는지 !! ',data);
 
       if (data === roomData.curUserInfo.snsId) {
@@ -90,7 +90,7 @@ const ChatRoom = (props) => {
     });
 
     return () => {
-      console.log("채팅방나간다잉");
+      // console.log("채팅방나간다잉");
       // upCheckChat();
       // console.log('checkChat 컴포넌트가 사라질때!! ',checkChat);
 
@@ -99,7 +99,7 @@ const ChatRoom = (props) => {
         toSnsId: roomData.user.snsId,
       };
 
-      socket.emit("leaveRoom", room);
+      socket?.emit("leaveRoom", room);
 
       setMessageList([]);
     };
@@ -107,7 +107,7 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     if (typeof roomData.user.nickname === "undefined") {
-      window.alert("잘못된 접근입니다.");
+      // window.alert("잘못된 접근입니다.");
       history.push("/chatlist");
     } else {
       dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
