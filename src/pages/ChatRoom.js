@@ -54,7 +54,7 @@ const ChatRoom = (props) => {
   // 소켓서버에 변경사항이 있을때마다 내부함수 실행
   React.useEffect(() => {
     // 서버에서 메시지데이터 받아오기
-    socket.on("chat", (data) => {
+    socket?.on("chat", (data) => {
       // 수신데이터는 보낸데이터에서 checkChat추가 (읽엇는지 안읽엇는지)
 
       const oneChat = {
@@ -75,7 +75,7 @@ const ChatRoom = (props) => {
       });
     });
 
-    socket.on("join", (data) => {
+    socket?.on("join", (data) => {
 
       if (data === roomData.curUserInfo.snsId) {
         dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
@@ -89,7 +89,7 @@ const ChatRoom = (props) => {
         toSnsId: roomData.user.snsId,
       };
 
-      socket.emit("leaveRoom", room);
+      socket?.emit("leaveRoom", room);
 
       setMessageList([]);
     };
@@ -97,7 +97,6 @@ const ChatRoom = (props) => {
 
   React.useEffect(() => {
     if (typeof roomData.user.nickname === "undefined") {
-      window.alert("잘못된 접근입니다.");
       history.push("/chatlist");
     } else {
       dispatch(chatActions.getChatRoomListFB(roomData.user.snsId));
