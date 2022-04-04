@@ -42,7 +42,7 @@ function App() {
   //     if (result === "granted") {
   //       console.log("[Notification] 허용: ", result);
   //     } else {
-  //       console.log("[Notification] 차단: ", result);
+  //       console.log("[Notification] 차단:d ", result);
   //     }
   //   });
   // }
